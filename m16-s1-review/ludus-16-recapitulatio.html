@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ludus XVI — Recapitulātiō | M/J Latin Advanced</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0E1C42; color: #fff; }
+    .wrap { max-width: 640px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+    .top { background: #0E1C42; border-bottom: 4px solid #55C8E8; padding: 16px 24px; text-align: center; }
+    .top .game { font-size: 13px; letter-spacing: 2px; color: #55C8E8; text-transform: uppercase; }
+    .top .name { font-size: 26px; margin-top: 2px; }
+    .top .sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .stage { flex: 1; padding: 22px 24px; display: flex; flex-direction: column; }
+    .bar-wrap { background: rgba(255,255,255,0.15); border-radius: 20px; height: 12px; overflow: hidden; margin-bottom: 6px; }
+    #bar { background: #55C8E8; height: 100%; width: 100%; transition: width 0.25s linear; }
+    .meta { display: flex; justify-content: space-between; font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 18px; }
+    .meta strong { color: #C7922C; }
+    .card { background: #fff; color: #0E1C42; border-radius: 12px; padding: 30px 24px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+    .prompt-label { font-size: 13px; color: #6b7a99; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .prompt { font-size: 26px; margin-bottom: 6px; line-height: 1.35; }
+    .prompt-note { font-size: 15px; color: #6b7a99; min-height: 20px; }
+    .opts { display: flex; gap: 12px; margin-top: 22px; }
+    .opts button { flex: 1; padding: 18px 10px; font-size: 18px; font-family: inherit; border: 2px solid #D0D9E8; background: #F4F6FA; color: #0E1C42; border-radius: 10px; cursor: pointer; transition: all 0.1s; }
+    .opts button:hover { border-color: #55C8E8; }
+    .opts button.right { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .opts button.wrong { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .btn { display: inline-block; padding: 15px 40px; font-size: 19px; font-family: inherit; background: #C7922C; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 18px; }
+    .btn:hover { background: #b3831f; }
+    .center { text-align: center; margin: auto 0; }
+    .big { font-size: 60px; color: #55C8E8; margin: 6px 0; }
+    .lead { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.9); }
+    .best { font-size: 15px; color: #C7922C; margin-top: 10px; }
+    .rules { text-align: left; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 18px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); margin: 14px 0; }
+    .hidden { display: none; }
+    .foot { text-align: center; font-size: 12px; color: rgba(255,255,255,0.4); padding: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <div class="game">Ludus XVI</div>
+        <div class="name">Recapitulātiō</div>
+        <div class="sub">M/J Latin Advanced &middot; Module 16</div>
+    </div>
+    <div class="stage">
+
+        <!-- START -->
+        <div id="start" class="center">
+            <div class="lead"><em>Recapitulātiō</em> &mdash; &ldquo;a running back over the whole thing.&rdquo; The Romans used it for the part of a speech where an orator gathers up everything he has said. This one gathers up the whole semester: forms, deponents, the gerundive, all four subjunctive tenses, sequence, every construction, the conditions and the irregulars. Nothing is labelled and nothing is grouped.</div>
+            <div class="rules">
+                &#9201;&#65039; You have <strong>75 seconds</strong>.<br>
+                &#9989; Tap the right answer &mdash; each correct answer adds to your score.<br>
+                &#128260; Play as many times as you like: <strong>your best score counts.</strong>
+            </div>
+            <div class="best" id="best-start"></div>
+            <button class="btn" id="go">Incipe! (Begin)</button>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play" class="hidden">
+            <div class="bar-wrap"><div id="bar"></div></div>
+            <div class="meta"><span>&#9201;&#65039; <strong id="time">75</strong>s</span><span>Score: <strong id="score">0</strong></span></div>
+            <div class="card">
+                <div class="prompt-label" id="p-label">Which one?</div>
+                <div class="prompt" id="p-text">&mdash;</div>
+                <div class="prompt-note" id="p-note"></div>
+                <div class="opts"><button id="opt0"></button><button id="opt1"></button></div>
+            </div>
+        </div>
+
+        <!-- END -->
+        <div id="end" class="hidden center">
+            <div class="lead">Tempus! (Time's up)</div>
+            <div class="big" id="final">0</div>
+            <div class="lead">correct answers</div>
+            <div class="best" id="best-end"></div>
+            <button class="btn" id="again">Iterum! (Play again)</button>
+            <div class="rules" style="margin-top:18px;">&#128221; When you are happy with your best score, record it where your course tells you (this game is graded on your <strong>best of unlimited attempts</strong>).</div>
+        </div>
+
+    </div>
+    <div class="foot">&copy; Optima Academy Online &middot; Ludus &middot; Recapitulātiō (Module 16)</div>
+</div>
+
+<script>
+(function () {
+  var ITEMS = [
+    // (a) Nouns, cases and declensions — 0706010 + m05
+    { label: "Which declension?", q: "senātus, senātūs", note: "read the genitive singular", opts: ["4th", "2nd"], a: "4th" },
+    { label: "Which declension?", q: "rēs, reī", note: "read the genitive singular", opts: ["5th", "3rd"], a: "5th" },
+    { label: "Which declension?", q: "cōnsul, cōnsulis", note: "read the genitive singular", opts: ["3rd", "2nd"], a: "3rd" },
+    { label: "Which declension?", q: "supplicium, suppliciī", note: "read the genitive singular", opts: ["2nd", "4th"], a: "2nd" },
+    { label: "Which case, which job?", q: "nōbīs, in dēfendenda est", note: "gerundive of obligation", opts: ["Dative of agent", "Ablative of agent"], a: "Dative of agent" },
+    { label: "Which case?", q: "senātōribus, after imperāvit", note: "the person commanded", opts: ["Dative", "Accusative"], a: "Dative" },
+    { label: "Which case?", q: "cīvēs, after monuit", note: "the person warned", opts: ["Accusative", "Dative"], a: "Accusative" },
+
+    // (b) Deponent, semi-deponent, or ordinary — m02, m03
+    { label: "Which type of verb?", q: "loquor, loquī, locūtus sum", note: "count the principal parts", opts: ["Deponent", "Semi-deponent"], a: "Deponent" },
+    { label: "Which type of verb?", q: "audeō, audēre, ausus sum", note: "count the principal parts", opts: ["Deponent", "Semi-deponent"], a: "Semi-deponent" },
+    { label: "Which type of verb?", q: "gaudeō, gaudēre, gāvīsus sum", note: "count the principal parts", opts: ["Semi-deponent", "Deponent"], a: "Semi-deponent" },
+    { label: "Which type of verb?", q: "patior, patī, passus sum", note: "count the principal parts", opts: ["Semi-deponent", "Deponent"], a: "Deponent" },
+    { label: "Which type of verb?", q: "dīcō, dīcere, dīxī, dictum", note: "count the principal parts", opts: ["Ordinary", "Deponent"], a: "Ordinary" },
+    { label: "What does it mean?", q: "hortātus est", note: "hortor is deponent", opts: ["he urged", "he was urged"], a: "he urged" },
+    { label: "What does it mean?", q: "locūtus", note: "a deponent participle", opts: ["having spoken", "having been spoken"], a: "having spoken" },
+    { label: "What does it mean?", q: "dictum est", note: "dīcō is an ordinary verb", opts: ["it was said", "he said"], a: "it was said" },
+
+    // (c) Gerund or gerundive — m04, m05
+    { label: "Gerund or gerundive?", q: "cupiditās rēgnandī", note: "is there a noun for it to agree with?", opts: ["Gerund", "Gerundive"], a: "Gerund" },
+    { label: "Gerund or gerundive?", q: "ad urbem dēfendendam", note: "check the endings against urbem", opts: ["Gerund", "Gerundive"], a: "Gerundive" },
+    { label: "Gerund or gerundive?", q: "ad dīcendum", note: "nothing to agree with", opts: ["Gerundive", "Gerund"], a: "Gerund" },
+    { label: "Gerund or gerundive?", q: "rēs pūblica dēfendenda est", note: "obligation", opts: ["Gerundive", "Gerund"], a: "Gerundive" },
+    { label: "What does it mean?", q: "Hoc mihi faciendum est.", note: "gerundive + esse", opts: ["I must do this", "I am doing this"], a: "I must do this" },
+    { label: "What does it mean?", q: "dīcendī causā", note: "genitive gerund + causā", opts: ["for the sake of speaking", "because he spoke"], a: "for the sake of speaking" },
+
+    // (d) Which subjunctive tense? — m06, m13
+    { label: "Which subjunctive tense?", q: "dīceret", note: "form only", opts: ["Imperfect", "Present"], a: "Imperfect" },
+    { label: "Which subjunctive tense?", q: "dīcat", note: "form only", opts: ["Imperfect", "Present"], a: "Present" },
+    { label: "Which subjunctive tense?", q: "dīxerit", note: "form only", opts: ["Perfect", "Pluperfect"], a: "Perfect" },
+    { label: "Which subjunctive tense?", q: "dīxisset", note: "form only", opts: ["Perfect", "Pluperfect"], a: "Pluperfect" },
+    { label: "Which subjunctive tense?", q: "locūtus esset", note: "a deponent, two words", opts: ["Pluperfect", "Perfect"], a: "Pluperfect" },
+    { label: "Which subjunctive tense?", q: "locūtus sit", note: "a deponent, two words", opts: ["Pluperfect", "Perfect"], a: "Perfect" },
+    { label: "Which subjunctive tense?", q: "esset", note: "from sum", opts: ["Imperfect", "Pluperfect"], a: "Imperfect" },
+    { label: "Which subjunctive tense?", q: "fuisset", note: "from sum", opts: ["Imperfect", "Pluperfect"], a: "Pluperfect" },
+    { label: "Indicative or subjunctive?", q: "tacēbant", note: "read the marker", opts: ["Indicative", "Subjunctive"], a: "Indicative" },
+    { label: "Indicative or subjunctive?", q: "tacērent", note: "read the marker", opts: ["Indicative", "Subjunctive"], a: "Subjunctive" },
+
+    // (e) Sequence — m07, m13
+    { label: "Primary or secondary?", q: "rogābit", note: "future", opts: ["Primary", "Secondary"], a: "Primary" },
+    { label: "Primary or secondary?", q: "rogāvit", note: "perfect", opts: ["Primary", "Secondary"], a: "Secondary" },
+    { label: "Primary or secondary?", q: "nesciēbat", note: "imperfect", opts: ["Secondary", "Primary"], a: "Secondary" },
+    { label: "Primary or secondary?", q: "nescit", note: "present", opts: ["Secondary", "Primary"], a: "Primary" },
+    { label: "Which subjunctive?", q: "Rogat quid ____ . (same time)", note: "rogat is present — faciō", opts: ["faciat", "faceret"], a: "faciat" },
+    { label: "Which subjunctive?", q: "Rogāvit quid ____ . (same time)", note: "rogāvit is perfect — faciō", opts: ["faciat", "faceret"], a: "faceret" },
+    { label: "Which subjunctive?", q: "Rogat quid ____ . (already done)", note: "rogat is present — faciō", opts: ["fēcerit", "fēcisset"], a: "fēcerit" },
+    { label: "Which subjunctive?", q: "Rogāvit quid ____ . (already done)", note: "rogāvit is perfect — faciō", opts: ["fēcerit", "fēcisset"], a: "fēcisset" },
+
+    // (f) The construction sort — m08 to m14
+    { label: "Which construction?", q: "Vēnit ut populus audīret.", note: "no signpost", opts: ["Purpose", "Result"], a: "Purpose" },
+    { label: "Which construction?", q: "Tanta erat audācia ut nēmō tacēret.", note: "read the main clause", opts: ["Purpose", "Result"], a: "Result" },
+    { label: "Which construction?", q: "Imperāvit ut cōnstituerent.", note: "read the main verb", opts: ["Indirect command", "Purpose"], a: "Indirect command" },
+    { label: "Which construction?", q: "Timēbat nē venīret.", note: "read the main verb", opts: ["Negative purpose", "Fear clause"], a: "Fear clause" },
+    { label: "Which construction?", q: "Tacuit nē suspicārētur.", note: "read the main verb", opts: ["Negative purpose", "Fear clause"], a: "Negative purpose" },
+    { label: "Which construction?", q: "Cum nēmō respondēret, iterum rogāvit.", note: "read the opening word", opts: ["Cum clause", "Indirect question"], a: "Cum clause" },
+    { label: "Which construction?", q: "Nesciēbat ubi Catilīna esset.", note: "read the opening word", opts: ["Cum clause", "Indirect question"], a: "Indirect question" },
+    { label: "Which construction?", q: "Dīxit Catilīnam in urbe esse.", note: "any subjunctive here?", opts: ["Indirect statement", "Indirect question"], a: "Indirect statement" },
+    { label: "Which construction?", q: "Cum ex clārā gente orīrētur, tamen periit.", note: "one small word decides", opts: ["Concessive cum", "Causal cum"], a: "Concessive cum" },
+
+    // (g) Nē, ut, and the negatives — m08, m09, m12, m14
+    { label: "Which negative?", q: "negative PURPOSE", note: "m08", opts: ["nē", "ut nōn"], a: "nē" },
+    { label: "Which negative?", q: "negative RESULT", note: "m09", opts: ["nē", "ut nōn"], a: "ut nōn" },
+    { label: "Which negative?", q: "a fear that something will NOT happen", note: "m12", opts: ["nē nōn", "ut nōn"], a: "nē nōn" },
+    { label: "Which negative?", q: "negative of a jussive or hortatory", note: "m14 — something willed", opts: ["nōn", "nē"], a: "nē" },
+    { label: "Which negative?", q: "negative of a DELIBERATIVE question", note: "m14 — it only asks", opts: ["nōn", "nē"], a: "nōn" },
+    { label: "Which negative?", q: "negative of an optative wish", note: "m14 — utinam ___", opts: ["nē", "nōn"], a: "nē" },
+    { label: "Which negative?", q: "inside a cum clause", note: "m10", opts: ["nōn", "nē"], a: "nōn" },
+    { label: "What does it mean?", q: "Timeō nē veniat.", note: "verb of fearing", opts: ["afraid he WILL come", "afraid he will NOT come"], a: "afraid he WILL come" },
+    { label: "What does it mean?", q: "Timeō nē nōn veniat.", note: "verb of fearing", opts: ["afraid he WILL come", "afraid he will NOT come"], a: "afraid he will NOT come" },
+
+    // (h) Main clause or subordinate? — m14
+    { label: "Main clause or subordinate?", q: "Faciāmus quod officium poscit.", note: "anything in front of it?", opts: ["Main clause", "Subordinate"], a: "Main clause" },
+    { label: "Main clause or subordinate?", q: "ut faciāmus quod officium poscit", note: "anything in front of it?", opts: ["Main clause", "Subordinate"], a: "Subordinate" },
+    { label: "Which main-clause use?", q: "Veniat.", note: "read the person", opts: ["Jussive", "Hortatory"], a: "Jussive" },
+    { label: "Which main-clause use?", q: "Eāmus.", note: "read the person", opts: ["Jussive", "Hortatory"], a: "Hortatory" },
+    { label: "Which main-clause use?", q: "Utinam vēnisset!", note: "one word gives it away", opts: ["Optative", "Deliberative"], a: "Optative" },
+    { label: "Which main-clause use?", q: "Quid faciam?", note: "it is a question", opts: ["Optative", "Deliberative"], a: "Deliberative" },
+    { label: "Which kind of wish?", q: "Utinam venīret!", note: "imperfect subjunctive", opts: ["about now, and untrue", "about the past"], a: "about now, and untrue" },
+    { label: "Which kind of wish?", q: "Utinam vēnisset!", note: "pluperfect subjunctive", opts: ["about now, and untrue", "about the past"], a: "about the past" },
+
+    // (i) Which condition? — m15
+    { label: "Which condition?", q: "Sī hoc dīcis, errās.", note: "read the mood", opts: ["Simple", "Contrary to fact"], a: "Simple" },
+    { label: "Which condition?", q: "Sī hoc dīcās, errēs.", note: "present subjunctive both halves", opts: ["Future less vivid", "Contrary to fact, past"], a: "Future less vivid" },
+    { label: "Which condition?", q: "Sī hoc dīcerēs, errārēs.", note: "imperfect subjunctive both halves", opts: ["Contrary to fact, now", "Contrary to fact, past"], a: "Contrary to fact, now" },
+    { label: "Which condition?", q: "Sī hoc dīxissēs, errāvissēs.", note: "pluperfect subjunctive both halves", opts: ["Contrary to fact, now", "Contrary to fact, past"], a: "Contrary to fact, past" },
+    { label: "What does it mean?", q: "nisi", note: "conditions", opts: ["unless, if not", "although"], a: "unless, if not" },
+    { label: "Which half is which?", q: "the sī clause", note: "naming the halves", opts: ["Protasis", "Apodosis"], a: "Protasis" },
+
+    // (j) The six irregular verbs — m15
+    { label: "Present or imperfect subjunctive?", q: "vellem", note: "volō", opts: ["Imperfect", "Present"], a: "Imperfect" },
+    { label: "Present or imperfect subjunctive?", q: "velim", note: "volō", opts: ["Imperfect", "Present"], a: "Present" },
+    { label: "Present or imperfect subjunctive?", q: "ferrem", note: "ferō", opts: ["Present", "Imperfect"], a: "Imperfect" },
+    { label: "Present or imperfect subjunctive?", q: "fīam", note: "fīō", opts: ["Present", "Imperfect"], a: "Present" },
+    { label: "Present or imperfect subjunctive?", q: "īrem", note: "eō", opts: ["Present", "Imperfect"], a: "Imperfect" },
+    { label: "What does it mean?", q: "mālō", note: "irregular verb", opts: ["to prefer", "to be unwilling"], a: "to prefer" },
+    { label: "What does it mean?", q: "nōlō", note: "irregular verb", opts: ["to prefer", "to be unwilling"], a: "to be unwilling" },
+    { label: "What does it mean?", q: "fīō", note: "irregular verb", opts: ["to become, be made", "to carry"], a: "to become, be made" },
+    { label: "What does it mean?", q: "ferō", note: "irregular verb", opts: ["to become, be made", "to carry, bear"], a: "to carry, bear" },
+
+    // (k) Vocabulary from across the semester
+    { label: "What does it mean?", q: "rēs pūblica", note: "the phrase of the semester", opts: ["the state, the republic", "the public square"], a: "the state, the republic" },
+    { label: "What does it mean?", q: "coniūrātiō", note: "noun", opts: ["conspiracy", "council"], a: "conspiracy" },
+    { label: "What does it mean?", q: "supplicium", note: "noun", opts: ["the death penalty", "a request"], a: "the death penalty" },
+    { label: "What does it mean?", q: "audācia", note: "noun", opts: ["boldness, recklessness", "hearing"], a: "boldness, recklessness" },
+    { label: "What does it mean?", q: "scelus", note: "noun", opts: ["crime", "shield"], a: "crime" },
+    { label: "What does it mean?", q: "lēnitās", note: "noun — from m11", opts: ["mercy, mildness", "severity"], a: "mercy, mildness" },
+    { label: "What does it mean?", q: "sevēritās", note: "noun — from m11", opts: ["mercy, mildness", "strictness, severity"], a: "strictness, severity" },
+    { label: "What does it mean?", q: "nōn ignōrō", note: "a Latin double negative", opts: ["I know full well", "I have no idea"], a: "I know full well" },
+    { label: "What does it mean?", q: "cūnctor", note: "deponent verb", opts: ["to hesitate", "to hurry"], a: "to hesitate" },
+    { label: "What does it mean?", q: "poscō", note: "verb", opts: ["to demand", "to allow"], a: "to demand" },
+    { label: "What does it mean?", q: "pereō", note: "compound of eō", opts: ["to perish", "to appear"], a: "to perish" },
+    { label: "What does it mean?", q: "cōnstantia", note: "this module's virtue", opts: ["steadiness, perseverance", "self-restraint"], a: "steadiness, perseverance" },
+    { label: "What does it mean?", q: "virtūs", note: "the virtue of m02, m08 and m12", opts: ["courage, excellence", "truth"], a: "courage, excellence" },
+    { label: "What does it mean?", q: "vēritās", note: "the virtue of m03 and m09", opts: ["courage, excellence", "truth"], a: "truth" },
+    { label: "What does it mean?", q: "officium", note: "the virtue of m05 and m14", opts: ["duty, service", "weight, seriousness"], a: "duty, service" },
+    { label: "What does it mean?", q: "gravitās", note: "the virtue of m04 and m15", opts: ["duty, service", "weight, seriousness"], a: "weight, seriousness" },
+    { label: "What does it mean?", q: "recapitulātiō", note: "the name of this game", opts: ["a running back over the whole thing", "a fresh start"], a: "a running back over the whole thing" }
+  ];
+  var DURATION = 75;
+  var order = [], oi = 0, score = 0, endAt = 0, tick = null, locked = false;
+
+  var el = function (id) { return document.getElementById(id); };
+  var startScreen = el('start'), playScreen = el('play'), endScreen = el('end');
+
+  function bestKey() { return 'ludus16_recapitulatio_best'; }
+  function getBest() { try { return parseInt(localStorage.getItem(bestKey()) || '0', 10); } catch (e) { return 0; } }
+  function setBest(v) { try { localStorage.setItem(bestKey(), String(v)); } catch (e) {} }
+  function showBest() {
+    var b = getBest();
+    el('best-start').textContent = b > 0 ? ('Your best so far: ' + b) : '';
+  }
+
+  function shuffle(n) {
+    var arr = [];
+    for (var i = 0; i < n; i++) arr.push(i);
+    for (var j = arr.length - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = arr[j]; arr[j] = arr[k]; arr[k] = tmp;
+    }
+    return arr;
+  }
+
+  function render() {
+    if (oi >= order.length) { order = shuffle(ITEMS.length); oi = 0; }
+    var it = ITEMS[order[oi]];
+    el('p-label').innerHTML = it.label;
+    el('p-text').innerHTML = it.q;
+    el('p-note').innerHTML = it.note || '';
+    var b0 = el('opt0'), b1 = el('opt1');
+    b0.className = ''; b1.className = '';
+    b0.textContent = it.opts[0]; b1.textContent = it.opts[1];
+    b0.dataset.v = it.opts[0]; b1.dataset.v = it.opts[1];
+    locked = false;
+  }
+
+  function answer(btn) {
+    if (locked) return;
+    locked = true;
+    var it = ITEMS[order[oi]];
+    var right = btn.dataset.v === it.a;
+    btn.className = right ? 'right' : 'wrong';
+    if (right) { score++; el('score').textContent = score; }
+    else {
+      var other = btn.id === 'opt0' ? el('opt1') : el('opt0');
+      other.className = 'right';
+    }
+    setTimeout(function () { oi++; render(); }, right ? 260 : 700);
+  }
+
+  function updateTimer() {
+    var remain = Math.max(0, Math.round((endAt - Date.now()) / 1000));
+    el('time').textContent = remain;
+    el('bar').style.width = (remain / DURATION * 100) + '%';
+    if (remain <= 0) finish();
+  }
+
+  function start() {
+    score = 0; oi = 0; order = shuffle(ITEMS.length);
+    el('score').textContent = '0';
+    startScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+    playScreen.classList.remove('hidden');
+    render();
+    endAt = Date.now() + DURATION * 1000;
+    updateTimer();
+    tick = setInterval(updateTimer, 250);
+  }
+
+  function finish() {
+    clearInterval(tick);
+    playScreen.classList.add('hidden');
+    el('final').textContent = score;
+    var b = getBest();
+    if (score > b) { setBest(score); el('best-end').textContent = 'New best score!'; }
+    else { el('best-end').textContent = 'Your best so far: ' + b; }
+    endScreen.classList.remove('hidden');
+  }
+
+  el('go').addEventListener('click', start);
+  el('again').addEventListener('click', start);
+  el('opt0').addEventListener('click', function () { answer(this); });
+  el('opt1').addEventListener('click', function () { answer(this); });
+  showBest();
+})();
+</script>
+</body>
+</html>

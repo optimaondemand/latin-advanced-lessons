@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 12.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 12</div>
+        <div style="font-size: 12px; color: #666;">Fear Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 12.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Other Direction</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 12.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Other Direction</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Yesterday: "I'm afraid he <em>will</em> come." Today: "I'm afraid he <em>won't</em>."</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Both are real fears and Latin can say both. But the marker words swap: <em>nē</em> gave you the first, and the second needs either <strong><em>nē nōn</em></strong> or, more rarely, <strong><em>ut</em></strong> on its own. <em>Ut</em> is the one every textbook shows and almost nobody writes. Today you learn which is which, and why the pattern is not arbitrary.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say "I am afraid that X will <strong>not</strong> happen" in Latin, using <em>nē nōn</em> or <em>ut</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>ut</em> after a verb of fearing comes into English as "that&hellip;<strong>not</strong>."</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pick the right marker word from an English fear, and say why <em>nē nōn</em> is legal here even though Module 8 banned it.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE FEAR THAT SOMETHING <em>WON'T</em> HAPPEN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Fears come in two flavours, and you feel the difference instantly in English:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8A1F16; margin-bottom:4px;">I DON'T WANT IT TO HAPPEN</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>Timeō <strong>nē</strong> veniat.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"I am afraid <strong>that</strong> he <strong>will</strong> come."</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:4px;">I <em>WANT</em> IT TO HAPPEN</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>Timeō <strong>ut</strong> veniat.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"I am afraid <strong>that</strong> he <strong>will not</strong> come."</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Identical verbs. Identical subjunctive. The <em>only</em> difference is the marker word &mdash; and the English polarity flips completely. That looks like a cruel joke until you go back to yesterday's explanation, which handles both cases at once.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Remember the wish hidden inside the construction. With <em>nē</em>, the wish was negative &mdash; <em>nē veniat!</em>, "may he <em>not</em> come!" So what is feared is the coming. Now make the wish <strong>positive</strong>:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; align-items:stretch;">
+            <div style="flex:1; min-width:200px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:12px; color:#6b7a99; margin-bottom:4px;">THE FEELING</div>
+                <div style="font-size:21px; color:#0e1c42;"><em>Timeō.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"I am afraid."</div>
+            </div>
+            <div style="flex:1; min-width:200px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:12px; color:#8a6416; margin-bottom:4px;">THE WISH &mdash; NOW POSITIVE</div>
+                <div style="font-size:21px; color:#0e1c42;"><em>Ut veniat!</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"If only he would come!"</div>
+            </div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:14px 18px; font-size:17px; color:#1a2340; line-height:1.6;">&#128161; <strong>So the logic is consistent after all.</strong> The marker word tells you <strong>what the speaker wants</strong>, and the fear is always that the wish <em>fails</em>. Wish it away with <em>nē</em> &rarr; you fear it will happen. Wish for it with <em>ut</em> &rarr; you fear it will not. The "not" in your English never comes from the Latin word; it comes from the wish being disappointed.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 2 &middot; THE ONE YOU WILL ACTUALLY WRITE: <em>NĒ NŌN</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><em>Timeō ut veniat</em> is correct Latin. It is also <strong>rare</strong>. Open Cicero or Sallust and the ordinary way to say "I'm afraid he won't come" is not <em>ut</em> at all &mdash; it is <em>nē</em> plus an honest <em>nōn</em>:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0; text-align:center;">
+            <div style="font-size:24px; color:#0e1c42;"><em>Timeō <strong>nē nōn</strong> veniat.</em></div>
+            <div style="font-size:17px; color:#1a2340; margin-top:8px;">"I am afraid that he will <strong>not</strong> come."</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Read it the way the construction is built and it makes plain sense. <em>Nē</em> marks the unwanted outcome. The unwanted outcome here is <em>his not coming</em>. So you write the negative into the clause where it belongs: <em>nē</em> + <em>nōn veniat</em>. Nothing clever is happening.</p>
+        <table class="para">
+            <tr><th style="width:34%">Latin</th><th style="width:34%">English</th><th>How common</th></tr>
+            <tr><td><em>Timeō <strong>nē</strong> veniat.</em></td><td>I'm afraid he <strong>will</strong> come.</td><td>The standard positive-polarity fear. Everywhere.</td></tr>
+            <tr><td><em>Timeō <strong>nē nōn</strong> veniat.</em></td><td>I'm afraid he will <strong>not</strong> come.</td><td class="end">The normal way to say this. <strong>Write this one.</strong></td></tr>
+            <tr><td><em>Timeō <strong>ut</strong> veniat.</em></td><td>I'm afraid he will <strong>not</strong> come.</td><td>Correct, and genuinely used &mdash; but uncommon. You must be able to <strong>read</strong> it.</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:17px; color:#1a2340; line-height:1.6; margin:12px 0;">&#9888;&#65039; <strong>Module 8 told you never to write <em>nē nōn</em>. That was true &mdash; about purpose clauses.</strong> In a purpose clause, <em>nē</em> already carries the "not" into your English, so adding <em>nōn</em> double-negates and the sentence collapses. In a <strong>fear</strong> clause, <em>nē</em> carries <strong>no</strong> "not" into your English at all &mdash; you translate it "that." So the <em>nōn</em> has real work to do, and Latin lets it do it. Same two words, opposite verdict, because the governing verb is different. <strong>Two constructions, two rules; you now hold both.</strong></div>
+        <table class="para">
+            <tr><th style="width:30%">Construction</th><th style="width:24%"><em>nē nōn</em>?</th><th>Why</th></tr>
+            <tr><td class="lab">Purpose (Module 8)</td><td><span style="color:#8A1F16;">&#10007;</span> never</td><td><em>Nē</em> = "so that&hellip;not." The negative is already spent.</td></tr>
+            <tr><td class="lab">Fear (this module)</td><td><span style="color:#1A6B3D;">&#10003;</span> yes, normally</td><td><em>Nē</em> = "that." The negative is still available, and <em>nōn</em> uses it.</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-left:5px solid #0E1C42; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128271; <strong>One shape that is never right after a verb of fearing:</strong> <em>ut nōn</em>. You met <em>ut nōn</em> in Module 9 as the negative of a <strong>result</strong> clause, and that is the only place it lives. After <em>timeō</em>, <em>ut</em> by itself already delivers the "not," so <em>timeō ut nōn veniat</em> would negate twice and mean nothing useful. Do not write it, and do not choose it on Friday's quiz.</div>
+    </div>
+
+    <!-- MEMORY WORK -->
+    <div style="background:#EEF1F8; border:1px solid #D0D9E8; border-left:5px solid #0E1C42; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#0e1c42; letter-spacing:.4px; margin-bottom:10px;">&#127925; MEMORY WORK &middot; SAY IT OUT LOUD THREE TIMES</div>
+        <div style="text-align:center; font-size:22px; color:#0e1c42; line-height:1.9;">
+            After fearing: <em>nē</em> is <strong>"that."</strong><br>
+            After fearing: <em>ut</em> is <strong>"that not."</strong><br>
+            <span style="font-size:19px; color:#1a2340;">And if I want the "not" said plainly &mdash; <em>nē nōn</em>.</span>
+        </div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:12px 0 0 0;">Chant it before you touch the drill. Nine seconds of this is worth more than reasoning the rule out from first principles in the middle of a translation, and it is the single highest-value thing you will memorize this quarter.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128260; PART 3 &middot; THE <em>NĒ</em> / <em>UT</em> FLIP</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Six rows. Each one gives you an English fear; you pick the Latin that actually says it. Read the English twice before you choose &mdash; the whole question is which way the fear points.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#128260; THE FLIP &middot; ENGLISH FEAR &rarr; LATIN MARKER</div>
+            <div class="widget-question">Which Latin sentence says the English?</div>
+            <div class="widget-row" data-correct="b" data-hint="Is the speaker afraid the return WILL happen, or that it will not?">
+                <div class="widget-row-prompt">"I am afraid that Catiline will come back." <span style="font-style:normal; color:#8a6416;">(<em>reveniō, revenīre</em> &mdash; to come back)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ut reveniat says the opposite: 'I'm afraid he will NOT come back.' Ut marks the thing you want, and the fear is that it fails.">Timeō ut Catilīna reveniat.</button>
+                    <button data-choice="b" data-fb="Right — nē marks the unwanted outcome, and English renders it as a plain 'that': 'I am afraid that Catiline will come back.'">Timeō nē Catilīna reveniat.</button>
+                    <button data-choice="c" data-fb="Nē nōn adds a 'not' the English does not have. That would be 'I'm afraid he will NOT come back.'">Timeō nē Catilīna nōn reveniat.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="The English has a &quot;not&quot; in it. Where does the Latin put it?">
+                <div class="widget-row-prompt">"I am afraid that help will not come." <span style="font-style:normal; color:#8a6416;">(<em>auxilium, auxiliī</em> n. &mdash; help; <em>veniō, venīre</em>)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nē veniat with no nōn means 'I am afraid help WILL come' — which is not a fear anybody has. Watch the polarity.">Timeō nē auxilium veniat.</button>
+                    <button data-choice="b" data-fb="Ut nōn is never used after a verb of fearing. It is the negative of a RESULT clause (Module 9). Here ut alone would already mean 'that not.'">Timeō ut auxilium nōn veniat.</button>
+                    <button data-choice="c" data-fb="Right — nē nōn veniat. The unwanted outcome is help NOT coming, so the nōn goes inside the clause. This is the normal classical way to say it.">Timeō nē auxilium nōn veniat.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="With <em>ut</em>, the marker word already carries the negative.">
+                <div class="widget-row-prompt">"The soldiers were afraid that the army would not be there." &mdash; written the <strong>rarer</strong> way, with <em>ut</em>. <span style="font-style:normal; color:#8a6416;">(<em>adsum, adesse</em> &mdash; to be present; imperfect subj. <em>adesset</em>)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — Mīlitēs timēbant ut exercitus adesset. Ut after a verb of fearing means 'that…not,' so this is 'they feared the army would not be there.'">Mīlitēs timēbant ut exercitus adesset.</button>
+                    <button data-choice="b" data-fb="Nē adesset reverses the fear: 'they were afraid the army WOULD be there.' The soldiers wanted their army present, so this cannot be right.">Mīlitēs timēbant nē exercitus adesset.</button>
+                    <button data-choice="c" data-fb="Ut nōn does not occur after a verb of fearing, and here it would negate twice. Ut on its own is what you want.">Mīlitēs timēbant ut exercitus nōn adesset.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="One of these three combinations belongs to a different construction entirely.">
+                <div class="widget-row-prompt">Which sequence of words is <strong>not</strong> used after a verb of fearing?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Timeō nē is the core construction of the whole module. Perfectly good Latin.">timeō nē&hellip;</button>
+                    <button data-choice="b" data-fb="Right — ut nōn belongs to result clauses (Module 9). After a verb of fearing it double-negates, because ut alone already means 'that…not.'">timeō ut nōn&hellip;</button>
+                    <button data-choice="c" data-fb="Timeō nē nōn is not only allowed, it is the ordinary classical way to say 'I am afraid that X will not happen.'">timeō nē nōn&hellip;</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Present main verb &rarr; primary sequence. And is the capture wanted or unwanted?">
+                <div class="widget-row-prompt">"We are afraid that the city will be captured." <span style="font-style:normal; color:#8a6416;">(<em>capiō, capere</em> &mdash; present subj. passive <em>capiātur</em>; imperfect subj. passive <em>caperētur</em>)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ut capiātur would mean 'we are afraid the city will NOT be captured' — the opposite fear, and not one Roman citizens had.">Timēmus ut urbs capiātur.</button>
+                    <button data-choice="b" data-fb="The marker word is right, but caperētur is imperfect subjunctive, which needs a past main verb. Timēmus is present, so primary sequence: capiātur.">Timēmus nē urbs caperētur.</button>
+                    <button data-choice="c" data-fb="Right — Timēmus nē urbs capiātur. Nē for the unwanted outcome, and present subjunctive passive because timēmus is present (primary sequence).">Timēmus nē urbs capiātur.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="The English &quot;do not have&quot; is a negative inside the clause.">
+                <div class="widget-row-prompt">"I am afraid that we do not have enough grain." <span style="font-style:normal; color:#8a6416;">(<em>frūmentum, frūmentī</em> n. &mdash; grain; <em>satis frūmentī</em> &mdash; enough grain)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — Timeō nē nōn satis frūmentī habeāmus. The unwanted outcome is not having enough, so the nōn sits inside the clause.">Timeō nē nōn satis frūmentī habeāmus.</button>
+                    <button data-choice="b" data-fb="Without the nōn this says 'I am afraid we DO have enough grain,' which is not a fear. The negative has to be there somewhere.">Timeō nē satis frūmentī habeāmus.</button>
+                    <button data-choice="c" data-fb="Habēmus is present indicative. A fear clause always takes the subjunctive — here habeāmus.">Timeō nē nōn satis frūmentī habēmus.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 4 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out before you flip. Two of these four have a negative in the English and two do not &mdash; deciding which is the whole exercise.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Vereor nē hostēs iam in agrīs sint.</em></div><div class="hint">click to compare</div><div class="back">"I am afraid <strong>that</strong> the enemy <strong>are</strong> already in the fields." <em>Vereor</em> is the deponent &mdash; "I fear," never "I am feared." <em>Nē</em> &rarr; plain "that." <em>Sint</em> is present subjunctive of <em>esse</em> after a present main verb.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cicerō timēbat nē cōnsilia coniūrātōrum nōn cognōscerentur.</em></div><div class="hint">click to compare</div><div class="back">"Cicero was afraid <strong>that</strong> the plans of the conspirators <strong>would not be discovered</strong>." Here <em>nē nōn</em> gives the negative fear, and <em>cognōscerentur</em> is imperfect subjunctive <strong>passive</strong> &mdash; the plans are not doing the discovering.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Metuēbant nē nōn satis cibī esset.</em></div><div class="hint">click to compare</div><div class="back">"They dreaded <strong>that</strong> there <strong>would not be</strong> enough food." <em>Metuēbant</em> is imperfect &rarr; secondary sequence &rarr; <em>esset</em>. <em>Satis cibī</em> &mdash; "enough of food," partitive genitive. Gloss: <em>cibus, cibī</em> m. &mdash; food.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Timeō ut cōnsul in tempore veniat.</em></div><div class="hint">click to compare</div><div class="back">"I am afraid <strong>that</strong> the consul <strong>will not</strong> come in time." This is the rare <em>ut</em> pattern &mdash; the speaker <em>wants</em> the consul to come, and fears he will not. If you wrote "that the consul will come," you read <em>ut</em> as <em>nē</em>. Gloss: <em>in tempore</em> &mdash; in time, on time.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 12.03 &mdash; Fear in Sequence</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Which tense goes in the clause &mdash; the same two-row rule from Module 7, no new machinery. Plus the full paradigm of <em>vereor</em>, this module's vocabulary, and the <em>metus</em> trap that catches everybody once.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The marker word tells you <strong>what the speaker wanted</strong>, and the fear is always that the wish fails. <em>Nē</em> &rarr; "that&hellip;<em>will</em>." <em>Ut</em> &rarr; "that&hellip;<em>will not</em>." And when you want the "not" said out loud, write <em><strong>nē nōn</strong></em> &mdash; which Module 8 forbade in a purpose clause and this module welcomes, because the governing verb changed the rules.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 12.02 &middot; The Other Direction</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

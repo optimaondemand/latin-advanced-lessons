@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 11.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 11</div>
+        <div style="font-size: 12px; color: #666;">Indirect Questions</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 11.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Cicero Asks the Senate</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 25 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 11.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Cicero Asks the Senate</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Module Review</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You have read this meeting twice already. Today you hear the man who was chairing it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Module 9 gave you Sallust's account of the Senate debate of 5 December 63 BC. Module 10 gave you what happened that evening. Today the course <strong>rewinds a few hours</strong> and puts you in the room with Cicero's own words &mdash; the fourth and last speech against Catiline, delivered while the vote was still open. It is built out of questions, because a man who is presiding cannot simply announce what will happen. He has to ask.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted passage of Cicero and pick out every indirect question in it, single and double.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say which two proposals were actually on the table when Cicero spoke, and who ended up winning the vote instead.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the whole module in one table and begin the quiz without re-reading the week.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; BEFORE YOU READ</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>1. Where.</strong> Not the <em>Cūria</em>. On 5 December 63 BC the Senate met in the <em>aedēs Concordiae</em>, the Temple of Concord, at the foot of the Capitoline &mdash; a building whose name is worth a moment's thought given what was decided inside it.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>2. What Cicero could and could not do.</strong> He was consul, so he was <em>presiding</em>. A presiding consul put the question and counted the votes; he did not get a vote of his own. So his speech cannot say &ldquo;do this.&rdquo; It can only say: here are the two proposals, here is what each one means, now decide. That constraint is why the passage is full of indirect questions &mdash; the grammar and the political position match.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>3. Two proposals &mdash; and the winner was neither of them yet.</strong> When Cicero rose, the Senate had heard <strong>Sīlānus</strong>, the consul-elect, propose the death penalty, and <strong>Caesar</strong> propose confiscation of property and life imprisonment in the Italian towns. Cicero weighs <em>those two</em>. <strong>Cato spoke after him</strong>, and it was Cato's speech &mdash; the one Sallust gives you in Module 9 &mdash; that carried the vote for death. Keep the order straight: Sīlānus, Caesar, <em>Cicero</em>, Cato.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Watch for the whole week at once.</strong> The passage carries single indirect questions with question words, one <strong>double</strong> question with <em>utrum&hellip;an</em>, two indirect statements from 0706010, two relative clauses, an indirect command from m08, and a <em>cum</em> clause from m10 in the last line. This is the first reading this semester that asks you to hold five constructions at the same time, which is exactly what Lesson 11.04 was for.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; THE READING</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>Adapted from Cicero,</strong> <em>In Catilīnam</em> <strong>IV</strong> (5 December 63 BC). Lines 1 and 6 are close to Cicero's own words; the rest has been shortened and simplified to the grammar you have been taught, and the sequence of proposals is his. This is an <strong>adaptation</strong>, not Cicero's own Latin.</div>
+        <div class="rd">
+            <p><span class="ln">1</span>Videō, patrēs cōnscrīptī, in mē omnium vestrum ōra atque oculōs esse conversōs.</p>
+            <p><span class="ln">2</span>Nōn ignōrō <b>quantum</b> perīculum mihi ipsī <b>immineat</b>.</p>
+            <p><span class="ln">3</span>Sed dē mē nunc nōn loquor: quaerō <b>quid</b> dē coniūrātīs <b>cōnstituātis</b>.</p>
+            <p><span class="ln">4</span>Rēs enim nōn est obscūra; manifesta est atque dēprehēnsa.</p>
+            <p><span class="ln">5</span>Vidētis <b>quot</b> hominēs in hāc coniūrātiōne <b>sint</b> et <b>quam</b> grave <b>sit</b> hoc scelus.</p>
+            <p><span class="ln">6</span>Videō adhūc duās esse sententiās.</p>
+            <p><span class="ln">7</span>Ūnam Sīlānus dīcit, quī supplicium postulat; alteram Caesar, quī cēnset ut coniūrātī in custōdiam trādantur.</p>
+            <p><span class="ln">8</span>Nunc igitur cōnstituere dēbētis <b>utrum</b> lēnitās <b>an</b> sevēritās reī pūblicae magis ūtilis <b>sit</b>.</p>
+            <p><span class="ln">9</span>Ego autem, quaecumque cōnstituētis, faciam; et vōs rogō ut hunc diem memoriā teneātis.</p>
+            <p><span class="ln">10</span>Quae cum ita sint, dē salūte patriae statuite.</p>
+        </div>
+
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin:14px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS &mdash; EVERY WORD NOT ON YOUR RUNNING LIST, IN THE FORM IT APPEARS</div>
+            <ul class="gl">
+                <li><strong>1</strong> &middot; <em>patrēs cōnscrīptī</em> &mdash; &ldquo;senators&rdquo; (the formal address to the Senate; literally &ldquo;enrolled fathers&rdquo;) &middot; <em>vestrum</em> &mdash; of you (genitive plural) &middot; <em>ōra</em> &mdash; faces (accusative plural of <em>ōs, ōris</em> n.) &middot; <em>atque</em> &mdash; and &middot; <em>conversōs</em> &mdash; turned (perfect passive participle of <em>convertō</em>); <em>ōra&hellip;esse conversōs</em> is an accusative + infinitive &mdash; an <strong>indirect statement</strong></li>
+                <li><strong>2</strong> &middot; <em>immineat</em> &mdash; present subjunctive of <em>immineō, imminēre</em> (+ dative): to hang over, threaten &middot; <em>mihi ipsī</em> &mdash; over me myself (dative)</li>
+                <li><strong>3</strong> &middot; <em>dē mē</em> &mdash; about myself &middot; <em>cōnstituātis</em> &mdash; present subjunctive, 2nd plural, of <em>cōnstituō</em>: to decide</li>
+                <li><strong>4</strong> &middot; <em>enim</em> &mdash; for, in fact (never stands first) &middot; <em>obscūrus, -a, -um</em> &mdash; unclear &middot; <em>manifesta</em> &mdash; plain, caught in the open &middot; <em>dēprehēnsa</em> &mdash; caught, detected (perfect passive participle of <em>dēprehendō</em>)</li>
+                <li><strong>5</strong> &middot; <em>hominēs</em> &mdash; men, people (nominative plural of <em>homō, hominis</em> m.) &middot; <em>hāc coniūrātiōne</em> &mdash; in this conspiracy &middot; <em>quam grave</em> &mdash; how serious (<em>quam</em> + adjective; <em>gravis, grave</em> &mdash; heavy, serious) &middot; <em>scelus, sceleris</em> n. &mdash; crime</li>
+                <li><strong>6</strong> &middot; <em>adhūc</em> &mdash; so far, up to now &middot; <em>duās esse sententiās</em> &mdash; another accusative + infinitive: &ldquo;that there are two proposals&rdquo;</li>
+                <li><strong>7</strong> &middot; <em>ūnam&hellip;alteram</em> &mdash; the one&hellip;the other &middot; <em>Sīlānus, Sīlānī</em> m. &mdash; Silanus, consul-elect for 62 BC &middot; <em>postulō, postulāre</em> &mdash; to demand, call for &middot; <em>cēnset ut&hellip;trādantur</em> &mdash; &ldquo;moves that they be handed over&rdquo; (<em>cēnseō</em> + <em>ut</em> + subjunctive is an <strong>indirect command</strong>, m08) &middot; <em>custōdia, custōdiae</em> f. &mdash; custody, confinement &middot; <em>trādantur</em> &mdash; present subjunctive passive of <em>trādō, trādere</em>: to hand over</li>
+                <li><strong>8</strong> &middot; <em>igitur</em> &mdash; therefore &middot; <em>lēnitās, lēnitātis</em> f. &mdash; mildness, mercy &middot; <em>sevēritās, sevēritātis</em> f. &mdash; strictness, severity &middot; <em>reī pūblicae</em> &mdash; to the republic (dative) &middot; <em>magis</em> &mdash; more &middot; <em>ūtilis, ūtile</em> &mdash; useful, in one's interest</li>
+                <li><strong>9</strong> &middot; <em>autem</em> &mdash; however, but (never stands first) &middot; <em>quaecumque</em> &mdash; whatever things (neuter accusative plural) &middot; <em>cōnstituētis</em> &mdash; you will decide (future <strong>indicative</strong>) &middot; <em>memoriā teneātis</em> &mdash; &ldquo;that you hold in memory,&rdquo; i.e. that you remember (an <strong>indirect command</strong> after <em>rogō ut</em>, m08)</li>
+                <li><strong>10</strong> &middot; <em>Quae cum ita sint</em> &mdash; a fixed Ciceronian phrase: &ldquo;since these things are so.&rdquo; A causal <em>cum</em> clause (m10) with the present subjunctive <em>sint</em> &middot; <em>salūs, salūtis</em> f. &mdash; safety, welfare &middot; <em>statuite</em> &mdash; decide! (imperative plural of <em>statuō, statuere</em>)</li>
+            </ul>
+        </div>
+
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Two honest notes.</strong> First: Cicero's real speech reports the two proposals using perfect and future infinitives and one tense of the subjunctive you do not own until Module 13; the adaptation moves everything into the present and imperfect so you can read it now. Second: line 8 is the adaptation's own framing of Cicero's argument, not a sentence he wrote. He does weigh mercy against severity at length in this speech &mdash; and worries aloud about being thought either cruel or slack &mdash; but the neat <em>utrum&hellip;an</em> question is ours, built to show you the construction in its natural home.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; WORK THE PASSAGE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five questions on the Latin. Run the three steps from 11.04 on each one before you choose.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What is happening in this line, grammatically?</div>
+
+            <div class="widget-row" data-correct="c" data-hint="Look at the case of ōra and oculōs, and at the form esse. Which construction is that?">
+                <div class="widget-row-prompt">Line 1 &mdash; <em>Videō&hellip; in mē omnium vestrum ōra atque oculōs esse conversōs.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An indirect question needs a question word and a subjunctive. There is neither here: esse is an infinitive.">Indirect question</button>
+                    <button data-choice="b" data-fb="No cum in this line at all, and no subjunctive.">A <em>cum</em> clause</button>
+                    <button data-choice="c" data-fb="Right — indirect statement, straight from 0706010. Ōra and oculōs are accusative, esse conversōs is the infinitive: &quot;I see that the faces and eyes of all of you are turned upon me.&quot; Step 1 of the 11.04 procedure stops you here.">Indirect statement (accusative + infinitive)</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Nōn ignōrō is present tense. What does that do to the subjunctive in the clause it governs?">
+                <div class="widget-row-prompt">Line 2 &mdash; <em>Nōn ignōrō quantum perīculum mihi ipsī immineat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. Nōn ignōrō is present → primary sequence → present subjunctive immineat. And nōn ignōrō is a Latin double negative meaning &quot;I know full well&quot;: &quot;I am well aware how great a danger hangs over me myself.&quot; Quantum agrees with perīculum, neuter.">Indirect question, present subjunctive &mdash; primary sequence</button>
+                    <button data-choice="b" data-fb="Immineat is present subjunctive, not imperfect (that would be imminēret) — and the main verb ignōrō is present, so primary sequence is correct. Check both halves of the sequence rule.">Indirect question, imperfect subjunctive &mdash; secondary sequence</button>
+                    <button data-choice="c" data-fb="Quantum here is not a signpost word like tantum; it is the interrogative &quot;how great,&quot; and the clause hangs off a verb of knowing. There is no ut in the line.">Result clause with the signpost <em>quantum</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two qu- words in this line. Look at what stands immediately before each one.">
+                <div class="widget-row-prompt">Line 7 &mdash; <em>Ūnam Sīlānus dīcit, quī supplicium postulat; alteram Caesar, quī cēnset ut coniūrātī in custōdiam trādantur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Neither quī is interrogative here. Both have an antecedent — Sīlānus and Caesar — and both take an indicative verb (postulat, cēnset). An indirect question would need a subjunctive.">Two indirect questions &mdash; &ldquo;who demanded&hellip;&rdquo;</button>
+                    <button data-choice="b" data-fb="Right. Both quī words are relative pronouns with antecedents (Sīlānus, Caesar) and indicative verbs. Then cēnset ut… trādantur is an indirect command (m08): &quot;Silanus states the one, who calls for the death penalty; Caesar the other, who moves that the conspirators be handed over into custody.&quot;">Two relative clauses, plus an indirect command after <em>cēnset ut</em></button>
+                    <button data-choice="c" data-fb="Trādantur is a present subjunctive PASSIVE inside an ut clause after cēnset — that is an indirect command, not a result clause. There is no signpost word (tam, tantus, tot) anywhere in the line.">A relative clause plus a result clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="What frame is utrum…an, and how many subjunctives does this one need?">
+                <div class="widget-row-prompt">Line 8 &mdash; <em>Nunc igitur cōnstituere dēbētis utrum lēnitās an sevēritās reī pūblicae magis ūtilis sit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An is not the ordinary &quot;or&quot; — that is aut. An is the &quot;or&quot; that lives inside a question, and utrum in front of it makes the frame unmistakable.">Two separate statements joined by &ldquo;or&rdquo;</button>
+                    <button data-choice="b" data-fb="Lēnitās and sevēritās are both nominative, and sit is a subjunctive, not an infinitive. An indirect statement would need an accusative subject and an infinitive.">An indirect statement about two things</button>
+                    <button data-choice="c" data-fb="Right — an indirect DOUBLE question, the 11.03 construction: &quot;Now therefore you must decide whether mercy or severity is more useful to the republic.&quot; One subjunctive (sit) serves both halves because they share a verb. Dēbētis is present → primary → present subjunctive.">Indirect double question, <em>utrum&hellip;an</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Line 9 has a future indicative and a subjunctive. Which is which, and why?">
+                <div class="widget-row-prompt">Line 9 &mdash; <em>Ego autem, quaecumque cōnstituētis, faciam; et vōs rogō ut hunc diem memoriā teneātis.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. Cōnstituētis is future INDICATIVE — a plain statement about what they will do, not a reported question — and teneātis is a present subjunctive in an indirect command after rogō ut (m08): &quot;And I, whatever you decide, will do; and I ask you to hold this day in memory.&quot;">Future indicative, then an indirect command after <em>rogō ut</em></button>
+                    <button data-choice="b" data-fb="There is no question word, no num, no -ne, no utrum in this line. Quaecumque is &quot;whatever things&quot; — an indefinite relative, not an interrogative — and cōnstituētis is indicative.">An indirect question after <em>rogō</em></button>
+                    <button data-choice="c" data-fb="Rogō ut + subjunctive is an indirect command, not a purpose clause. Purpose would answer &quot;why did he ask?&quot;; this clause is the content of the request itself.">A purpose clause after <em>rogō</em></button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; THE ROMAN WORLD &middot; THE SPEECH SALLUST LEFT OUT</div>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;">Cicero published this speech himself, some years later, which means we have his voice for that meeting in a way we have almost no one else's. And here is the thing worth noticing: <strong>Sallust does not.</strong> In the <em>Bellum Catilīnae</em> Sallust writes out Caesar's speech at length and Cato's at length &mdash; and gives Cicero, the presiding consul, nothing. Not a paraphrase. Not a line.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0;">That silence is a judgment. Sallust was writing twenty years later, under a very different Rome, and he was interested in Caesar and Cato as two kinds of Roman greatness. Cicero interested him much less. So the historian and the orator hand you two incompatible versions of one afternoon: in Cicero's, the consul frames the choice and the Senate decides; in Sallust's, two great men argue and the consul is furniture. Neither is lying. Both are choosing. When you read a primary source you are always reading someone's decision about what mattered &mdash; which is the <em>vēritās</em> problem Module 9 raised, arriving now from the other direction.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE WHOLE MODULE IN ONE TABLE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">If you can reconstruct this from memory, you are ready for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:26%">Piece</th><th>What to remember</th></tr>
+            <tr><td class="lab"><strong>The four steps</strong><br><span style="font-size:13px; color:#666;">11.01</span></td><td>Keep the question word &middot; add a main verb of asking/knowing &middot; indicative &rarr; <strong>subjunctive</strong>, tense set by <strong>sequence</strong> &middot; delete the question mark.</td></tr>
+            <tr><td class="lab"><strong>Sequence</strong><br><span style="font-size:13px; color:#666;">m07, used every day this week</span></td><td>Main verb present or future &rarr; <strong>present</strong> subjunctive. Main verb imperfect, perfect or pluperfect &rarr; <strong>imperfect</strong> subjunctive.</td></tr>
+            <tr><td class="lab"><strong>The question words</strong><br><span style="font-size:13px; color:#666;">11.02</span></td><td><em>cūr, ubi, quō, quandō, quōmodo</em> (adverbs, no endings) &middot; <em>quantus, -a, -um</em> and <em>uter, utra, utrum</em> (agree like adjectives) &middot; <em>quot</em> (indeclinable) &middot; <em>quis, quid</em> (declines) &middot; <em>quam</em> + adjective.</td></tr>
+            <tr><td class="lab"><strong>Yes-or-no reported</strong><br><span style="font-size:13px; color:#666;">11.03</span></td><td class="end"><em>num</em> or <em>-ne</em> = &ldquo;whether&rdquo; &mdash; and indirect <em>num</em> has <strong>lost</strong> its &ldquo;surely not?&rdquo; bias.</td></tr>
+            <tr><td class="lab"><strong>Double questions</strong><br><span style="font-size:13px; color:#666;">11.03</span></td><td class="end"><em>utrum&hellip;an</em> (or <em>-ne&hellip;an</em>) = &ldquo;whether&hellip;or&hellip;&rdquo; &middot; <em>&hellip;necne</em> = &ldquo;or not&rdquo; &middot; <em>an</em> is never the ordinary &ldquo;or&rdquo; &mdash; that is <em>aut</em>.</td></tr>
+            <tr><td class="lab"><strong>The look-alikes</strong><br><span style="font-size:13px; color:#666;">11.04</span></td><td>Accusative + infinitive &rarr; indirect <strong>statement</strong>. Subjunctive &rarr; read the opening word: <em>cum</em> / question word / <em>ut</em>&ndash;<em>nē</em> (then check for a signpost). <em>Quī</em> with an antecedent and an indicative &rarr; relative clause.</td></tr>
+            <tr><td class="lab"><strong>What is <em>not</em> yet yours</strong></td><td>The <strong>perfect and pluperfect subjunctive</strong> (Module 13). Until then every indirect question in this course reports something happening at the same time as the main verb &mdash; and the present and imperfect cover that completely. Do not offer a m13 form on the quiz.</td></tr>
+        </table>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; MIXED SELF-CHECK &middot; EVERYTHING FROM M08 TO M11</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four sentences, four different constructions, no labels. The quiz will mix them like this.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is the subordinate clause?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Read the word that opens the clause, then the mood of its verb.">
+                <div class="widget-row-prompt"><em>Cicerō cognōvit quōmodo coniūrātī litterās mitterent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A cum clause opens with cum. This one opens with quōmodo, &quot;how, in what way&quot; — an interrogative adverb.">A <em>cum</em> clause</button>
+                    <button data-choice="b" data-fb="Right — indirect question. Quōmodo + the imperfect subjunctive mitterent, after the perfect cognōvit (secondary sequence): &quot;Cicero found out how the conspirators were sending letters.&quot;">Indirect question</button>
+                    <button data-choice="c" data-fb="An indirect statement would need an accusative subject and an infinitive. Coniūrātī is nominative plural and mitterent is a subjunctive.">Indirect statement</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Nē, and no signpost word in the main clause. What was Cicero trying to prevent?">
+                <div class="widget-row-prompt"><em>Cicerō cōnsilium cēlāvit nē coniūrātī effugerent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nē is not an interrogative. There is no question word, no num, no -ne and no utrum in this sentence.">Indirect question</button>
+                    <button data-choice="b" data-fb="Negative result is ut nōn, not nē — the m09 distinction — and a result clause needs a signpost word in the main clause.">Negative result clause</button>
+                    <button data-choice="c" data-fb="Right — negative purpose (m08). Nē + subjunctive, no signpost: &quot;Cicero concealed the plan so that the conspirators would not escape.&quot;">Negative purpose clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Two clauses. The second one opens with utrum — but what about the first?">
+                <div class="widget-row-prompt"><em>Cum senātōrēs tacērent, Cicerō rogāvit utrum lēnitās an sevēritās ūtilis esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right on both counts. First clause: cum + the imperfect subjunctive tacērent, no tamen, and the silence reads as circumstance → temporal cum (m10). Second: utrum…an + esset → indirect double question (m11). &quot;When the senators were silent, Cicero asked whether mercy or severity was useful.&quot;">A <em>cum</em> clause, then an indirect double question</button>
+                    <button data-choice="b" data-fb="Check the first clause again: it opens with cum, not with a question word, and there is no verb of asking governing it. Cum clauses and indirect questions are two different constructions that happen to sit next to each other here.">Two indirect questions</button>
+                    <button data-choice="c" data-fb="There is no ut and no signpost word (tam, tantus, tot, adeō) anywhere in this sentence, so neither clause can be a result clause.">A result clause, then an indirect question</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Look immediately before quōs. Is there a noun it agrees with?">
+                <div class="widget-row-prompt"><em>Cicerō nesciēbat num coniūrātī, quōs custōdēs servābant, adhūc tacērent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There are two clauses here, not one, and they are not the same construction: quōs custōdēs servābant has an antecedent and an indicative verb.">One indirect question only</button>
+                    <button data-choice="b" data-fb="Reversed. Num + the subjunctive tacērent is the indirect question; quōs + the indicative servābant, with coniūrātī as its antecedent, is the relative clause.">A relative clause, then an indirect statement</button>
+                    <button data-choice="c" data-fb="Right. Num… tacērent is an indirect question (imperfect subjunctive after the imperfect nesciēbat), and quōs custōdēs servābant is a relative clause tucked inside it — antecedent coniūrātī, indicative verb. &quot;Cicero did not know whether the conspirators, whom the guards were watching, were still silent.&quot;">An indirect question with a relative clause inside it</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- HANDOFF -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#128203; YOUR GRADED WORK FOR MODULE 11</div>
+        <div class="task">
+            <div class="th"><strong>1. <em>Ludus XI &mdash; Quid Rogat?</em></strong> &middot; Interactive Practice &amp; Games</div>
+            <div class="td">Seventy-five seconds, and your <strong>best of unlimited attempts</strong> counts. It drills the question-word kit, the sequence rule, and the statement-versus-question sort. Play it before the quiz.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>2. Module 11 Quiz</strong> &middot; 40 points &middot; auto-graded, unlimited attempts, highest score kept</div>
+            <div class="td">The four steps, the question words, <em>num</em> and <em>utrum&hellip;an</em>, sequence-driven form production, the look-alike sort, and two best-translation items. A gloss is given for the translation section.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>3. Module 11 Translation</strong> &middot; 30 points &middot; teacher-reviewed, in Microsoft Word</div>
+            <div class="td">Five sentences English into Latin and three Latin into English, all vocabulary supplied. One of the English sentences needs <em>utrum&hellip;an</em>, and one deliberately needs an indirect <em>statement</em> rather than a question. Save to OneDrive as <em>Lastname_Firstname_LatinAdv_M11_Translation.docx</em> and submit through Canvas.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>4. Module 11 Reflection</strong> &middot; ungraded survey</div>
+            <div class="td">Five questions, no points. It tells your teacher what to help you with before Module 12 &mdash; fear clauses, where <em>nē</em> turns up meaning almost the opposite of what you expect. Answer it honestly; it costs you nothing.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">12</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 12 &mdash; Fear Clauses</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">&ldquo;I am afraid <em>that</em> he will come&rdquo; &mdash; and Latin writes <em>nē</em>, the word you have been reading as &ldquo;so that&hellip;not&rdquo; since Module 8. It is the strangest reversal in the subjunctive system, and there is a reason for it. The reading follows Catiline north to Pistoria, and to the end.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Cicero could not tell the Senate what to do, so he asked them &mdash; and Latin has a whole construction for a question that has stopped being a question. <em>Temperantia</em> is the virtue of this module for a reason: naming precisely what you do not yet know is a discipline, not a weakness.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 11.05 &middot; Cicero Asks the Senate</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

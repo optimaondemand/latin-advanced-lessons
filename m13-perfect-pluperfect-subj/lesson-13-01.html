@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 13.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 13</div>
+        <div style="font-size: 12px; color: #666;">Perfect &amp; Pluperfect Subjunctive</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 13.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Grey Column Opens</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 13.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Grey Column Opens</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; the perfect subjunctive, active</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Six modules ago you were shown a table with half of it locked. Today the lock comes off.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">In Lesson 7.01 you met the real sequence-of-tenses table &mdash; <strong>four</strong> cells, not two &mdash; and two of those cells were greyed out and stamped <em>Module 13</em>. Every module since has repeated the same promise: two more subjunctive tenses exist, they handle <strong>completed action</strong>, and they are coming. This is Module 13. You are going to build both of them, and then you are going to hold the whole system at once.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what "already finished before the main verb" means, and point to the cell of the sequence table that handles it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the <strong>perfect subjunctive active</strong> in all four conjugations, plus <em>esse</em> and <em>posse</em>, with the macrons in the right places.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find the perfect stem of any verb from its principal parts and use it as the base of a subjunctive.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE PROMISE FROM MODULE 7, PAID</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is the table exactly as you saw it in Lesson 7.01 &mdash; same rows, same headings &mdash; with one change. The right-hand column is no longer grey.</p>
+        <table class="para">
+            <tr><th style="width:26%">Main verb</th><th style="width:20%">Sequence</th><th style="width:27%">Same time as the main verb</th><th>Already finished before it</th></tr>
+            <tr><td class="lab">present / future</td><td><strong>PRIMARY</strong></td><td class="end">present subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#10004; yours since Module 6</span></td><td class="end">perfect subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#128275; yours <strong>today</strong></span></td></tr>
+            <tr><td class="lab">imperfect / perfect / pluperfect</td><td><strong>SECONDARY</strong></td><td class="end">imperfect subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#10004; yours since Module 6</span></td><td class="end">pluperfect subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#128275; yours <strong>tomorrow</strong></span></td></tr>
+        </table>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#127881; <strong>What you were told in Module 7.</strong> "The greyed-out column handles a subordinate action that was <em>already completed</em> when the main verb happened &mdash; 'he asks what you <em>have done</em>,' 'he asked what you <em>had done</em>.' That needs two subjunctive tenses you have not built yet, and building them is the whole job of Module 13." That was the deal. Lesson 13.01 builds the top cell; 13.02 builds the bottom one; 13.03 does both in the passive; 13.04 puts all four to work at once.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>You were also told to note and move on.</strong> "If you meet a form ending in <em>-erit</em> or <em>-isset</em> in outside reading this week, you have found the Module 13 half." If you kept any of those, get them out now. By Friday you will be able to parse every one.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; WHAT "ALREADY FINISHED" ACTUALLY MEANS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Start in English, where you already feel this without thinking about it. Two questions, same speaker, same moment:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#E8F6FB; border:1px solid #C5DCE5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1B6A94; margin-bottom:6px;">SAME TIME &mdash; still going on</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;">He asks what Catiline <strong>is doing</strong>.</div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;"><em>Rogat quid Catilīna <strong>faciat</strong>.</em></div>
+                <div style="font-size:15px; color:#1B6A94; margin-top:6px;"><em>faciat</em> = <strong>present</strong> subjunctive</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:6px;">ALREADY FINISHED &mdash; over and done</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;">He asks what Catiline <strong>has done</strong>.</div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;"><em>Rogat quid Catilīna <strong>fēcerit</strong>.</em></div>
+                <div style="font-size:15px; color:#8a6416; margin-top:6px;"><em>fēcerit</em> = <strong>perfect</strong> subjunctive</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">The main verb did not move. <em>Rogat</em> is present in both, so both are <strong>primary</strong> sequence. What changed is whether the asking is about something still unfolding or about something over. That second question &mdash; the completed one &mdash; is the sentence you have not been able to write since Module 7. You can write it after today.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;">Sequence has <strong>two</strong> questions, not one. <strong>First:</strong> is the main verb past or non-past? That picks the <em>row</em>. <strong>Second:</strong> is the subordinate action still going on, or already finished? That picks the <em>column</em>.</div>
+        </div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Before you see the forms: why do you think Latin waited to give you these two tenses, instead of teaching all four in Module 6?</div>
+            <div class="widget-options">
+                <button data-response="That is close to the real reason. Every construction you learned from Module 8 onward — purpose, result, cum, indirect questions, fear — could be taught honestly with just two tenses, as long as the examples all described same-time action. Adding two more tenses in Module 6 would have doubled the forms before you had a single clause to put them in.">Because you needed clauses to put them in first</button>
+                <button data-response="Fair, and partly true — the perfect and pluperfect subjunctive are built on a different stem, so they really are a separate job. But the deeper reason is that a tense with no use is just a chant. You now have five constructions that need these forms, which is why they are worth building today.">Because they are built differently and needed their own week</button>
+                <button data-response="Understandable suspicion, but no — nothing was hidden from you. Lesson 7.01 printed the whole table, named the two missing tenses, and told you the module number. The course showed you the shape of the thing and then filled it in. That is deliberate, not evasive.">Because the course was hiding something</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE FORM: PERFECT STEM + <em>-ERIM</em></div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;">Perfect subjunctive active = <strong>the perfect stem</strong> + <strong><em>-erim, -erīs, -erit, -erīmus, -erītis, -erint</em></strong>.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">The <strong>perfect stem</strong> is the third principal part with its final <em>-ī</em> chopped off. You have been using it since 0706010 to build the perfect, pluperfect, and future perfect indicative. Nothing new here except where it is going next.</p>
+        <table class="para">
+            <tr><th style="width:34%">Third principal part</th><th style="width:22%">Perfect stem</th><th>Perfect subjunctive, 1 sg.</th></tr>
+            <tr><td class="lab"><em>amāv<span class="end">ī</span></em></td><td><em>amāv-</em></td><td><em>amāverim</em></td></tr>
+            <tr><td class="lab"><em>monu<span class="end">ī</span></em></td><td><em>monu-</em></td><td><em>monuerim</em></td></tr>
+            <tr><td class="lab"><em>rēx<span class="end">ī</span></em> <span style="font-size:13px; color:#666;">(from <em>regō</em>)</span></td><td><em>rēx-</em></td><td><em>rēxerim</em></td></tr>
+            <tr><td class="lab"><em>cēp<span class="end">ī</span></em> <span style="font-size:13px; color:#666;">(from <em>capiō</em>)</span></td><td><em>cēp-</em></td><td><em>cēperim</em></td></tr>
+            <tr><td class="lab"><em>audīv<span class="end">ī</span></em></td><td><em>audīv-</em></td><td><em>audīverim</em></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">Now all six persons, in all four conjugations. Read down one column first, then across one row.</p>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:18%"><em>amō</em> (1st)</th><th style="width:17%"><em>moneō</em> (2nd)</th><th style="width:17%"><em>regō</em> (3rd)</th><th style="width:17%"><em>capiō</em> (3rd io)</th><th><em>audiō</em> (4th)</th></tr>
+            <tr><td class="lab">1 sg. <span class="end">-erim</span></td><td><em>amāverim</em></td><td><em>monuerim</em></td><td><em>rēxerim</em></td><td><em>cēperim</em></td><td><em>audīverim</em></td></tr>
+            <tr><td class="lab">2 sg. <span class="end">-erīs</span></td><td><em>amāverīs</em></td><td><em>monuerīs</em></td><td><em>rēxerīs</em></td><td><em>cēperīs</em></td><td><em>audīverīs</em></td></tr>
+            <tr><td class="lab">3 sg. <span class="end">-erit</span></td><td><em>amāverit</em></td><td><em>monuerit</em></td><td><em>rēxerit</em></td><td><em>cēperit</em></td><td><em>audīverit</em></td></tr>
+            <tr><td class="lab">1 pl. <span class="end">-erīmus</span></td><td><em>amāverīmus</em></td><td><em>monuerīmus</em></td><td><em>rēxerīmus</em></td><td><em>cēperīmus</em></td><td><em>audīverīmus</em></td></tr>
+            <tr><td class="lab">2 pl. <span class="end">-erītis</span></td><td><em>amāverītis</em></td><td><em>monuerītis</em></td><td><em>rēxerītis</em></td><td><em>cēperītis</em></td><td><em>audīverītis</em></td></tr>
+            <tr><td class="lab">3 pl. <span class="end">-erint</span></td><td><em>amāverint</em></td><td><em>monuerint</em></td><td><em>rēxerint</em></td><td><em>cēperint</em></td><td><em>audīverint</em></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Where the macron goes &mdash; and you have seen this pattern twice already.</strong> The <em>i</em> of the ending is <strong>long</strong> before <em>-s, -mus, -tis</em> and <strong>short</strong> before <em>-m, -t, -nt</em>. So <em>amāverim</em> but <em>amāverīs</em>; <em>amāverit</em> but <em>amāverītis</em>. This is exactly the shortening you learned for <em>amem / amēs</em> in 6.01 and for <em>amārem / amārēs</em> in 6.03. One rule, three tenses.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 6px 0;">Notice what did <strong>not</strong> happen: the conjugations stopped mattering. Once you are on the perfect stem there is no first-conjugation <em>-ē-</em>, no <em>-a-</em> for everybody else, no <em>-i-</em> in the io-stems. One set of endings, glued onto whatever stem the third principal part hands you. That includes the two verbs you meet most:</p>
+        <table class="para">
+            <tr><th style="width:24%">Verb</th><th style="width:24%">Perfect stem</th><th>Perfect subjunctive</th></tr>
+            <tr><td class="lab"><em>sum, esse, fuī</em> &mdash; to be</td><td><em>fu-</em></td><td><em>fuerim, fuerīs, fuerit, fuerīmus, fuerītis, fuerint</em></td></tr>
+            <tr><td class="lab"><em>possum, posse, potuī</em> &mdash; to be able</td><td><em>potu-</em></td><td><em>potuerim, potuerīs, potuerit, potuerīmus, potuerītis, potuerint</em></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Compare the present subjunctive of <em>sum</em>: <em>sim, sīs, sit&hellip;</em></strong> That one had to be memorised because there was nothing to derive it from. <em>Fuerim</em> is derived, like every other perfect subjunctive in Latin. The irregular verbs stop being irregular the moment you get onto the perfect stem &mdash; the same relief you got with <em>essem</em> in 6.03.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9888;&#65039; <strong>One warning, then we leave it until tomorrow.</strong> <em>Amāverit</em> is also the <strong>future perfect indicative</strong> 3rd singular &mdash; the same six letters, a different mood. That collision is real, it is the single most confusing thing in this module, and it gets a whole section of Lesson 13.02. For today: do not panic when a form looks like two things. Note it and keep going.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; FIRST FORMS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Principal parts are given, so every question is about the rule, not about memory.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Find the perfect stem, then add the ending.</div>
+            <div class="widget-row" data-correct="c" data-hint="Chop the -ī off the third principal part, then add -erit.">
+                <div class="widget-row-prompt"><em>dīcō, dīcere, dīxī, dictum</em> &mdash; perfect subjunctive, <strong>3rd singular</strong></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dīcat is present subjunctive, built on the present stem. The perfect subjunctive works from dīx-.">dīcat</button>
+                    <button data-choice="b" data-fb="Dīceret is imperfect subjunctive — the present infinitive dīcere plus -t. Right family, wrong tense.">dīceret</button>
+                    <button data-choice="c" data-fb="Right — dīxī gives the stem dīx-, and dīx- + -erit = dīxerit. Note that the third principal part, not the infinitive, is what you work from.">dīxerit</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="The 3rd plural ending has a short i.">
+                <div class="widget-row-prompt"><em>audiō, audīre, audīvī, audītum</em> &mdash; perfect subjunctive, <strong>3rd plural</strong></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — audīv- + -erint = audīverint. Short i in the ending, because -nt shortens the vowel in front of it.">audīverint</button>
+                    <button data-choice="b" data-fb="Audīverīnt with a long ī does not exist. The long ī appears only before -s, -mus and -tis: audīverīs, audīverīmus, audīverītis.">audīverīnt</button>
+                    <button data-choice="c" data-fb="Audiant is present subjunctive. You want the perfect stem audīv-, not the present stem audi-.">audiant</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Which principal part carries the perfect stem of an io-stem verb?">
+                <div class="widget-row-prompt"><em>capiō, capere, cēpī, captum</em> &mdash; perfect subjunctive, <strong>1st plural</strong></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Capiāmus is present subjunctive. The -i- of the io-stem belongs to the present system only; it is gone on the perfect stem.">capiāmus</button>
+                    <button data-choice="b" data-fb="Right — cēpī gives cēp-, and cēp- + -erīmus = cēperīmus. Long ī, because the ending is -mus.">cēperīmus</button>
+                    <button data-choice="c" data-fb="Cēperimus with a short i is the FUTURE PERFECT INDICATIVE 1st plural — 'we will have taken.' The macron is the whole difference, and Lesson 13.02 is about exactly this.">cēperimus</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="What is the third principal part of sum?">
+                <div class="widget-row-prompt">Which is the <strong>perfect subjunctive</strong> of <em>sum</em>, 3rd singular?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Sit is the PRESENT subjunctive of sum — the form you have been using since Module 6 for same-time action in primary sequence.">sit</button>
+                    <button data-choice="b" data-fb="Esset is the IMPERFECT subjunctive of sum — same-time action in secondary sequence.">esset</button>
+                    <button data-choice="c" data-fb="Right — fuerit. The third principal part is fuī, so the stem is fu-, and fu- + -erit = fuerit: 'has been.'">fuerit</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which cell of the four-cell table does 'has done' with a present main verb land in?">
+                <div class="widget-row-prompt"><em>Rogat quid Cicerō ____.</em> &mdash; "He asks what Cicero <strong>has done</strong>."</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — fēcerit. Rogat is present, so primary sequence (top row); 'has done' is finished, so the right-hand column; primary + finished = perfect subjunctive.">fēcerit</button>
+                    <button data-choice="b" data-fb="Faciat is present subjunctive — primary sequence, but the SAME-TIME column: 'what Cicero is doing.' The English says 'has done,' which is finished.">faciat</button>
+                    <button data-choice="c" data-fb="Faceret is imperfect subjunctive, which belongs to secondary sequence. Rogat is present, so you cannot be in the bottom row at all.">faceret</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the Forum Rōmānum in the spring of 62 BC. The conspiracy is finished. Catiline is dead at Pistoria, Cicero is no longer consul, and the Forum has gone back to ordinary business &mdash; but people are still arguing about what happened. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things in the scene in Latin &mdash; for example <em>forum</em>, <em>columna</em> ("column"), <em>basilica</em> ("law-court hall"), <em>Cūria</em> ("Senate House"), <em>populus</em> ("the crowd"), <em>mercātor</em> ("trader"). <span style="color:#666;">[ARTHUR: label tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write two Latin sentences</strong> about what the people in the Forum are saying &mdash; both looking <em>back</em>. Use a perfect subjunctive in one and, after Lesson 13.02, a pluperfect subjunctive in the other. Models: <em>Rogant quid Cicerō fēcerit.</em> ("They ask what Cicero has done.") &middot; <em>Nesciēbant cūr Catilīna ex urbe discessisset.</em> ("They did not know why Catiline had left the city.") Add a one-line note naming the tense and saying which cell of the table it came from. Formative and ungraded; the graded ARTHUR project comes at Module 16.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; CŌNSTANTIA &middot; PERSEVERANCE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Cōnstantia</em> is built from <em>cōn-</em> ("together") and <em>stō</em> ("to stand") &mdash; standing firm, staying put, holding a shape under pressure. Romans used it for the person who does not revise their principles every time the situation turns awkward. It gives us <em>constant</em>, <em>constancy</em>, and <em>consistent</em>.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">This module is about the completed past, and that is where <em>cōnstantia</em> lives. A finished action cannot be edited. Whatever Cicero did in 63 BC, he did; whatever Catiline's soldiers did at Pistoria, they did. The perfect and pluperfect subjunctive are the forms Latin reaches for when it stops narrating and starts <strong>assessing</strong> &mdash; <em>quid factum esset</em>, "what had been done." And there is a smaller, closer <em>cōnstantia</em> in front of you today: you were promised these two tenses six modules ago and told to wait. You waited. The endings you are learning have been sitting there the whole time, unchanged, in exactly the shape the table said they would be. A language that keeps its promises is worth the patience it costs.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 13.02 &mdash; The Easiest Form, and the Most Dangerous</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The pluperfect subjunctive, which takes about ninety seconds to learn &mdash; and then the collision between the perfect subjunctive and the future perfect indicative, handled honestly and in full.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>Perfect stem + <em>-erim, -erīs, -erit, -erīmus, -erītis, -erint</em>.</strong> That is the perfect subjunctive active, in every conjugation and for <em>sum</em> and <em>possum</em> too. It fills the top-right cell of the sequence table: <strong>non-past main verb + action already finished</strong>. <em>Rogat quid fēcerit</em> &mdash; "he asks what he has done."</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 13.01 &middot; The Grey Column Opens</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

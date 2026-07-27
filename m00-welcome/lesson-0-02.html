@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 0.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 0</div>
+        <div style="font-size: 12px; color: #666;">Welcome &amp; Orientation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Nouns You Already Own</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Nouns You Already Own</div>
+        <div style="font-size: 16px; color: #666;">Review Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two questions, asked in order, unlock any Latin noun.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">There are only two things you ever need from a noun: <strong>which family does it belong to</strong> (so you know the endings), and <strong>what job is it doing in this sentence</strong> (so you know the meaning). You already have the tools for both. Today is one fast pass to make them automatic again.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name any noun's declension from its genitive singular ending.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the core job of each of the five cases and the question it answers.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> identify the case, number, and function of nouns in sentences about the Catilinarian crisis.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE GENITIVE IS THE ID CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A dictionary entry gives you the nominative and then the <strong>genitive singular</strong>. The nominative can lie &mdash; <em>manus</em> and <em>servus</em> look alike and behave completely differently. The genitive never lies.</p>
+        <table class="para">
+            <tr><th style="width:14%">Declension</th><th style="width:20%">Genitive sg.</th><th>Example entry</th></tr>
+            <tr><td class="lab"><strong>1st</strong></td><td class="end">-ae</td><td><em>puella, puellae</em> f. &mdash; girl &middot; <em>patria, patriae</em> f. &mdash; homeland</td></tr>
+            <tr><td class="lab"><strong>2nd</strong></td><td class="end">-ī</td><td><em>servus, servī</em> m. &mdash; slave &middot; <em>ager, agrī</em> m. &mdash; field &middot; <em>bellum, bellī</em> n. &mdash; war</td></tr>
+            <tr><td class="lab"><strong>3rd</strong></td><td class="end">-is</td><td><em>rēx, rēgis</em> m. &mdash; king &middot; <em>cōnsul, cōnsulis</em> m. &mdash; consul &middot; <em>nōmen, nōminis</em> n. &mdash; name</td></tr>
+            <tr><td class="lab"><strong>4th</strong></td><td class="end">-ūs</td><td><em>manus, manūs</em> f. &mdash; hand &middot; <em>senātus, senātūs</em> m. &mdash; Senate &middot; <em>cornū, cornūs</em> n. &mdash; horn</td></tr>
+            <tr><td class="lab"><strong>5th</strong></td><td class="end">-eī / -ēī</td><td><em>rēs, reī</em> f. &mdash; thing, affair &middot; <em>diēs, diēī</em> m. &mdash; day</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Two words you will meet constantly this year</strong> live in the 4th and 5th declensions: <em>senātus, senātūs</em> m. (the Senate) and <em>rēs pūblica, reī pūblicae</em> f. (the republic &mdash; literally "the public thing," two words that decline separately: <em>rēs</em> 5th declension, <em>pūblica</em> a 1st/2nd-declension adjective agreeing with it).</div>
+        <h3 style="font-size: 18px; color: #0e1c42; margin: 18px 0 8px 0;">Quick self-test: <em>senātus, senātūs</em> in the singular</h3>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; NAME THE CASE, THEN CLICK TO CHECK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>senātus</em></div><div class="hint">click</div><div class="back"><strong>Nominative sg.</strong> &mdash; the Senate as subject</div></div>
+                <div class="flip-card"><div class="front"><em>senātūs</em></div><div class="hint">click</div><div class="back"><strong>Genitive sg.</strong> &mdash; "of the Senate." Same spelling as nom. pl.; context decides.</div></div>
+                <div class="flip-card"><div class="front"><em>senātuī</em></div><div class="hint">click</div><div class="back"><strong>Dative sg.</strong> &mdash; "to / for the Senate." <em>Cicerō senātuī dīxit.</em></div></div>
+                <div class="flip-card"><div class="front"><em>senātum</em></div><div class="hint">click</div><div class="back"><strong>Accusative sg.</strong> &mdash; the Senate as direct object</div></div>
+                <div class="flip-card"><div class="front"><em>senātū</em></div><div class="hint">click</div><div class="back"><strong>Ablative sg.</strong> &mdash; "in / by the Senate." <em>in senātū</em> = in the Senate.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; FIVE CASES, FIVE JOBS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Knowing the family gets you the ending. The <strong>case</strong> tells you what the word is doing. Each case answers a question &mdash; ask the question and the translation follows.</p>
+        <table class="para">
+            <tr><th style="width:16%">Case</th><th style="width:34%">Core job</th><th>Ask yourself</th></tr>
+            <tr><td class="lab"><strong>Nominative</strong></td><td>Subject; predicate noun</td><td>Who or what is doing this?</td></tr>
+            <tr><td class="lab"><strong>Genitive</strong></td><td>Possession; description; "of"</td><td>Whose? Of what?</td></tr>
+            <tr><td class="lab"><strong>Dative</strong></td><td>Indirect object; person concerned</td><td>To whom? For whom?</td></tr>
+            <tr><td class="lab"><strong>Accusative</strong></td><td>Direct object; object of <em>ad, in, per, trāns</em>&hellip;</td><td>Whom or what &mdash; receiving the action?</td></tr>
+            <tr><td class="lab"><strong>Ablative</strong></td><td>Means, manner, agent, separation, place; object of <em>ā/ab, cum, dē, ē/ex, in, sine</em></td><td>By, with, from, or in what?</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two ablatives worth separating again,</strong> because they look identical and mean different things: <em>ā/ab</em> + ablative marks a <strong>person</strong> who does something (agent) &mdash; <em>ā Cicerōne</em>, "by Cicero." A bare ablative with no preposition marks a <strong>thing</strong> used to do it (means) &mdash; <em>virtūte</em>, "by courage," <em>verbīs</em>, "by words."</div>
+        <h3 style="font-size: 18px; color: #0e1c42; margin: 18px 0 8px 0;">The genitive of description</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">One genitive use is worth naming now, because Sallust uses it to introduce Catiline. Latin can describe a person by putting the quality in the <strong>genitive</strong>:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin: 8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Catilīna erat vir magnae audāciae sed malī animī.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Catiline was a man <strong>of great boldness</strong> but <strong>of an evil mind</strong>."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>magnae audāciae</em> and <em>malī animī</em> are both genitive singular &mdash; the <strong>genitive of description</strong>. Not possession: the boldness does not own the man, it characterizes him.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; PUT IT TO WORK</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Each sentence is about the crisis of 63 BC. Name the case and function of the highlighted word.</div>
+            <div class="widget-row" data-correct="b" data-hint="Ask: to whom did Cicero announce it?">
+                <div class="widget-row-prompt"><em>Cicerō <strong>senātuī</strong> nūntiāvit perīculum magnum esse.</em> &mdash; "Cicero announced to the Senate that the danger was great."</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Genitive singular of senātus is senātūs, with a long ū. The -uī ending is something else.">Genitive sg. — "of the Senate"</button>
+                    <button data-choice="b" data-fb="Right — dative singular, the indirect object: the person or body told. Nūntiō regularly takes a dative.">Dative sg. — indirect object</button>
+                    <button data-choice="c" data-fb="Ablative singular of senātus is senātū. And nothing here is being done 'by means of' the Senate.">Ablative sg. — means</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Whose plan was it?">
+                <div class="widget-row-prompt"><em><strong>Coniūrātōrum</strong> cōnsilium ā Cicerōne cognitum est.</em> &mdash; "The plan of the conspirators was discovered by Cicero."</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nominative plural would be coniūrātī. The subject here is cōnsilium.">Nominative pl. — subject</button>
+                    <button data-choice="b" data-fb="Dative plural would be coniūrātīs, ending in -īs. Not this form.">Dative pl. — indirect object</button>
+                    <button data-choice="c" data-fb="Right — genitive plural, possession: the plan belonging to the conspirators. The -ōrum ending is your signal.">Genitive pl. — possession</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Is a person doing this, or a quality?">
+                <div class="widget-row-prompt"><em><strong>Virtūte</strong> Rōmānōrum hostēs superātī sunt.</em> &mdash; "By the courage of the Romans the enemy were overcome."</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — ablative singular of means. Virtūs is a quality, not a person, so no ā/ab: bare ablative.">Ablative sg. — means</button>
+                    <button data-choice="b" data-fb="Agent needs ā/ab plus a person. Courage is not a person, and there is no preposition here.">Ablative sg. — agent</button>
+                    <button data-choice="c" data-fb="Dative singular of virtūs is virtūtī. Also, nothing is being given to courage.">Dative sg. — reference</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Look for the preposition.">
+                <div class="widget-row-prompt"><em>Senātōrēs in <strong>Cūriā</strong> convēnērunt.</em> &mdash; "The senators gathered in the Senate House."</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Cūriam would be accusative — used with in for motion INTO. Here they gather inside, so it is ablative.">Accusative sg. — motion toward</button>
+                    <button data-choice="b" data-fb="Right — ablative singular after in meaning 'in, inside.' Place where.">Ablative sg. — place where</button>
+                    <button data-choice="c" data-fb="Nominative singular is Cūria. The subject here is senātōrēs.">Nominative sg. — subject</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which declension has a genitive singular in -ūs?">
+                <div class="widget-row-prompt">Which of these is a <strong>4th-declension</strong> noun?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Rēs, reī is 5th declension — genitive in -eī.">rēs, reī f.</button>
+                    <button data-choice="b" data-fb="Cōnsul, cōnsulis is 3rd declension — genitive in -is.">cōnsul, cōnsulis m.</button>
+                    <button data-choice="c" data-fb="Right — manus, manūs: genitive singular in -ūs is the 4th declension signature.">manus, manūs f.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- DERIVATIVE -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:6px;">&#128220; DERIVATIVE MINUTE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><em>Senātus</em> comes from <em>senex</em>, "old man" &mdash; the Senate was literally the council of elders. English keeps it in <strong>senate</strong>, <strong>senator</strong>, and <strong>senile</strong>. And <em>rēs pūblica</em>, "the public thing," went through French into English as <strong>republic</strong>. When Romans argued about the <em>rēs pūblica</em>, they were arguing about whose thing Rome was.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 0.03 &mdash; Verbs You Already Own</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The whole indicative system on one page &mdash; six tenses, active and passive &mdash; plus the three participles. This is the launchpad for the subjunctive.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Two questions, in this order: <strong>genitive ending &rarr; which family?</strong> then <strong>case ending &rarr; which job?</strong> Do those in order and no Latin noun can hide from you &mdash; not even in Sallust.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.02 &middot; Nouns You Already Own</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

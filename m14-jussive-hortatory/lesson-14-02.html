@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 14.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 14</div>
+        <div style="font-size: 12px; color: #666;">Main-Clause Subjunctives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 14.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Three Kinds of Wish</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 14.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><em>Utinam</em>: Three Kinds of Wish</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">In a wish, the tense is not telling you <em>when</em>. It is telling you <em>whether</em>.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Add the little word <em>utinam</em> to a main-clause subjunctive and you have a <strong>wish</strong>. Then Latin does something remarkable: it uses the <strong>tense</strong> of that subjunctive to tell you how the speaker rates his own chances. Present tense &mdash; the wish is still open. Imperfect &mdash; the speaker is telling you it is <em>not so now</em>. Pluperfect &mdash; the speaker is telling you it <em>did not happen</em>, and cannot now. One word of grammar carries a whole judgment about the world, and last week's perfect and pluperfect subjunctive were built for this.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognise an <strong>optative</strong> wish and name <em>utinam</em> as its signpost.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose between present, imperfect and pluperfect in a wish, and say what each one claims about the facts.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> make a wish negative with <em>utinam nē</em>, and translate it without losing the negative.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; ONE WORD TURNS A COMMAND INTO A WISH</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The name for this use is the <strong>optative</strong> subjunctive, from <em>optō, optāre, optāvī</em> &mdash; &ldquo;to wish for, to choose.&rdquo; The same root gives English <em>option</em>, <em>optional</em> and <em>adopt</em>. A Roman who wanted to mark a subjunctive out as a wish rather than an order put <em>utinam</em> in front of it.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><strong><em>Utinam</em> + subjunctive = a wish.</strong> Negative: <strong><em>utinam nē</em></strong> + subjunctive.</div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">English has no single word for it, so you have a choice of scaffolding: <strong>&ldquo;If only&hellip;!&rdquo;</strong>, <strong>&ldquo;Would that&hellip;!&rdquo;</strong>, <strong>&ldquo;I wish&hellip;&rdquo;</strong>, or sometimes just <strong>&ldquo;May&hellip;!&rdquo;</strong>. Pick whichever makes the English sound like something a person would say.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">Notice that the negative is <em>nē</em> again &mdash; the same negative as the jussive and the hortatory yesterday. That is not a coincidence. All three are main-clause subjunctives, all three are about something willed rather than something reported, and Latin gives the whole family one negative.</p>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Where a wish and a command overlap.</strong> Yesterday you translated <em>Salva sit rēs pūblica</em> as &ldquo;May the republic be safe&rdquo; and called it a jussive. Some grammars would file that same sentence as an optative wish, and they are not wrong: with a third-person verb and no <em>utinam</em>, &ldquo;let it be&rdquo; and &ldquo;may it be&rdquo; run into each other. This is a genuinely soft border, and nothing on your quiz depends on it. What <em>utinam</em> gives you is certainty in the other direction: <strong>where <em>utinam</em> appears, you are looking at a wish, full stop.</strong></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE TENSE IS THE WHOLE MESSAGE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Everywhere else in this course, the tense of a subjunctive has been decided <em>for</em> you &mdash; by sequence of tenses, looking up at the main verb. A wish has no main verb above it. So the tense is free, and Latin spends that freedom on something else entirely: <strong>saying whether the wish can still come true.</strong></p>
+        <table class="para">
+            <tr><th style="width:20%">Tense of the subjunctive</th><th style="width:26%">What kind of wish it is</th><th style="width:27%">English scaffolding</th><th>What the speaker is telling you about the facts</th></tr>
+            <tr><td class="lab"><strong>PRESENT</strong><br><span style="font-size:14px; color:#666;"><em>veniat</em>, <em>sit</em>, <em>absolvātur</em></span></td><td class="end">a wish that may still come true</td><td>&ldquo;If only he may come!&rdquo;<br>&ldquo;May he come!&rdquo;<br>&ldquo;I hope he comes.&rdquo;</td><td>Nothing yet. The door is open; the speaker is hoping, not reporting.</td></tr>
+            <tr><td class="lab"><strong>IMPERFECT</strong><br><span style="font-size:14px; color:#666;"><em>venīret</em>, <em>esset</em>, <em>imminēret</em></span></td><td class="end">a wish about how things are <strong>now</strong> &mdash; and they are not</td><td>&ldquo;If only he were coming!&rdquo;<br>&ldquo;Would that he were here!&rdquo;</td><td>That it is <strong>false right now</strong>. The wish is being made against a fact the speaker already knows.</td></tr>
+            <tr><td class="lab"><strong>PLUPERFECT</strong><br><span style="font-size:14px; color:#666;"><em>vēnisset</em>, <em>fuisset</em>, <em>facta esset</em></span></td><td class="end">a wish about the <strong>past</strong> &mdash; and it did not happen</td><td>&ldquo;If only he had come!&rdquo;<br>&ldquo;Would that he had spoken!&rdquo;</td><td>That it <strong>did not happen</strong>, and nothing can change that now.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Read the middle row again, slowly.</strong> The <strong>imperfect</strong> subjunctive in a wish does <strong>not</strong> mean the wish is about the past. It means the wish is about <strong>now</strong>, and that the speaker is admitting it is not the case. This is the single commonest mistake in the module: students see an imperfect and translate &ldquo;if only he <em>was</em> coming.&rdquo; The right English is &ldquo;if only he <strong>were</strong> coming&rdquo; &mdash; the same odd English form you use in &ldquo;if only I <em>were</em> taller,&rdquo; which is not about the past either.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 8px 0;">And here is the payoff from last week. In Module 13 you built the perfect and pluperfect subjunctive and were told they existed to handle &ldquo;already finished&rdquo; action in subordinate clauses. This is the other reason they exist. Without the <strong>pluperfect subjunctive</strong> you simply could not say the most human sentence in Latin: <em>I wish it had not happened.</em></p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#E8F6FB; border:1px solid #C5DCE5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1B6A94; margin-bottom:6px;">STILL OPEN &mdash; present</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Utinam Murēna absolvātur!</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;If only Murena may be acquitted!&rdquo; The trial is still going. Nobody knows yet.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:6px;">NOT SO NOW &mdash; imperfect</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Utinam Rōma tūta esset!</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;If only Rome were safe!&rdquo; She is not. The sentence says so without saying so.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#F5E7E8; border:1px solid #E0B8BD; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#AA1E2D; margin-bottom:6px;">DID NOT HAPPEN &mdash; pluperfect</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Utinam nē Lentulus patriam prōdidisset!</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;If only Lentulus had not betrayed his country!&rdquo; He did. Nothing is left but the wish.</div>
+            </div>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:14px 18px; margin:12px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS FOR THE THREE EXAMPLES</div>
+            <ul class="gl">
+                <li><em>absolvātur</em> &mdash; present subjunctive passive of <em>absolvō, absolvere, absolvī, absolūtum</em>: to acquit, set free from a charge</li>
+                <li><em>tūtus, -a, -um</em> &mdash; safe, protected</li>
+                <li><em>prōdidisset</em> &mdash; pluperfect subjunctive of <em>prōdō, prōdere, prōdidī, prōditum</em>: to betray, hand over</li>
+                <li><em>patria, patriae</em> f. &mdash; native land, fatherland</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; MORE WISHES, AND TWO HONEST FOOTNOTES</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Utinam vōbīs haec ōrātiō persuādeat!</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If only this speech may persuade you!&rdquo; <strong>Present</strong> &mdash; the speech is not finished yet, so the wish is live. <span style="color:#8a6416;">Gloss: <em>persuādeō, persuādēre</em> (+ dative) &mdash; to persuade; <em>ōrātiō, ōrātiōnis</em> f. &mdash; speech.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Utinam nē tantum perīculum reī pūblicae imminēret!</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If only so great a danger were not hanging over the republic!&rdquo; <strong>Imperfect</strong> &mdash; and the wish quietly reports that the danger <em>is</em> hanging over it. <span style="color:#8a6416;">Gloss: <em>immineō, imminēre</em> (+ dative) &mdash; to hang over, threaten.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Utinam nē ista coniūrātiō umquam facta esset!</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If only that conspiracy had never been made!&rdquo; <strong>Pluperfect</strong>, and <strong>passive</strong> &mdash; the two-word kind from Lesson 13.03: the participle <em>facta</em> plus <em>esset</em>. <span style="color:#8a6416;">Gloss: <em>iste, ista, istud</em> &mdash; that (of yours), that one there; <em>umquam</em> &mdash; ever.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Utinam cōnsul illā nocte nōn dubitāvisset!</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If only the consul had not hesitated that night!&rdquo; <strong>Pluperfect active.</strong> <span style="color:#8a6416;">Gloss: <em>dubitō, dubitāre, dubitāvī</em> &mdash; to hesitate, doubt.</span> Note the negative here is <em>nōn</em> rather than <em>nē</em> &mdash; see the second footnote below, and expect <em>nē</em> to be the form you are asked to produce.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Footnote one: the fourth tense exists, and this module leaves it alone.</strong> A <strong>perfect</strong> subjunctive after <em>utinam</em> is possible in Latin &mdash; a wish about something that may already have happened, along the lines of &ldquo;I hope he has said it.&rdquo; It is uncommon, the grammars disagree about how to describe it, and it is not on your quiz or your translation. Three tenses do the work: present, imperfect, pluperfect. If you meet a perfect subjunctive after <em>utinam</em> in outside reading, note it and move on.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9888;&#65039; <strong>Footnote two: <em>utinam nōn</em> does happen.</strong> The regular negative for a wish is <strong><em>utinam nē</em></strong>, and that is what you should write. But real authors sometimes use <em>nōn</em> after <em>utinam</em>, especially when what is being denied is one particular word rather than the whole wish. Do not let it shake you: <em>utinam</em> is still the signpost, the construction is still a wish, and the tense still tells you which kind. Produce <em>nē</em>; recognise both.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; WHICH KIND OF WISH?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six items. For each one, find the tense first &mdash; then say what the speaker is admitting.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What kind of wish is this, and what does it tell you about the facts?</div>
+
+            <div class="widget-row" data-correct="c" data-hint="What tense is absolvātur? Compare it with absolverētur.">
+                <div class="widget-row-prompt"><em>Utinam Murēna absolvātur!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An imperfect subjunctive would be absolverētur, and it would mean the speaker already knows the acquittal is not happening. Absolvātur is present.">A wish about now, and he is not being acquitted</button>
+                    <button data-choice="b" data-fb="A wish about the past would need the PLUPERFECT — absolūtus esset, &quot;if only he had been acquitted.&quot; Absolvātur is present, so the trial is still open.">A wish about the past that did not happen</button>
+                    <button data-choice="c" data-fb="Right — present subjunctive passive, so a wish that may still come true. &quot;If only Murena may be acquitted!&quot; The speaker is hoping, and the outcome is genuinely unknown.">A wish that may still come true</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Esset is imperfect. In a wish, what does the imperfect claim about right now?">
+                <div class="widget-row-prompt"><em>Utinam Rōma hōc tempore tūta esset!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — imperfect subjunctive, so a wish about the present that is not so. &quot;If only Rome were safe at this moment!&quot; The sentence tells you, without stating it, that Rome is not safe.">A wish about now &mdash; and Rome is not safe</button>
+                    <button data-choice="b" data-fb="This is the module's commonest error. An imperfect subjunctive in a wish is NOT about the past — it is about the present, and about the present being wrong. &quot;If only Rome was safe&quot; is the English to avoid; &quot;if only Rome were safe&quot; is the English to write.">A wish about the past &mdash; Rome used to be safe</button>
+                    <button data-choice="c" data-fb="A wish that is still open would use the PRESENT subjunctive: utinam Rōma tūta sit. The writer chose esset instead, and that choice is the news.">A wish that may still come true</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Prōdidisset — perfect stem plus -isset. Which tense is that, and what does it commit the speaker to?">
+                <div class="widget-row-prompt"><em>Utinam nē Lentulus patriam prōdidisset!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Prōdidisset is pluperfect, not present. And the sense makes the point: the betrayal is over, so no present wish could reach it.">A wish that may still come true</button>
+                    <button data-choice="b" data-fb="Right — pluperfect subjunctive, so a wish about the past, and the speaker is admitting it happened. &quot;If only Lentulus had not betrayed his country!&quot; He did; that is why the wish is in this tense.">A wish about the past &mdash; and he did betray it</button>
+                    <button data-choice="c" data-fb="An imperfect (prōderet) would make the wish about the present. Prōdidisset has the -isset shape you built in Lesson 13.02, which is pluperfect and points back.">A wish about now &mdash; and he is betraying it</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="The English says &ldquo;had not hesitated&rdquo; — finished, and it did happen. Which tense carries that?">
+                <div class="widget-row-prompt">&ldquo;If only the consul had not hesitated!&rdquo; &mdash; <em>Utinam nē cōnsul ____!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dubitet is present subjunctive — a wish still open, &quot;if only the consul may not hesitate.&quot; The English &quot;had not hesitated&quot; is about a past that is finished.">dubitet</button>
+                    <button data-choice="b" data-fb="Dubitāret is imperfect — &quot;if only the consul were not hesitating,&quot; a wish about the present moment. Close, but the English puts the hesitation in the past.">dubitāret</button>
+                    <button data-choice="c" data-fb="Right — dubitāvisset. Perfect stem dubitāv- plus -isset gives the pluperfect subjunctive, the tense for a wish about a past that did not go the way you wanted.">dubitāvisset</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Which negative belongs to a main-clause subjunctive?">
+                <div class="widget-row-prompt">&ldquo;If only the danger were not so great!&rdquo; &mdash; <em>Utinam ____ perīculum tantum esset!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — nē. Utinam nē perīculum tantum esset! Jussive, hortatory and optative all take nē, because all three are main-clause subjunctives about something willed rather than reported.">nē</button>
+                    <button data-choice="b" data-fb="Ut nōn is the negative of a result clause (m09), and a result clause is subordinate, needs a signpost in the main clause, and has nothing to do with a wish.">ut nōn</button>
+                    <button data-choice="c" data-fb="Nōn is the negative you would expect from the indicative, and real authors do occasionally write utinam nōn. But nē is the form to produce, and the one the quiz asks for.">nōn</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="One of these has a verb of fearing in front of it. Which construction owns that?">
+                <div class="widget-row-prompt">Which of these two is the <strong>wish</strong>? &nbsp;(i) <em>Timeō nē Murēna condemnētur.</em> &nbsp;(ii) <em>Utinam nē Murēna condemnētur!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Sentence (i) is a FEAR CLAUSE from Module 12: timeō is the main verb, and nē condemnētur is a subordinate clause hanging off it — &quot;I am afraid that Murena will be condemned.&quot; Same three words condemnētur, entirely different job.">(i), because <em>nē</em> shows it is a wish</button>
+                    <button data-choice="b" data-fb="Right — (ii). Utinam is the signpost, and condemnētur is the MAIN verb of its own sentence: &quot;If only Murena may not be condemned!&quot; In (i) the main verb is timeō and the subjunctive is subordinate. This pair is exactly what Thursday's procedure is for.">(ii), because <em>utinam</em> marks a wish and there is no other verb</button>
+                    <button data-choice="c" data-fb="They are not the same. One reports a state of mind (I am afraid); the other expresses a wish (if only). And the grammar shows the difference: (i) has a main verb above its subjunctive, and (ii) does not.">Both mean the same thing</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 5 &middot; SPEED SORT &middot; CLICK EACH CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Name the tense and the kind of wish out loud, then flip. Aim for a second a card.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; TENSE FIRST, THEN THE KIND OF WISH</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>Utinam veniat!</em></div><div class="hint">which wish?</div><div class="back"><strong>Present.</strong> Still open: &ldquo;If only he may come!&rdquo; No claim about whether he will.</div></div>
+                <div class="flip-card"><div class="front"><em>Utinam venīret!</em></div><div class="hint">which wish?</div><div class="back"><strong>Imperfect.</strong> About now, and it is not so: &ldquo;If only he were coming!&rdquo; &mdash; he is not.</div></div>
+                <div class="flip-card"><div class="front"><em>Utinam vēnisset!</em></div><div class="hint">which wish?</div><div class="back"><strong>Pluperfect.</strong> About the past, and it did not happen: &ldquo;If only he had come!&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>Utinam sit!</em> &middot; <em>Utinam esset!</em> &middot; <em>Utinam fuisset!</em></div><div class="hint">the three of <em>sum</em></div><div class="back"><strong>Present / imperfect / pluperfect.</strong> &ldquo;May it be&rdquo; &middot; &ldquo;if only it were&rdquo; (it is not) &middot; &ldquo;if only it had been&rdquo; (it was not).</div></div>
+                <div class="flip-card"><div class="front"><em>Utinam nē&hellip;</em></div><div class="hint">what is <em>nē</em> doing?</div><div class="back"><strong>The negative of a wish.</strong> Same negative as the jussive and hortatory, because all three are main-clause subjunctives.</div></div>
+                <div class="flip-card"><div class="front"><em>Utinam nē facta esset!</em></div><div class="hint">which wish, and which voice?</div><div class="back"><strong>Pluperfect passive</strong> &mdash; participle <em>facta</em> + <em>esset</em>, the two-word form from 13.03. &ldquo;If only it had not been done!&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>Timeō nē veniat.</em></div><div class="hint">wish or not?</div><div class="back"><strong>Not a wish &mdash; a fear clause (m12).</strong> <em>Timeō</em> is the main verb; <em>veniat</em> is subordinate. &ldquo;I am afraid that he will come.&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>Veniat.</em></div><div class="hint">wish or command?</div><div class="back"><strong>Jussive command</strong> (m14, yesterday): &ldquo;Let him come.&rdquo; With no <em>utinam</em> and a third-person verb, read it as a command first.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 14.03 &mdash; &ldquo;What Am I to Do?&rdquo;</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The fourth main-clause use: the <strong>deliberative question</strong> &mdash; a real question, asked in the subjunctive, when the speaker genuinely does not know what to do. Plus this module's vocabulary, drawn from the Roman courtroom, and the one place in this family where the negative is <em>not</em> <em>nē</em>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">In a wish, ask the tense a question it has never been asked before: <strong>not &ldquo;when?&rdquo; but &ldquo;is it true?&rdquo;</strong> Present &rarr; nobody knows yet. Imperfect &rarr; it is not so now. Pluperfect &rarr; it did not happen. The wish and the admission arrive in the same word.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 14.02 &middot; <em>Utinam</em>: Three Kinds of Wish</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

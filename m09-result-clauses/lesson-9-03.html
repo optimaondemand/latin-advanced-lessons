@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 9.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 9</div>
+        <div style="font-size: 12px; color: #666;">Result Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 9.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Nē or Ut Nōn?</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 9.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><em>Nē</em> or <em>Ut Nōn</em>?</div>
+        <div style="font-size: 16px; color: #666;">Grammar in Use</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The twins are identical &mdash; until you make them say &ldquo;not.&rdquo;</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">In the positive, purpose and result are the same three letters: <em>ut</em>. In the negative they part company completely. <strong>Purpose says <em>nē</em>. Result says <em>ut nōn</em>.</strong> This is the single most useful fact in Module 9, because it is the one thing you can check <em>mechanically</em> &mdash; no judgment call, no feel for the sentence. Look at the negative word and you know which construction you are in.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the negative asymmetry: purpose <em>nē</em>, result <em>ut nōn</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read a negative <em>ut</em> clause and say instantly whether it reports an intention or an outcome.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> handle the &ldquo;no one / nothing / never&rdquo; versions: <em>nē quis</em> for purpose, <em>ut nēmō</em> for result.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE WHOLE RULE IN ONE TABLE</div>
+        <table class="para">
+            <tr><th style="width:22%">Construction</th><th style="width:26%">Positive</th><th style="width:26%">Negative</th><th>English for the negative</th></tr>
+            <tr><td class="lab"><strong>Purpose</strong><br><span style="font-size:13px; color:#666;">Module 8</span></td><td><em>ut</em> + subjunctive</td><td class="end"><em>nē</em> + subjunctive</td><td>&ldquo;so that&hellip;<strong>not</strong>&rdquo; &middot; &ldquo;in order <strong>not</strong> to&rdquo; &middot; &ldquo;to prevent&hellip;&rdquo;</td></tr>
+            <tr><td class="lab"><strong>Result</strong><br><span style="font-size:13px; color:#666;">this module</span></td><td><em>ut</em> + subjunctive</td><td class="end"><em>ut nōn</em> + subjunctive</td><td>&ldquo;so that&hellip;<strong>did not</strong>&rdquo; &middot; &ldquo;with the result that&hellip;<strong>not</strong>&rdquo;</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">Read the second column and the third column side by side. In the <strong>positive</strong> column the two constructions are indistinguishable &mdash; that is why Lessons 9.01 and 9.02 gave you signposts and a meaning test. In the <strong>negative</strong> column they are impossible to confuse, and you do not need any test at all. Just read the word.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:6px;">SEE <em>NĒ</em> &rarr; SOMEBODY WAS TRYING TO PREVENT SOMETHING</div>
+                <div style="font-size:19px; color:#0e1c42;"><em>Catilīna ex urbe fūgit <strong>nē</strong> comprehenderētur.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;Catiline fled from the city <strong>so that he would not be arrested</strong>.&rdquo;</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">His plan. Whether it worked is not stated.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:6px;">SEE <em>UT NŌN</em> &rarr; SOMETHING DID NOT HAPPEN</div>
+                <div style="font-size:19px; color:#0e1c42;"><em>Catilīna tam callidus erat <strong>ut nōn</strong> statim comprehenderētur.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;Catiline was so clever <strong>that he was not arrested at once</strong>.&rdquo;</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">The outcome. He really was not arrested at once.</div>
+            </div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Look at the verb in both boxes.</strong> It is the same word: <em>comprehenderētur</em>, imperfect subjunctive passive of <em>comprehendō</em>, &ldquo;he was being arrested / would be arrested.&rdquo; The verb form carries no information about which construction you are in. Only <em>nē</em> versus <em>ut nōn</em> tells you, and that is exactly why it is worth memorizing. <span style="color:#8a6416;">Gloss: <em>comprehendō, comprehendere, comprehendī, comprehēnsum</em> &mdash; to seize, arrest; <em>statim</em> (adv.) &mdash; at once, immediately.</span></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; ONE MORE MINIMAL PAIR</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is the same trick with a different verb. Everything in the two <em>ut</em> clauses is identical except the negative word &mdash; and that one word changes what the sentence is claiming about the world.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Coniūrātī nocte convēnērunt <strong>nē vidērentur</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;The conspirators met at night <strong>so that they would not be seen</strong>.&rdquo;</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><strong>Purpose.</strong> This is why they chose night-time. The sentence says nothing about whether anybody spotted them.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Nox tam obscūra erat <strong>ut nōn vidērentur</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;The night was so dark <strong>that they were not seen</strong>.&rdquo;</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><strong>Result.</strong> Signpost <em>tam</em>, negative <em>ut nōn</em>. This sentence does make a claim: nobody saw them. <span style="color:#8a6416;">Gloss: <em>obscūrus, -a, -um</em> &mdash; dark, dim.</span></div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>A production warning.</strong> When you write Latin this week, the commonest error is not a wrong ending &mdash; it is reaching for <em>nē</em> out of habit because you have just spent a whole module on purpose clauses. Before you write a negative <em>ut</em> clause, ask yourself one question: <em>am I saying what somebody wanted, or what happened?</em> Wanted &rarr; <em>nē</em>. Happened &rarr; <em>ut nōn</em>.</div>
+    </div>
+
+    <!-- MEMORY WORK -->
+    <div style="background:#EEF1F8; border:1px solid #D0D9E8; border-left:5px solid #0E1C42; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#0e1c42; letter-spacing:.4px; margin-bottom:10px;">&#127925; MEMORY WORK &middot; SAY IT OUT LOUD THREE TIMES</div>
+        <div style="text-align:center; font-size:22px; color:#0e1c42; line-height:1.9;">
+            <em>ut</em> &hellip; <em>nē</em> &mdash; that is <strong>purpose</strong>.<br>
+            <em>ut</em> &hellip; <em>ut nōn</em> &mdash; that is <strong>result</strong>.<br>
+            <span style="font-size:19px; color:#1a2340;"><em>Nē</em> is the plan. <em>Ut nōn</em> is the outcome.</span>
+        </div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:12px 0 0 0;">Say it now, before you look at the drill. Six seconds of chanting will save you several marks on Friday's translation, and it is faster than reasoning the rule out from scratch every time you meet a negative clause.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; &ldquo;SO THAT NO ONE&hellip;&rdquo;</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Often the negative idea is not carried by <em>nōn</em> at all, but by a word that is already negative: &ldquo;no one,&rdquo; &ldquo;nothing,&rdquo; &ldquo;never.&rdquo; When that happens, Latin does <strong>not</strong> add a second negative on top. And the two constructions still use different words:</p>
+        <table class="para">
+            <tr><th style="width:24%">English</th><th style="width:26%">Purpose says</th><th style="width:26%">Result says</th><th>Watch out</th></tr>
+            <tr><td class="lab">&hellip;that no one</td><td class="end"><em>nē quis</em></td><td class="end"><em>ut nēmō</em></td><td>never <em>ut nōn nēmō</em></td></tr>
+            <tr><td class="lab">&hellip;that nothing</td><td class="end"><em>nē quid</em></td><td class="end"><em>ut nihil</em></td><td>never <em>ut nōn nihil</em></td></tr>
+            <tr><td class="lab">&hellip;that never</td><td class="end"><em>nē umquam</em></td><td class="end"><em>ut numquam</em></td><td>never <em>ut nōn umquam</em></td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerō custōdēs posuit <strong>nē quis</strong> effugeret.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Cicero posted guards <strong>so that no one would escape</strong>.&rdquo; &mdash; his intention. <span style="color:#8a6416;">Gloss: <em>custōs, custōdis</em> m. &mdash; guard; <em>quis</em> (after <em>nē</em>) &mdash; anyone; <em>effugiō</em> &mdash; to escape.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Adeō timēbant <strong>ut nēmō</strong> loquerētur.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;They were afraid to such a degree <strong>that no one spoke</strong>.&rdquo; &mdash; the outcome. Signpost <em>adeō</em>; the negative lives inside <em>nēmō</em>, so no <em>nōn</em> is needed.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Do not double up.</strong> English tolerates &ldquo;didn't see nobody&rdquo; in casual speech; classical Latin does not. One negative per clause. If you have written <em>nēmō</em>, <em>nihil</em>, or <em>numquam</em>, the clause is already negative &mdash; leave <em>ut</em> on its own.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; THE MECHANICAL CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five rows. For the first three you do not need to understand the sentence at all &mdash; read the negative word and answer. For the last two you have to choose the negative yourself.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Purpose or result &mdash; and which negative?</div>
+            <div class="widget-row" data-correct="b" data-hint="Which negative word is standing at the front of the clause?">
+                <div class="widget-row-prompt"><em>Cicerō litterās recitāvit nē cīvēs dubitārent.</em> (<em>recitō</em> &mdash; to read aloud; <em>dubitō</em> &mdash; to doubt)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A result clause would have to say ut nōn. This clause says nē, so it is reporting Cicero's intention, not the outcome.">Result &mdash; &ldquo;with the result that the citizens did not doubt&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — nē, so purpose: he read the letters out in order to stop the citizens doubting. Notice there is no signpost word in the main clause either, which points the same way.">Purpose &mdash; &ldquo;so that the citizens would not doubt&rdquo;</button>
+                    <button data-choice="c" data-fb="Indirect command needs a verb of ordering or asking — imperō, rogō, and their relatives. Recitāvit is not one of those.">Indirect command &mdash; &ldquo;he ordered them not to doubt&rdquo;</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Two things to spot: the signpost in the main clause, and the negative word.">
+                <div class="widget-row-prompt"><em>Nox tam obscūra erat ut nōn vidērentur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Purpose would require nē, and it would also need somebody with an intention. A night cannot intend anything.">Purpose &mdash; &ldquo;so that they would not be seen&rdquo;</button>
+                    <button data-choice="b" data-fb="Vidērentur is passive: &quot;they were seen.&quot; The conspirators are not doing the seeing here.">Result &mdash; &ldquo;that they did not see&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — tam is the signpost, ut nōn is the result negative, and vidērentur is passive: the darkness meant they were in fact not seen.">Result &mdash; &ldquo;that they were not seen&rdquo;</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Is there a nōn anywhere? Where does the negative idea actually live?">
+                <div class="widget-row-prompt"><em>Adeō timēbant ut nēmō loquerētur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a negative result clause whose negative sits inside nēmō, &quot;no one.&quot; Adding nōn would give you two negatives in one clause, which classical Latin does not do here.">Result, and correctly negative already &mdash; <em>nēmō</em> carries the &ldquo;not&rdquo;</button>
+                    <button data-choice="b" data-fb="It does not need fixing. Ut nōn nēmō would be a double negative — literally &quot;that not no one.&quot;">Result, but it should read <em>ut nōn nēmō</em></button>
+                    <button data-choice="c" data-fb="Purpose is impossible here: adeō is a result signpost, and nobody in this sentence is trying to bring the silence about.">Purpose &mdash; &ldquo;so that no one would speak&rdquo;</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Did the conspirators intend not to be caught, or is the sentence reporting what actually happened?">
+                <div class="widget-row-prompt">Complete for <strong>purpose</strong>: <em>Coniūrātī nocte convēnērunt ____ vidērentur.</em> (&ldquo;&hellip;so that they would not be seen&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ut nōn is the RESULT negative. This sentence is about why they chose the night — their plan.">ut nōn</button>
+                    <button data-choice="b" data-fb="Right — nē, the purpose negative. They met at night in order not to be seen.">nē</button>
+                    <button data-choice="c" data-fb="Nē nōn is not the negative of a purpose clause. One negative is enough: just nē.">nē nōn</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Look for a signpost in the main clause before you choose.">
+                <div class="widget-row-prompt">Complete for <strong>result</strong>: <em>Catilīna tam callidus erat ____ statim comprehenderētur.</em> (&ldquo;&hellip;that he was not arrested at once&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nē would make this a purpose clause — as if being clever were a plan to avoid arrest. The signpost tam tells you this is an outcome.">nē</button>
+                    <button data-choice="b" data-fb="Ut on its own gives you a POSITIVE result: &quot;that he was arrested at once,&quot; which is the opposite of what the English says.">ut</button>
+                    <button data-choice="c" data-fb="Right — ut nōn. Signpost tam in the main clause, negative result in the ut clause: he really was not arrested straight away.">ut nōn</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 9.04 &mdash; The Identifier</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Everything from three days put to work: signpost test, meaning test, negative test, all on mixed sentences &mdash; including indirect commands and plain adverbs thrown in to see whether you are really reading. Plus your first Latin production of the week.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>Purpose negates with <em>nē</em>. Result negates with <em>ut nōn</em>.</strong> Everything else about the two constructions can look identical; this cannot. When the clause is negative, stop reasoning and just read the word &mdash; and if the negative is already inside <em>nēmō</em>, <em>nihil</em>, or <em>numquam</em>, do not add another one.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 9.03 &middot; Nē or Ut Nōn?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 8.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 8</div>
+        <div style="font-size: 12px; color: #666;">Purpose Clauses &amp; Indirect Command</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Third Way to Say Why</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Third Way to Say Why</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">In Module 4 we told you a third way to say purpose was coming. It is here.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You already own two: <em>ad dīcendum</em> and <em>dīcendī causā</em>, both "in order to speak." Today you get the one Cicero reaches for most often &mdash; a whole clause, with <em>ut</em> and its own verb in the <strong>subjunctive</strong>: <em>Cicerō surrēxit <strong>ut dīceret</strong></em>, "Cicero rose <strong>so that he might speak</strong>." Everything you learned in Modules 6 and 7 was built for this moment.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what a purpose clause is and why Latin puts its verb in the subjunctive rather than the indicative.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build and translate a positive purpose clause with <em>ut</em>, choosing present or imperfect subjunctive by the sequence of tenses.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> rewrite a Module 4 gerund purpose phrase as an <em>ut</em> clause, and say what each version is good for.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE PROMISE FROM MODULE 4, PAID</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Lesson 4.03 was called <em>Two Ways to Say Purpose</em>, and it ended by telling you there was a third &mdash; the most common one of all &mdash; waiting in Module 8. Here is the whole family in one table. Two of these three you can already write.</p>
+        <table class="para">
+            <tr><th style="width:26%">Construction</th><th style="width:34%">Latin</th><th>English</th></tr>
+            <tr><td class="lab">Module 4 &middot; <em>ad</em> + accusative gerund</td><td><em>Cicerō surrēxit <span class="end">ad dīcendum</span>.</em></td><td>Cicero rose <strong>to speak</strong> / for the purpose of speaking.</td></tr>
+            <tr><td class="lab">Module 4 &middot; genitive gerund + <em>causā</em></td><td><em>Cicerō surrēxit <span class="end">dīcendī causā</span>.</em></td><td>Cicero rose <strong>for the sake of speaking</strong>.</td></tr>
+            <tr><td class="lab"><strong>Module 8 &middot; <em>ut</em> + subjunctive</strong></td><td><em>Cicerō surrēxit <span class="end">ut dīceret</span>.</em></td><td>Cicero rose <strong>so that he might speak</strong>.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why Latin bothers with three.</strong> The gerund constructions are compact but silent about <em>who</em> is doing the purposed action &mdash; <em>ad dīcendum</em> just means "for speaking." A full <em>ut</em> clause has its own verb, so it can carry its own subject, its own object, its own negative. When Cicero needs to say "so that <em>the people</em> might know what <em>the consul</em> had done," only the clause can do it.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Latin puts the verb of a purpose clause in the <strong>subjunctive</strong>, not the indicative. Before you read on: what is your best guess about why?</div>
+            <div class="widget-options">
+                <button data-response="That is exactly it. A purpose has not happened yet at the moment of the main verb — it is aimed at, intended, hoped for. The indicative reports facts; the subjunctive handles what is wished, intended, or merely possible. Latin marks the difference with the mood of the verb.">Because a purpose has not happened yet &mdash; it is only intended</button>
+                <button data-response="Reasonable, but not the reason. Subordinate clauses in Latin are perfectly happy with the indicative — you have been reading relative clauses in the indicative since 0706010. It is not the subordination that triggers the subjunctive; it is the meaning.">Because it is a subordinate clause, and those take the subjunctive</button>
+                <button data-response="Fair guess, and Latin does love a signal word — but ut is not the cause. Ut also introduces clauses that are not purpose at all (you will meet one such kind in Module 9). The subjunctive is there because of what a purpose IS, not because of the word in front of it.">Because <em>ut</em> is a special word that demands it</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE DEFINITION, AND THE SHAPE</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;">A <strong>purpose clause</strong> answers the question <strong>"Why?"</strong> It is built from <strong><em>ut</em> + a verb in the subjunctive</strong>, and it tells you what the action of the main clause was <em>aimed at</em>.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Look at what changes and what does not:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:4px;">A FACT &mdash; INDICATIVE</div>
+                <div style="font-size:19px; color:#0e1c42;"><em>Senātōrēs intellegunt.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"The senators understand." It happened. It is true.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:4px;">AN AIM &mdash; SUBJUNCTIVE</div>
+                <div style="font-size:19px; color:#0e1c42;"><em>&hellip;ut senātōrēs intellegant.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"&hellip;so that the senators <strong>may</strong> understand." Aimed at. Maybe achieved, maybe not.</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">English gives you four good ways to render the clause. All four are correct; pick whichever reads best:</p>
+        <table class="para">
+            <tr><th style="width:36%">English pattern</th><th>Example on <em>Cicerō dīxit ut senātōrēs intellegerent</em></th></tr>
+            <tr><td class="lab"><strong>in order to</strong> + verb</td><td>Cicero spoke <strong>in order</strong> for the senators <strong>to</strong> understand.</td></tr>
+            <tr><td class="lab"><strong>so that&hellip;might / would</strong></td><td>Cicero spoke <strong>so that</strong> the senators <strong>might</strong> understand.</td></tr>
+            <tr><td class="lab"><strong>to</strong> + verb (when the subject is the same)</td><td>Cicero rose <strong>to</strong> speak. <span style="font-size:14px; color:#666;">(from <em>ut dīceret</em>)</span></td></tr>
+            <tr><td class="lab"><strong>in order that&hellip;may</strong></td><td>Cicero spoke <strong>in order that</strong> the senators <strong>might</strong> understand.</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>What you must not do:</strong> translate the subjunctive as if it were indicative. <em>Ut senātōrēs intellegerent</em> is not "so that the senators understood" &mdash; that claims it worked. It is "so that the senators <em>might</em> understand." The whole point of the mood is that Latin is telling you about an <em>intention</em>, and intentions can fail.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128260; PART 3 &middot; THE FORMS YOU ALREADY HAVE &mdash; MODULE 6 RECALL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Nothing new here. This is the Module 6 material, and you should be able to fill in most of it from memory before you look. Purpose clauses use only <strong>two</strong> of the four subjunctive tenses &mdash; present and imperfect. (The perfect and pluperfect subjunctive arrive in Module 13 and are <em>not</em> used in purpose clauses.)</p>
+        <table class="para">
+            <tr><th style="width:22%">Conjugation</th><th style="width:39%">Present subjunctive &middot; 1st sg.</th><th>Imperfect subjunctive &middot; 1st sg.</th></tr>
+            <tr><td class="lab">1st &mdash; <em>amō</em></td><td><em>am<span class="end">em</span></em></td><td><em>amāre</em> + <span class="end">m</span> &rarr; <em>amārem</em></td></tr>
+            <tr><td class="lab">2nd &mdash; <em>moneō</em></td><td><em>mon<span class="end">eam</span></em></td><td><em>monēre</em> + <span class="end">m</span> &rarr; <em>monērem</em></td></tr>
+            <tr><td class="lab">3rd &mdash; <em>regō</em></td><td><em>reg<span class="end">am</span></em></td><td><em>regere</em> + <span class="end">m</span> &rarr; <em>regerem</em></td></tr>
+            <tr><td class="lab">3rd io-stem &mdash; <em>capiō</em></td><td><em>cap<span class="end">iam</span></em></td><td><em>capere</em> + <span class="end">m</span> &rarr; <em>caperem</em></td></tr>
+            <tr><td class="lab">4th &mdash; <em>audiō</em></td><td><em>aud<span class="end">iam</span></em></td><td><em>audīre</em> + <span class="end">m</span> &rarr; <em>audīrem</em></td></tr>
+            <tr><td class="lab"><em>sum</em> (irregular)</td><td><em>sim, sīs, sit, sīmus, sītis, sint</em></td><td><em>essem, essēs, esset, essēmus, essētis, essent</em></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The imperfect subjunctive is the easiest form in Latin.</strong> Take the <strong>present infinitive exactly as it is</strong> and add <em>-m, -s, -t, -mus, -tis, -nt</em>. <em>Regere</em> &rarr; <em>regerem, regerēs, regeret, regerēmus, regerētis, regerent</em>. No stem changes, no exceptions to memorize. If you can read a dictionary entry, you can build this tense.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128260; PART 4 &middot; WHICH TENSE? THE MAIN VERB DECIDES &mdash; MODULE 7 RECALL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This is the sequence of tenses from Module 7, and in a purpose clause it comes down to one line: <strong>look at the main verb, then pick.</strong></p>
+        <table class="para">
+            <tr><th style="width:34%">Main verb is&hellip;</th><th style="width:22%">Sequence</th><th>Purpose clause verb</th></tr>
+            <tr><td class="lab"><strong>present</strong> or <strong>future</strong><br><span style="font-size:14px; color:#666;"><em>dīcit, dīcet</em></span></td><td>primary</td><td><strong>present subjunctive</strong> &mdash; <em>ut&hellip;intellegant</em></td></tr>
+            <tr><td class="lab"><strong>past</strong>: imperfect, perfect, or pluperfect<br><span style="font-size:14px; color:#666;"><em>dīcēbat, dīxit, dīxerat</em></span></td><td>secondary</td><td><strong>imperfect subjunctive</strong> &mdash; <em>ut&hellip;intellegerent</em></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">Four worked examples. The only thing changing on the left is the tense of <em>dīcō</em>; watch what that forces on the right.</p>
+        <table class="para">
+            <tr><th style="width:44%">Latin</th><th>English</th></tr>
+            <tr><td><em>Cicerō dīc<strong>it</strong> ut senātōrēs intelleg<strong>ant</strong>.</em></td><td>Cicero speaks so that the senators <strong>may</strong> understand. <span style="font-size:14px; color:#666;">(present &rarr; primary)</span></td></tr>
+            <tr><td><em>Cicerō dīc<strong>et</strong> ut senātōrēs intelleg<strong>ant</strong>.</em></td><td>Cicero will speak so that the senators <strong>may</strong> understand. <span style="font-size:14px; color:#666;">(future &rarr; primary)</span></td></tr>
+            <tr><td><em>Cicerō dīx<strong>it</strong> ut senātōrēs intelleg<strong>erent</strong>.</em></td><td>Cicero spoke so that the senators <strong>might</strong> understand. <span style="font-size:14px; color:#666;">(perfect &rarr; secondary)</span></td></tr>
+            <tr><td><em>Cicerō dīcē<strong>bat</strong> ut senātōrēs intelleg<strong>erent</strong>.</em></td><td>Cicero was speaking so that the senators <strong>might</strong> understand. <span style="font-size:14px; color:#666;">(imperfect &rarr; secondary)</span></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>A shortcut that will not fail you here.</strong> English does the same thing without being asked: "so that they <em>may</em>" after a present verb, "so that they <em>might</em>" after a past one. If your English has <em>may</em>, your Latin wants the present subjunctive. If your English has <em>might</em>, your Latin wants the imperfect.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; PICK THE FORM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Read the main verb first every time. That is the whole method.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Complete each purpose clause with the sequence-correct subjunctive.</div>
+            <div class="widget-row" data-correct="b" data-hint="What tense is <em>mīsit</em>? That decides it.">
+                <div class="widget-row-prompt"><em>Cicerō lēgātōs mīsit ut litterās ____ .</em> &mdash; "Cicero sent envoys so that they might receive the letters." <span style="font-style:normal; color:#8a6416;">(<em>accipiō, accipere</em>)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Accipiant is present subjunctive, which belongs after a present or future main verb. Mīsit is perfect — a past tense — so the clause needs the imperfect subjunctive.">accipiant</button>
+                    <button data-choice="b" data-fb="Right &mdash; acciperent. Mīsit is perfect, so secondary sequence, so imperfect subjunctive: accipere + nt.">acciperent</button>
+                    <button data-choice="c" data-fb="Accipiunt is present INDICATIVE. A purpose clause never takes the indicative — the whole point of the construction is the subjunctive mood.">accipiunt</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="<em>Veniet</em> is future. Future counts as primary.">
+                <div class="widget-row-prompt"><em>Cōnsul veniet ut cīvēs omnia ____ .</em> &mdash; "The consul will come so that the citizens may know everything." <span style="font-style:normal; color:#8a6416;">(<em>sciō, scīre</em>)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Scīrent is imperfect subjunctive, which needs a past main verb. Veniet is future, and future goes with primary sequence.">scīrent</button>
+                    <button data-choice="b" data-fb="Sciunt is present indicative. The mood is wrong: a purpose clause needs the subjunctive.">sciunt</button>
+                    <button data-choice="c" data-fb="Right &mdash; sciant. Veniet is future, so primary sequence, so present subjunctive: sciam, sciās, sciat, sciāmus, sciātis, sciant.">sciant</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which two Module 4 constructions mean the same as <em>ut dīceret</em>?">
+                <div class="widget-row-prompt">Rewrite <em>Cicerō surrēxit ut dīceret</em> using a Module 4 gerund construction. Which is right?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — ad dīcendum, 'for the purpose of speaking.' Dīcendī causā would also work. Both are the compact version of the same idea.">Cicerō surrēxit <em>ad dīcendum</em>.</button>
+                    <button data-choice="b" data-fb="In dīcendō means 'while speaking, in the course of speaking' — a circumstance, not a purpose. Module 4 was clear about this one.">Cicerō surrēxit <em>in dīcendō</em>.</button>
+                    <button data-choice="c" data-fb="Dīcendō on its own is an ablative gerund of means — 'by speaking.' That is how he did something, not what he was aiming at.">Cicerō surrēxit <em>dīcendō</em>.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Only two subjunctive tenses appear in purpose clauses.">
+                <div class="widget-row-prompt">Which two tenses of the subjunctive are used in purpose clauses?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Perfect and pluperfect subjunctive are real forms, but you meet them in Module 13, and they do not appear in purpose clauses.">Perfect and pluperfect</button>
+                    <button data-choice="b" data-fb="Right — present (primary sequence) and imperfect (secondary sequence). Those are the only two you need for every purpose clause this semester.">Present and imperfect</button>
+                    <button data-choice="c" data-fb="Future subjunctive does not exist in Latin at all. The present subjunctive already carries the forward-looking sense a purpose needs.">Present and future</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE &mdash; THIS ONE IS GRADED</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the <em>Forum Rōmānum</em>, or the <em>Cūria</em> &mdash; the Senate House where Cicero laid the seized letters in front of the men who had sealed them. Your choice of the two. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label at least <strong>six</strong> structures or objects in Latin with correct case endings, then write a <strong>short Latin reflection</strong> on the scene that includes <strong>at least one purpose clause</strong>. <span style="color:#666;">[ARTHUR: labeling tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>This is the Module 8 ARTHUR Project</strong> &mdash; the first graded one in the course, and it counts in the Project group. Full instructions and the rubric are on the assignment page in Canvas. Every module before this one gave you an ungraded practice run; this is the one that counts, and you have had eight modules of practice at it.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; VIRTŪS &middot; COURAGE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Virtūs</em> comes from <em>vir</em>, "man," and for Romans it meant courage first and excellence generally. You met it in Module 2 as the nerve to hold two things at once. Here it means something more specific: <strong>acting on purpose</strong>.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">Romans drew a hard line between <em>virtūs</em> and <em>audācia</em> &mdash; recklessness, nerve without a plan. Catiline had <em>audācia</em>. What Cicero claimed for himself was <em>virtūs</em>: he did each thing <em>so that</em> a particular good would follow, or <em>so that</em> a particular harm would not. That is not a coincidence of vocabulary. The purpose clause is the grammar of intentional courage &mdash; it is the shape a sentence takes when someone can say why they did what they did. Watch for it in Thursday's reading; nearly every action Cicero reports comes with one attached.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 8.02 &mdash; <em>Nē</em>: One Word for "So That&hellip;Not"</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Negative purpose, which Latin handles with a single word &mdash; and the single most valuable thing you will learn this module: why <em>ut nōn</em> is <strong>not</strong> how you say it.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A purpose clause is <strong><em>ut</em> + subjunctive</strong>, and it answers <strong>"Why?"</strong> The tense is not your choice: a <strong>present or future</strong> main verb takes the <strong>present</strong> subjunctive, a <strong>past</strong> main verb takes the <strong>imperfect</strong>. Read the main verb first, then build.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.01 &middot; The Third Way to Say Why</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

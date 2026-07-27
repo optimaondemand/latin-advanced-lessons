@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 6.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">Subjunctive I: Formation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">A Second Mood</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">A Second Mood</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Every verb you have met for two years has been making a claim about the world. Today Latin stops claiming.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><em>Cicerō dīcit</em> &mdash; "Cicero speaks." That is a fact, and Latin has a whole system for facts: the <strong>indicative</strong> mood, all six tenses of it, active and passive. You own that system. Today you get a <strong>second</strong> one, built for what is <em>not</em> fact &mdash; what might be, what someone wishes were so, what nobody is sure about. It is called the <strong>subjunctive</strong>, and it is the largest single addition of this course.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what a <em>mood</em> is, and say what the subjunctive does that the indicative cannot.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the <strong>present active subjunctive</strong> of all four conjugations, all six persons.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell <em>amās</em> from <em>amēs</em> &mdash; and say which one is a fact.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; WHAT A MOOD IS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A verb's <strong>tense</strong> tells you <em>when</em>. A verb's <strong>voice</strong> tells you whether the subject acts or is acted on. A verb's <strong>mood</strong> tells you something different from either: <em>what kind of claim the speaker is making.</em></p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#0e1c42; letter-spacing:.4px; margin-bottom:6px;">INDICATIVE &mdash; THE MOOD OF FACT</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>Catilīna ex urbe discēdit.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Catiline is leaving the city." <span style="color:#666;">This happened. I am telling you it happened.</span></div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6D59A; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; letter-spacing:.4px; margin-bottom:6px;">SUBJUNCTIVE &mdash; THE MOOD OF NOT-QUITE</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>Catilīna ex urbe discēdat.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"May Catiline leave the city." <span style="color:#666;">He has not. I am putting the idea in the air.</span></div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">One letter apart. Two completely different acts of speech. The subjunctive is the mood Latin uses for:</p>
+        <table class="para">
+            <tr><th style="width:24%">It carries</th><th>Which sounds like this in English</th></tr>
+            <tr><td class="lab"><strong>Possibility</strong></td><td>"he <em>might</em> come," "this <em>could</em> happen"</td></tr>
+            <tr><td class="lab"><strong>Wish</strong></td><td>"<em>may</em> he come," "<em>if only</em> he would"</td></tr>
+            <tr><td class="lab"><strong>Doubt</strong></td><td>"I am not sure whether he <em>is</em> coming"</td></tr>
+            <tr><td class="lab"><strong>Restraint</strong></td><td>"one <em>ought not</em>," "let us not"</td></tr>
+            <tr><td class="lab"><strong>Subordinate ideas</strong></td><td>"so that he <em>might</em> hear," "because he <em>was</em> afraid," "he asked why they <em>were</em> silent"</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>English still has one, barely.</strong> "I wish he <em>were</em> here" &mdash; not <em>was</em>. "If I <em>were</em> you" &mdash; not <em>am</em>. "The court insists that he <em>appear</em>" &mdash; not <em>appears</em>. Those odd-sounding verbs are the last survivors of an English subjunctive. Latin's is not a survivor. It is alive, regular, and everywhere.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#128220; <strong>Where the name comes from.</strong> Roman grammarians called it the <em>modus subiūnctīvus</em> &mdash; from <em>sub</em> ("underneath") + <em>iungō</em> ("I join"). The <strong>joined-underneath mood</strong>: the mood of the clause that hangs under another clause. That name is a promise about where you will mostly meet it, and Modules 8 through 12 are that promise being kept. This module is about the forms themselves.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Latin gets a whole second set of verb endings just for things that are not facts. Before you learn them &mdash; why would a language bother?</div>
+            <div class="widget-options">
+                <button data-response="That is a real part of it. Latin loves subordination: 'so that,' 'because,' 'although,' 'he asked whether.' Those clauses are not standing on their own feet, and Latin marks that with the verb rather than leaving you to guess from word order.">Because Latin builds long sentences out of dependent clauses</button>
+                <button data-response="Yes &mdash; and this is the reason that matters most for this semester. Cicero is a lawyer speaking in a room full of enemies. He needs to say 'this might be thought harsh,' 'someone could claim,' 'I would have acted if.' A mood for hedging is a mood for politics.">Because speakers need to hedge &mdash; to say things without claiming them</button>
+                <button data-response="Fair, and English does exactly that: we use helper words (may, might, would, should, could) where Latin changes the ending. Neither is more logical. Latin puts the information inside the word, which is why you have to learn a form instead of a word.">Honestly? English manages with 'might' and 'would' instead</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE PRESENT SUBJUNCTIVE: ONE VOWEL DOES ALL THE WORK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is the whole rule, and it is shorter than you are expecting. The present subjunctive keeps the personal endings you already know &mdash; <em>-m/-ō, -s, -t, -mus, -tis, -nt</em> &mdash; and changes <strong>the vowel in front of them</strong>.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;"><strong>1st conjugation:</strong> the stem vowel <em>-ā-</em> is <strong>replaced by <em>-ē-</em></strong>.<br><strong>Everything else:</strong> <strong><em>-ā-</em> is added</strong> to the present stem.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">First conjugation, then. <em>Amō, amāre</em> gives the stem <em>am-</em>, and the subjunctive vowel is <em>ē</em>:</p>
+        <table class="para">
+            <tr><th style="width:20%">1st conj. &mdash; <em>amō, amāre</em></th><th style="width:40%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st person</td><td>am<span class="end">e</span>m</td><td>am<span class="end">ē</span>mus</td></tr>
+            <tr><td class="lab">2nd person</td><td>am<span class="end">ē</span>s</td><td>am<span class="end">ē</span>tis</td></tr>
+            <tr><td class="lab">3rd person</td><td>am<span class="end">e</span>t</td><td>am<span class="end">e</span>nt</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Why some of those <em>e</em>'s are short.</strong> A long vowel shortens before final <em>-m</em>, <em>-t</em> and <em>-nt</em> &mdash; which is why you write <em>amem, amet, ament</em> but <em>amēs, amēmus, amētis</em>. You have already lived with this: it is the same reason the indicative is <em>amat</em> and not <em>amāt</em>. Learn the pattern, not a list.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 6px 0;">Now the other four. Same idea, different vowel: take the present stem and put <strong><em>-ā-</em></strong> in front of the endings. For 3rd io-stem and 4th verbs the stem already ends in <em>-i-</em>, so you get <em>-iā-</em>.</p>
+        <table class="para">
+            <tr><th style="width:20%">Conjugation</th><th style="width:16%">Stem</th><th>Present active subjunctive</th></tr>
+            <tr><td class="lab"><strong>2nd</strong> &mdash; <em>moneō, monēre</em></td><td><em>mone-</em></td><td><em>mone<span class="end">a</span>m, mone<span class="end">ā</span>s, mone<span class="end">a</span>t, mone<span class="end">ā</span>mus, mone<span class="end">ā</span>tis, mone<span class="end">a</span>nt</em></td></tr>
+            <tr><td class="lab"><strong>3rd</strong> &mdash; <em>regō, regere</em></td><td><em>reg-</em></td><td><em>reg<span class="end">a</span>m, reg<span class="end">ā</span>s, reg<span class="end">a</span>t, reg<span class="end">ā</span>mus, reg<span class="end">ā</span>tis, reg<span class="end">a</span>nt</em></td></tr>
+            <tr><td class="lab"><strong>3rd io-stem</strong> &mdash; <em>capiō, capere</em></td><td><em>capi-</em></td><td><em>capi<span class="end">a</span>m, capi<span class="end">ā</span>s, capi<span class="end">a</span>t, capi<span class="end">ā</span>mus, capi<span class="end">ā</span>tis, capi<span class="end">a</span>nt</em></td></tr>
+            <tr><td class="lab"><strong>4th</strong> &mdash; <em>audiō, audīre</em></td><td><em>audi-</em></td><td><em>audi<span class="end">a</span>m, audi<span class="end">ā</span>s, audi<span class="end">a</span>t, audi<span class="end">ā</span>mus, audi<span class="end">ā</span>tis, audi<span class="end">a</span>nt</em></td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 20px; margin:10px 0;">
+            <div style="font-size:13px; color:#6b7a99; margin-bottom:6px;">MEMORY WORK &middot; SAY IT OUT LOUD</div>
+            <div style="font-size:20px; color:#0e1c42; line-height:1.6;"><em>am<strong>e</strong>m &middot; mone<strong>a</strong>m &middot; reg<strong>a</strong>m &middot; capi<strong>a</strong>m &middot; audi<strong>a</strong>m</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">Five first-person forms, one per conjugation, in order. Learn that chant and you have the vowel of every present subjunctive in Latin: <strong>e</strong> once, then <strong>a</strong> four times. One oddity out of five is a good deal.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 3 &middot; THE MACRON THAT CHANGES THE MOOD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">In the first conjugation, the subjunctive vowel <em>ē</em> lands exactly where the indicative had <em>ā</em>. That means the difference between "you love" and "may you love" is <strong>one letter</strong>, and in some persons only <strong>one macron</strong>. This is not a trick question the course invented; it is how Latin works, and Roman readers handled it by paying attention.</p>
+        <table class="para">
+            <tr><th style="width:28%">Indicative &mdash; the fact</th><th style="width:28%">Subjunctive &mdash; not the fact</th><th>What changed</th></tr>
+            <tr><td><em>am<strong>ā</strong>s</em> &mdash; "you love"</td><td><em>am<strong>ē</strong>s</em> &mdash; "you may love"</td><td>the stem vowel: <em>ā</em> &rarr; <em>ē</em></td></tr>
+            <tr><td><em>am<strong>a</strong>t</em> &mdash; "he loves"</td><td><em>am<strong>e</strong>t</em> &mdash; "he may love"</td><td>one letter, both short</td></tr>
+            <tr><td><em>am<strong>ā</strong>mus</em> &mdash; "we love"</td><td><em>am<strong>ē</strong>mus</em> &mdash; "we may love"</td><td>the stem vowel again</td></tr>
+            <tr><td><em>mon<strong>e</strong>t</em> &mdash; "he warns"</td><td><em>mon<strong>ea</strong>t</em> &mdash; "he may warn"</td><td>an <em>a</em> appears out of nowhere</td></tr>
+            <tr><td><em>reg<strong>i</strong>t</em> &mdash; "he rules"</td><td><em>reg<strong>a</strong>t</em> &mdash; "he may rule"</td><td><em>i</em> becomes <em>a</em></td></tr>
+            <tr><td><em>aud<strong>i</strong>t</em> &mdash; "he hears"</td><td><em>aud<strong>ia</strong>t</em> &mdash; "he may hear"</td><td>an <em>a</em> is added after the <em>i</em></td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The mistake to head off right now.</strong> A long <em>ē</em> is <em>not</em> a subjunctive signal by itself. <em>Monēs</em> ("you warn") and <em>manēs</em> ("you remain") are plain present indicatives &mdash; that <em>ē</em> is simply the 2nd-conjugation stem vowel. The subjunctive of those verbs is <em>moneās</em> and <em>maneās</em>, with the added <em>a</em>. Before you call a form subjunctive, ask <strong>which conjugation</strong> the verb belongs to. The vowel only means something once you know that.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; CHECK YOUR UNDERSTANDING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four questions. Each one is a decision you will make hundreds of times this semester.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; PRESENT SUBJUNCTIVE, ACTIVE</div>
+            <div class="widget-question">Name the conjugation first. Then pick the vowel.</div>
+            <div class="widget-row" data-correct="b" data-hint="Vocō is 1st conjugation. Which vowel replaces the ā?">
+                <div class="widget-row-prompt">Present subjunctive, 3rd singular active, of <em>vocō, vocāre</em> ("to call"):</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Vocat is the present indicative &mdash; 'he calls.' That is the fact form, not the subjunctive.">vocat</button>
+                    <button data-choice="b" data-fb="Right &mdash; vocet. First conjugation replaces the ā with ē, and the ē shortens before final -t.">vocet</button>
+                    <button data-choice="c" data-fb="Vocat with an added a is not a Latin form. The -a- rule belongs to conjugations 2, 3 and 4; the 1st conjugation swaps in ē instead.">vocaat</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Videō, vidēre is 2nd conjugation. Its stem is vide-.">
+                <div class="widget-row-prompt">Present subjunctive, 3rd singular active, of <em>videō, vidēre</em> ("to see"):</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Vidēret is the imperfect subjunctive &mdash; you build that one tomorrow-but-one, in 6.03. The question asked for the present.">vidēret</button>
+                    <button data-choice="b" data-fb="Vidēt is not a Latin spelling; the indicative is videt, short e. And the present subjunctive needs an added a.">vidēt</button>
+                    <button data-choice="c" data-fb="Right &mdash; videat. Stem vide- plus the subjunctive -a-, then the ending -t.">videat</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="One of these is a 2nd-conjugation indicative wearing a long ē.">
+                <div class="widget-row-prompt">Which of these is <strong>indicative</strong>, not subjunctive?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; manēs, 'you remain,' present indicative of maneō. The ē is just the 2nd-conjugation stem vowel. Its subjunctive is maneās.">manēs</button>
+                    <button data-choice="b" data-fb="Amēs is subjunctive: 1st conjugation with ē replacing ā. The indicative is amās.">amēs</button>
+                    <button data-choice="c" data-fb="Audiant is subjunctive: stem audi- plus the added -a-. The indicative 3rd plural is audiunt.">audiant</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Which conjugation does capiō belong to, and what happens to the -i-?">
+                <div class="widget-row-prompt">Present subjunctive, 1st plural active, of <em>capiō, capere</em> ("to seize"):</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Capimus is the present indicative &mdash; 'we seize.'">capimus</button>
+                    <button data-choice="b" data-fb="Right &mdash; capiāmus. The stem is capi-, the subjunctive adds -ā-, and the ending is -mus.">capiāmus</button>
+                    <button data-choice="c" data-fb="Capiēmus is the future indicative, 'we shall seize.' Close in shape, different vowel, different mood.">capiēmus</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the <em>Forum Rōmānum</em> &mdash; specifically the open ground in front of the <em>Cūria</em>, where a crowd would wait to hear what the Senate had decided. <span style="color:#666;">[ARTHUR: scene link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things you can see, in Latin, with correct case endings &mdash; for example <em>Cūria</em> (Senate House), <em>templum</em>, <em>rōstra</em> (the speaker's platform), <em>populus</em>, <em>ōrātor</em>, <em>via</em>. <span style="color:#666;">[ARTHUR: labeling tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write one Latin sentence containing a subjunctive form</strong> from this module. It does not need to sit in a subordinate clause yet &mdash; you have not been taught those jobs. A bare wish is plenty: <em>Cōnsul nōs dēfendat.</em> &mdash; "May the consul defend us." Formative and <strong>ungraded</strong>; the graded ARTHUR project arrives at Module 8. <span style="color:#666;">[ARTHUR: how to save and where to record completion]</span></p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; TEMPERANTIA &middot; SELF-GOVERNMENT</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><em>Temperantia</em> is built on <em>temperāre</em>, "to mix in the right proportion" &mdash; from <em>tempus</em>, the same root that gives Latin <em>tempestās</em>, weather. Unmixed weather is a storm. A person of <em>temperantia</em> is not timid; they are <strong>proportioned</strong>. They know how much is enough, and they can stop.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">The subjunctive is the grammar of that. The indicative declares: <em>this is so</em>. The subjunctive weighs: <em>this might be so, this ought to be so, I am not certain it is so</em>. Cicero in 63 BC could have arrested Catiline in the middle of his own speech and did not &mdash; and the whole first <em>Catilīnarian</em> is an argument in the subjunctive mood about why. Learning these endings is learning how a language says <em>hold on</em>. That is a small piece of self-government, done with verbs.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 6.02 &mdash; The Other Half: Passive, Deponent, and <em>Esse</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The same vowel, the passive endings you already own: <em>amer, amēris, amētur</em>. Then the deponents collect their reward &mdash; <em>loquar, loquāris, loquātur</em> &mdash; and you meet the only three present subjunctives in Latin worth memorising as a list: <em>sim</em>, <em>possim</em>, <em>eam</em>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Mood is not tense. The <strong>subjunctive</strong> is a second way of holding a verb &mdash; the mood of the possible, the wished-for, and the doubted. To build the present subjunctive: <strong>1st conjugation swaps <em>ā</em> for <em>ē</em>; every other conjugation adds <em>ā</em>.</strong> Chant it: <em>amem, moneam, regam, capiam, audiam.</em></p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.01 &middot; A Second Mood</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

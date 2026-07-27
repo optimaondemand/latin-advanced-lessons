@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 8.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 8</div>
+        <div style="font-size: 12px; color: #666;">Purpose Clauses &amp; Indirect Command</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Purpose, or Not?</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Purpose, or Not?</div>
+        <div style="font-size: 16px; color: #666;">Review &amp; Self-Check &middot; Gate Module</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The skill worth having is not "recognize <em>ut</em>." It is telling apart four constructions that all look alike.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today: one review table, one identifier drill, one form check, and a plain, honest word about the <strong>Module 8 gate</strong> &mdash; what it asks for, why it exists, and why a low first attempt costs you nothing.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell a purpose clause apart from an indirect command, an indirect statement, and an ordinary relative clause.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> produce any present or imperfect subjunctive form the module asks for, active, passive, or deponent.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state exactly what the Module 8 gate requires of me and what I will do if my first attempt falls short.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; MODULE 8 IN FIVE LINES</div>
+        <table class="para">
+            <tr><th style="width:22%">Lesson</th><th>The one thing to keep</th></tr>
+            <tr><td class="lab">8.01</td><td>Purpose = <strong><em>ut</em> + subjunctive</strong>, answering "Why?" The main verb picks the tense: <strong>present/future &rarr; present subj.</strong>, <strong>past &rarr; imperfect subj.</strong></td></tr>
+            <tr><td class="lab">8.02</td><td>Negative purpose = <strong><em>nē</em></strong>, one word, never <em>ut nōn</em>. Passive and deponent verbs go inside the clause with the passive-shaped subjunctive endings.</td></tr>
+            <tr><td class="lab">8.03</td><td>Indirect command = the same clause after a verb of ordering or asking. <strong><em>imperō</em>, <em>persuādeō</em> + dative</strong>; <strong><em>rogō, ōrō, moneō, hortor</em> + accusative</strong>; <strong><em>iubeō</em> + accusative + infinitive, no <em>ut</em>.</strong></td></tr>
+            <tr><td class="lab">8.04</td><td>In real prose these clauses carry the argument. A relative pronoun plus a <strong>subjunctive</strong> verb (<em>quī&hellip;custōdīrent</em>) is also purpose &mdash; recognize it.</td></tr>
+            <tr><td class="lab">8.05</td><td>The reader's real job is discrimination: <em>ut</em> + subjunctive is not always purpose, and a subjunctive is not always <em>ut</em>.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Five questions to ask of any purpose clause you write.</strong> (1) Is the purpose positive or negative &mdash; <em>ut</em> or <em>nē</em>? (2) What tense is my <strong>main</strong> verb? (3) Therefore, present or imperfect subjunctive? (4) Is the clause's verb active, passive, or deponent? (5) If there is a person being ordered, does this verb want the dative or the accusative? Run that list and you will not lose a mark on this module.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128269; PART 2 &middot; THE IDENTIFIER</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Seven sentences. For each one, name the construction. This is the exact skill the first section of the quiz tests.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; PURPOSE, OR SOMETHING ELSE?</div>
+            <div class="widget-question">Read the main verb, then the subordinate clause, then decide.</div>
+            <div class="widget-row" data-correct="b" data-hint="Is anyone being ordered here, or is this just a reason for going?">
+                <div class="widget-row-prompt"><em>Cicerō ad Forum prōcessit ut populus omnia audīret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nobody is being ordered. Prōcēdō is a verb of motion, not of commanding — this clause gives the reason he went.">Indirect command</button>
+                    <button data-choice="b" data-fb="Right — a plain positive purpose clause: 'so that the people might hear everything.' The main verb is a verb of motion, and the clause answers 'why did he go?'">Purpose clause</button>
+                    <button data-choice="c" data-fb="An indirect statement is accusative + infinitive, with no ut. Here you have ut plus a subjunctive.">Indirect statement</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="What kind of verb is <em>persuāsit</em>, and what case is <em>lēgātīs</em>?">
+                <div class="widget-row-prompt"><em>Cicerō lēgātīs persuāsit ut tabellās acciperent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not simple purpose. Persuādeō is a verb of persuading, and lēgātīs is the dative of the person worked on — that combination makes this a reported order.">Purpose clause</button>
+                    <button data-choice="b" data-fb="Ordinary relative clauses are introduced by quī, quae, quod. There is no relative pronoun here.">Relative clause</button>
+                    <button data-choice="c" data-fb="Right — indirect command. Persuādeō + dative (lēgātīs) + ut + subjunctive: 'he persuaded the envoys to accept the letters.'">Indirect command</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Count the <em>ut</em>s. There are none.">
+                <div class="widget-row-prompt"><em>Cicerō dīxit coniūrātōs tabellās dedisse.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — indirect statement, the 0706010 construction: accusative subject (coniūrātōs) plus a perfect infinitive (dedisse). 'Cicero said that the conspirators had given the letters.'">Indirect statement</button>
+                    <button data-choice="b" data-fb="A purpose clause needs ut or nē and a subjunctive. This has an accusative and an infinitive instead.">Purpose clause</button>
+                    <button data-choice="c" data-fb="Dīcō here means 'said,' reporting a fact, not an order. And an indirect command would need ut or nē.">Indirect command</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Look hard at the mood of <em>custōdīrent</em>.">
+                <div class="widget-row-prompt"><em>Cicerō custōdēs mīsit quī pontem custōdīrent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not an ordinary relative clause: custōdīrent is subjunctive, not indicative. An ordinary relative clause here would read quī pontem custōdiēbant.">Ordinary relative clause</button>
+                    <button data-choice="b" data-fb="Nobody is ordered. Mittō is a verb of sending; the clause explains what the guards were sent for.">Indirect command</button>
+                    <button data-choice="c" data-fb="Right — relative purpose. Quī plus a subjunctive after a verb of sending: 'Cicero sent guards to guard the bridge.' Ut pontem custōdīrent would mean the same thing.">Relative purpose clause</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Same sentence as the last one with one ending changed. Which mood now?">
+                <div class="widget-row-prompt"><em>Cicerō custōdēs mīsit quī pontem custōdiēbant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Custōdiēbant is imperfect INDICATIVE, not subjunctive. Purpose always needs the subjunctive.">Relative purpose clause</button>
+                    <button data-choice="b" data-fb="Right — an ordinary relative clause in the indicative: 'guards who were guarding the bridge.' It tells you a fact about them, not a purpose.">Ordinary relative clause</button>
+                    <button data-choice="c" data-fb="There is no ut and no subjunctive, so no purpose clause. The mood is the whole tell here.">Purpose clause</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which verb is this, and what construction does it insist on?">
+                <div class="widget-row-prompt"><em>Cicerō Catilīnam ex urbe discēdere iussit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a reported order built the iubeō way: accusative (Catilīnam) plus infinitive (discēdere), no ut and no subjunctive anywhere.">A reported order &mdash; <em>iubeō</em> + acc. + infinitive</button>
+                    <button data-choice="b" data-fb="There is no ut and no subjunctive in this sentence, so it is not the ut-clause kind of indirect command. The meaning is an order; the construction is not.">Indirect command with <em>ut</em> + subjunctive</button>
+                    <button data-choice="c" data-fb="A purpose clause would answer 'why did Cicero do something?' This sentence reports what he told Catiline to do.">Purpose clause</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Look at <em>ita</em> in the main clause. Is this an intention, or an outcome?">
+                <div class="widget-row-prompt"><em>Cicerō ita fortiter ēgit ut omnēs eum laudārent.</em> <span style="font-style:normal; color:#8a6416;">(<em>ita</em> &mdash; so, in such a way; <em>fortiter</em> &mdash; bravely; <em>ēgit</em> &mdash; he acted; <em>laudārent</em> &mdash; impf. subj. of <em>laudō</em>)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not purpose. This does not say Cicero acted IN ORDER TO be praised; it says his action was so brave THAT praise followed. That is an outcome, not an aim.">Purpose clause</button>
+                    <button data-choice="b" data-fb="Right — not purpose. The ita in the main clause is the signal that the ut clause reports a CONSEQUENCE: 'he acted so bravely that everyone praised him.' This is a result clause, and it is Module 9's job — you are not expected to name it yet, only to notice that ut + subjunctive is not automatically purpose.">Not purpose &mdash; something else, coming in Module 9</button>
+                    <button data-choice="c" data-fb="Nobody is being ordered. Agō is not a verb of commanding, and there is no person in the dative or accusative receiving an order.">Indirect command</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 3 &middot; FORM CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write each form out on paper <strong>before</strong> you flip the card. Anything you miss here is exactly what to review before the quiz &mdash; and the quiz asks for forms like these in writing.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; PRODUCE THE FORM &middot; THEN CLICK TO CHECK</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front">3rd person <strong>plural present</strong> subjunctive of <em>audiō, audīre</em></div><div class="hint">click to check</div><div class="back"><strong><em>audiant</em></strong>. The 4th-conjugation present subjunctive runs <em>audiam, audiās, audiat, audiāmus, audiātis, audiant</em>. Use it after a present or future main verb.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front">3rd person <strong>singular imperfect</strong> subjunctive of <em>capiō, capere</em></div><div class="hint">click to check</div><div class="back"><strong><em>caperet</em></strong>. Present infinitive <em>capere</em> + <em>t</em>. Do not reach for <em>capiam</em>-type endings here: the imperfect subjunctive ignores the io-stem entirely.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front">3rd person <strong>plural imperfect</strong> subjunctive of <em>effugiō, effugere</em></div><div class="hint">click to check</div><div class="back"><strong><em>effugerent</em></strong>. <em>Effugere</em> + <em>nt</em>. This is the form in <em>nē lēgātī effugerent</em> &mdash; the most-quoted clause in the module.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front">2nd person <strong>plural present</strong> subjunctive of <em>teneō, tenēre</em></div><div class="hint">click to check</div><div class="back"><strong><em>teneātis</em></strong>. From Cicero's own request in the reading: <em>Ōrō vōs ut huius diēī memoriam teneātis</em>. Present, because <em>ōrō</em> is present.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front">3rd person <strong>singular imperfect</strong> subjunctive <strong>passive</strong> of <em>dēleō, dēlēre</em></div><div class="hint">click to check</div><div class="back"><strong><em>dēlērētur</em></strong>. Build the active <em>dēlēret</em>, then trade the active ending for the passive one: <em>-t</em> becomes <em>-tur</em> with the long vowel &mdash; <em>dēlērētur</em>, "it might be destroyed."</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front">3rd person <strong>singular imperfect</strong> subjunctive of the deponent <em>suspicor, suspicārī</em></div><div class="hint">click to check</div><div class="back"><strong><em>suspicārētur</em></strong>. Passive in form, active in meaning: "he might suspect." As in <em>Cicerō tacuit nē Catilīna suspicārētur</em>.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front">Fill the gap: <em>Cicerō mīlitibus imperāvit ____ venīrent.</em></div><div class="hint">click to check</div><div class="back"><strong><em>ut</em></strong> &mdash; "he ordered the soldiers to come." And notice <em>mīlitibus</em>: <em>imperō</em> always takes the <strong>dative</strong> of the person ordered. If the sense were negative, the gap would be <em>nē</em>, never <em>ut nōn</em>.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- THE GATE -->
+    <div style="background:#FDF3E3; border:1px solid #E6DFC9; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:10px;">&#128274; THE MODULE 8 GATE &mdash; PLAINLY</div>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;">Module 8 is a <strong>mastery gate</strong>. The Module 8 Quiz is out of <strong>40 points</strong>, and you need <strong>32 out of 40 &mdash; 80% &mdash; to unlock the rest of the semester.</strong> Modules 9 through 16 stay closed until you get there.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;"><strong>You may retake the quiz as many times as you like, and we would like you to.</strong> Canvas keeps your <strong>highest</strong> score, so a first attempt that goes badly costs you nothing except the time to go back and fix what it showed you. There is no penalty, no limit, and no record of the attempts that did not work. Take the first one as a diagnosis.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;"><strong>Why the gate is here, and only here.</strong> There are exactly two in the semester &mdash; this one and Module 16 &mdash; and this is not an arbitrary place for one. Everything from Module 9 on is built directly on top of the subjunctive: result clauses (9), <em>cum</em> clauses (10), indirect questions (11), fear clauses (12), then two more tenses of the subjunctive (13), the jussive and hortatory uses (14), and conditions (15). Every one of them assumes you can build a subjunctive and pick its tense by sequence without stopping to think.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0;">A student who slips past this point shaky does not get an easier course &mdash; they get a much harder one, for eight straight modules. The gate is not a hurdle we put in your way. It is the point at which the rest of the semester becomes readable. If your first attempt lands under 32, go back to <strong>8.01 Part 4</strong> (sequence), <strong>8.02 Part 3</strong> (passive and deponent forms), and <strong>8.03 Part 2</strong> (the case each verb takes) &mdash; in our experience that is where nearly all the lost points live &mdash; then come back and take it again.</p>
+    </div>
+
+    <!-- THIS WEEK'S WORK -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; YOUR GRADED WORK FOR MODULE 8</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Lūdus VIII &mdash; <em>Ut et Nē</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">75 seconds of marker words, sequence choices, and the case each command-verb takes. <strong>Best of unlimited attempts.</strong> This is also the fastest gate preparation available to you.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #AA1E2D; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 8 Quiz</strong> &middot; auto-graded &middot; <span style="color:#AA1E2D;">THE GATE &mdash; 32/40 needed</span></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Identification, written form production, <em>ut</em> versus <em>nē</em>, indirect commands and their cases, vocabulary, and best-translation questions. Unlimited attempts, highest score kept.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 8 Translation</strong> &middot; read by your teacher</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five sentences into Latin, three out of Latin, every one built on a purpose clause or an indirect command. Full vocabulary provided &mdash; you are assessed on <em>forms and syntax</em>, not on memory.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #2A9D5C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 8 ARTHUR Project</strong> &middot; graded &mdash; the first one in the course</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The <em>Forum Rōmānum</em> or the <em>Cūria</em>: at least six Latin labels with correct case endings, plus a short Latin reflection containing at least one purpose clause. Rubric on the assignment page.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 8 Reflection</strong> &middot; ungraded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five quick questions, including one about the gate itself. Tell your teacher honestly how it went &mdash; that is what shapes the help you get next.</div>
+            </div>
+        </div>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; margin-top:14px; font-size:16px; color:#1a2340; line-height:1.6;">&#128196; <strong>M365 step for the translation.</strong> Write it in <strong>Microsoft Word</strong>. Put your Latin in <em>italics</em> (Ctrl+I) and leave your English in plain text. Save to <strong>OneDrive</strong> as <code>Lastname_Firstname_LatinAdv_M08_Translation.docx</code> and submit through Canvas. On one English-to-Latin sentence, add a Word <strong>Comment</strong> naming the clause type you used (positive <em>ut</em>, negative <em>nē</em>, or indirect command) and the sequence rule you applied.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT'S COMING</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M9</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 9 &mdash; Result Clauses</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The other <em>ut</em> clause &mdash; and finally, the place where <em>ut nōn</em> belongs. Result reports what actually followed rather than what was intended, and it usually announces itself with a word like <em>ita, tam</em>, or <em>tantus</em> in the main clause. The reading turns to Sallust and the debate in the Senate over what to do with the men Cicero had just arrested. <strong>Module 9 opens when the Module 8 gate is cleared.</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A subjunctive after <em>ut</em> is a question, not an answer: <strong>purpose, or a reported order, or something else?</strong> Read the main verb first &mdash; it tells you the construction, and it tells you the tense. That habit is what the gate is checking, and it is what makes the next eight modules readable.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.05 &middot; Purpose, or Not?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

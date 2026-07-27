@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 10.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 10</div>
+        <div style="font-size: 12px; color: #666;"><em>Cum</em> Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 10.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Fifth of December</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 25 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 10.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Fifth of December</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Module Review</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Module 9 ended with the Senate voting. Today you read what happened before that night was over.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Cato's motion carried. Within hours, five Roman citizens were dead in a cell beside the Forum, and Sallust wrote the coldest paragraph in his book about it. You will read it adapted &mdash; ten lines carrying almost every use of <em>cum</em> you have learned this week, including one line with the conjunction and the preposition side by side. Then you review the module and pick up your graded work.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted passage of Sallust and name the job of every <em>cum</em> in it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what the Romans argued about after the executions, and why it ended Cicero's career for a while.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the whole module in one table and begin the quiz without re-reading the week.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; BEFORE YOU READ</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Three things to hold in your head, because the passage assumes all three and explains none of them.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>1. The vote had just happened.</strong> That is the debate you read in Module 9: Caesar arguing for imprisonment, Cato for death. Cato won. Sallust's next sentence is the one you are about to read, and it moves without a pause from a vote to an execution.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>2. Lentulus was a serving magistrate.</strong> Publius Cornēlius Lentulus Sūra was <em>praetor</em> in 63 BC &mdash; and had been <em>consul</em> years earlier, in 71. Rome did not execute a magistrate in office. So the first thing that had to happen was a resignation. You met that sentence in 10.04.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>3. The prison was two rooms.</strong> The <em>carcer</em> beside the Forum had an upper chamber and, below it, a cell called the <em>Tulliānum</em>, sunk into the rock. Rome did not use prisons for long sentences; the <em>Tulliānum</em> was where sentences were carried out. Sallust stops the narrative to describe it, which is the one moment in the chapter where his voice shows.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Watch for the grammar doing the work.</strong> Count the <em>cum</em>s as you read &mdash; there are five, and they are not all doing the same job. One of them is the preposition. One line has both kinds in it. Sallust did not arrange this for your benefit; this is simply what Latin prose looks like, which is why the four-step procedure was worth learning.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; THE READING</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>Adapted from Sallust,</strong> <em>Bellum Catilīnae</em> <strong>55.</strong> The sentences have been shortened and simplified to the grammar you have been taught; the order of events, the names, and the description of the <em>Tulliānum</em> are Sallust's. This is an <strong>adaptation</strong>, not Sallust's own Latin.</div>
+        <div class="rd">
+            <p><span class="ln">1</span><b>Cum</b> senātōrēs Catōnī assentīrentur, Cicerō diūtius nōn dubitāvit.</p>
+            <p><span class="ln">2</span>Nox iam appropinquābat; itaque cōnsul trēsvirōs supplicium parāre iussit, nē quid eā nocte novārētur.</p>
+            <p><span class="ln">3</span><b>Cum</b> Lentulus praetor esset, prīmum magistrātū sē abdicāre dēbuit.</p>
+            <p><span class="ln">4</span>Tum Cicerō ipse eum <b>cum</b> praesidiō per Viam Sacram in carcerem dēdūxit; idem per praetōrēs cēterīs factum est.</p>
+            <p><span class="ln">5</span>Est in carcere locus quī Tulliānum appellātur, circiter duodecim pedēs humī dēpressus.</p>
+            <p><span class="ln">6</span>Tam foedus est ille locus ut nēmō eum sine horrōre aspiciat.</p>
+            <p><span class="ln">7</span><b>Cum</b> Lentulus in eum locum dēmitterētur, vindicēs laqueō gulam frēgērunt.</p>
+            <p><span class="ln">8</span>Ita ille patricius, <b>cum</b> ex clārissimā gente Cornēliōrum orīrētur et cōnsul quondam esset, <em>tamen</em> exitium mōribus factīsque suīs dignum invēnit.</p>
+            <p><span class="ln">9</span>Dē Cethēgō, Statiliō, Gabiniō, Caepāriō eōdem modō supplicium sūmptum est.</p>
+            <p><span class="ln">10</span>Sed <b>cum</b> Catilīna ipse <b>cum</b> exercitū in Etrūriā adhūc esset, bellum nōndum cōnfectum erat.</p>
+        </div>
+
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin:14px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS &mdash; EVERY WORD NOT ON YOUR RUNNING LIST, IN THE FORM IT APPEARS</div>
+            <ul class="gl">
+                <li><strong>1</strong> &middot; <em>assentīrentur</em> &mdash; imperfect subjunctive of <em>assentior, assentīrī, assēnsus sum</em> (+ dative), a deponent: to agree with &middot; <em>diūtius</em> &mdash; any longer &middot; <em>dubitō, dubitāre</em> &mdash; to hesitate</li>
+                <li><strong>2</strong> &middot; <em>appropinquābat</em> &mdash; was drawing near (<em>appropinquō, appropinquāre</em>) &middot; <em>itaque</em> &mdash; and so, therefore &middot; <em>trēsvirōs</em> &mdash; the board of three officials who carried out sentences (accusative plural) &middot; <em>supplicium, suppliciī</em> n. &mdash; punishment; the death penalty &middot; <em>iussit</em> + accusative + infinitive &mdash; ordered (someone) to (do something) &middot; <em>nē quid novārētur</em> &mdash; so that nothing should be changed &mdash; that is, so that no rescue attempt could alter the situation (<em>quid</em> after <em>nē</em> = anything)</li>
+                <li><strong>3</strong> &middot; <em>praetor, praetōris</em> m. &mdash; praetor, a senior elected magistrate &middot; <em>prīmum</em> (adv.) &mdash; first &middot; <em>magistrātū</em> &mdash; from his public office (ablative of <em>magistrātus, magistrātūs</em> m.) &middot; <em>sē abdicāre</em> (+ ablative) &mdash; to resign from</li>
+                <li><strong>4</strong> &middot; <em>praesidiō</em> &mdash; with an armed escort (ablative of <em>praesidium, praesidiī</em> n.) &middot; <em>Via Sacra</em> &mdash; the Sacred Way, the road through the Forum &middot; <em>dēdūxit</em> &mdash; led down, escorted (<em>dēdūcō, dēdūcere, dēdūxī</em>) &middot; <em>idem</em> &mdash; the same thing &middot; <em>cēterīs</em> &mdash; for the rest, to the others (dative plural of <em>cēterī</em>)</li>
+                <li><strong>5</strong> &middot; <em>Tulliānum, Tulliānī</em> n. &mdash; the Tullianum, the lower cell of the Roman prison &middot; <em>appellātur</em> &mdash; is called (present passive of <em>appellō, appellāre</em>) &middot; <em>circiter</em> (adv.) &mdash; about, roughly &middot; <em>duodecim pedēs</em> &mdash; twelve feet (accusative measuring how far) &middot; <em>humī</em> &mdash; into the ground &middot; <em>dēpressus</em> &mdash; sunk, pressed down (<em>dēprimō, dēprimere, dēpressī, dēpressum</em>)</li>
+                <li><strong>6</strong> &middot; <em>foedus, -a, -um</em> &mdash; foul, loathsome &middot; <em>sine</em> (+ ablative) &mdash; without &middot; <em>horrōre</em> &mdash; shuddering, horror (ablative of <em>horror, horrōris</em> m.) &middot; <em>aspiciat</em> &mdash; present subjunctive of <em>aspiciō, aspicere</em>: to look at</li>
+                <li><strong>7</strong> &middot; <em>dēmitterētur</em> &mdash; was being let down (imperfect subjunctive passive of <em>dēmittō, dēmittere</em>) &middot; <em>vindicēs</em> &mdash; the officers who carried out capital sentences (nominative plural of <em>vindex, vindicis</em> m.) &middot; <em>laqueō</em> &mdash; with a noose (ablative of <em>laqueus, laqueī</em> m.) &middot; <em>gulam</em> &mdash; throat (accusative of <em>gula, gulae</em> f.) &middot; <em>frēgērunt</em> &mdash; broke (<em>frangō, frangere, frēgī, frāctum</em>)</li>
+                <li><strong>8</strong> &middot; <em>patricius, patriciī</em> m. &mdash; patrician, a man of the old nobility &middot; <em>gente</em> &mdash; family, clan (ablative of <em>gēns, gentis</em> f.) &middot; <em>Cornēliōrum</em> &mdash; of the Cornelii, Lentulus's family &middot; <em>orīrētur</em> &mdash; imperfect subjunctive of <em>orior, orīrī, ortus sum</em>, a deponent: to rise, be descended from &middot; <em>quondam</em> (adv.) &mdash; once, formerly &middot; <em>exitium, exitiī</em> n. &mdash; end, destruction &middot; <em>mōribus factīsque suīs dignum</em> &mdash; worthy of his own character and deeds (<em>dignus, -a, -um</em> takes the ablative)</li>
+                <li><strong>9</strong> &middot; <em>eōdem modō</em> &mdash; in the same way &middot; <em>supplicium sūmptum est dē</em> (+ ablative) &mdash; the death penalty was carried out on</li>
+                <li><strong>10</strong> &middot; <em>exercitū</em> &mdash; with an army (ablative of <em>exercitus, exercitūs</em> m.) &middot; <em>Etrūria, Etrūriae</em> f. &mdash; Etruria, the region north of Rome &middot; <em>adhūc</em> (adv.) &mdash; still &middot; <em>cōnfectum erat</em> &mdash; had been finished (<em>cōnficiō, cōnficere, cōnfēcī, cōnfectum</em>)</li>
+            </ul>
+        </div>
+
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>One honest note about line 8.</strong> Sallust's own sentence here uses a pluperfect tense you will not meet until Module 13, and it is one of the most quoted sentences in the <em>Bellum Catilīnae</em>. The adaptation keeps his judgment &mdash; that Lentulus got the end he deserved &mdash; and puts it into a concessive <em>cum</em> clause you can read today. When you reach Module 13 you will be able to read the line as he wrote it.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; NAME EVERY <em>CUM</em> IN THE PASSAGE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five <em>cum</em>s, in the order they appear. Run the four steps on each.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What job is this <em>cum</em> doing, and what does the line mean?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Assentīrentur is subjunctive and there is no tamen. So: scenery, or reason?">
+                <div class="widget-row-prompt">Line 1 &mdash; <em>Cum senātōrēs Catōnī assentīrentur, Cicerō diūtius nōn dubitāvit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Assentīrentur is imperfect subjunctive of the deponent assentior — the indicative would be assentiēbantur. So this is not the plain-time use.">Conjunction with the indicative &mdash; plain &ldquo;when&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — causal. &quot;Since the senators were agreeing with Cato, Cicero hesitated no longer.&quot; The vote is exactly why he stopped hesitating; that is a reason, not a time-stamp. Note assentior takes the dative: Catōnī.">Conjunction, causal &mdash; &ldquo;since the senators were agreeing&rdquo;</button>
+                    <button data-choice="c" data-fb="There is a verb inside the group (assentīrentur), so cum cannot be the preposition here. And senātōrēs is nominative plural, not ablative.">Preposition &mdash; &ldquo;with the senators&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Line 3. Put &ldquo;since&rdquo; in front and ask whether the sentence becomes an argument.">
+                <div class="widget-row-prompt">Line 3 &mdash; <em>Cum Lentulus praetor esset, prīmum magistrātū sē abdicāre dēbuit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — causal, and this one is not a close call. Being praetor is the whole reason a resignation was needed: Rome could not execute a magistrate in office. &quot;Since Lentulus was praetor, he first had to resign his office.&quot;">Conjunction, causal &mdash; &ldquo;since Lentulus was praetor&rdquo;</button>
+                    <button data-choice="b" data-fb="Concessive needs the clause to push against the main clause, and there is no tamen. Being praetor did not work against the resignation — it required it.">Conjunction, concessive &mdash; &ldquo;although Lentulus was praetor&rdquo;</button>
+                    <button data-choice="c" data-fb="Not impossible as English, but it loses the point of the sentence. Sallust is not telling you when the resignation happened; he is telling you why it had to.">Conjunction, temporal &mdash; &ldquo;when Lentulus was praetor&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Step 1 only. Is there a verb between cum and per?">
+                <div class="widget-row-prompt">Line 4 &mdash; <em>Tum Cicerō ipse eum cum praesidiō per Viam Sacram in carcerem dēdūxit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dēdūxit is the main verb of the sentence and belongs to Cicerō, not to the cum group. There is no verb inside cum praesidiō at all.">Conjunction, temporal &mdash; &ldquo;when the escort&hellip;&rdquo;</button>
+                    <button data-choice="b" data-fb="Causal would need a verb in the subjunctive inside the cum group. Praesidiō is a plain ablative singular noun.">Conjunction, causal &mdash; &ldquo;since there was a guard&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — the preposition, and step 1 settled it without any thought about meaning. &quot;Then Cicero himself escorted him with an armed guard through the Sacred Way into the prison.&quot;">Preposition &mdash; &ldquo;with an armed escort&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Dēmitterētur is subjunctive, no tamen. Is being lowered into the cell the reason they strangled him, or the moment it happened?">
+                <div class="widget-row-prompt">Line 7 &mdash; <em>Cum Lentulus in eum locum dēmitterētur, vindicēs laqueō gulam frēgērunt.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="&quot;Since he was being let down&quot; would make the lowering the reason for the killing, which reverses the logic — he was lowered in order to be killed.">Conjunction, causal &mdash; &ldquo;since he was being let down&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — temporal. &quot;When Lentulus had been let down into that place, the executioners broke his throat with a noose.&quot; The clause fixes the moment; that is all it does. Note dēmitterētur is imperfect subjunctive PASSIVE — he is not doing the lowering.">Conjunction, temporal &mdash; &ldquo;when he was let down&rdquo;</button>
+                    <button data-choice="c" data-fb="There is no tamen and nothing is pushing against anything. &quot;Although he was being let down, they strangled him&quot; does not mean anything.">Conjunction, concessive &mdash; &ldquo;although he was let down&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Line 10 has cum twice. Do step 1 on each one before choosing.">
+                <div class="widget-row-prompt">Line 10 &mdash; <em>Sed cum Catilīna ipse cum exercitū in Etrūriā adhūc esset, bellum nōndum cōnfectum erat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right, and this is the line the whole module was pointing at. First cum: verb esset inside the group → conjunction, and the sense is causal — Catiline still having an army is exactly why the war was not over. Second cum: cum exercitū, ablative, no verb → preposition, &quot;with an army.&quot; &quot;But since Catiline himself was still in Etruria with an army, the war had not yet been finished.&quot;">First = conjunction (causal); second = preposition</button>
+                    <button data-choice="b" data-fb="Reversed. Cum exercitū has no verb of its own, so it cannot open a clause; esset sits inside the first group, so the first cum cannot be a preposition.">First = preposition; second = conjunction (causal)</button>
+                    <button data-choice="c" data-fb="There is only one verb inside the cum material — esset — so only one of the two can be a conjunction. Two conjunctions would need two subordinate verbs.">Both are conjunctions &mdash; two clauses</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; THE ROMAN WORLD &middot; FIVE MEN AND NO TRIAL</div>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;">The <em>Tulliānum</em> is still there. You can look down into it beside the Forum: a stone room perhaps twelve feet below street level, and Sallust says its darkness and its smell made it terrible to look at. On the evening of 5 December 63 BC, five Roman citizens were taken down into it and strangled &mdash; Lentulus, Cethēgus, Statilius, Gabinius, Caepārius. Plutarch, writing much later, says that when Cicero came back up he told the waiting crowd one word: <em>vīxērunt</em>. &ldquo;They have lived.&rdquo; Meaning: they are finished.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0;">That evening was legal, and it was also a problem. The men had confessed before the Senate, and the Senate had voted &mdash; but the Senate was not a court, and a Roman citizen had the right to appeal to the people before a capital sentence. Cicero had used an emergency decree to skip that. For a few weeks Rome called him <em>pater patriae</em>, father of the fatherland. Five years later a tribune named Clōdius passed a law against anyone who had executed citizens without trial, and Cicero left Italy in exile. He never entirely stopped defending that night, which is usually a sign that a man knows the case against him is not empty.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE WHOLE MODULE IN ONE TABLE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">If you can reconstruct this table from memory, you are ready for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:20%">What you see</th><th style="width:18%">What <em>cum</em> is</th><th style="width:22%">How to translate it</th><th>The test</th></tr>
+            <tr><td class="lab">noun or pronoun in the <strong>ablative</strong>, no verb<br><span style="font-size:14px;color:#666;"><em>cum praesidiō</em>, <em>mēcum</em></span></td><td>preposition</td><td class="end">&ldquo;with&rdquo;</td><td>Step 1: there is no verb in the group.</td></tr>
+            <tr><td class="lab">clause with an <strong>indicative</strong> verb<br><span style="font-size:14px;color:#666;"><em>cum vesper vēnit</em></span></td><td>conjunction</td><td class="end">&ldquo;when&rdquo; &middot; &ldquo;whenever&rdquo;</td><td>Step 2: read the mood. Pure time, no further claim.</td></tr>
+            <tr><td class="lab">clause with a <strong>subjunctive</strong> verb, <em>tamen</em> in the main clause<br><span style="font-size:14px;color:#666;"><em>cum&hellip; orīrētur, tamen&hellip;</em></span></td><td>conjunction</td><td class="end">&ldquo;although&rdquo;</td><td>Step 3: <em>tamen</em>. Your one mechanical handle.</td></tr>
+            <tr><td class="lab">clause with a <strong>subjunctive</strong> verb, giving the <strong>reason</strong><br><span style="font-size:14px;color:#666;"><em>cum Lentulus praetor esset</em></span></td><td>conjunction</td><td class="end">&ldquo;since&rdquo; &middot; &ldquo;because&rdquo;</td><td>Step 4: &ldquo;since&rdquo; makes the sentence an argument.</td></tr>
+            <tr><td class="lab">clause with a <strong>subjunctive</strong> verb, setting the <strong>scene</strong><br><span style="font-size:14px;color:#666;"><em>cum Lentulus dēmitterētur</em></span></td><td>conjunction</td><td class="end">&ldquo;when&rdquo; &middot; &ldquo;after&rdquo;</td><td>Step 4: &ldquo;since&rdquo; makes it nonsense, so it is circumstance.</td></tr>
+            <tr><td class="lab"><em>quamquam</em> + indicative &middot; <em>quia</em> + indicative</td><td>not <em>cum</em> at all</td><td class="end">&ldquo;although&rdquo; &middot; &ldquo;because&rdquo;</td><td>The indicative cousins: same ideas, stated as plain fact.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>And the negatives, from 10.03:</strong> a <em>cum</em> clause is made negative with <strong><em>nōn</em></strong> inside the clause &mdash; <em>cum nōn respondēret</em>, &ldquo;since he was not answering.&rdquo; It does not use <em>nē</em>, and it does not use <em>ut nōn</em>. Those belong to purpose and result, which is the m08&ndash;m09 pair, not this one.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; MIXED SELF-CHECK &middot; EVERYTHING FROM M08 TO M10</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Three subordinate-clause types now look alike on the page: purpose, result, and <em>cum</em>. The quiz will mix them, so mix them here first.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is this?</div>
+
+            <div class="widget-row" data-correct="c" data-hint="Look for a signpost word in the main clause, and look at what word opens the subordinate clause.">
+                <div class="widget-row-prompt"><em>Tam foedus erat ille locus ut nēmō eum aspicere posset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A cum clause would open with cum. This one opens with ut, and the main clause carries the signpost tam.">A <em>cum</em> clause</button>
+                    <button data-choice="b" data-fb="Purpose would answer &quot;why?&quot; and would carry no signpost. Tam in the main clause points forward to a consequence, not an aim — and a place cannot have aims.">A purpose clause</button>
+                    <button data-choice="c" data-fb="Right — result (Module 9). Tam + adjective in the main clause, ut + subjunctive following: &quot;The place was so foul that no one could look at it.&quot;">A result clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Nē, and no signpost word anywhere. What did Cicero want to prevent?">
+                <div class="widget-row-prompt"><em>Cicerō praesidia disposuit nē quis coniūrātōs līberāret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — negative purpose (Module 8). Nē + subjunctive, no signpost: &quot;Cicero posted guards so that no one would free the conspirators.&quot; Gloss: dispōnō — to post, station; līberō — to set free.">A negative purpose clause</button>
+                    <button data-choice="b" data-fb="Negative result would be ut nōn, not nē — that is the m09 distinction. And there is no signpost word in the main clause to announce a result.">A negative result clause</button>
+                    <button data-choice="c" data-fb="A cum clause opens with cum. This one opens with nē.">A <em>cum</em> clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two clauses here. Read the first word of each.">
+                <div class="widget-row-prompt"><em>Cum tenebrae venīrent, cōnsul trēsvirōs supplicium parāre iussit nē quid novārētur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Close, but check the second clause: nē quid novārētur has no signpost word in front of it and states what the consul was trying to prevent. That is purpose, not result.">Temporal <em>cum</em>, then a result clause</button>
+                    <button data-choice="b" data-fb="Right — both at once, which is exactly what line 2 of the reading does. Cum + venīrent, imperfect subjunctive, scene-setting → temporal. Then nē + novārētur, no signpost → negative purpose. &quot;When darkness was coming on, the consul ordered the three officials to prepare the punishment, so that nothing should be changed.&quot;">Temporal <em>cum</em>, then a negative purpose clause</button>
+                    <button data-choice="c" data-fb="Causal would mean darkness arriving was the reason for the order. It is nearer to the reason he hurried, but the clause reads as the moment, and the reason is given by the purpose clause at the end.">Causal <em>cum</em>, then an indirect command</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Which word in the main clause is doing work here — and which construction owns that word?">
+                <div class="widget-row-prompt"><em>Cum ex clārissimā gente orīrētur, tamen exitium dignum invēnit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Result clauses open with ut and are announced by signposts like tam, tantus, tālis, tot. Tamen is not a result signpost — it is the concessive one.">A result clause announced by <em>tamen</em></button>
+                    <button data-choice="b" data-fb="Causal would be step 4, but step 3 fires first: tamen is present. And check the sense — a distinguished family is not the reason he came to a bad end; it is what makes the ending striking.">A causal <em>cum</em> clause</button>
+                    <button data-choice="c" data-fb="Right — concessive. Tamen in the main clause, subjunctive orīrētur in the cum clause: &quot;Although he was descended from a most distinguished family, he nevertheless found the end he deserved.&quot; This is line 8 of the reading.">A concessive <em>cum</em> clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Convēnērunt or convenīrent? Read the ending carefully — that one letter decides the whole answer.">
+                <div class="widget-row-prompt"><em>Cum coniūrātī in aedibus convēnērunt, nēmō eōs vīdit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — indicative. Convēnērunt is perfect indicative (the subjunctive would be convenīrent). Step 2 stops you: plain &quot;when,&quot; pure time. &quot;When the conspirators met in the house, no one saw them.&quot;">Conjunction with the indicative &mdash; plain &ldquo;when&rdquo;</button>
+                    <button data-choice="b" data-fb="Check the ending again: -ērunt is the perfect indicative. The imperfect subjunctive would be convenīrent, from the infinitive convenīre.">Conjunction with the subjunctive &mdash; temporal</button>
+                    <button data-choice="c" data-fb="Coniūrātī is nominative plural — the subject of convēnērunt — not an ablative. And the group contains a verb, so cum is a conjunction.">Preposition &mdash; &ldquo;with the conspirators&rdquo;</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- HANDOFF -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#128203; YOUR GRADED WORK FOR MODULE 10</div>
+        <div class="task">
+            <div class="th"><strong>1. <em>Ludus X &mdash; Tempus, Causa, an Concessiō?</em></strong> &middot; Interactive Practice &amp; Games</div>
+            <div class="td">Seventy-five seconds of sorting, and your <strong>best of unlimited attempts</strong> counts. Play it before the quiz &mdash; it drills exactly the four-way sort the quiz asks for, and it is the cheapest way to make the procedure automatic.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>2. Module 10 Quiz</strong> &middot; 40 points &middot; auto-graded, unlimited attempts, highest score kept</div>
+            <div class="td">Identification, the four-way sort, form production, the negative, and two best-translation items. Everything on this page and the four lessons before it. A gloss is given for the translation section.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>3. Module 10 Translation</strong> &middot; 30 points &middot; teacher-reviewed, in Microsoft Word</div>
+            <div class="td">Five sentences English into Latin and three Latin into English, all vocabulary supplied. Two of the English sentences deliberately need you to <em>choose</em> between temporal, causal and concessive &mdash; and one asks you to write a concessive with <em>tamen</em>. Save to OneDrive as <em>Lastname_Firstname_LatinAdv_M10_Translation.docx</em> and submit through Canvas.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>4. Module 10 Reflection</strong> &middot; ungraded survey</div>
+            <div class="td">Five questions, no points. It tells your teacher what to help you with before Module 11 &mdash; which adds indirect questions, a fourth construction that puts a subjunctive in a subordinate clause. Answer it honestly; it costs you nothing and it is the fastest way to get help.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">11</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 11 &mdash; Indirect Questions</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">&ldquo;I ask who did this&rdquo; &mdash; and the verb goes subjunctive. A fourth construction joins purpose, result and <em>cum</em>, and this time the signal is a question word: <em>quis, quid, cūr, ubi, quandō, quōmodo</em>. The reading turns back to Cicero, for the fourth and last speech against Catiline.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Line 10 of the reading has both <em>cum</em>s in it, four words apart, and you can now tell them apart in about a second. That is what a week on one small word buys you: not a fact you have memorised, but a question you ask automatically. <em>Verb? Mood? Tamen? Reason?</em></p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 10.05 &middot; The Fifth of December</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

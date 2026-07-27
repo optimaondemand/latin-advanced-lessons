@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 5.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 5</div>
+        <div style="font-size: 12px; color: #666;">Gerundives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Must Be Done</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Must Be Done: the Gerundive of Obligation</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Add <em>est</em>, and a description becomes a demand.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><em>Urbs dēfendenda</em> &mdash; "the city needing to be defended" &mdash; is just a phrase. Put <em>est</em> after it and you get <em>urbs dēfendenda est</em>: <strong>"the city must be defended."</strong> That is the single most useful sentence pattern in Roman political speech, and once you can see it you can read the argument of an entire oration.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognize a gerundive of obligation and translate it as "must be ___ed" &mdash; passively, every time.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> change the tense of <em>esse</em> to move the obligation into the past or the future.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> translate the impersonal neuter version, <em>pugnandum est</em>, "there must be fighting."</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE PATTERN</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0; text-align:center;">
+            <div style="font-size:21px; color:#0e1c42; line-height:1.5;"><strong>nominative noun</strong> &nbsp;+&nbsp; <strong>gerundive agreeing with it</strong> &nbsp;+&nbsp; <strong>a form of <em>esse</em></strong></div>
+            <div style="font-size:17px; color:#666; margin-top:8px;">= "the noun <strong>must be</strong> ___ed" / "the noun <strong>has to be</strong> ___ed"</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">Grammar books also call this the <strong>passive periphrastic</strong>. "Periphrastic" just means "said the long way round" &mdash; Latin uses two words where English uses "must." Here it is across all six gender-and-number combinations:</p>
+        <table class="para">
+            <tr><th style="width:40%">Latin</th><th style="width:22%">Gerundive is&hellip;</th><th>English</th></tr>
+            <tr><td><em>Urbs dēfendenda est.</em></td><td>fem. nom. sg.</td><td>The city must be defended.</td></tr>
+            <tr><td><em>Catilīna pūniendus est.</em></td><td>masc. nom. sg.</td><td>Catiline must be punished.</td></tr>
+            <tr><td><em>Officium faciendum est.</em></td><td>neut. nom. sg.</td><td>The duty must be done.</td></tr>
+            <tr><td><em>Coniūrātī capiendī sunt.</em></td><td>masc. nom. pl.</td><td>The conspirators must be captured.</td></tr>
+            <tr><td><em>Epistulae legendae sunt.</em></td><td>fem. nom. pl.</td><td>The letters must be read.</td></tr>
+            <tr><td><em>Multa facienda sunt.</em></td><td>neut. nom. pl.</td><td>Many things must be done.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Notice that <em>esse</em> agrees too.</strong> Singular noun, <em>est</em>. Plural noun, <em>sunt</em>. That is nothing new &mdash; it is the ordinary rule that a verb agrees with its subject, and here the nominative noun is the subject. So a gerundive of obligation has <strong>two</strong> things pointing at the same noun: the gerundive's ending and the number of <em>esse</em>. Two clues, one answer. Use both.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 2 &middot; THE VOICE TRAP, HEAD ON</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This is the error that costs more marks than anything else in the module, so we are going to look straight at it. The nominative noun in this construction is <strong>not the doer</strong>. It is the thing done to.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:16px 20px;">
+                <div style="font-size:14px; color:#8A1F16; margin-bottom:6px;">&#10060; WHAT THE EYE WANTS TO DO</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>Urbs dēfendenda est.</em></div>
+                <div style="font-size:17px; color:#1a2340; margin-top:8px;">"The city must defend."</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">Nominative noun &rarr; must be the subject &rarr; must be doing the verb. That chain of reasoning is right for ordinary sentences and wrong here.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:16px 20px;">
+                <div style="font-size:14px; color:#1A6B3D; margin-bottom:6px;">&#9989; WHAT IT MEANS</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>Urbs dēfendenda est.</em></div>
+                <div style="font-size:17px; color:#1a2340; margin-top:8px;">"The city must be defended."</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">The gerundive is <strong>passive in force</strong>. The city is on the receiving end. Somebody else does the defending.</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">Run the test on four sentences. In each one, ask yourself: <em>who or what is having something done to it?</em></p>
+        <table class="para">
+            <tr><th style="width:34%">Latin</th><th style="width:33%">&#10060; The flipped reading</th><th>&#9989; The right reading</th></tr>
+            <tr><td><em>Catilīna pūniendus est.</em></td><td>"Catiline must punish."</td><td>"Catiline must be punished."</td></tr>
+            <tr><td><em>Epistula legenda est.</em></td><td>"The letter must read." &mdash; which is not even English</td><td>"The letter must be read."</td></tr>
+            <tr><td><em>Lēgēs scrībendae sunt.</em></td><td>"The laws must write."</td><td>"The laws must be written."</td></tr>
+            <tr><td><em>Coniūrātī custōdiendī sunt.</em></td><td>"The conspirators must guard."</td><td>"The conspirators must be guarded."</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Your safety check.</strong> Translate the gerundive as "<strong>needing to be ___ed</strong>" first, exactly as you practised on Monday. "Catiline, needing to be punished, is." It is ugly, but nobody has ever produced an active mistranslation out of it. Then tidy up to "must be punished." Two steps beats one wrong guess.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE TENSE LIVES IN <em>ESSE</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The gerundive itself never changes tense &mdash; it always points forward. If you want to say the obligation belonged to the past, or is coming, you change <em>esse</em>. Nothing else moves.</p>
+        <table class="para">
+            <tr><th style="width:22%">Form of <em>esse</em></th><th style="width:36%">Example</th><th>English</th></tr>
+            <tr><td class="lab"><em>est</em> / <em>sunt</em><br><span style="font-size:13px; color:#666;">present</span></td><td><em>Ōrātiō habenda <span class="end">est</span>.</em></td><td>The speech <strong>must be</strong> delivered.</td></tr>
+            <tr><td class="lab"><em>erat</em> / <em>erant</em><br><span style="font-size:13px; color:#666;">imperfect</span></td><td><em>Ōrātiō habenda <span class="end">erat</span>.</em></td><td>The speech <strong>had to be</strong> delivered.</td></tr>
+            <tr><td class="lab"><em>erit</em> / <em>erunt</em><br><span style="font-size:13px; color:#666;">future</span></td><td><em>Ōrātiō habenda <span class="end">erit</span>.</em></td><td>The speech <strong>will have to be</strong> delivered.</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Do not read <em>erat</em> as "was."</strong> <em>Ōrātiō habenda erat</em> is not "the speech was delivered" &mdash; that would be <em>ōrātiō habita est</em>, an ordinary perfect passive with the participle <em>habita</em>. The gerundive keeps the obligation alive: the speech <em>had to be</em> delivered, whether or not it ever was. Watch for the <em>-nd-</em>; it is the difference between a fact and a duty.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Latin's other ways to say "ought."</strong> The gerundive is not the only option, and knowing the alternatives makes the choice visible. <em>Dēbeō</em> + infinitive: <em>Senātus lēgēs scrībere dēbet</em> &mdash; "the Senate ought to write the laws." Impersonal <em>oportet</em> + infinitive: <em>Cōnsulem vigilāre oportet</em> &mdash; "the consul ought to keep watch." And <em>necesse est</em> + infinitive: <em>necesse est agere</em> &mdash; "it is necessary to act." Each of these keeps the doer in front and the verb active. The gerundive does the opposite: it puts the <strong>task</strong> in front and leaves the doer for later, or leaves him out altogether. That is a rhetorical choice, and Cicero makes it constantly.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; WHEN THERE IS NOTHING TO AGREE WITH</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Some verbs never take a direct object. <em>Pugnō</em> ("fight"), <em>vigilō</em> ("stay awake, keep watch"), <em>proficīscor</em> ("set out") &mdash; you do not fight a thing, you just fight. So there is no noun for the gerundive to agree with.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Latin's answer is elegant: use the <strong>neuter singular</strong> as a default, with no subject at all, and let <em>est</em> stand alone.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:23px; color:#0e1c42; text-align:center;"><em>Pugnandum est.</em></div>
+            <div style="font-size:17px; color:#1a2340; margin-top:8px; text-align:center;">"There must be fighting." &mdash; more naturally, <strong>"We must fight."</strong></div>
+        </div>
+        <table class="para">
+            <tr><th style="width:38%">Latin</th><th>English</th></tr>
+            <tr><td><em>Nōbīs pugnandum est.</em></td><td>We must fight. <span style="font-size:14px; color:#666;">(literally "there must be fighting by us")</span></td></tr>
+            <tr><td><em>Cōnsulī vigilandum erat.</em></td><td>The consul had to keep watch.</td></tr>
+            <tr><td><em>Mihi nunc agendum est.</em></td><td>I must act now.</td></tr>
+            <tr><td><em>Nōbīs ex urbe proficīscendum erit.</em></td><td>We will have to set out from the city.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>How to spot the impersonal version.</strong> A gerundive in <em>-ndum</em> with <em>est</em> or <em>erat</em>, and <strong>no nominative noun anywhere</strong>. Translate it as "there must be ___ing," then convert to a normal English sentence with a person as subject. And notice <em>proficīscendum</em> in the last example: a deponent, working perfectly well in this construction.</div>
+    </div>
+
+    <!-- CATO -->
+    <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128220; THE MOST FAMOUS EXAMPLE &mdash; AND WHO IT BELONGS TO</div>
+        <div style="font-size:24px; color:#0e1c42; text-align:center; font-style:italic; margin:10px 0;">Carthāgō dēlenda est.</div>
+        <div style="font-size:16px; color:#666; text-align:center; margin-bottom:12px;">"Carthage must be destroyed."</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 8px 0;">You may have met this sentence before it ever meant anything to you grammatically. Now you can take it apart: <em>Carthāgō</em> is feminine nominative singular, <em>dēlenda</em> is the gerundive of <em>dēleō</em> agreeing with it, <em>est</em> supplies the present tense. Passive in force, obligation, no agent named. Four words, and no way to argue with it.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 8px 0;"><strong>Get the attribution right.</strong> This is traditionally associated with <strong>Cato the Elder</strong> &mdash; Cato the Censor &mdash; a Roman senator of the generation before Cicero's, who ancient writers say ended his speeches by insisting that Carthage be destroyed, whatever the debate had actually been about. Even that much is worth stating carefully: the compact four-word sentence as we quote it is a later formulation rather than a verbatim quotation of Cato's own words.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;">What matters for this module is that it is <strong>not Cicero</strong>. Cicero uses the construction constantly, and you will read him using it in Lesson 5.05 &mdash; but this particular sentence belongs to a different man and a different century. When you cite Latin, cite it accurately; that is its own kind of <em>officium</em>.</p>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; GET THE VOICE AND THE TENSE RIGHT</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Every sentence below is a gerundive of obligation. Voice first, then tense.</div>
+            <div class="widget-row" data-correct="c" data-hint="Is the city doing the defending, or receiving it?">
+                <div class="widget-row-prompt"><em>Urbs nunc dēfendenda est.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This is the flipped reading. A gerundive is passive in force — the city is what gets defended, not what defends.">"The city must now defend."</button>
+                    <button data-choice="b" data-fb="'Was defended' is an ordinary perfect passive: urbs dēfēnsa est, with the participle dēfēnsa. Dēfendenda still points forward to something owed.">"The city was defended now."</button>
+                    <button data-choice="c" data-fb="Right — 'The city must now be defended.' Feminine nominative singular gerundive agreeing with urbs, plus est for present obligation.">"The city must now be defended."</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Erant is which tense of esse?">
+                <div class="widget-row-prompt"><em>Multa eō tempore facienda erant.</em> (<em>eō tempore</em> &mdash; at that time)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — imperfect erant gives past obligation: 'Many things had to be done at that time.'">"Many things had to be done at that time."</button>
+                    <button data-choice="b" data-fb="'Will have to be done' needs erunt, the future. Erant is imperfect.">"Many things will have to be done at that time."</button>
+                    <button data-choice="c" data-fb="'Were done' is a plain perfect passive: multa facta sunt. The -nd- form keeps the obligation in play — they had to be done, whether or not they were.">"Many things were done at that time."</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Which noun does the gerundive agree with, and what does that noun receive?">
+                <div class="widget-row-prompt"><em>Coniūrātōrum epistulae senātuī legendae erant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="The conspirators are in the genitive (coniūrātōrum) — 'of the conspirators.' They are not what the gerundive agrees with; epistulae is.">"The conspirators had to read the Senate's letters."</button>
+                    <button data-choice="b" data-fb="Right — legendae is feminine nominative plural, agreeing with epistulae: 'The conspirators' letters had to be read by the Senate.' Senātuī is the one who had to do it — that is Thursday's lesson.">"The conspirators' letters had to be read by the Senate."</button>
+                    <button data-choice="c" data-fb="'Were read' loses the obligation. Legendae erant means they still had to be read; a plain perfect passive would be lēctae sunt.">"The conspirators' letters were read by the Senate."</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Is there a nominative noun in this sentence at all?">
+                <div class="widget-row-prompt"><em>Nunc prō patriā pugnandum est.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is no nominative noun for pugnandum to agree with, so it cannot be describing 'the country.' Prō patriā is ablative after prō.">"The country must now be fought for by us." &mdash; <em>patriā</em> as the subject</button>
+                    <button data-choice="b" data-fb="Pugnandum est is not a perfect passive. 'There was fighting' would be pugnātum est — same neuter shape, but built on the participle pugnātum, not on -nd-.">"There was fighting for the country."</button>
+                    <button data-choice="c" data-fb="Right — an impersonal gerundive: neuter singular, no subject at all. 'There must now be fighting for the country,' i.e. 'we must now fight for our country.'">"There must now be fighting for the country."</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Look at the number of esse, then find a noun that matches it.">
+                <div class="widget-row-prompt">Which sentence is built correctly?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — Lēgēs scrībendae sunt. Feminine nominative plural noun, feminine nominative plural gerundive, plural esse. All three agree.">Lēgēs scrībendae sunt.</button>
+                    <button data-choice="b" data-fb="Lēgēs is plural, so esse must be sunt, not est — and scrībenda would be neuter plural or feminine singular. Two mismatches.">Lēgēs scrībenda est.</button>
+                    <button data-choice="c" data-fb="Scrībendus is masculine singular. Lēx, lēgis is feminine, and lēgēs is plural.">Lēgēs scrībendus sunt.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 5.04 &mdash; The Dative of Agent</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">So far nobody has been named as the one who must act. Today you add them &mdash; in the dative, not with <em>ā/ab</em>. Plus this module's vocabulary and the four English words that are secretly gerundives.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Gerundive + <em>esse</em> = "<strong>must be ___ed</strong>," and it is <strong>passive</strong>: the nominative noun is what gets done to, never the doer. The tense lives in <em>esse</em> &mdash; <em>est</em>, <em>erat</em>, <em>erit</em>. With no noun to agree with, the neuter goes impersonal: <em>pugnandum est</em>, "we must fight."</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.03 &middot; Must Be Done</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

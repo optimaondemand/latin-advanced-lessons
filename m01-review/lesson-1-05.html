@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 1.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Review in Context</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Everything, Without Prompting</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Everything, Without Prompting</div>
+        <div style="font-size: 16px; color: #666;">Review &amp; Self-Check</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Nobody tells you what each question is testing. That is the point.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Every self-check so far this week came with a heading telling you what to look for. Today's does not. Six mixed items, no labels, no warnings &mdash; because that is what reading Latin is. Then your graded work for the week, including the <strong>first written translation of the course</strong>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> parse forms and name constructions in mixed order, with no clue about what is being asked.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name exactly which part of this module I still need to shore up before Module 2.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> set up, format, and submit a translation document in Microsoft Word to the course's conventions.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; MODULE 1 IN FIVE LINES</div>
+        <table class="para">
+            <tr><th style="width:14%">Lesson</th><th>The one thing to keep</th></tr>
+            <tr><td class="lab">1.01</td><td>Three questions, in order: <strong>main verb &rarr; subject &rarr; case of everything else</strong>. For a participle, case comes before meaning.</td></tr>
+            <tr><td class="lab">1.02</td><td>A participle tells you <strong>time</strong> (PPP earlier, PAP alongside, FAP later) and <strong>ownership</strong> (read it off the case).</td></tr>
+            <tr><td class="lab">1.03</td><td>Ablative absolute = <strong>ablative participle</strong> + ablative noun with no other job. Then choose <em>when</em>, <em>because</em>, or <em>although</em>.</td></tr>
+            <tr><td class="lab">1.04</td><td>In indirect statement the infinitive's tense is <strong>relative</strong>: future = later, present = same time, perfect = earlier. <em>Sē</em> points back to the main subject.</td></tr>
+            <tr><td class="lab">1.05</td><td>You can now do all of it out of running prose. That, not the paradigm chart, is what "knowing the grammar" means.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Nothing new arrived this week.</strong> Every form in both readings was something you brought with you from M/J Latin Intermediate. What changed is that you found them yourself, in continuous Latin, with a Roman historian's argument running underneath. Keep that in mind when the subjunctive lands in Module 6 &mdash; you will meet it the same way: explained, then found.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; MIXED SELF-CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six items, deliberately unlabelled. If a row gives you trouble, that row names what to review before the quiz.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; SIX ITEMS &middot; NO HINTS ABOUT WHAT THEY TEST</div>
+            <div class="widget-question">Answer without looking back, then check.</div>
+            <div class="widget-row" data-correct="c" data-hint="Look for the -era- between the perfect stem and the ending.">
+                <div class="widget-row-prompt"><em>Nōbilēs perditī omnem pecūniam <strong>cōnsūmpserant</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Perfect active 3rd plural would be cōnsūmpsērunt. There is no -ērunt ending here.">Perfect active, 3rd pl.</button>
+                    <button data-choice="b" data-fb="Imperfect would be cōnsūmēbant, built on the present stem with -bā-. This form is built on the perfect stem cōnsūmps-.">Imperfect active, 3rd pl.</button>
+                    <button data-choice="c" data-fb="Right &mdash; perfect stem cōnsūmps- plus -erant: pluperfect active, 3rd plural, 'they had used up.' Earlier than whatever the main narrative verb is.">Pluperfect active, 3rd pl.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Two things to check: the case of commōtus, and whether timōre has a preposition.">
+                <div class="widget-row-prompt"><em>Senātor, <strong>magnō timōre commōtus</strong>, tacēbat.</em> (<em>commoveō</em> &mdash; to disturb, shake)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; commōtus is nominative singular masculine and agrees with senātor, the subject; magnō timōre is ablative of means: 'the senator, shaken by great fear, kept silent.'">A participle with the subject, plus ablative of means</button>
+                    <button data-choice="b" data-fb="For an ablative absolute the participle must be ablative &mdash; that would be commōtō. Commōtus is nominative, so it belongs to the subject.">Ablative absolute</button>
+                    <button data-choice="c" data-fb="An ablative of agent needs ā or ab and normally a person. Fear is a thing and there is no preposition, so this is means.">Ablative of agent</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="The waging comes after the saying. Which infinitive tense is that?">
+                <div class="widget-row-prompt">Complete: "Cicero said that Catiline <strong>would wage</strong> war." &mdash; <em>Cicerō dīxit Catilīnam bellum ____.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Gerere is the present infinitive: 'that Catiline was waging war,' at the same time as the saying. Not what the English asks for.">gerere</button>
+                    <button data-choice="b" data-fb="Right &mdash; gestūrum esse, the future active infinitive, and gestūrum is accusative singular masculine because it agrees with the accusative subject Catilīnam.">gestūrum esse</button>
+                    <button data-choice="c" data-fb="Gessisse is the perfect infinitive: 'that Catiline had waged war' &mdash; earlier than the saying, the opposite of what is wanted.">gessisse</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Gender and number from the antecedent; case from the job inside the clause.">
+                <div class="widget-row-prompt">In <em>pecūnia <strong>quam</strong> coniūrātī cōnsūmpserant nōn magna erat</em>, why is <em>quam</em> accusative?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Its antecedent pecūnia is nominative &mdash; but a relative pronoun never copies its antecedent's case, only its gender and number.">Because <em>pecūnia</em> is the subject of the sentence</button>
+                    <button data-choice="b" data-fb="There is no preposition here at all. The case is coming from the verb inside the relative clause.">Because it follows a preposition</button>
+                    <button data-choice="c" data-fb="Right &mdash; quam is the direct object of cōnsūmpserant inside its own clause, so accusative; feminine singular because pecūnia is: 'the money which the conspirators had used up was not large.'">Because it is the object of <em>cōnsūmpserant</em></button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Whose mind? Or is the phrase saying what kind of man he is?">
+                <div class="widget-row-prompt"><em>Catilīna erat vir <strong>ingeniī prāvī</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dative of reference would answer 'for whom?' Ingeniī prāvī cannot be dative anyway &mdash; the dative singular of ingenium is ingeniō.">Dative of reference</button>
+                    <button data-choice="b" data-fb="Right &mdash; genitive of description: 'a man of warped character.' It tells you what sort of man he was. Sallust characterizes people this way constantly.">Genitive of description</button>
+                    <button data-choice="c" data-fb="Ablative of means answers 'by what?' The ablative singular would be ingeniō prāvō, and the sense here is not instrumental.">Ablative of means</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="A reflexive inside indirect statement points back to the subject of the introducing verb.">
+                <div class="widget-row-prompt"><em>Coniūrātī <strong>sē</strong> esse parātōs dīxērunt.</em> Who is ready?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; sē points back to coniūrātī, the subject of dīxērunt: 'the conspirators said that they themselves were ready.' Note parātōs is accusative plural, agreeing with sē.">The conspirators themselves</button>
+                    <button data-choice="b" data-fb="If Latin meant somebody else, it would use eōs (accusative of is, ea, id) rather than the reflexive sē. That contrast is exactly what sē exists to mark.">Some other group, not the conspirators</button>
+                    <button data-choice="c" data-fb="Catiline is not in this sentence at all. And if he were the one who was ready, parātōs would be singular parātum.">Catiline</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 - THIS WEEK'S WORK -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; PART 3 &middot; YOUR GRADED WORK FOR MODULE 1</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Lūdus I &mdash; <em>Formae in Contextū</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">75 seconds of parsing forms and naming constructions <em>inside phrases</em> &mdash; no bare paradigm rows. <strong>Best of unlimited attempts.</strong></div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 1 Quiz</strong> &middot; auto-graded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Parsing in context, form production, constructions and participles, vocabulary, and short translation from this week's passages. Immediate feedback; you may retake it.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 1 Translation</strong> &middot; read by your teacher</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five sentences into Latin, three out of Latin. Full vocabulary provided &mdash; you are being assessed on <em>forms and syntax</em>, not on memory.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 1 Reflection</strong> &middot; ungraded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five quick questions so your teacher knows what landed and what did not. Nobody scores these.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIRST TRANSLATION -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128196; THE FIRST WRITTEN TRANSLATION OF THE COURSE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Module 0 had no translation assignment &mdash; that week was for getting your footing. <strong>This is the first one</strong>, and there will be one every module from here to the end of the semester. So it is worth setting up properly once, today, and then never thinking about the mechanics again.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 12px 0;">A few things worth knowing before you start. It is <strong>read by a person</strong>, not scored by a machine, so a sentence that is nearly right earns nearly full marks and gets a comment telling you exactly what to fix. The vocabulary is <strong>given to you</strong> on the assignment page &mdash; every word, with principal parts. And it is short: eight sentences. It is not a test of stamina. It is a test of whether you can put an ending in the right place on purpose.</p>
+        <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:10px;">&#10004; SET IT UP ONCE &mdash; SIX STEPS IN MICROSOFT WORD</div>
+            <table class="para" style="margin-top:0;">
+                <tr><th style="width:8%">&nbsp;</th><th style="width:32%">Do this</th><th>How</th></tr>
+                <tr><td class="lab"><strong>1</strong></td><td>Open a new document in <strong>Word</strong></td><td>Start from the Word tile in Microsoft 365, or open the assignment in Canvas and use the <strong>Microsoft OneDrive</strong> option there. Working in the browser version is completely fine.</td></tr>
+                <tr><td class="lab"><strong>2</strong></td><td>Make a folder for this course</td><td>In OneDrive, create a folder called <strong>Latin Advanced</strong> and keep every translation in it. By Module 17 you will have sixteen of these, and you will be glad they are in one place.</td></tr>
+                <tr><td class="lab"><strong>3</strong></td><td>Name the file exactly</td><td><code style="background:#fff; border:1px solid #BFE0C7; border-radius:3px; padding:1px 5px;">Lastname_Firstname_LatinAdv_M01_Translation.docx</code> &mdash; underscores, no spaces. Same pattern every module, with only the number changing.</td></tr>
+                <tr><td class="lab"><strong>4</strong></td><td>Head the page</td><td>Your name, the date, and <em>Module 1 Translation</em> on three short lines at the top. Then number your answers <strong>A1&ndash;A5</strong> and <strong>B1&ndash;B3</strong> to match the assignment.</td></tr>
+                <tr><td class="lab"><strong>5</strong></td><td>Italicize the Latin</td><td>Select your Latin and press <strong>Ctrl+I</strong> (Cmd+I on a Mac). Leave English in plain text. This is standard scholarly practice &mdash; it is how every edition you will ever read does it, and it makes your work much faster to mark.</td></tr>
+                <tr><td class="lab"><strong>6</strong></td><td>Save, then submit</td><td>Word saves to OneDrive as you type. Then go to the Canvas assignment and submit the file. Check that the file name in Canvas is the one from step 3.</td></tr>
+            </table>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>About macrons.</strong> Type them if you can &mdash; on Windows, <em>Insert &rarr; Symbol</em> has ā ē ī ō ū, and it is worth saving them as AutoCorrect entries once. But <strong>you are not marked down for writing without macrons</strong> in a typed translation. Nobody is going to lose a point over a keyboard. What <em>is</em> marked is the ending itself: <em>pressī</em> and <em>pressīs</em> are different words, and no macron will save a wrong case.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#128172; <strong>One more thing, and then go.</strong> If a sentence defeats you, write down what you <em>did</em> work out &mdash; "I know this needs an ablative absolute and I think the participle is <em>convocātīs</em>, but I could not place the noun." That is worth real credit and it tells your teacher precisely where to help. A blank tells nobody anything.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT'S COMING</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 2 &mdash; Deponent Verbs</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The first genuinely new grammar of the year, and you have already met it twice in disguise: <em>nātus erat</em> in Monday's portrait, and <em>abūtēre</em> in Cicero's opening line back in Module 0. A whole class of ordinary Latin verbs wears passive endings and means something active. Next week you take the disguise off &mdash; and Sallust's narration suddenly gets much easier to read.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">This week added no grammar and changed everything anyway. Knowing a form is being able to <strong>find</strong> it &mdash; in a sentence you have not seen, with no heading telling you what to look for. That is <em>cōnstantia</em>: the same forms, one more time, until they come when called.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.05 &middot; Everything, Without Prompting</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

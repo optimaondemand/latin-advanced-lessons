@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 6.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">Subjunctive I: Formation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;"><em>Quō Ūsque Tandem?</em></div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><em>Quō Ūsque Tandem?</em></div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Review &amp; Self-Check</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">In Module 0 you read one real sentence of Cicero and could only be told what was in it. Today you can see it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Fourteen subjunctives in one passage, and you can now parse every one. Their <em>jobs</em> &mdash; purpose, fear, indirect question, command &mdash; are Modules 8 through 14 and are glossed for you below. Your work today is the mood and the tense: exactly what you have spent four days building.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> parse every subjunctive form in an adapted passage of Cicero's first <em>Catilīnarian</em> &mdash; verb, tense, person, number, voice.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read <em>Quō ūsque tandem abūtēre, Catilīna, patientiā nostrā?</em> and account for every word in it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why Cicero, who had the power to arrest Catiline, argued instead &mdash; and why that is a lesson in <em>temperantia</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; FIRST, THE REAL THING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Two sentences of genuine, unadapted Cicero &mdash; the first words of the speech, and a line from a page later. You met the first of them in Lesson 0.05, when you had to take most of it on trust. Read them again now.</p>
+        <div style="background:#0E1C42; border-radius:8px; padding:22px 26px; margin:14px 0; text-align:center;">
+            <div style="font-size:25px; color:#ffffff; font-style:italic; line-height:1.5;">Quō ūsque tandem abūtēre, Catilīna, patientiā nostrā?</div>
+            <div style="font-size:14px; color:#55c8e8; margin-top:10px;">Cicero, <em>In Catilīnam</em> I.1 (unadapted)</div>
+            <div style="font-size:23px; color:#ffffff; font-style:italic; line-height:1.5; margin-top:18px; border-top:1px solid rgba(255,255,255,0.2); padding-top:18px;">Ō tempora, ō mōrēs!</div>
+            <div style="font-size:14px; color:#55c8e8; margin-top:10px;">Cicero, <em>In Catilīnam</em> I.2 (unadapted)</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:24%">Word</th><th>What it is doing</th></tr>
+            <tr><td class="lab"><em>quō ūsque tandem</em></td><td>"how long, in the end?" &mdash; a set phrase; <em>tandem</em> adds the impatience</td></tr>
+            <tr><td class="lab"><em>abūtēre</em></td><td>2nd sg. <strong>future</strong> of the deponent <em>abūtor</em>, "will you go on abusing?" &mdash; an alternative spelling of <em>abūtēris</em>. Passive in form, active in meaning: Module 2.</td></tr>
+            <tr><td class="lab"><em>patientiā nostrā</em></td><td>ablative &mdash; <em>abūtor</em> governs the ablative, not the accusative. And <em>patientia</em> is now on your vocabulary list.</td></tr>
+            <tr><td class="lab"><em>ō tempora, ō mōrēs</em></td><td>two accusatives of exclamation: "what an age! what a state of morals!" <em>Mōrēs</em> is the plural of <em>mōs</em> &mdash; also new this module.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Notice what is <em>not</em> in the famous line: a subjunctive.</strong> Cicero opens in the indicative, with a question about a fact. The subjunctives arrive a few sentences later, when he starts explaining what he <em>could</em> do, what he <em>fears</em> might be said, and what he <em>wishes</em> Catiline would do. The mood tracks the argument &mdash; and that is why he needed it.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Cicero, <em>In Catilīnam</em> I.</strong> A simplified Latin retelling of the scene in the temple on 8 November 63 BC &mdash; <strong>not Cicero's own sentences</strong>, apart from the three words <em>Ō tempora! Ō mōrēs!</em>, which are his (<em>In Cat.</em> I.2). Every <span style="color:#AA1E2D;"><strong>subjunctive</strong></span> is marked in red. Read it once straight through for sense.</p>
+        <div class="rd">
+            <p>Cōnsul senātum in templum Iovis Statōris convocāverat. Catilīna ipse vēnit et sēdit; nēmō tamen prope eum sedēbat, et sellae circum eum vacuae erant. Cicerō surrēxit et paulum tacuit, ut omnēs <b>audīrent</b>.</p>
+            <p>"Quō ūsque tandem, Catilīna, patientiā nostrā abūtēris? Cōnsilia tua iam omnibus nōta sunt. Nox illa, in quā tū cum coniūrātīs tuīs locūtus es, nōbīs nōn est occulta.</p>
+            <p>"Rogās fortasse cūr tē nōn statim <b>comprehendam</b>. Nōn tē comprehendō, nē quis <b>dīcat</b> cōnsulem sevērum esse. Ō tempora! Ō mōrēs! Senātus haec intellegit, cōnsul videt; tū tamen in urbe manēs. Tibi, Catilīna, ex urbe exeundum est."</p>
+            <p>Multī senātōrēs timēbant nē rēs pūblica ā coniūrātīs <b>dēlērētur</b>. Nēmō dubitābat quis auctor huius cōnsiliī <b>esset</b>; aliī rogābant quid cōnsul facere <b>posset</b>. Ōlim cōnsulēs, ut rem pūblicam <b>dēfenderent</b>, cīvēs malōs statim necābant; nunc autem cīvis Rōmānus sine iūdiciō necārī nōn dēbet.</p>
+            <p>Catilīna surrēxit ut <b>loquerētur</b>, sed nihil dīxit. Senātōrēs, cum haec <b>intellegerent</b>, tacēbant. Tandem ūnus rogāvit num Catilīna ex urbe <b>exīret</b>. Tum multī clāmāvērunt: "<b>Exeat</b>! Ex urbe <b>discēdat</b>! Urbs <b>servētur</b>!"</p>
+            <p>Catilīna tandem ex templō discessit. Nocte proximā ex urbe profectus est, ut in Etrūriā exercitum <b>parāret</b>.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list</div>
+            <ul class="gl">
+                <li><em>Iuppiter Stator, Iovis Statōris</em> &mdash; "Jupiter the Stayer," the god who makes a line hold; Cicero delivered this speech in his temple</li>
+                <li><em>convocō, convocāre, convocāvī, convocātum</em> &mdash; to call together, summon</li>
+                <li><em>sella, sellae</em> f. &mdash; seat, bench</li>
+                <li><em>circum</em> (+ acc.) &mdash; around</li>
+                <li><em>vacuus, -a, -um</em> &mdash; empty</li>
+                <li><em>paulum</em> (adv.) &mdash; for a moment, a little</li>
+                <li><em>quō ūsque tandem</em> &mdash; "how long, in the end?" &mdash; the set phrase from Modules 0 and 4</li>
+                <li><em>abūtēris</em> &mdash; "will you go on abusing?" (2nd sg. future of the deponent <em>abūtor</em>, which governs the <strong>ablative</strong>: <em>patientiā nostrā</em>)</li>
+                <li><em>nōta sunt</em> &mdash; "are known" (from <em>nōtus, -a, -um</em>, known; the person to whom goes in the dative: <em>omnibus</em>)</li>
+                <li><em>nox illa, in quā</em> &mdash; "that night, on which"</li>
+                <li><em>occultus, -a, -um</em> &mdash; hidden, secret</li>
+                <li><em>statim</em> (adv.) &mdash; at once, immediately</li>
+                <li><em>quis</em> (here, after <em>nē</em>) &mdash; "anyone"</li>
+                <li><em>auctor, auctōris</em> m. &mdash; originator, the one behind something</li>
+                <li><em>huius</em> &mdash; "of this" (gen. sg. of <em>hic, haec, hoc</em>)</li>
+                <li><em>ōlim</em> (adv.) &mdash; once, in the old days</li>
+                <li><em>iūdicium, iūdiciī</em> n. &mdash; trial, judgment, court proceeding</li>
+                <li><em>num</em> &mdash; "whether" (introduces an indirect question)</li>
+                <li><em>servō, servāre, servāvī, servātum</em> &mdash; to save, protect, keep safe</li>
+                <li><em>nocte proximā</em> &mdash; "on the following night" (ablative of time)</li>
+                <li><em>Etrūria, Etrūriae</em> f. &mdash; Etruria, the region north of Rome where Catiline's army was waiting</li>
+                <li><strong>From this module's list:</strong> <em>patientia, mōrēs, fortasse, sevērus, intellegō, comprehendō, necō, dubitō, exeō</em>. From Module 5: <em>dēleō</em>, and the gerundive of obligation <em>exeundum est</em>.</li>
+            </ul>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>About every red form in that passage.</strong> Each one sits in a construction you have <strong>not studied yet</strong> &mdash; purpose, fear, indirect question, command. Those constructions are the next eight modules, and the table below tells you which module owns each one. <strong>You are not expected to parse the constructions today, and you will not be graded on them.</strong> What you <em>can</em> do, and what this module grades, is name the verb, the tense, the person, the number and the voice of every single one. Try it before you look.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 3 &middot; SUBJUNCTIVE INVENTORY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Fourteen forms. Parse each one yourself, then check. This table is also your revision sheet for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:15%">Form</th><th style="width:14%">From</th><th style="width:27%">Tense &middot; person &middot; number &middot; voice</th><th style="width:20%">Meaning here</th><th>Its job &mdash; and where you learn it</th></tr>
+            <tr><td class="lab"><em>audīrent</em></td><td><em>audiō</em></td><td>imperfect &middot; 3rd pl. &middot; active</td><td>"might hear"</td><td>purpose clause with <em>ut</em> &mdash; <strong>m08</strong></td></tr>
+            <tr><td class="lab"><em>comprehendam</em></td><td><em>comprehendō</em></td><td>present &middot; 1st sg. &middot; active</td><td>"I am arresting / should arrest"</td><td>indirect question after <em>cūr</em> &mdash; <strong>m11</strong>. Also the ambiguous form from 6.04: identical to the future indicative.</td></tr>
+            <tr><td class="lab"><em>dīcat</em></td><td><em>dīcō</em></td><td>present &middot; 3rd sg. &middot; active</td><td>"may say"</td><td>negative purpose with <em>nē</em> &mdash; <strong>m08</strong></td></tr>
+            <tr><td class="lab"><em>dēlērētur</em></td><td><em>dēleō</em></td><td>imperfect &middot; 3rd sg. &middot; <strong>passive</strong></td><td>"might be destroyed"</td><td>fear clause after <em>timēbant nē</em> &mdash; <strong>m12</strong></td></tr>
+            <tr><td class="lab"><em>esset</em></td><td><em>sum</em></td><td>imperfect &middot; 3rd sg.</td><td>"was"</td><td>indirect question after <em>quis</em> &mdash; <strong>m11</strong></td></tr>
+            <tr><td class="lab"><em>posset</em></td><td><em>possum</em></td><td>imperfect &middot; 3rd sg.</td><td>"could, was able"</td><td>indirect question after <em>quid</em> &mdash; <strong>m11</strong></td></tr>
+            <tr><td class="lab"><em>dēfenderent</em></td><td><em>dēfendō</em></td><td>imperfect &middot; 3rd pl. &middot; active</td><td>"might defend"</td><td>purpose clause with <em>ut</em> &mdash; <strong>m08</strong></td></tr>
+            <tr><td class="lab"><em>loquerētur</em></td><td><em>loquor</em></td><td>imperfect &middot; 3rd sg. &middot; <strong>deponent</strong></td><td>"might speak"</td><td>purpose clause with <em>ut</em> &mdash; <strong>m08</strong></td></tr>
+            <tr><td class="lab"><em>intellegerent</em></td><td><em>intellegō</em></td><td>imperfect &middot; 3rd pl. &middot; active</td><td>"understood"</td><td><em>cum</em> clause &mdash; <strong>m10</strong></td></tr>
+            <tr><td class="lab"><em>exīret</em></td><td><em>exeō</em></td><td>imperfect &middot; 3rd sg. &middot; active</td><td>"was going out"</td><td>indirect question after <em>num</em> &mdash; <strong>m11</strong></td></tr>
+            <tr><td class="lab"><em>exeat</em></td><td><em>exeō</em></td><td>present &middot; 3rd sg. &middot; active</td><td>"let him leave!"</td><td>independent command &mdash; <strong>m14</strong></td></tr>
+            <tr><td class="lab"><em>discēdat</em></td><td><em>discēdō</em></td><td>present &middot; 3rd sg. &middot; active</td><td>"let him depart!"</td><td>independent command &mdash; <strong>m14</strong></td></tr>
+            <tr><td class="lab"><em>servētur</em></td><td><em>servō</em></td><td>present &middot; 3rd sg. &middot; <strong>passive</strong></td><td>"let the city be saved!"</td><td>independent command &mdash; <strong>m14</strong></td></tr>
+            <tr><td class="lab"><em>parāret</em></td><td><em>parō</em></td><td>imperfect &middot; 3rd sg. &middot; active</td><td>"might prepare"</td><td>purpose clause with <em>ut</em> &mdash; <strong>m08</strong></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Count the tenses and something jumps out.</strong> Nine of the fourteen are <strong>imperfect</strong>, and every one of those nine hangs under a <strong>past</strong> main verb: <em>tacuit</em>, <em>timēbant</em>, <em>dubitābat</em>, <em>rogābant</em>, <em>necābant</em>, <em>surrēxit</em>, <em>tacēbant</em>, <em>rogāvit</em>, <em>profectus est</em>. The five <strong>present</strong> subjunctives sit under present-tense speech, or stand alone as shouts in the moment. That is <strong>sequence of tenses</strong> operating in front of you &mdash; and it is Module 7's whole subject.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 4 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out before flipping. The construction is glossed on each card, so what you are practising is getting the <em>form</em> right. These four are good preparation for the translation assignment.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cicerō surrēxit et paulum tacuit, ut omnēs audīrent.</em> <span style="font-size:14px; color:#666;">(<em>ut</em> + subjunctive = "so that&hellip;might" &mdash; Module 8)</span></div><div class="hint">click to compare</div><div class="back">"Cicero stood up and was silent for a moment, <strong>so that everyone might hear</strong>." <em>Audīrent</em> is <strong>imperfect subjunctive, 3rd plural, active</strong> &mdash; built from <em>audīre</em> + <em>-nt</em>. It is imperfect because the main verb <em>tacuit</em> is past.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Multī senātōrēs timēbant nē rēs pūblica ā coniūrātīs dēlērētur.</em> <span style="font-size:14px; color:#666;">(<em>timeō nē</em> = "fear that" &mdash; Module 12)</span></div><div class="hint">click to compare</div><div class="back">"Many senators <strong>were afraid that the republic would be destroyed by the conspirators</strong>." <em>Dēlērētur</em> is <strong>imperfect subjunctive, 3rd singular, passive</strong>: <em>dēlēre</em> + <em>-tur</em>. Note <em>ā coniūrātīs</em> &mdash; ablative of agent with a genuine passive, which is why it is not a dative here.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Catilīna surrēxit ut loquerētur, sed nihil dīxit.</em> <span style="font-size:14px; color:#666;">(<em>ut</em> + subjunctive = purpose &mdash; Module 8)</span></div><div class="hint">click to compare</div><div class="back">"Catiline stood up <strong>in order to speak</strong>, but said nothing." <em>Loquerētur</em> is the <strong>imperfect subjunctive of the deponent <em>loquor</em></strong> &mdash; passive endings, active meaning, exactly as in Module 2. "Might be spoken" is the misreading to avoid.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Tum multī clāmāvērunt: "Exeat! Ex urbe discēdat! Urbs servētur!"</em> <span style="font-size:14px; color:#666;">(independent subjunctive = a command &mdash; Module 14)</span></div><div class="hint">click to compare</div><div class="back">"Then many shouted: '<strong>Let him leave! Let him depart from the city! Let the city be saved!</strong>'" Three <strong>present</strong> subjunctives: <em>exeat</em> and <em>discēdat</em> active, <em>servētur</em> passive. A crowd using the subjunctive to demand something is the mood doing exactly what it exists for.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; WHAT CICERO COULD NOT DO</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">A reasonable question about that scene: Cicero was consul. Catiline was sitting ten feet away, and Cicero had already survived one attempt on his life. Why give a speech instead of an order?</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Because Roman law was jealous about the rights of citizens. A statute of 123 BC, the <em>lēx Semprōnia</em>, established that a Roman citizen could not be put to death without the judgment of the people. A consul who ignored it did not become a strong leader; he became the story. Catiline had real supporters and real grievances behind him, and Cicero knew that the moment he acted outside the law, the argument would stop being about the conspiracy and start being about him.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">He was right to worry. A month later, with the plot proven, the Senate passed the emergency decree that modern historians call the <em>senātūs cōnsultum ultimum</em>, and the arrested conspirators were executed without trial. Caesar argued against it. Five years after that, a tribune named Clodius carried a law penalising anyone who had executed a Roman citizen without trial, and Cicero &mdash; who by then had no doubt at all whom it was aimed at &mdash; left Italy into exile. The most successful act of his career became the charge against him.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>Which is why the grammar of this speech is what it is.</strong> Cicero is not simply reporting facts; he is managing what <em>might</em> be said, what <em>could</em> be feared, what a reasonable man <em>would</em> do. That is subjunctive territory, and he lives in it for the length of the speech. <em>Nē quis dīcat cōnsulem sevērum esse</em> &mdash; "so that nobody may say the consul is harsh." A man in full control of the city, worrying out loud about his reputation, in the mood of things-that-are-not-facts.</p>
+    </div>
+
+    <!-- MODULE REVIEW -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; MODULE 6 IN FIVE LINES</div>
+        <table class="para">
+            <tr><th style="width:22%">Lesson</th><th>The one thing to keep</th></tr>
+            <tr><td class="lab">6.01</td><td>Mood is not tense. Present subjunctive: <strong>1st conjugation swaps <em>ā</em> for <em>ē</em>; everything else adds <em>ā</em></strong>. <em>Amem, moneam, regam, capiam, audiam.</em></td></tr>
+            <tr><td class="lab">6.02</td><td>Passive = the same vowel with the passive endings: <em>amer, regātur</em>. <strong>Deponents use those forms actively</strong>: <em>loquātur</em> = "he may speak." Chant <em>sim &middot; possim &middot; eam</em>.</td></tr>
+            <tr><td class="lab">6.03</td><td><strong>Imperfect subjunctive = present infinitive + endings.</strong> No exceptions: <em>amārem, regerem, essem, possem, īrem</em>. Deponents use the would-be active infinitive: <em>loquerer</em>.</td></tr>
+            <tr><td class="lab">6.04</td><td><em>-bā-</em> means indicative. <em>-re-</em>/<em>-sse-</em> plus an ending means imperfect subjunctive. And <em>dīcam</em>, <em>capiam</em>, <em>audiam</em> are genuinely ambiguous &mdash; the sentence decides, not the form.</td></tr>
+            <tr><td class="lab">6.05</td><td>In real oratory the subjunctive carries the <em>argument</em>: what might be said, what was feared, what should be done. Cicero needed a mood for hedging because he was a lawyer in a room full of enemies.</td></tr>
+        </table>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; FINAL SELF-CHECK BEFORE THE QUIZ</div>
+            <div class="widget-question">Four questions across the whole module.</div>
+            <div class="widget-row" data-correct="b" data-hint="Which conjugation is servō, and which vowel does that conjugation take?">
+                <div class="widget-row-prompt">In the passage, the crowd shouts <em>Urbs servētur!</em> What is <em>servētur</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Servātur, with ā, is the present passive INDICATIVE: 'the city is being saved.' A report, not a demand.">Present passive indicative</button>
+                    <button data-choice="b" data-fb="Right — present passive subjunctive, 3rd singular. Servō is 1st conjugation, so its mood vowel is ē: serv-ē-tur, 'let the city be saved.'">Present passive subjunctive</button>
+                    <button data-choice="c" data-fb="The imperfect passive subjunctive would be servārētur, built on the infinitive servāre. There is no -re- in servētur.">Imperfect passive subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Start from the infinitive. Then remember what a deponent does with endings.">
+                <div class="widget-row-prompt">Give the imperfect subjunctive, 3rd plural, of the deponent <em>sequor, sequī</em>:</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Sequerent uses an active ending. Sequor is deponent and has no active forms at all.">sequerent</button>
+                    <button data-choice="b" data-fb="Sequantur is the PRESENT subjunctive, 'they may follow.' Right mood, wrong tense.">sequantur</button>
+                    <button data-choice="c" data-fb="Right — sequerentur. Would-be active infinitive sequere plus the passive ending -ntur, translated actively: 'they might follow.'">sequerentur</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Only one of these has a -bā- in it.">
+                <div class="widget-row-prompt">Which of these is <strong>indicative</strong>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — dubitābat is imperfect indicative, 'he was doubting.' The -bā- marker settles it instantly.">dubitābat</button>
+                    <button data-choice="b" data-fb="Dubitāret is imperfect subjunctive: dubitāre + -t, 'he might doubt.'">dubitāret</button>
+                    <button data-choice="c" data-fb="Dubitet is present subjunctive: 1st conjugation, so the mood vowel is ē (shortened before -t).">dubitet</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Think about which principal part each tense is built on.">
+                <div class="widget-row-prompt">Why is the imperfect subjunctive called the easiest tense in Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="It is not because it is rare — it is extremely common, and you will meet it constantly from Module 8 onward.">Because it hardly ever appears</button>
+                    <button data-choice="b" data-fb="Right — present infinitive plus personal endings, with no exceptions at all: amārem, regerem, essem, possem, īrem. Even the irregular verbs obey.">Because it is the present infinitive plus endings, for every verb without exception</button>
+                    <button data-choice="c" data-fb="It has a full set of six persons in both voices, like every other tense. Nothing is missing.">Because it only exists in the third person</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- THIS WEEK'S WORK -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; YOUR GRADED WORK FOR MODULE 6</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Lūdus VI &mdash; <em>Modus Subiūnctīvus</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">75 seconds of mood-and-tense calls: indicative or subjunctive, present or imperfect, active or passive. <strong>Best of unlimited attempts.</strong></div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 6 Quiz</strong> &middot; auto-graded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Identification and parsing, form production, a large indicative-versus-subjunctive section, vocabulary and derivatives, and short translation from this passage with the construction glossed for you.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 6 Translation</strong> &middot; read by your teacher</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five transformations into Latin (write the sentence in the indicative, then change the verb to the subjunctive tense named) and three sentences out of Latin. Full vocabulary provided &mdash; you are being assessed on <em>forms</em>, not on memory, and never on a construction you have not been taught.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 6 Reflection</strong> &middot; ungraded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tell your teacher what clicked and what did not. This module is the foundation of the next nine, so answer honestly.</div>
+            </div>
+        </div>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; margin-top:14px; font-size:16px; color:#1a2340; line-height:1.6;">&#128196; <strong>M365 step for the translation.</strong> Write it in <strong>Microsoft Word</strong>. Put your Latin in <em>italics</em> (Ctrl+I) and leave your English in plain text. Where a sentence asks for two versions, use a two-column table (<strong>Insert &rarr; Table</strong>) with the indicative on the left and the subjunctive on the right &mdash; it makes the change you made visible at a glance. Save to <strong>OneDrive</strong> as <code>Lastname_Firstname_LatinAdv_M06_Translation.docx</code> and submit through Canvas.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT'S COMING</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M7</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 7 &mdash; Sequence of Tenses</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">You noticed the pattern in Part 3: past main verb, imperfect subjunctive. Next week that becomes a rule you can use in both directions, with a name for each half &mdash; <strong>primary</strong> and <strong>secondary</strong> sequence &mdash; and an answer to what happens when the two actions are not simultaneous. The reading moves to <em>In Catilīnam</em> II, where Cicero has to explain to the people of Rome what he did in that temple. Then Module 8 &mdash; purpose clauses and indirect command &mdash; is the first <strong>80% mastery gate</strong> of the semester.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You have just read a page of Latin in which fourteen verbs refused to state a fact &mdash; and you could name every one of them. That is the whole point of the module. Cicero had the legal power to arrest a man and chose to argue instead; the mood he argued in is the one you now own. <em>Temperantia</em> is not weakness. It is a consul with the authority to act, using the subjunctive.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.05 &middot; Quō Ūsque Tandem?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

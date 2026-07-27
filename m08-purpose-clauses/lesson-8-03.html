@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 8.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 8</div>
+        <div style="font-size: 12px; color: #666;">Purpose Clauses &amp; Indirect Command</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Reported Orders</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Reported Orders &mdash; Indirect Command</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The same shape you learned Monday, doing a completely different job.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">When Latin <em>reports</em> an order instead of quoting it, it reaches for <em>ut</em> or <em>nē</em> plus a subjunctive &mdash; the identical machinery. What changes is the main verb: a verb of <strong>ordering, asking, urging, begging, warning, or persuading</strong>. Learn the list, and above all learn which case the person takes.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> turn a direct command into an indirect command with <em>ut/nē</em> + subjunctive, and translate one into natural English.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> put the person commanded in the right case &mdash; dative after <em>imperō</em> and <em>persuādeō</em>, accusative after <em>rogō, ōrō, moneō, hortor</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>iubeō</em> is the exception, and write it correctly with an accusative and an infinitive.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; FROM QUOTED TO REPORTED</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">In November of 63 BC Cicero stood up in the Senate and told Catiline to get out of Rome. Quoted directly, that is an imperative &mdash; the mood of command you have had since 0706000:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0; text-align:center;">
+            <div style="font-size:23px; color:#0e1c42;"><em>"Discēde ex urbe!"</em></div>
+            <div style="font-size:16px; color:#666; margin-top:6px;">"Leave the city!" &mdash; a direct command, imperative mood</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Now report it. Nobody is quoting anymore; a narrator is telling us what happened. Latin drops the imperative and builds a clause:</p>
+        <div style="background:#FDF3E3; border-radius:7px; padding:16px 20px; margin:8px 0; text-align:center;">
+            <div style="font-size:23px; color:#0e1c42;"><em>Cicerō Catilīn<span class="end">ae</span> imperāvit <span class="end">ut</span> ex urbe <span class="end">discēderet</span>.</em></div>
+            <div style="font-size:16px; color:#666; margin-top:6px;">"Cicero ordered Catiline to leave the city."</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Three things to notice, and only the third is new:</p>
+        <table class="para">
+            <tr><th style="width:30%">Piece</th><th>What it is doing</th></tr>
+            <tr><td class="lab"><em>ut&hellip;discēderet</em></td><td><strong>Nothing new.</strong> <em>Ut</em> + imperfect subjunctive, secondary sequence after the perfect <em>imperāvit</em> &mdash; exactly the shape from Monday.</td></tr>
+            <tr><td class="lab"><em>nē</em> instead of <em>ut</em></td><td><strong>Nothing new.</strong> A negative order uses <em>nē</em>, same as negative purpose: <em>Cicerō cīvēs monuit nē timērent</em> &mdash; "Cicero warned the citizens not to fear."</td></tr>
+            <tr><td class="lab"><em>Catilīnae</em></td><td><strong>This is new.</strong> <em>Imperō</em> takes the person commanded in the <strong>dative</strong>, not the accusative. Get this wrong and the sentence stops being Latin.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>English will mislead you here, so decide now to ignore it.</strong> English says "ordered Catiline <em>to leave</em>" &mdash; an infinitive, and "Catiline" looks like a direct object. Latin says <em>Catilīnae imperāvit ut discēderet</em> &mdash; a dative and a subjunctive clause. Translate <em>into</em> the English infinitive freely; never translate <em>out of</em> it by writing an infinitive in your Latin.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE VERBS, AND THE CASE EACH ONE WANTS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">There is no logic to memorize here &mdash; just a short list to know. Learn it as three groups.</p>
+        <table class="para">
+            <tr><th style="width:26%">Verb</th><th style="width:22%">Person goes in the&hellip;</th><th>Example</th></tr>
+            <tr><td class="lab"><em>imperō, imperāre, imperāvī, imperātum</em><br><span style="font-size:14px; color:#666;">order, command</span></td><td class="end">DATIVE</td><td><em>Cicerō mīlitibus imperāvit ut venīrent.</em><br><span style="font-size:14px; color:#666;">"Cicero ordered the soldiers to come."</span></td></tr>
+            <tr><td class="lab"><em>persuādeō, persuādēre, persuāsī, persuāsum</em><br><span style="font-size:14px; color:#666;">persuade</span></td><td class="end">DATIVE</td><td><em>Cicerō lēgātīs persuāsit ut litterās acciperent.</em><br><span style="font-size:14px; color:#666;">"Cicero persuaded the envoys to accept the letters."</span></td></tr>
+            <tr><td class="lab"><em>rogō, rogāre, rogāvī, rogātum</em><br><span style="font-size:14px; color:#666;">ask</span></td><td class="end">ACCUSATIVE</td><td><em>Cicerō senātōrēs rogāvit nē timērent.</em><br><span style="font-size:14px; color:#666;">"Cicero asked the senators not to be afraid."</span></td></tr>
+            <tr><td class="lab"><em>ōrō, ōrāre, ōrāvī, ōrātum</em><br><span style="font-size:14px; color:#666;">beg, plead with</span></td><td class="end">ACCUSATIVE</td><td><em>Cicerō cīvēs ōrāvit ut memoriam tenērent.</em><br><span style="font-size:14px; color:#666;">"Cicero begged the citizens to hold the memory."</span></td></tr>
+            <tr><td class="lab"><em>moneō, monēre, monuī, monitum</em><br><span style="font-size:14px; color:#666;">warn, advise</span></td><td class="end">ACCUSATIVE</td><td><em>Cicerō cīvēs monuit nē timērent.</em><br><span style="font-size:14px; color:#666;">"Cicero warned the citizens not to fear."</span></td></tr>
+            <tr><td class="lab"><em>hortor, hortārī, hortātus sum</em><br><span style="font-size:14px; color:#666;">urge, encourage <span style="color:#8a6416;">(deponent, Module 2)</span></span></td><td class="end">ACCUSATIVE</td><td><em>Cicerō cīvēs hortātus est ut fortēs essent.</em><br><span style="font-size:14px; color:#666;">"Cicero urged the citizens to be brave."</span></td></tr>
+            <tr><td class="lab"><em>petō, petere, petīvī, petītum</em><br><span style="font-size:14px; color:#666;">seek, request</span></td><td class="end"><em>ā / ab</em> + ABLATIVE</td><td><em>Cicerō ā senātū petīvit ut auxilium daret.</em><br><span style="font-size:14px; color:#666;">"Cicero requested of the Senate that it give help."</span></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two of them you can reason about.</strong> <em>Imperō</em> and <em>persuādeō</em> both take the dative because of what they literally do: you give an order <em>to</em> someone, and you make something sweet (<em>suādeō</em>, from the same root as English <em>suave</em>) <em>to</em> someone. Latin treats the person as the one <strong>to whom</strong> the action is directed, not the thing acted on. The accusative group treats the person as the one you <strong>work on</strong> directly &mdash; you ask <em>them</em>, you warn <em>them</em>.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 3 &middot; THE ONE VERB THAT REFUSES <em>UT</em>: <em>IUBEŌ</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><em>Iubeō, iubēre, iussī, iussum</em> means "order, command" &mdash; it looks like a perfect member of the <em>imperō</em> family. It is not. <em>Iubeō</em> takes an <strong>accusative and an infinitive</strong>, with no <em>ut</em> anywhere.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:4px;"><em>IUBEŌ</em> &mdash; ACC. + INFINITIVE &#10003;</div>
+                <div style="font-size:18px; color:#0e1c42;"><em>Cicerō Catilīnam ex urbe exīre iussit.</em></div>
+                <div style="font-size:15px; color:#1a2340; margin-top:6px;">"Cicero ordered Catiline to go out of the city."</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8A1F16; margin-bottom:4px;">NOT THIS &#10007;</div>
+                <div style="font-size:18px; color:#0e1c42;"><em>Cicerō Catilīnae iussit ut exīret.</em></div>
+                <div style="font-size:15px; color:#1a2340; margin-top:6px;">A very common error. <em>Iubeō</em> does not take a dative, and it does not take <em>ut</em>.</div>
+            </div>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:14px 18px; margin: 12px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS FOR THE SENTENCE ABOVE</div>
+            <ul class="gl">
+                <li><em>exīre</em> &mdash; "to go out," present infinitive of <em>exeō</em> (a compound of <em>eō</em>, "to go"). <strong>Not yet studied &mdash; gloss provided:</strong> the irregular verbs <em>ferō, eō, volō, nōlō, mālō, fiō</em> are taught in Module 15. You only need to recognize this one form as an infinitive. Latin authors write <em>ex urbe exīre</em> often; if you would rather write <em>discēdere</em> ("to depart"), that is equally correct: <em>Cicerō Catilīnam ex urbe discēdere iussit</em>.</li>
+            </ul>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Put the two side by side and hold the contrast, because this is the single most-tested distinction in the module:</p>
+        <table class="para">
+            <tr><th style="width:22%">Verb</th><th style="width:32%">Person</th><th>The order itself</th></tr>
+            <tr><td class="lab"><em>imperō</em></td><td><strong>dative</strong> &mdash; <em>Catilīnae</em></td><td><em>ut</em> / <em>nē</em> + <strong>subjunctive</strong> &mdash; <em>ut discēderet</em></td></tr>
+            <tr><td class="lab"><em>iubeō</em></td><td><strong>accusative</strong> &mdash; <em>Catilīnam</em></td><td><strong>infinitive</strong>, no <em>ut</em> &mdash; <em>discēdere</em></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>A memory hook.</strong> <em>Iubeō</em> gives you an English word you already know from music: a <em>jussive</em> command. It behaves like the verbs of <em>saying</em> you met in 0706010 &mdash; accusative plus infinitive, the indirect-statement shape. <em>Imperō</em> behaves like a verb of <em>giving</em>. Two different pictures of what an order is.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 4 &middot; VOCABULARY FOR THIS MODULE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The verbs above, plus the nouns you will need for Thursday's reading. Learn them in the shapes given.</p>
+        <table class="para">
+            <tr><th style="width:36%">Entry</th><th>Meaning &amp; note</th></tr>
+            <tr><td class="lab"><em>imperō, imperāre, imperāvī, imperātum</em> (+ dat.)</td><td>to order, command</td></tr>
+            <tr><td class="lab"><em>persuādeō, persuādēre, persuāsī, persuāsum</em> (+ dat.)</td><td>to persuade</td></tr>
+            <tr><td class="lab"><em>ōrō, ōrāre, ōrāvī, ōrātum</em> (+ acc.)</td><td>to beg, plead with, pray &mdash; from <em>ōs, ōris</em>, "mouth"</td></tr>
+            <tr><td class="lab"><em>moneō, monēre, monuī, monitum</em> (+ acc.)</td><td>to warn, advise</td></tr>
+            <tr><td class="lab"><em>iubeō, iubēre, iussī, iussum</em> (+ acc. + inf.)</td><td>to order &mdash; the exception; never <em>ut</em></td></tr>
+            <tr><td class="lab"><em>suspicor, suspicārī, suspicātus sum</em></td><td>to suspect &mdash; deponent</td></tr>
+            <tr><td class="lab"><em>nūntiō, nūntiāre, nūntiāvī, nūntiātum</em></td><td>to report, announce</td></tr>
+            <tr><td class="lab"><em>agnōscō, agnōscere, agnōvī, agnitum</em></td><td>to recognize, identify</td></tr>
+            <tr><td class="lab"><em>custōs, custōdis</em> m./f.</td><td>guard, watchman</td></tr>
+            <tr><td class="lab"><em>signum, signī</em> n.</td><td>sign, signal, <strong>seal</strong> &mdash; the seal pressed into wax on a letter</td></tr>
+            <tr><td class="lab"><em>tabella, tabellae</em> f.</td><td>writing tablet; in the plural, a sealed letter or document</td></tr>
+            <tr><td class="lab"><em>testis, testis</em> m./f.</td><td>witness</td></tr>
+            <tr><td class="lab"><em>lēgātus, lēgātī</em> m.</td><td>envoy, ambassador</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128220; <strong>Etymology moment.</strong> <em>Imperō</em> is the root of an enormous English family: <em>emperor, empire, imperial, imperative</em> &mdash; a sentence that commands is an <em>imperative</em> sentence, and a man whose whole title is "the one who commands" is an <em>imperātor</em>. <em>Suspicor</em> gives you <em>suspect</em> and <em>suspicion</em> (<em>sub-</em> "from below" + <em>specere</em> "to look" &mdash; to look at someone from below). And <em>testis</em> gives you <em>testify, testimony, testament, contest</em>. Cicero's whole case on December 3rd turned on <em>testēs</em> and <em>signa</em> &mdash; witnesses and seals.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; GET THE CASE RIGHT</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Five rows. Every one of these is a mistake a real student made.</div>
+            <div class="widget-row" data-correct="b" data-hint="Which case does <em>imperō</em> govern?">
+                <div class="widget-row-prompt">"Cicero ordered the soldiers to come." Which is correct Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Mīlitēs is accusative. Imperō does not take an accusative of the person — it takes the dative.">Cicerō mīlitēs imperāvit ut venīrent.</button>
+                    <button data-choice="b" data-fb="Right — mīlitibus, dative, with ut venīrent. Imperō always puts the person commanded in the dative.">Cicerō mīlitibus imperāvit ut venīrent.</button>
+                    <button data-choice="c" data-fb="Imperō does not take an infinitive. That is iubeō's construction — and iubeō would need an accusative: mīlitēs venīre iussit.">Cicerō mīlitibus imperāvit venīre.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="This verb is the exception to everything else in the lesson.">
+                <div class="widget-row-prompt">"Cicero ordered Catiline to leave the city," using <em>iubeō</em>. Which is correct?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Iubeō never takes ut + subjunctive. That is the imperō pattern.">Cicerō Catilīnae iussit ut discēderet.</button>
+                    <button data-choice="b" data-fb="The infinitive is right for iubeō, but Catilīnae is dative. Iubeō takes the accusative: Catilīnam.">Cicerō Catilīnae discēdere iussit.</button>
+                    <button data-choice="c" data-fb="Right — accusative Catilīnam plus the infinitive discēdere. Iubeō behaves like a verb of saying, not a verb of giving.">Cicerō Catilīnam ex urbe discēdere iussit.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="<em>Persuādeō</em> is in the same case-group as <em>imperō</em>.">
+                <div class="widget-row-prompt">"Cicero persuaded the envoys to accept the letters." Which is correct?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — lēgātīs, dative. Persuādeō joins imperō in the dative group: you make something sweet TO someone.">Cicerō lēgātīs persuāsit ut litterās acciperent.</button>
+                    <button data-choice="b" data-fb="Lēgātōs is accusative. Persuādeō takes the dative, exactly like imperō.">Cicerō lēgātōs persuāsit ut litterās acciperent.</button>
+                    <button data-choice="c" data-fb="Two problems: lēgātōs should be dative lēgātīs, and acciperent should not be replaced by an infinitive — persuādeō needs ut + subjunctive.">Cicerō lēgātōs persuāsit litterās accipere.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Negative order. Which marker word, and which case after <em>moneō</em>?">
+                <div class="widget-row-prompt">"Cicero warned the citizens not to fear." Which is correct?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Two errors: cīvibus should be accusative cīvēs after moneō, and negative orders use nē, not ut nōn.">Cicerō cīvibus monuit ut nōn timērent.</button>
+                    <button data-choice="b" data-fb="Right — cīvēs accusative after moneō, and nē timērent for the negative. Monuit is perfect, so the imperfect subjunctive is correct.">Cicerō cīvēs monuit nē timērent.</button>
+                    <button data-choice="c" data-fb="The case is right, but ut nōn is not how Latin negates an indirect command or a purpose clause. Use nē.">Cicerō cīvēs monuit ut nōn timērent.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Both sentences report an order. What is different about the main verbs?">
+                <div class="widget-row-prompt">Why does <em>Cicerō Catilīnam discēdere iussit</em> have an infinitive while <em>Cicerō Catilīnae imperāvit ut discēderet</em> has a subjunctive?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Both sentences are past tense, and both report a completed order. Tense is not the difference.">Because one is past and one is present</button>
+                    <button data-choice="b" data-fb="Both are indirect commands in meaning — nobody is being quoted in either sentence.">Because only one of them is really an indirect command</button>
+                    <button data-choice="c" data-fb="Right — the construction is a property of the individual verb. Iubeō takes acc. + infinitive; imperō takes dat. + ut/nē + subjunctive. You learn it per verb, from the dictionary entry.">Because each verb has its own construction, and you learn it with the verb</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 8.04 &mdash; The Seals at the Senate</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Adapted Cicero, <em>In Catilīnam</em> III: the envoys of the Allobroges, the letters taken at the bridge, and the morning the seals were shown to the men who had pressed them. Purpose clauses and indirect commands &mdash; a dozen of them &mdash; in one short passage.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">An <strong>indirect command</strong> uses the same <em>ut/nē</em> + subjunctive clause as a purpose clause; what marks it is the main verb. The work is in the case: <strong><em>imperō</em> and <em>persuādeō</em> take the dative</strong>, <strong><em>rogō, ōrō, moneō, hortor</em> take the accusative</strong>, and <strong><em>iubeō</em> takes an accusative with an infinitive and no <em>ut</em> at all.</strong></p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.03 &middot; Reported Orders &mdash; Indirect Command</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 0.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 0</div>
+        <div style="font-size: 12px; color: #666;">Welcome &amp; Orientation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Verbs You Already Own</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Verbs You Already Own</div>
+        <div style="font-size: 16px; color: #666;">Review Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Not hundreds of verb forms &mdash; two stems and a short list of markers.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You know six tenses in two voices across four conjugations. Written out, that is a wall of forms. Organized properly, it is <strong>two stems</strong>, each with its own small set of markers. Get the organization back today, because next year's subjunctive is built on exactly these stems.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pull the present stem, the perfect stem, and the participial stem out of a verb's four principal parts.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the tense, voice, person, and number of any indicative form I meet.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell the three participles apart and say when each one happens.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; FOUR PRINCIPAL PARTS, THREE STEMS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A dictionary entry hands you everything you need, if you know what each part is for:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:21px; color:#0e1c42;"><em>laudō, laudāre, laudāvī, laudātum</em> &mdash; to praise</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:18%">Part</th><th style="width:22%">Gives you</th><th>Used to build</th></tr>
+            <tr><td class="lab">1st &mdash; <em>laudō</em></td><td>the dictionary form</td><td>"I praise" &mdash; and it tells you the conjugation together with part 2</td></tr>
+            <tr><td class="lab">2nd &mdash; <em>laudāre</em></td><td><strong>present stem</strong> <em>laudā-</em></td><td>present, imperfect, future &mdash; active <em>and</em> passive (the "present system")</td></tr>
+            <tr><td class="lab">3rd &mdash; <em>laudāvī</em></td><td><strong>perfect stem</strong> <em>laudāv-</em></td><td>perfect, pluperfect, future perfect &mdash; <strong>active only</strong></td></tr>
+            <tr><td class="lab">4th &mdash; <em>laudātum</em></td><td><strong>participial stem</strong> <em>laudāt-</em></td><td>the PPP, and therefore every perfect <strong>passive</strong> tense; also the FAP</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why this matters for this year:</strong> the subjunctive you meet in Module 6 is not a new set of forms bolted on. The present subjunctive is built on the <strong>present stem</strong>; the imperfect subjunctive on the <strong>present infinitive</strong>; the perfect and pluperfect subjunctive on the <strong>perfect stem</strong> and the <strong>PPP</strong>. Every stem you refresh today gets reused.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE PRESENT SYSTEM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Three tenses off the present stem. The <strong>personal endings</strong> are what tell you the voice:</p>
+        <table class="para">
+            <tr><th style="width:34%">Person &amp; number</th><th style="width:33%">Active endings</th><th>Passive endings</th></tr>
+            <tr><td class="lab">1st singular</td><td class="end">-ō / -m</td><td class="end">-or / -r</td></tr>
+            <tr><td class="lab">2nd singular</td><td class="end">-s</td><td class="end">-ris</td></tr>
+            <tr><td class="lab">3rd singular</td><td class="end">-t</td><td class="end">-tur</td></tr>
+            <tr><td class="lab">1st plural</td><td class="end">-mus</td><td class="end">-mur</td></tr>
+            <tr><td class="lab">2nd plural</td><td class="end">-tis</td><td class="end">-minī</td></tr>
+            <tr><td class="lab">3rd plural</td><td class="end">-nt</td><td class="end">-ntur</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">And the tense markers that sit between stem and ending:</p>
+        <table class="para">
+            <tr><th style="width:20%">Tense</th><th style="width:32%">Marker</th><th>Example (<em>laudō</em>, 3rd sg.)</th></tr>
+            <tr><td class="lab">Present</td><td>none &mdash; stem + ending</td><td><em>laudat</em> (he praises) &middot; <em>laudātur</em> (he is praised)</td></tr>
+            <tr><td class="lab">Imperfect</td><td class="end">-bā-</td><td><em>laudābat</em> (he was praising) &middot; <em>laudābātur</em> (he was being praised)</td></tr>
+            <tr><td class="lab">Future &mdash; 1st &amp; 2nd conj.</td><td class="end">-bi-</td><td><em>laudābit</em> (he will praise) &middot; <em>laudābitur</em> (he will be praised)</td></tr>
+            <tr><td class="lab">Future &mdash; 3rd &amp; 4th conj.</td><td class="end">-a- / -ē-</td><td><em>reget</em> (he will rule) &middot; <em>regētur</em> (he will be ruled)</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The trap worth remembering.</strong> In the 3rd and 4th conjugations, present and future look dangerously alike: <em>regit</em> is "he rules," <em>reget</em> is "he will rule." One vowel. Read carefully &mdash; and expect Latin to do this to you again in Module 2, where <em>loqueris</em> ("you speak") and <em>loquēris</em> ("you will speak") differ only by a macron.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE PERFECT SYSTEM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Three more tenses &mdash; but here <strong>active and passive are built completely differently</strong>. Active uses the perfect stem. Passive uses the PPP plus a form of <em>esse</em>.</p>
+        <table class="para">
+            <tr><th style="width:20%">Tense</th><th style="width:40%">Active &mdash; perfect stem <em>laudāv-</em></th><th>Passive &mdash; PPP + <em>esse</em></th></tr>
+            <tr><td class="lab">Perfect</td><td><em>laudāvit</em> &mdash; he praised, he has praised</td><td><em>laudātus est</em> &mdash; he was praised</td></tr>
+            <tr><td class="lab">Pluperfect</td><td><em>laudāverat</em> &mdash; he had praised</td><td><em>laudātus erat</em> &mdash; he had been praised</td></tr>
+            <tr><td class="lab">Future perfect</td><td><em>laudāverit</em> &mdash; he will have praised</td><td><em>laudātus erit</em> &mdash; he will have been praised</td></tr>
+        </table>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; margin:12px 0; align-items:center;">
+            <div style="flex:1; min-width:180px; background:#EEF1F8; border-radius:7px; padding:14px 16px; text-align:center;"><div style="font-size:19px; color:#0e1c42;"><em>laudāt</em>us</div><div style="font-size:14px; color:#666; margin-top:6px;">the PPP &mdash; an adjective, so it agrees</div></div>
+            <div style="font-size:22px; color:#999;">+</div>
+            <div style="flex:1; min-width:180px; background:#E8F6FB; border-radius:7px; padding:14px 16px; text-align:center;"><div style="font-size:19px; color:#0e1c42;"><em>est / erat / erit</em></div><div style="font-size:14px; color:#666; margin-top:6px;">the tense marker</div></div>
+            <div style="font-size:22px; color:#999;">&rarr;</div>
+            <div style="flex:1; min-width:180px; background:#EEF1F8; border-radius:7px; padding:14px 16px; text-align:center;"><div style="font-size:19px; color:#0e1c42;"><strong>the passive tense</strong></div><div style="font-size:14px; color:#666; margin-top:6px;"><em>superātī sunt</em> = they were overcome</div></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 8px 0 0 0;">Because the PPP is an adjective, it <strong>agrees with the subject</strong> in gender, number, and case: <em>senātor laudātus est</em>, but <em>senātōrēs laudātī sunt</em>. Hold on to that habit &mdash; in Module 2 you meet verbs whose perfect looks exactly like this and yet means something <em>active</em>.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE THREE PARTICIPLES</div>
+        <table class="para">
+            <tr><th style="width:22%">Participle</th><th style="width:26%">Built from</th><th style="width:26%">Example</th><th>Time &amp; voice</th></tr>
+            <tr><td class="lab"><strong>PPP</strong><br><span style="font-size:13px; color:#666;">perfect passive</span></td><td>4th principal part</td><td><em>laudātus, -a, -um</em><br>having been praised</td><td><strong>before</strong> the main verb &middot; passive</td></tr>
+            <tr><td class="lab"><strong>PAP</strong><br><span style="font-size:13px; color:#666;">present active</span></td><td>present stem + <em>-ns, -ntis</em></td><td><em>laudāns, laudantis</em><br>praising</td><td><strong>same time</strong> as the main verb &middot; active</td></tr>
+            <tr><td class="lab"><strong>FAP</strong><br><span style="font-size:13px; color:#666;">future active</span></td><td>participial stem + <em>-ūrus</em></td><td><em>laudātūrus, -a, -um</em><br>about to praise</td><td><strong>after</strong> the main verb &middot; active</td></tr>
+        </table>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Name each form. All of them come from sentences about 63 BC.</div>
+            <div class="widget-row" data-correct="b" data-hint="Look for the perfect stem cognōv-.">
+                <div class="widget-row-prompt"><em>Cicerō cōnsilia coniūrātiōnis <strong>cognōvit</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Present active would be cognōscit. The -ōv- is a perfect stem.">Present active, 3rd sg.</button>
+                    <button data-choice="b" data-fb="Right — perfect active, 3rd singular: 'he found out, he discovered.' Perfect stem cognōv- + -it.">Perfect active, 3rd sg.</button>
+                    <button data-choice="c" data-fb="Pluperfect would be cognōverat. This has no -era-.">Pluperfect active, 3rd sg.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Two markers to spot: -bā- and the ending.">
+                <div class="widget-row-prompt"><em>Catilīna ā cīvibus nōn <strong>timēbātur</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Imperfect active 3rd sg. would be timēbat, ending in -t.">Imperfect active, 3rd sg.</button>
+                    <button data-choice="b" data-fb="Present passive would be timētur, with no -bā-.">Present passive, 3rd sg.</button>
+                    <button data-choice="c" data-fb="Right — -bā- gives imperfect, -tur gives passive: 'he was not being feared by the citizens.'">Imperfect passive, 3rd sg.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="PPP + a form of esse. Which one, and what number?">
+                <div class="widget-row-prompt"><em>Coniūrātī ā cōnsule <strong>superātī sunt</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — perfect passive, 3rd plural: 'they were overcome.' Note superātī is nominative plural masculine, agreeing with coniūrātī.">Perfect passive, 3rd pl.</button>
+                    <button data-choice="b" data-fb="Pluperfect passive would be superātī erant. Sunt is present, which makes the whole thing perfect.">Pluperfect passive, 3rd pl.</button>
+                    <button data-choice="c" data-fb="Perfect ACTIVE 3rd plural would be superāvērunt. The PPP plus sunt is passive.">Perfect active, 3rd pl.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="-ns, -ntis. Which participle is that?">
+                <div class="widget-row-prompt"><em>Cicerō, in senātū <strong>dīcēns</strong>, cōnsilia coniūrātōrum patefēcit.</em> (<em>patefaciō</em> &mdash; to reveal)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A PPP would be dictus and would mean 'having been said' — passive, and earlier in time.">PPP — having been said</button>
+                    <button data-choice="b" data-fb="Right — PAP, 'speaking': active, at the same time as patefēcit. Cicero revealed the plans while speaking.">PAP — speaking</button>
+                    <button data-choice="c" data-fb="A FAP would be dictūrus, 'about to speak' — later in time, and it ends in -ūrus.">FAP — about to speak</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="-ūrus is the giveaway.">
+                <div class="widget-row-prompt"><em>Mīlitēs <strong>pugnātūrī</strong> in campō stābant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="'Having fought' would need a perfect participle — and pugnō is not deponent, so it has no active perfect participle at all.">PPP — having fought</button>
+                    <button data-choice="b" data-fb="'Fighting' would be pugnantēs, the PAP.">PAP — fighting</button>
+                    <button data-choice="c" data-fb="Right — FAP, nominative plural masculine: 'about to fight, on the point of fighting.' The action comes after stābant.">FAP — about to fight</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 0.04 &mdash; The Big Three, and Your First Sallust</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Ablative absolute, indirect statement, relative clause &mdash; then a real adapted passage of Sallust where all three show up at once.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Every Latin verb form answers three questions: <strong>which stem</strong> is it built on, <strong>which marker</strong> sits after the stem, and <strong>which ending</strong> closes it. Stem, marker, ending. That is the whole indicative system &mdash; and it is the frame the subjunctive will drop into.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.03 &middot; Verbs You Already Own</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

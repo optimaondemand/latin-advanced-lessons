@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ludus I — Formae in Contextū | M/J Latin Advanced</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0E1C42; color: #fff; }
+    .wrap { max-width: 640px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+    .top { background: #0E1C42; border-bottom: 4px solid #55C8E8; padding: 16px 24px; text-align: center; }
+    .top .game { font-size: 13px; letter-spacing: 2px; color: #55C8E8; text-transform: uppercase; }
+    .top .name { font-size: 26px; margin-top: 2px; }
+    .top .sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .stage { flex: 1; padding: 22px 24px; display: flex; flex-direction: column; }
+    .bar-wrap { background: rgba(255,255,255,0.15); border-radius: 20px; height: 12px; overflow: hidden; margin-bottom: 6px; }
+    #bar { background: #55C8E8; height: 100%; width: 100%; transition: width 0.25s linear; }
+    .meta { display: flex; justify-content: space-between; font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 18px; }
+    .meta strong { color: #C7922C; }
+    .card { background: #fff; color: #0E1C42; border-radius: 12px; padding: 30px 24px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+    .prompt-label { font-size: 13px; color: #6b7a99; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .prompt { font-size: 28px; margin-bottom: 6px; }
+    .prompt-note { font-size: 15px; color: #6b7a99; min-height: 20px; }
+    .opts { display: flex; gap: 12px; margin-top: 22px; }
+    .opts button { flex: 1; padding: 18px 10px; font-size: 17px; font-family: inherit; border: 2px solid #D0D9E8; background: #F4F6FA; color: #0E1C42; border-radius: 10px; cursor: pointer; transition: all 0.1s; }
+    .opts button:hover { border-color: #55C8E8; }
+    .opts button.right { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .opts button.wrong { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .btn { display: inline-block; padding: 15px 40px; font-size: 19px; font-family: inherit; background: #C7922C; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 18px; }
+    .btn:hover { background: #b3831f; }
+    .center { text-align: center; margin: auto 0; }
+    .big { font-size: 60px; color: #55C8E8; margin: 6px 0; }
+    .lead { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.9); }
+    .best { font-size: 15px; color: #C7922C; margin-top: 10px; }
+    .rules { text-align: left; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 18px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); margin: 14px 0; }
+    .hidden { display: none; }
+    .foot { text-align: center; font-size: 12px; color: rgba(255,255,255,0.4); padding: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <div class="game">Ludus I</div>
+        <div class="name">Formae in Contextū</div>
+        <div class="sub">M/J Latin Advanced &middot; Module 1</div>
+    </div>
+    <div class="stage">
+
+        <!-- START -->
+        <div id="start" class="center">
+            <div class="lead">No paradigm rows here. Every prompt is a <strong>form inside a phrase</strong> from this week's Sallust &mdash; name the tense, the case, the participle, or the construction.</div>
+            <div class="rules">
+                &#9201;&#65039; You have <strong>75 seconds</strong>.<br>
+                &#9989; Tap the right answer &mdash; each correct answer adds to your score.<br>
+                &#128260; Play as many times as you like: <strong>your best score counts.</strong>
+            </div>
+            <div class="best" id="best-start"></div>
+            <button class="btn" id="go">Incipe! (Begin)</button>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play" class="hidden">
+            <div class="bar-wrap"><div id="bar"></div></div>
+            <div class="meta"><span>&#9201;&#65039; <strong id="time">75</strong>s</span><span>Score: <strong id="score">0</strong></span></div>
+            <div class="card">
+                <div class="prompt-label" id="p-label">Name the form</div>
+                <div class="prompt" id="p-text">&mdash;</div>
+                <div class="prompt-note" id="p-note"></div>
+                <div class="opts"><button id="opt0"></button><button id="opt1"></button></div>
+            </div>
+        </div>
+
+        <!-- END -->
+        <div id="end" class="hidden center">
+            <div class="lead">Tempus! (Time's up)</div>
+            <div class="big" id="final">0</div>
+            <div class="lead">correct answers</div>
+            <div class="best" id="best-end"></div>
+            <button class="btn" id="again">Iterum! (Play again)</button>
+            <div class="rules" style="margin-top:18px;">&#128221; When you are happy with your best score, record it where your course tells you (this game is graded on your <strong>best of unlimited attempts</strong>).</div>
+        </div>
+
+    </div>
+    <div class="foot">&copy; Optima Academy Online &middot; Ludus &middot; Formae in Contextū (Module 1)</div>
+</div>
+
+<script>
+(function () {
+  var ITEMS = [
+    // (a) Verb forms, always shown inside a phrase
+    { label: "Name the form:", q: "cupiēbat", note: "nova et perīculōsa cupiēbat", opts: ["Imperfect active", "Perfect active"], a: "Imperfect active" },
+    { label: "Name the form:", q: "trāxit", note: "in coniūrātiōnem trāxit", opts: ["Pluperfect active", "Perfect active"], a: "Perfect active" },
+    { label: "Name the form:", q: "āmīserant", note: "quī pecūniam āmīserant", opts: ["Pluperfect active", "Perfect active"], a: "Pluperfect active" },
+    { label: "Name the form:", q: "premēbantur", note: "magnīs dēbitīs premēbantur", opts: ["Imperfect active", "Imperfect passive"], a: "Imperfect passive" },
+    { label: "Name the form:", q: "factus est", note: "dux coniūrātiōnis factus est", opts: ["Perfect passive", "Pluperfect passive"], a: "Perfect passive" },
+    { label: "Name the form:", q: "cōnsūmpserant", note: "omnem pecūniam cōnsūmpserant", opts: ["Perfect active", "Pluperfect active"], a: "Pluperfect active" },
+    { label: "Name the form:", q: "dīxērunt", note: "sē esse parātōs dīxērunt", opts: ["Perfect active", "Imperfect active"], a: "Perfect active" },
+    { label: "Name the form:", q: "aderant", note: "aderant nōbilēs perditī", opts: ["Imperfect", "Perfect"], a: "Imperfect" },
+
+    // (b) Participles
+    { label: "Which participle?", q: "petēns", note: "pecūniam aliēnam petēns", opts: ["PAP &mdash; seeking", "PPP &mdash; having been sought"], a: "PAP &mdash; seeking" },
+    { label: "Which participle?", q: "dēceptōs", note: "multōs virōs dēceptōs", opts: ["PAP &mdash; deceiving", "PPP &mdash; deceived"], a: "PPP &mdash; deceived" },
+    { label: "Which participle?", q: "gestūrus", note: "bellum gestūrus", opts: ["FAP &mdash; about to wage", "PPP &mdash; having been waged"], a: "FAP &mdash; about to wage" },
+    { label: "Which participle?", q: "audītīs", note: "verbīs Catilīnae audītīs", opts: ["PAP &mdash; hearing", "PPP &mdash; having been heard"], a: "PPP &mdash; having been heard" },
+
+    // (c) Constructions
+    { label: "Name the construction:", q: "multīs virīs convocātīs", note: "both words ablative", opts: ["Ablative absolute", "Ablative of means"], a: "Ablative absolute" },
+    { label: "Name the construction:", q: "magnīs dēbitīs pressī", note: "pressī is nominative", opts: ["Ablative absolute", "Participle with the subject"], a: "Participle with the subject" },
+    { label: "Name the construction:", q: "ā Cicerōne accūsātus", note: "accūsātus is nominative", opts: ["Ablative of agent", "Ablative absolute"], a: "Ablative of agent" },
+    { label: "Name the construction:", q: "Catilīnam adulēscentēs corrūpisse", note: "after scrīpsit", opts: ["Relative clause", "Indirect statement"], a: "Indirect statement" },
+    { label: "Name the construction:", q: "quī sub Sullā pugnāverant", note: "quī is nominative", opts: ["Relative clause", "Indirect statement"], a: "Relative clause" },
+    { label: "Name the construction:", q: "Cicerōne dīcente", note: "both words ablative", opts: ["Ablative of means", "Ablative absolute"], a: "Ablative absolute" },
+
+    // (d) Case and function
+    { label: "Case &amp; function:", q: "ingeniī prāvī", note: "vir ingeniī prāvī", opts: ["Genitive of description", "Dative of purpose"], a: "Genitive of description" },
+    { label: "Case &amp; function:", q: "nōbilī genere", note: "nōbilī genere nātus", opts: ["Accusative of extent", "Ablative of origin"], a: "Ablative of origin" },
+    { label: "Case &amp; function:", q: "verbīs blandīs", note: "verbīs blandīs virōs trāxit", opts: ["Ablative of means", "Dative of reference"], a: "Ablative of means" },
+    { label: "Case &amp; function:", q: "coniūrātiōnis", note: "dux coniūrātiōnis", opts: ["Ablative of separation", "Genitive &mdash; 'of'"], a: "Genitive &mdash; 'of'" },
+    { label: "Case &amp; function:", q: "eīs", note: "Catilīna eīs prōmīsit", opts: ["Dative &mdash; indirect object", "Ablative &mdash; means"], a: "Dative &mdash; indirect object" },
+
+    // (e) Time relative to the main verb
+    { label: "Which time?", q: "verbīs audītīs", note: "…coniūrātī laetī erant", opts: ["Before the main verb", "After the main verb"], a: "Before the main verb" },
+    { label: "Which time?", q: "Cicerōne dīcente", note: "…senātōrēs tacēbant", opts: ["Before the main verb", "At the same time"], a: "At the same time" },
+    { label: "Which time?", q: "bellum gestūrus", note: "…arma parābat", opts: ["After the main verb", "Before the main verb"], a: "After the main verb" }
+  ];
+  var DURATION = 75;
+  var order = [], oi = 0, score = 0, endAt = 0, tick = null, locked = false;
+
+  var el = function (id) { return document.getElementById(id); };
+  var startScreen = el('start'), playScreen = el('play'), endScreen = el('end');
+
+  function bestKey() { return 'ludus1_formae_in_contextu_best'; }
+  function getBest() { try { return parseInt(localStorage.getItem(bestKey()) || '0', 10); } catch (e) { return 0; } }
+  function setBest(v) { try { localStorage.setItem(bestKey(), String(v)); } catch (e) {} }
+  function showBest() {
+    var b = getBest();
+    el('best-start').textContent = b > 0 ? ('Your best so far: ' + b) : '';
+  }
+
+  function shuffle(n) {
+    var arr = [];
+    for (var i = 0; i < n; i++) arr.push(i);
+    for (var j = arr.length - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = arr[j]; arr[j] = arr[k]; arr[k] = tmp;
+    }
+    return arr;
+  }
+
+  function render() {
+    if (oi >= order.length) { order = shuffle(ITEMS.length); oi = 0; }
+    var it = ITEMS[order[oi]];
+    el('p-label').innerHTML = it.label;
+    el('p-text').innerHTML = it.q;
+    el('p-note').innerHTML = it.note || '';
+    var b0 = el('opt0'), b1 = el('opt1');
+    b0.className = ''; b1.className = '';
+    b0.innerHTML = it.opts[0]; b1.innerHTML = it.opts[1];
+    b0.dataset.v = it.opts[0]; b1.dataset.v = it.opts[1];
+    locked = false;
+  }
+
+  function answer(btn) {
+    if (locked) return;
+    locked = true;
+    var it = ITEMS[order[oi]];
+    var right = btn.dataset.v === it.a;
+    btn.className = right ? 'right' : 'wrong';
+    if (right) { score++; el('score').textContent = score; }
+    else {
+      var other = btn.id === 'opt0' ? el('opt1') : el('opt0');
+      other.className = 'right';
+    }
+    setTimeout(function () { oi++; render(); }, right ? 260 : 700);
+  }
+
+  function updateTimer() {
+    var remain = Math.max(0, Math.round((endAt - Date.now()) / 1000));
+    el('time').textContent = remain;
+    el('bar').style.width = (remain / DURATION * 100) + '%';
+    if (remain <= 0) finish();
+  }
+
+  function start() {
+    score = 0; oi = 0; order = shuffle(ITEMS.length);
+    el('score').textContent = '0';
+    startScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+    playScreen.classList.remove('hidden');
+    render();
+    endAt = Date.now() + DURATION * 1000;
+    updateTimer();
+    tick = setInterval(updateTimer, 250);
+  }
+
+  function finish() {
+    clearInterval(tick);
+    playScreen.classList.add('hidden');
+    el('final').textContent = score;
+    var b = getBest();
+    if (score > b) { setBest(score); el('best-end').textContent = 'New best score!'; }
+    else { el('best-end').textContent = 'Your best so far: ' + b; }
+    endScreen.classList.remove('hidden');
+  }
+
+  el('go').addEventListener('click', start);
+  el('again').addEventListener('click', start);
+  el('opt0').addEventListener('click', function () { answer(this); });
+  el('opt1').addEventListener('click', function () { answer(this); });
+  showBest();
+})();
+</script>
+</body>
+</html>

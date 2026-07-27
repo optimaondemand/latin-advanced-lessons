@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 6.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 6</div>
+        <div style="font-size: 12px; color: #666;">Subjunctive I: Formation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 6.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Indicative or Subjunctive?</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 6.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Indicative or Subjunctive?</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; with this module's vocabulary</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Building a form is one skill. Recognising one at reading speed is a different skill, and it is the one that gets tested.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">When you meet <em>regat</em> in a sentence, nobody tells you it is subjunctive. You have to see it. Today you build the reflex &mdash; three reliable markers, the traps that catch everyone, and the one place where Latin genuinely will not tell you and you have to read the context instead.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> decide whether a given verb form is indicative or subjunctive, and name its tense.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why <em>regam</em> is ambiguous, and say what settles the question.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use this module's fourteen new words, and say which English words came from them.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THREE MARKERS THAT DO MOST OF THE WORK</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:18px; color:#0e1c42; line-height:1.75;">
+                <strong>1.</strong> <em>-bā-</em> or <em>-bō-</em> in the middle &rarr; <strong>indicative</strong>, always. <em>Amābat</em>, <em>monēbātur</em>, <em>audiēbam</em>. The subjunctive never uses these markers.<br>
+                <strong>2.</strong> <em>-re-</em> or <em>-sse-</em> in the middle, with a personal ending after it &rarr; <strong>imperfect subjunctive</strong>. <em>Amāret</em>, <em>regerētur</em>, <em>esset</em>.<br>
+                <strong>3.</strong> A vowel that does not belong to the verb's own conjugation &rarr; <strong>present subjunctive</strong>. An <em>ē</em> in a 1st-conjugation verb (<em>amēs</em>); an <em>ā</em> anywhere else (<em>moneat, regat, capiat, audiat</em>).
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">Marker 3 is the one that needs practice, because it depends on knowing the conjugation first. Here are the pairs. Cover the right-hand column and work left to right.</p>
+        <table class="para">
+            <tr><th style="width:16%">Conj.</th><th style="width:28%">Present <strong>indicative</strong></th><th style="width:28%">Present <strong>subjunctive</strong></th><th>What tells you</th></tr>
+            <tr><td class="lab">1st</td><td><em>am<strong>ā</strong>s</em> &mdash; you love</td><td><em>am<strong>ē</strong>s</em> &mdash; you may love</td><td>1st conj. should have <em>ā</em>; an <em>ē</em> is the intruder</td></tr>
+            <tr><td class="lab">1st</td><td><em>am<strong>a</strong>nt</em> &mdash; they love</td><td><em>am<strong>e</strong>nt</em> &mdash; they may love</td><td>one letter, both short</td></tr>
+            <tr><td class="lab">2nd</td><td><em>mon<strong>e</strong>t</em> &mdash; he warns</td><td><em>mon<strong>ea</strong>t</em> &mdash; he may warn</td><td>an extra <em>a</em> has appeared</td></tr>
+            <tr><td class="lab">2nd</td><td><em>man<strong>ē</strong>s</em> &mdash; you remain</td><td><em>man<strong>eā</strong>s</em> &mdash; you may remain</td><td>the long <em>ē</em> is <em>not</em> a mood signal here</td></tr>
+            <tr><td class="lab">3rd</td><td><em>reg<strong>i</strong>t</em> &mdash; he rules</td><td><em>reg<strong>a</strong>t</em> &mdash; he may rule</td><td><em>i</em> has become <em>a</em></td></tr>
+            <tr><td class="lab">3rd io</td><td><em>cap<strong>i</strong>t</em> &mdash; he seizes</td><td><em>cap<strong>ia</strong>t</em> &mdash; he may seize</td><td>an <em>a</em> after the <em>i</em></td></tr>
+            <tr><td class="lab">4th</td><td><em>aud<strong>iu</strong>nt</em> &mdash; they hear</td><td><em>aud<strong>ia</strong>nt</em> &mdash; they may hear</td><td><em>iu</em> versus <em>ia</em></td></tr>
+            <tr><td class="lab">3rd pass.</td><td><em>reg<strong>i</strong>tur</em> &mdash; it is ruled</td><td><em>reg<strong>ā</strong>tur</em> &mdash; it may be ruled</td><td>same swap, passive ending</td></tr>
+            <tr><td class="lab">3rd dep.</td><td><em>loqu<strong>i</strong>tur</em> &mdash; he speaks</td><td><em>loqu<strong>ā</strong>tur</em> &mdash; he may speak</td><td>same swap; both active in meaning</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 6px 0;">And the imperfect pairs, which are easier, because <em>-bā-</em> gives the indicative away every single time:</p>
+        <table class="para">
+            <tr><th style="width:22%">Imperfect <strong>indicative</strong></th><th style="width:24%">Imperfect <strong>subjunctive</strong></th><th>Reading</th></tr>
+            <tr><td><em>amā<strong>ba</strong>t</em></td><td><em>amāre<strong>t</strong></em></td><td>"he was loving" vs. "he might love"</td></tr>
+            <tr><td><em>regē<strong>ba</strong>t</em></td><td><em>regere<strong>t</strong></em></td><td>"he was ruling" vs. "he might rule"</td></tr>
+            <tr><td><em>capiē<strong>ba</strong>t</em></td><td><em>capere<strong>t</strong></em></td><td>"he was seizing" vs. "he might seize"</td></tr>
+            <tr><td><em>audiē<strong>ba</strong>nt</em></td><td><em>audīre<strong>nt</strong></em></td><td>"they were hearing" vs. "they might hear"</td></tr>
+            <tr><td><em>er<strong>a</strong>t</em></td><td><em>esse<strong>t</strong></em></td><td>"he was" vs. "he might be"</td></tr>
+            <tr><td><em>poter<strong>a</strong>t</em></td><td><em>posse<strong>t</strong></em></td><td>"he was able" vs. "he might be able"</td></tr>
+            <tr><td><em>ī<strong>ba</strong>t</em></td><td><em>īre<strong>t</strong></em></td><td>"he was going" vs. "he might go"</td></tr>
+        </table>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 2 &middot; THE ONE PLACE LATIN WILL NOT TELL YOU</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is an honest fact about Latin that textbooks sometimes hide. In the 3rd, 3rd io and 4th conjugations, the <strong>future indicative first person singular</strong> and the <strong>present subjunctive first person singular</strong> are <strong>the same word</strong>. Not similar. Identical, macrons and all.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:230px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#0e1c42; margin-bottom:6px;">READING 1 &mdash; FUTURE INDICATIVE</div>
+                <div style="font-size:24px; color:#0e1c42;"><em>regam</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"I shall rule." A prediction. A fact about later.</div>
+            </div>
+            <div style="flex:1; min-width:230px; background:#FDF3E3; border:1px solid #E6D59A; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:6px;">READING 2 &mdash; PRESENT SUBJUNCTIVE</div>
+                <div style="font-size:24px; color:#0e1c42;"><em>regam</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"let me rule," "may I rule," "am I to rule?" Not a fact at all.</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">The same collision hits every verb of these three conjugations in the first person singular, active and passive:</p>
+        <table class="para">
+            <tr><th style="width:26%">Form</th><th style="width:37%">As future indicative</th><th>As present subjunctive</th></tr>
+            <tr><td class="lab"><em>dīcam</em></td><td>I shall say</td><td>let me say / may I say</td></tr>
+            <tr><td class="lab"><em>capiam</em></td><td>I shall seize</td><td>let me seize</td></tr>
+            <tr><td class="lab"><em>audiam</em></td><td>I shall hear</td><td>let me hear</td></tr>
+            <tr><td class="lab"><em>regar</em></td><td>I shall be ruled</td><td>let me be ruled</td></tr>
+            <tr><td class="lab"><em>loquar</em></td><td>I shall speak</td><td>let me speak</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>What settles it: the sentence, not the word.</strong> A subjunctive almost never stands alone. If the form sits after <em>ut</em>, <em>nē</em>, <em>cum</em>, <em>cūr</em> or another introducing word, it is subjunctive. If it stands as the plain main verb of a statement, it is future indicative. Modules 8 to 12 exist to give you those signposts. Until then, when you meet a bare <em>dīcam</em>, the correct answer is <strong>"either &mdash; and here is how you would tell"</strong>, not a guess.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Do not over-apply it.</strong> The collision is <strong>first person singular only</strong>. Second person onward, the two tenses separate cleanly: future <em>regēs, reget, regēmus</em> against subjunctive <em>regās, regat, regāmus</em>. And it never happens in the 1st or 2nd conjugation at all, because their future is <em>amābō</em> and <em>monēbō</em> &mdash; the <em>-bō-</em> marker keeps them apart.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; A FIRST LOOK: WHY TWO TENSES?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A fair question at this point: if the subjunctive is not really about time, why does it have a present and an imperfect? The short answer is that the subjunctive's tense is usually decided <strong>not by when the action happens</strong>, but by <strong>the tense of the main verb it hangs under</strong>. That relationship has a name: <strong>sequence of tenses</strong>.</p>
+        <table class="para">
+            <tr><th style="width:34%">If the main verb is&hellip;</th><th style="width:26%">the sequence is called&hellip;</th><th>the subjunctive under it is&hellip;</th></tr>
+            <tr><td class="lab">present or future <strong>indicative</strong></td><td><strong>primary</strong></td><td><strong>present</strong> subjunctive</td></tr>
+            <tr><td class="lab">any <strong>past</strong> indicative tense</td><td><strong>secondary</strong></td><td><strong>imperfect</strong> subjunctive</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 8px 0;">You can see it in a single pair. The clause does the same job both times; only the main verb has moved:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:18px; color:#0e1c42; line-height:1.9;">
+                <em>Cicerō <strong>dīcit</strong> ut senātōrēs <strong>intellegant</strong>.</em><br>
+                <span style="font-size:16px; color:#1a2340;">"Cicero speaks so that the senators <strong>may</strong> understand." Present main verb &rarr; present subjunctive.</span><br><br>
+                <em>Cicerō <strong>dīxit</strong> ut senātōrēs <strong>intellegerent</strong>.</em><br>
+                <span style="font-size:16px; color:#1a2340;">"Cicero spoke so that the senators <strong>might</strong> understand." Past main verb &rarr; imperfect subjunctive.</span>
+            </div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>That is as far as this module goes, deliberately.</strong> <strong>Module 7</strong> teaches sequence of tenses properly &mdash; including what happens when the two actions are <em>not</em> simultaneous. And the <em>ut</em> construction in those two sentences is a <strong>purpose clause</strong>, which belongs to <strong>Module 8</strong>. It is printed here only so the two tenses have a visible reason to exist. <strong>You will not be graded on sequence of tenses in this module's quiz or translation</strong> &mdash; this module grades the forms.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; VOCABULARY FOR THIS MODULE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;">Fourteen words, chosen because Cicero's first speech against Catiline needs them and because a mood of doubt needs words for doubting. Say the meaning before you flip.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; NOUNS</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>dubium, dubiī</em> n.</div><div class="hint">click</div><div class="back"><strong>doubt</strong><br><span style="color:#666;"><em>sine dubiō</em> &mdash; "without doubt." The noun that names what the subjunctive does.</span></div></div>
+                <div class="flip-card"><div class="front"><em>mōs, mōris</em> m.</div><div class="hint">click</div><div class="back"><strong>custom, habit</strong>; in the plural <em>mōrēs</em>, <strong>character, morals</strong><br><span style="color:#666;">Cicero's <em>Ō tempora, ō mōrēs!</em> is a complaint about the second meaning.</span></div></div>
+                <div class="flip-card"><div class="front"><em>patientia, patientiae</em> f.</div><div class="hint">click</div><div class="back"><strong>patience, endurance, forbearance</strong><br><span style="color:#666;">Glossed for you four times since Module 0. As of today it is yours: <em>patientiā nostrā</em>, "our patience."</span></div></div>
+            </div>
+            <div class="widget-kicker" style="color:#c7922c; margin-top:8px;">&#128269; VERBS</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>intellegō, intellegere,<br>intellēxī, intellēctum</em></div><div class="hint">click</div><div class="back">to <strong>understand, realise, perceive</strong><br><span style="color:#666;">3rd conj. Subj. <em>intellegat</em>, <em>intellegeret</em>. From <em>inter</em> + <em>legō</em> &mdash; "to pick out between."</span></div></div>
+                <div class="flip-card"><div class="front"><em>relinquō, relinquere,<br>relīquī, relictum</em></div><div class="hint">click</div><div class="back">to <strong>leave behind, abandon</strong><br><span style="color:#666;">3rd conj. Subj. <em>relinquat</em>, <em>relinqueret</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>fugiō, fugere, fūgī</em></div><div class="hint">click</div><div class="back">to <strong>flee, run away, escape</strong><br><span style="color:#666;">3rd io-stem; no fourth principal part in ordinary use. Subj. <em>fugiat</em>, <em>fugeret</em> &mdash; note the <em>-i-</em> vanishes in the imperfect.</span></div></div>
+                <div class="flip-card"><div class="front"><em>comprehendō, comprehendere,<br>comprehendī, comprehēnsum</em></div><div class="hint">click</div><div class="back">to <strong>seize, arrest</strong>; also <strong>to grasp mentally</strong><br><span style="color:#666;">3rd conj. Subj. <em>comprehendam</em>, <em>comprehenderet</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>necō, necāre,<br>necāvī, necātum</em></div><div class="hint">click</div><div class="back">to <strong>kill, put to death</strong><br><span style="color:#666;">1st conj., so the subjunctive is <em>necet</em> &mdash; with <em>ē</em>, not <em>ā</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>dubitō, dubitāre,<br>dubitāvī, dubitātum</em></div><div class="hint">click</div><div class="back">to <strong>doubt, hesitate, waver</strong><br><span style="color:#666;">1st conj. Subj. <em>dubitet</em>, <em>dubitāret</em>. Related to <em>duo</em>: to be of two minds.</span></div></div>
+                <div class="flip-card"><div class="front"><em>cōnfiteor, cōnfitērī,<br>cōnfessus sum</em></div><div class="hint">click</div><div class="back">to <strong>confess, admit, acknowledge</strong><br><span style="color:#666;">2nd-conjugation <strong>deponent</strong>. Subj. <em>cōnfiteātur</em>, <em>cōnfitērētur</em> &mdash; passive endings, active meaning.</span></div></div>
+                <div class="flip-card"><div class="front"><em>exeō, exīre,<br>exiī, exitum</em></div><div class="hint">click</div><div class="back">to <strong>go out, leave, depart</strong><br><span style="color:#666;">A compound of the irregular <em>eō</em> (full system in Module 15). Subj. <em>exeat</em>, <em>exīret</em>.</span></div></div>
+            </div>
+            <div class="widget-kicker" style="color:#c7922c; margin-top:8px;">&#128269; ADJECTIVE, ADVERB, CONJUNCTION</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>sevērus, -a, -um</em></div><div class="hint">click</div><div class="back"><strong>harsh, strict, severe</strong><br><span style="color:#666;">What Cicero is afraid of being called.</span></div></div>
+                <div class="flip-card"><div class="front"><em>fortasse</em> (adv.)</div><div class="hint">click</div><div class="back"><strong>perhaps, possibly</strong><br><span style="color:#666;">The adverb of the subjunctive's whole territory.</span></div></div>
+                <div class="flip-card"><div class="front"><em>atque</em> / <em>ac</em></div><div class="hint">click</div><div class="back"><strong>and, and also, and even</strong><br><span style="color:#666;">Stronger and tighter than <em>et</em>. Use <em>atque</em> before a vowel or <em>h-</em>, <em>ac</em> before a consonant.</span></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- DERIVATIVE -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128220; DERIVATIVE MINUTE &middot; DOUBT, FLIGHT, AND ONE GRAMMATICAL TERM</div>
+        <table class="para" style="margin:6px 0;">
+            <tr><th style="width:22%">Latin</th><th>English descendants</th></tr>
+            <tr><td class="lab"><em>dubium, dubitō</em></td><td><strong>doubt, dubious, indubitable, redoubtable</strong> &mdash; <em>in-dubit-able</em> is literally "not able to be doubted."</td></tr>
+            <tr><td class="lab"><em>fugiō</em></td><td><strong>fugitive, refuge, refugee, centrifugal</strong> &mdash; and a musical <strong>fugue</strong>, where a theme flees from voice to voice.</td></tr>
+            <tr><td class="lab"><em>intellegō</em></td><td><strong>intelligent, intellect, intelligence, intelligible</strong> &mdash; all from the idea of picking one thing out from among others.</td></tr>
+            <tr><td class="lab"><em>relinquō</em></td><td><strong>relinquish, relic, derelict, dereliction</strong> &mdash; a <em>relic</em> is what has been left behind.</td></tr>
+            <tr><td class="lab"><em>comprehendō</em></td><td><strong>comprehend, comprehensive, apprehend, apprehension</strong> &mdash; the same word does police work and mental work in both languages.</td></tr>
+            <tr><td class="lab"><em>mōs, mōrēs</em></td><td><strong>moral, morale, morality</strong>, and the borrowed plural <strong>mores</strong> &mdash; "the mores of a society" is Latin still wearing its own ending.</td></tr>
+            <tr><td class="lab"><em>sevērus</em></td><td><strong>severe, severity, asseverate</strong></td></tr>
+            <tr><td class="lab"><em>cōnfiteor</em></td><td><strong>confess, confession</strong>; and from its relative <em>profiteor</em>, <strong>profess, professor, profession</strong></td></tr>
+        </table>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:8px 0 0 0;"><strong>And the name of the mood itself.</strong> English <em>subjunctive</em> is a straight borrowing of <em>subiūnctīvus</em> &mdash; <em>sub</em> ("under") + <em>iūnctus</em> ("joined"), from <em>iungō</em>. The same root gives you <strong>junction, conjunction, juncture, adjunct</strong> and <strong>yoke</strong>. Every one of those words is about two things fastened together, which is precisely what a subjunctive clause is: a verb fastened underneath another verb.</p>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; MOOD AND TENSE AT SPEED</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five rows. This is the exact skill the quiz's largest section tests.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; NAME THE MOOD, THEN THE TENSE</div>
+            <div class="widget-question">Identify each form. Watch for the markers from Part 1.</div>
+            <div class="widget-row" data-correct="b" data-hint="Maneō is 2nd conjugation. What would its present subjunctive look like?">
+                <div class="widget-row-prompt">What is <em>manēs</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="The long ē is tempting, but it is simply the 2nd-conjugation stem vowel. The present subjunctive of maneō is maneam, maneās, maneat.">Present subjunctive, 2nd sg.</button>
+                    <button data-choice="b" data-fb="Right — present indicative, 2nd singular: 'you remain.' A plain statement of fact.">Present indicative, 2nd sg.</button>
+                    <button data-choice="c" data-fb="The imperfect subjunctive would be manērēs, built on the infinitive manēre. This form has no -re- in it.">Imperfect subjunctive, 2nd sg.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Look for the -bā- marker. Is it there?">
+                <div class="widget-row-prompt">What is <em>caperent</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="'They were seizing' would be capiēbant, with the -bā- marker. This form has -re-.">Imperfect indicative, 3rd pl.</button>
+                    <button data-choice="b" data-fb="The present subjunctive of capiō is capiant, with the -i-. Caperent works from the infinitive capere instead.">Present subjunctive, 3rd pl.</button>
+                    <button data-choice="c" data-fb="Right — imperfect subjunctive, 3rd plural: capere + -nt, 'they might seize.'">Imperfect subjunctive, 3rd pl.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which conjugation is audiō, and what vowel should its indicative have?">
+                <div class="widget-row-prompt">What is <em>audiātur</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — present passive subjunctive, 3rd singular: 'he/she/it may be heard.' The -ā- is the mood vowel; -tur is the passive ending.">Present <strong>passive</strong> subjunctive, 3rd sg.</button>
+                    <button data-choice="b" data-fb="The present passive indicative is audītur, 'he is heard.' No -ā- in it.">Present passive indicative, 3rd sg.</button>
+                    <button data-choice="c" data-fb="The imperfect passive subjunctive is audīrētur, built on audīre. This form has no -re-.">Imperfect passive subjunctive, 3rd sg.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="This is the ambiguous one. Which conjugation, and which person?">
+                <div class="widget-row-prompt">A sentence gives you the bare form <em>dīcam</em>, with no <em>ut</em>, <em>nē</em> or question word anywhere. What is the honest answer?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="It could be the present subjunctive — but it could equally be the future indicative, and nothing in the form itself decides.">Definitely present subjunctive</button>
+                    <button data-choice="b" data-fb="It could be the future indicative — but the present subjunctive of dīcō is spelled exactly the same way.">Definitely future indicative</button>
+                    <button data-choice="c" data-fb="Right — future indicative 'I shall say' and present subjunctive 'let me say' are identical in the 1st singular of 3rd, 3rd io and 4th conjugation verbs. Only the sentence decides.">Either one &mdash; the form cannot tell you; the sentence must</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Loquor is a deponent. Which vowel sits before -tur here?">
+                <div class="widget-row-prompt">What is <em>loquerētur</em>, and what does it mean?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="'He might be spoken' misses the deponent rule from Module 2: loquor has passive forms and active meaning throughout, subjunctive included.">Imperfect passive subjunctive &mdash; "he might be spoken"</button>
+                    <button data-choice="b" data-fb="Right — imperfect subjunctive of the deponent loquor: 'he might speak.' Built on the would-be infinitive loquere plus the passive ending -tur.">Imperfect subjunctive of a deponent &mdash; "he might speak"</button>
+                    <button data-choice="c" data-fb="'He was speaking' is loquēbātur, with the -bā- marker. That is the imperfect indicative.">Imperfect indicative &mdash; "he was speaking"</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 6.05 &mdash; <em>Quō Ūsque Tandem?</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The most famous opening in Roman oratory, and the sentence you first met in Module 0 &mdash; now with the grammar to see what is inside it. Fourteen subjunctives in one passage, and a room of senators shouting <em>Exeat!</em></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Three markers settle almost every case: <strong><em>-bā-</em> means indicative</strong>; <strong><em>-re-</em> or <em>-sse-</em> plus an ending means imperfect subjunctive</strong>; <strong>a vowel that does not belong to the verb's conjugation means present subjunctive</strong>. And when the form genuinely will not tell you &mdash; <em>dīcam</em>, <em>capiam</em>, <em>audiam</em> &mdash; that is not your failure. Latin left it to the sentence, and so should you.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 6.04 &middot; Indicative or Subjunctive?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 13.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 13</div>
+        <div style="font-size: 12px; color: #666;">Perfect &amp; Pluperfect Subjunctive</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 13.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Sallust and Cicero Look Back</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 25 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 13.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">What Had Been Done</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Module Review</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The story is over. Now comes the part that lasted twenty years: arguing about it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Every reading this semester has moved the conspiracy forward. Today's does not move anything &mdash; it <strong>looks back</strong>. Sallust stands on the battlefield at Pistoria and describes what he found there. Cicero, in the last days of his consulship, is asked to account for what he did in December and answers in one sentence. Both men are talking about actions that are <strong>over</strong>, which is why almost every subordinate verb in the passage sits in the right-hand column of your grid. The pluperfect subjunctive is not a rare form. It is the ordinary grammar of hindsight.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted retrospect passage and name the tense, voice and sequence-cell of every subjunctive in it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what Cicero swore in December 63 BC, why he had to swear it instead of making a speech, and why the argument did not stop there.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> reproduce the complete four-tense subjunctive system &mdash; forms, grid and voices &mdash; from one table, and begin the graded work.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; BEFORE YOU READ</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>1. Two writers, two distances.</strong> Sallust wrote the <em>Bellum Catilīnae</em> roughly twenty years after the events, having left public life. Cicero was <em>in</em> the events, and he wrote and spoke about them for the rest of his life. So one of them is remembering and the other is defending. Both are using the completed past, and they are using it for opposite purposes.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>2. What happened at Pistoria.</strong> In January 62 BC Catiline's army was caught in the <em>ager Pistoriēnsis</em>, in northern Etruria, and destroyed. Sallust reports that Catiline drew up his line in a narrow place, had the horses taken away so that everyone's danger would be equal, and fought on foot. Afterwards Catiline was found a long way in front of his own men, among the enemy dead, still faintly breathing. Module 12 gave you that battle; today's first six lines are Sallust <em>writing it down</em>.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>3. What happened to Cicero.</strong> A consul leaving office normally addressed the people. At the end of December 63 BC the newly installed tribune <strong>Metellus Nepos</strong> blocked Cicero from doing so, permitting only the customary oath that a magistrate had obeyed the laws. Cicero swore something else instead. Lines 9&ndash;11 are that moment.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>What to watch for in the Latin.</strong> Count them as you go: <strong>seven</strong> pluperfect subjunctives, <strong>three</strong> perfect subjunctives, <strong>one</strong> imperfect subjunctive, and one indirect statement with a perfect infinitive from 0706010. Four <em>cum</em> clauses (m10), six indirect questions &mdash; one of them a double question with <em>utrum&hellip;an</em> (m11) &mdash; one fear clause (m12), and one ablative absolute. Three of the subjunctives are <strong>passive</strong>, two-word forms with the participle agreeing. This is the densest passage of the semester so far, and every construction in it is one you own.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; THE READING</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>Adapted from Sallust,</strong> <em>Bellum Catilīnae</em> <strong>59&ndash;61</strong> (lines 1&ndash;6), <strong>and from Cicero's own later accounts of the end of his consulship</strong> &mdash; <em>In Pisōnem</em> 6 and <em>Ad Familiārēs</em> 5.2 (lines 7&ndash;12). This is an <strong>adaptation</strong>, not the Latin of either author: the sentences are ours, written to the grammar you have been taught, and the two writers have been set side by side in a way neither of them did.</div>
+        <div class="rd">
+            <p><span class="ln">1</span>Postquam proelium ad Pistōriam factum est, Sallustius ipse dē eō diē scrīpsit.</p>
+            <p><span class="ln">2</span>Cum Catilīna cōpiās suās in valle angustā <b>īnstrūxisset</b>, omnēs equīs remōtīs pedibus pugnāvērunt.</p>
+            <p><span class="ln">3</span>Sallustius nārrat quantā virtūte Catilīna ipse tum <b>pugnāverit</b>.</p>
+            <p><span class="ln">4</span>Catilīna enim longē ā suīs inter hostium cadāvera inventus est, paulum etiam spīrāns.</p>
+            <p><span class="ln">5</span>Nōn dubitat igitur Sallustius dīcere quam ferōx animus eius <b>fuerit</b>.</p>
+            <p><span class="ln">6</span>In extrēmō tamen librō nihil iūdicat: nārrat sōlum quid quisque <b>fēcerit</b>.</p>
+            <p><span class="ln">7</span>Cicerō autem, cum adhūc in urbe <b>manēret</b>, saepe rogābātur quid ipse <b>fēcisset</b>.</p>
+            <p><span class="ln">8</span>Nam quīdam cīvēs verēbantur nē coniūrātī sine iūdiciō <b>necātī essent</b>.</p>
+            <p><span class="ln">9</span>Cum igitur Metellus tribūnus eum ōrātiōnem habēre <b>vetuisset</b>, Cicerō hoc ūnum iūrāvit:</p>
+            <p><span class="ln">10</span>sē rem pūblicam urbemque cōnservāvisse.</p>
+            <p><span class="ln">11</span>Populus autem, cum haec <b>audīvisset</b>, magnō clāmōre cōnsēnsit.</p>
+            <p><span class="ln">12</span>Nēmō ignōrābat quid <b>factum esset</b>; sed multī adhūc rogābant utrum rēctē an contrā lēgem <b>factum esset</b>.</p>
+        </div>
+
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin:14px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS &mdash; EVERY WORD NOT ON YOUR RUNNING LIST, IN THE FORM IT APPEARS</div>
+            <ul class="gl">
+                <li><strong>1</strong> &middot; <em>postquam</em> &mdash; after (takes the indicative) &middot; <em>proelium, proeliī</em> n. &mdash; battle &middot; <em>ad Pistōriam</em> &mdash; near Pistoria, a town in northern Etruria (modern Pistoia) &middot; <em>Sallustius, Sallustiī</em> m. &mdash; Sallust &middot; <em>dē eō diē</em> &mdash; about that day</li>
+                <li><strong>2</strong> &middot; <em>cōpiae, cōpiārum</em> f. pl. &mdash; forces, troops &middot; <em>in valle angustā</em> &mdash; in a narrow valley (<em>vallis, vallis</em> f.; <em>angustus, -a, -um</em>) &middot; <em>īnstrūxisset</em> &mdash; <strong>pluperfect subjunctive</strong> of <em>īnstruō, īnstruere, īnstrūxī, īnstrūctum</em>: to draw up (a battle line) &middot; <em>equīs remōtīs</em> &mdash; "with the horses removed," an ablative absolute (<em>removeō, removēre, remōvī, remōtum</em>) &middot; <em>pedibus</em> &mdash; on foot (ablative plural of <em>pēs, pedis</em> m.)</li>
+                <li><strong>3</strong> &middot; <em>nārrō, nārrāre, nārrāvī, nārrātum</em> &mdash; to relate, tell &middot; <em>quantā virtūte</em> &mdash; with how great courage (ablative; <em>quantā</em> agrees with <em>virtūte</em>) &middot; <em>tum</em> &mdash; then, at that moment &middot; <em>pugnāverit</em> &mdash; <strong>perfect subjunctive</strong> of <em>pugnō, pugnāre</em></li>
+                <li><strong>4</strong> &middot; <em>longē</em> (adv.) &mdash; far &middot; <em>ā suīs</em> &mdash; from his own men &middot; <em>inter</em> (+ acc.) &mdash; among &middot; <em>cadāver, cadāveris</em> n. &mdash; corpse; <em>cadāvera</em> is accusative plural &middot; <em>inventus est</em> &mdash; was found (perfect passive of <em>inveniō</em>) &middot; <em>paulum</em> &mdash; a little &middot; <em>spīrāns</em> &mdash; breathing (present participle of <em>spīrō, spīrāre</em>)</li>
+                <li><strong>5</strong> &middot; <em>nōn dubitat dīcere</em> &mdash; does not hesitate to say &middot; <em>quam ferōx</em> &mdash; how fierce (<em>ferōx, ferōcis</em>) &middot; <em>animus, animī</em> m. &mdash; spirit, mind, temper &middot; <em>eius</em> &mdash; his &middot; <em>fuerit</em> &mdash; <strong>perfect subjunctive</strong> of <em>sum</em></li>
+                <li><strong>6</strong> &middot; <em>in extrēmō librō</em> &mdash; at the very end of the book (<em>extrēmus, -a, -um</em>; <em>liber, librī</em> m.) &middot; <em>nihil</em> &mdash; nothing &middot; <em>iūdicat</em> &mdash; passes judgment (<em>iūdicō</em>, this module) &middot; <em>sōlum</em> (adv.) &mdash; only &middot; <em>quisque</em> &mdash; each man, each one &middot; <em>fēcerit</em> &mdash; <strong>perfect subjunctive</strong> of <em>faciō</em></li>
+                <li><strong>7</strong> &middot; <em>autem</em> &mdash; however, but (never stands first) &middot; <em>adhūc</em> &mdash; still &middot; <em>manēret</em> &mdash; <strong>imperfect subjunctive</strong> in a <em>cum</em> clause: same-time action &middot; <em>rogābātur</em> &mdash; he was being asked (imperfect passive of <em>rogō</em>) &middot; <em>ipse</em> &mdash; himself &middot; <em>fēcisset</em> &mdash; <strong>pluperfect subjunctive</strong> of <em>faciō</em></li>
+                <li><strong>8</strong> &middot; <em>quīdam cīvēs</em> &mdash; certain citizens &middot; <em>verēbantur</em> &mdash; they were afraid (imperfect of the deponent <em>vereor</em>, m12) &middot; <em>sine</em> (+ abl.) &mdash; without &middot; <em>iūdicium, iūdiciī</em> n. &mdash; a trial (this module) &middot; <em>necātī essent</em> &mdash; <strong>pluperfect subjunctive passive</strong> of <em>necō, necāre</em> (this module): "had been put to death"; <em>necātī</em> is masculine plural to agree with <em>coniūrātī</em></li>
+                <li><strong>9</strong> &middot; <em>igitur</em> &mdash; therefore &middot; <em>Metellus, Metellī</em> m. &mdash; Metellus Nepos, who took office as tribune of the plebs in December 63 BC &middot; <em>tribūnus, tribūnī</em> m. &mdash; tribune &middot; <em>ōrātiōnem habēre</em> &mdash; to deliver a speech &middot; <em>vetuisset</em> &mdash; <strong>pluperfect subjunctive</strong> of <em>vetō, vetāre, vetuī, vetitum</em> (this module): to forbid; it takes an accusative + infinitive, here <em>eum&hellip;habēre</em> &middot; <em>hoc ūnum</em> &mdash; this one thing &middot; <em>iūrāvit</em> &mdash; he swore (<em>iūrō, iūrāre</em>, this module)</li>
+                <li><strong>10</strong> &middot; <em>sē&hellip;cōnservāvisse</em> &mdash; an <strong>indirect statement</strong> (0706010): accusative <em>sē</em>, "himself," with the perfect infinitive of <em>cōnservō</em> (this module) &mdash; "that he had saved" &middot; <em>rem pūblicam urbemque</em> &mdash; the republic and the city</li>
+                <li><strong>11</strong> &middot; <em>populus, populī</em> m. &mdash; the people &middot; <em>audīvisset</em> &mdash; <strong>pluperfect subjunctive</strong> of <em>audiō</em> &middot; <em>magnō clāmōre</em> &mdash; with a great shout (<em>clāmor, clāmōris</em> m.) &middot; <em>cōnsēnsit</em> &mdash; agreed, assented (perfect of <em>cōnsentiō, cōnsentīre, cōnsēnsī</em>)</li>
+                <li><strong>12</strong> &middot; <em>ignōrābat</em> &mdash; was unaware of (m11) &middot; <em>factum esset</em> &mdash; <strong>pluperfect subjunctive passive</strong> of <em>faciō</em>, neuter singular: "had been done" &middot; <em>rēctē</em> (adv.) &mdash; rightly, properly &middot; <em>contrā</em> (+ acc.) &mdash; against &middot; <em>lēx, lēgis</em> f. &mdash; law &middot; <em>utrum&hellip;an</em> &mdash; whether&hellip;or (m11)</li>
+            </ul>
+        </div>
+
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Four honest notes about this passage.</strong> <strong>(1)</strong> Lines 2 and 4 follow Sallust closely in <em>content</em> &mdash; the narrow ground, the horses sent away, Catiline found far in front of his men among the enemy dead and still faintly breathing are all his &mdash; but the Latin is ours, simplified to your grammar. <strong>(2)</strong> Line 6 is a claim about the <em>last chapter only</em>. Sallust is severe about Catiline elsewhere in the book; what he declines to do is deliver a verdict at the end, where he simply describes the field. Do not read line 6 as "Sallust had no opinion." <strong>(3)</strong> The oath in lines 9&ndash;11 is real and Cicero told the story himself more than once, but his exact words that day are not preserved. Line 10 is our summary of what he swore, not a quotation. <strong>(4)</strong> Line 12 is the adaptation's own framing of the argument that followed &mdash; it is not a sentence from either author.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; WORK THE PASSAGE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five questions on the Latin. Run the three steps from 13.04 on each one before you choose.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What is happening in this line, grammatically?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Nārrat is present. So which row are you in &mdash; and does that let you use a pluperfect?">
+                <div class="widget-row-prompt">Line 3 &mdash; <em>Sallustius nārrat quantā virtūte Catilīna ipse tum pugnāverit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Pugnāverit is not an indicative. The perfect indicative would be pugnāvit; the -erit ending with a long ī in the other persons marks the subjunctive, and in any case an indirect question is always subjunctive.">Indirect question with a perfect <em>indicative</em></button>
+                    <button data-choice="b" data-fb="Right. Nārrat is present → primary sequence, top row; the fighting is over → finished, right column; top right is the perfect subjunctive pugnāverit. &quot;Sallust relates with how great courage Catiline himself fought at that moment.&quot; Note quantā agreeing with virtūte in the ablative.">Indirect question, perfect subjunctive &mdash; primary sequence, finished</button>
+                    <button data-choice="c" data-fb="A pluperfect subjunctive would be pugnāvisset, and it would need a past main verb. Nārrat is present, so the bottom row is closed to you here.">Indirect question, pluperfect subjunctive</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two subjunctives in this line, and they are in different columns. Compare manēret with fēcisset.">
+                <div class="widget-row-prompt">Line 7 &mdash; <em>Cicerō autem, cum adhūc in urbe manēret, saepe rogābātur quid ipse fēcisset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Both cannot be same-time. Manēret is an imperfect subjunctive, which is the same-time cell; fēcisset is a pluperfect subjunctive, which is the finished cell. The line uses two different columns on purpose.">Two same-time subjunctives, both imperfect</button>
+                    <button data-choice="b" data-fb="Neither is a purpose clause. Cum opens a temporal clause and quid opens an indirect question; there is no ut or nē anywhere in the line.">A purpose clause and an indirect statement</button>
+                    <button data-choice="c" data-fb="Right, and this is the line the whole module was for. Rogābātur is imperfect → secondary sequence for both clauses. The staying overlaps the asking → same time → imperfect subjunctive manēret. The doing was over before the asking → finished → pluperfect subjunctive fēcisset. &quot;Cicero, however, while he was still living in the city, was often asked what he himself had done.&quot;">A <em>cum</em> clause in the same-time cell, and an indirect question in the finished cell</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Nē after a verb of fearing. And count the words in necātī essent.">
+                <div class="widget-row-prompt">Line 8 &mdash; <em>Nam quīdam cīvēs verēbantur nē coniūrātī sine iūdiciō necātī essent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a fear clause (m12) with a pluperfect subjunctive PASSIVE. Verēbantur is imperfect → secondary; the killing was over → finished; PPP + essem gives necātī essent, with necātī masculine plural to agree with coniūrātī. &quot;For certain citizens were afraid that the conspirators had been put to death without a trial.&quot;">Fear clause, pluperfect subjunctive passive</button>
+                    <button data-choice="b" data-fb="Nē here does not mean &quot;so that…not.&quot; After verēbantur — a verb of fearing — nē means &quot;that,&quot; which is the whole reversal Module 12 taught. And necātī essent is passive, not active.">Negative purpose clause, pluperfect subjunctive active</button>
+                    <button data-choice="c" data-fb="Necātī erant would be the pluperfect passive INDICATIVE. The helper word here is essent, the imperfect subjunctive of sum, which is what makes the whole form subjunctive — and a fear clause requires that.">Pluperfect passive indicative &mdash; a plain statement of fact</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Line 10 has no subjunctive in it at all. What does that leave?">
+                <div class="widget-row-prompt">Lines 9&ndash;10 &mdash; <em>&hellip;Cicerō hoc ūnum iūrāvit: sē rem pūblicam urbemque cōnservāvisse.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An indirect question needs a question word and a subjunctive. There is neither: cōnservāvisse is an infinitive, and sē is accusative.">Indirect question, perfect subjunctive</button>
+                    <button data-choice="b" data-fb="A fear clause needs nē or ut after a verb of fearing. Iūrāvit is a verb of swearing, and what follows is an accusative with an infinitive.">Fear clause after a verb of swearing</button>
+                    <button data-choice="c" data-fb="Right — indirect statement, straight from 0706010, with a PERFECT infinitive because the saving was already over: &quot;Cicero swore this one thing: that he had saved the republic and the city.&quot; Note what this shows — Latin has two ways of reporting completed action, the perfect infinitive for statements and the perfect or pluperfect subjunctive for questions and clauses. Do not confuse them.">Indirect statement with a <strong>perfect infinitive</strong></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="The same two words appear twice in this line. Are they doing the same job both times?">
+                <div class="widget-row-prompt">Line 12 &mdash; <em>Nēmō ignōrābat quid factum esset; sed multī adhūc rogābant utrum rēctē an contrā lēgem factum esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="They are not different tenses. Factum esset is a pluperfect subjunctive passive in both halves — the form is identical. What differs is the kind of question it answers.">Two different tenses of the same verb</button>
+                    <button data-choice="b" data-fb="Right. Both are the pluperfect subjunctive passive factum esset, in two indirect questions after two imperfect main verbs — but the first is a single question (quid, &quot;what&quot;) and the second is a DOUBLE question with utrum…an (m11). &quot;No one was unaware what had been done; but many were still asking whether it had been done rightly or against the law.&quot; The Latin repeats the form to make the point: everyone agreed on the facts and nobody agreed on the verdict.">The same form twice &mdash; a single indirect question, then a double one</button>
+                    <button data-choice="c" data-fb="Neither is a result clause. There is no signpost word (tam, tantus, tālis, tot, adeō) in the line, and utrum…an is a question frame, not a result marker.">An indirect question, then a result clause</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; THE ROMAN WORLD &middot; THE OATH, AND THE TWENTY YEARS AFTER IT</div>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;">A Roman consul stepping down at the end of December swore a short formal oath and then, by custom, spoke to the people about his year. Cicero never got the speech. Metellus Nepos, who had just taken up a tribuneship, used a tribune's power of veto to allow the oath and nothing else. Cicero swore &mdash; and instead of the ordinary formula he swore that the republic and the city had been saved. He records that the whole assembly shouted the same thing back at him, and he was still telling the story years later. It is a small scene, and it is the shape of his whole later life: a man who could not stop having to say, in the perfect and pluperfect, what he had done.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0;">The argument outlasted the oath. Five years on, in 58 BC, the tribune Clodius carried a measure aimed at anyone who had put a Roman citizen to death without trial; Cicero left Italy rather than face it, and came back the following year. So <em>quid factum esset</em> was not a grammar exercise for these people. It was the question a generation could not settle: whether the executions of 5 December had saved the state or broken its own law. Notice how differently the two writers handle it. Cicero insists on the verdict. Sallust ends his book on a battlefield, describing what he found and refusing to sum up. Both reach for the completed past &mdash; and <em>cōnstantia</em>, this module's virtue, turns out to mean two different things: standing by your judgment, and standing by the facts when you will not judge.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE COMPLETE SUBJUNCTIVE SYSTEM, IN ONE PLACE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Module 6 opened this system and Module 13 closes it. There is no fifth tense and no third row. Everything below is now yours &mdash; and from Module 14 onward you will only ever be finding new <em>places to put</em> these four forms, never new forms.</p>
+
+        <div style="font-size:13px; color:#6b7a99; letter-spacing:.4px; margin:16px 0 4px 0;">A &middot; THE GRID</div>
+        <table class="para">
+            <tr><th style="width:20%"></th><th style="width:40%">SAME TIME as the main verb</th><th>ALREADY FINISHED before it</th></tr>
+            <tr><td class="lab"><strong>PRIMARY</strong><br><span style="font-size:13px; color:#666;">main verb present or future</span></td><td class="end">present subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;"><em>faciat</em> &middot; <em>capiātur</em> &middot; <em>loquātur</em></span></td><td class="end">perfect subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;"><em>fēcerit</em> &middot; <em>captus sit</em> &middot; <em>locūtus sit</em></span></td></tr>
+            <tr><td class="lab"><strong>SECONDARY</strong><br><span style="font-size:13px; color:#666;">main verb imperfect, perfect or pluperfect</span></td><td class="end">imperfect subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;"><em>faceret</em> &middot; <em>caperētur</em> &middot; <em>loquerētur</em></span></td><td class="end">pluperfect subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;"><em>fēcisset</em> &middot; <em>captus esset</em> &middot; <em>locūtus esset</em></span></td></tr>
+        </table>
+
+        <div style="font-size:13px; color:#6b7a99; letter-spacing:.4px; margin:20px 0 4px 0;">B &middot; HOW EACH TENSE IS BUILT</div>
+        <table class="para">
+            <tr><th style="width:20%">Tense</th><th style="width:30%">Active</th><th style="width:28%">Passive &amp; deponent</th><th><em>sum</em></th></tr>
+            <tr><td class="lab">present</td><td>present stem + the vowel swap<br><span style="font-size:14px;"><em>amem, moneam, regam, capiam, audiam</em></span></td><td>same, with passive endings<br><span style="font-size:14px;"><em>amer, amēris, amētur&hellip;</em></span></td><td><em>sim, sīs, sit, sīmus, sītis, sint</em></td></tr>
+            <tr><td class="lab">imperfect</td><td><strong>present infinitive</strong> + <em>-m, -s, -t</em><br><span style="font-size:14px;"><em>amārem, monērem, regerem, caperem, audīrem</em></span></td><td>same, with passive endings<br><span style="font-size:14px;"><em>amārer, amārēris&hellip;</em></span></td><td><em>essem, essēs, esset, essēmus, essētis, essent</em></td></tr>
+            <tr><td class="lab"><strong>perfect</strong></td><td class="end"><strong>perfect stem</strong> + <em>-erim, -erīs, -erit, -erīmus, -erītis, -erint</em></td><td class="end"><strong>PPP</strong> + <em>sim, sīs, sit, sīmus, sītis, sint</em></td><td class="end"><em>fuerim, fuerīs, fuerit, fuerīmus, fuerītis, fuerint</em></td></tr>
+            <tr><td class="lab"><strong>pluperfect</strong></td><td class="end"><strong>perfect stem</strong> + <em>-issem, -issēs, -isset, -issēmus, -issētis, -issent</em></td><td class="end"><strong>PPP</strong> + <em>essem, essēs, esset, essēmus, essētis, essent</em></td><td class="end"><em>fuissem, fuissēs, fuisset, fuissēmus, fuissētis, fuissent</em></td></tr>
+        </table>
+
+        <div style="font-size:13px; color:#6b7a99; letter-spacing:.4px; margin:20px 0 4px 0;">C &middot; EVERYTHING ELSE WORTH KEEPING</div>
+        <table class="para">
+            <tr><th style="width:26%">Piece</th><th>What to remember</th></tr>
+            <tr><td class="lab"><strong>The macron rule</strong><br><span style="font-size:13px; color:#666;">13.01&ndash;13.03</span></td><td>Long vowel before <em>-s, -mus, -tis</em>; short before <em>-m, -t, -nt</em>. <em>amem/amēs</em> &middot; <em>amārem/amārēs</em> &middot; <em>amāverim/amāverīs</em> &middot; <em>amāvissem/amāvissēs</em> &middot; <em>sim/sīs</em> &middot; <em>essem/essēs</em>. One rule, every tense.</td></tr>
+            <tr><td class="lab"><strong>The one collision</strong><br><span style="font-size:13px; color:#666;">13.02</span></td><td class="end">Perfect subjunctive vs. <strong>future perfect indicative</strong>: <em>amāverit</em> and <em>amāverint</em> are identical; <em>amāverīs / amāveris</em>, <em>amāverīmus / amāverimus</em>, <em>amāverītis / amāveritis</em> differ by a macron only &mdash; and Romans wrote no macrons. Only <em>amāverim</em> vs. <em>amāverō</em> is safe. <strong>Read the clause, not the word.</strong></td></tr>
+            <tr><td class="lab"><strong>The one safe form</strong><br><span style="font-size:13px; color:#666;">13.02</span></td><td>Nothing else in Latin ends <em>-issem, -issēs, -isset, -issēmus, -issētis, -issent</em>. If you see <em>-isset</em>, you have a pluperfect subjunctive, full stop.</td></tr>
+            <tr><td class="lab"><strong>The passive never lies</strong><br><span style="font-size:13px; color:#666;">13.03</span></td><td><em>captus est</em> / <em>captus erat</em> are indicative; <em>captus sit</em> / <em>captus esset</em> are subjunctive. Different words, no ambiguity. The <strong>helper</strong> carries the mood; the <strong>participle</strong> carries the completion and agrees in gender, number and case.</td></tr>
+            <tr><td class="lab"><strong>Deponents and semi-deponents</strong><br><span style="font-size:13px; color:#666;">13.03</span></td><td>Deponents use the two-word forms and stay <strong>active</strong> in meaning: <em>locūtus sit</em> = "he has spoken." Semi-deponents switch halfway: <em>audeat, audēret</em> (one word) but <em>ausus sit, ausus esset</em> (two).</td></tr>
+            <tr><td class="lab"><strong>Which constructions use all four</strong><br><span style="font-size:13px; color:#666;">13.04</span></td><td>Indirect questions (m11), <em>cum</em> clauses (m10) and fear clauses (m12) use all four cells. Purpose and indirect command (m08) look forward, so they only ever use the same-time column. Result clauses (m09) normally follow sequence.</td></tr>
+            <tr><td class="lab"><strong>Statements are different</strong></td><td>An indirect <strong>statement</strong> reports completed action with a <strong>perfect infinitive</strong> (<em>sē cōnservāvisse</em>), not with a subjunctive. Line 10 of the reading is there to keep the two systems apart.</td></tr>
+            <tr><td class="lab"><strong>What is still not yours</strong></td><td>The subjunctive as a <strong>main</strong> verb (Module 14). Conditions with the subjunctive, and the irregular verbs <em>ferō, eō, volō, nōlō, mālō, fīō</em> (Module 15). And the "would do" future inside a reported question, which this course does not teach at all &mdash; recast the English instead.</td></tr>
+        </table>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; MIXED SELF-CHECK &middot; EVERYTHING FROM M09 TO M13</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four sentences, four different constructions, no labels. One of them does <strong>not</strong> want a Module 13 form at all.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is it, and which cell of the grid is the verb in?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Read the opening word, then the ending -isset.">
+                <div class="widget-row-prompt"><em>Cum Cicerō haec dīxisset, senātōrēs statim cōnsēnsērunt.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A result clause needs ut and a signpost word (tam, tantus, tot, adeō) in the main clause. This sentence opens with cum and has neither.">Result clause, pluperfect subjunctive</button>
+                    <button data-choice="b" data-fb="Right — a temporal cum clause (m10) with a pluperfect subjunctive, which is the commonest pairing in all of Latin narrative. Cōnsēnsērunt is perfect → secondary; the speaking finished before the agreeing → finished column. &quot;When Cicero had said these things, the senators at once agreed.&quot;">A <em>cum</em> clause, secondary sequence, finished cell</button>
+                    <button data-choice="c" data-fb="There is no question word here — no quid, cūr, num or utrum — and no verb of asking or knowing. Cum is a conjunction, not an interrogative.">Indirect question, pluperfect subjunctive</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="What does nē mean after a verb of fearing? And is profectī essent active or passive in meaning?">
+                <div class="widget-row-prompt"><em>Cōnsulēs timēbant nē coniūrātī iam ex Ītaliā profectī essent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="&quot;So that the conspirators should not set out&quot; is negative purpose, and after timēbant nē does not mean that. Module 12's whole point is that a verb of fearing reverses nē into &quot;that.&quot;">Negative purpose clause &mdash; "so that they would not set out"</button>
+                    <button data-choice="b" data-fb="&quot;Had been set out&quot; is not English, and proficīscor has no passive meaning to give. It is deponent: passive in form, active in sense, exactly as in Module 2.">Fear clause, pluperfect subjunctive <em>passive</em> &mdash; "had been sent out"</button>
+                    <button data-choice="c" data-fb="Right — a fear clause (m12) with the pluperfect subjunctive of the DEPONENT proficīscor. Timēbant imperfect → secondary; the setting out was already over → finished. &quot;The consuls were afraid that the conspirators had already set out from Italy.&quot; Two words, active meaning.">Fear clause, pluperfect subjunctive of a deponent &mdash; "had already set out"</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Look for a signpost word in the main clause before you decide anything about the tense.">
+                <div class="widget-row-prompt"><em>Tanta erat Cicerōnis auctōritās ut senātus statim cōnsentīret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a result clause (m09), and it wants no Module 13 form at all. Tanta is the signpost; erat is imperfect → secondary; the result runs alongside, so the same-time column → imperfect subjunctive cōnsentīret. &quot;So great was Cicero's authority that the Senate agreed at once.&quot;">Result clause, imperfect subjunctive &mdash; no Module 13 form needed</button>
+                    <button data-choice="b" data-fb="Cōnsēnsisset is a pluperfect subjunctive and would say the Senate had already agreed before Cicero had the authority, which reverses the sentence. A result follows its cause; it cannot precede it.">Result clause, pluperfect subjunctive <em>cōnsēnsisset</em></button>
+                    <button data-choice="c" data-fb="A purpose clause would answer &quot;why?&quot; and would have no signpost word. Tanta in the main clause is the giveaway: tanta…ut is result, which was the m08-versus-m09 distinction.">Purpose clause, imperfect subjunctive</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two clauses, two constructions, two different columns of the grid. Take them one at a time.">
+                <div class="widget-row-prompt"><em>Cōnsul mīlitēs mīsit ut coniūrātōs caperent; sed nesciēbat num iam profectī essent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="They are not the same construction. Ut after mīsit is purpose (m08); num after nesciēbat is an indirect question (m11). And they sit in different columns: caperent is same-time, profectī essent is finished.">Two purpose clauses, both imperfect subjunctive</button>
+                    <button data-choice="b" data-fb="Right, and this is the sentence that shows whether the module landed. Purpose clause first: ut…caperent, imperfect subjunctive, same-time column — a purpose can never be already finished. Indirect question second: num…profectī essent, pluperfect subjunctive of a deponent, finished column. &quot;The consul sent soldiers to arrest the conspirators; but he did not know whether they had already set out.&quot;">A purpose clause in the same-time cell, then an indirect question in the finished cell</button>
+                    <button data-choice="c" data-fb="Reversed. The purpose clause is the ut clause and it is in the same-time column; the indirect question is the num clause and it is in the finished column. Check which word opens each clause.">An indirect question first, then a purpose clause</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- HANDOFF -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#128203; YOUR GRADED WORK FOR MODULE 13</div>
+        <div class="task">
+            <div class="th"><strong>1. <em>Ludus XIII &mdash; Quattuor Tempora</em></strong> &middot; Interactive Practice &amp; Games</div>
+            <div class="td">Seventy-five seconds, and your <strong>best of unlimited attempts</strong> counts. Four tenses, one game: form recognition, the same-time-versus-finished call, the sequence cells, the perfect-subjunctive collision, the two-word passives, and this module's vocabulary. Play it before the quiz &mdash; the speed is the point.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>2. Module 13 Quiz</strong> &middot; 40 points &middot; auto-graded, unlimited attempts, highest score kept</div>
+            <div class="td">The two new tenses, the four-cell grid, the passive and deponent two-word forms, the future-perfect collision, form production in all four cells, the look-alike sort, and two best-translation items. A gloss is given for the translation section.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>3. Module 13 Translation</strong> &middot; 30 points &middot; teacher-reviewed, in Microsoft Word</div>
+            <div class="td">Five sentences English into Latin and three Latin into English, all vocabulary supplied. Two of the English sentences need a passive or deponent two-word form, and <strong>one deliberately needs an indirect statement with a perfect infinitive</strong> instead of a subjunctive. Save to OneDrive as <em>Lastname_Firstname_LatinAdv_M13_Translation.docx</em> and submit through Canvas.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>4. Module 13 Reflection</strong> &middot; ungraded survey</div>
+            <div class="td">Five questions, no points. It tells your teacher what to shore up before Module 14, where the subjunctive walks out of the subordinate clause and becomes the main verb of the sentence. Answer it honestly; it costs you nothing.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">14</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 14 &mdash; Jussive, Hortatory, Optative</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">For eight modules the subjunctive has lived inside a subordinate clause, hanging off a main verb. In Module 14 it walks out and becomes the main verb itself: <em>veniat</em> &mdash; "let him come." <em>Dīcāmus</em> &mdash; "let us speak." <em>Utinam vēnisset</em> &mdash; "if only he had come." No new forms; the four tenses you finished this week are all it needs. The reading turns to Cicero defending a consul-elect in court, where every other sentence is an appeal.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><em>Quid factum esset.</em> Three words, and they are the last thing this module leaves you: a pluperfect subjunctive passive inside an indirect question &mdash; "what had been done." Romans argued about that question for twenty years, in exactly this grammar. You can now read the argument in the tense they had it in. That is what <em>cōnstantia</em> bought you: six modules of waiting for two cells of a table, and the table is finished.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 13.05 &middot; What Had Been Done</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 9.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 9</div>
+        <div style="font-size: 12px; color: #666;">Result Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 9.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Signposts</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 9.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Signposts</div>
+        <div style="font-size: 16px; color: #666;">Vocabulary &amp; Recognition</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Latin tells you a result clause is coming. You only have to notice.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A good reader of Latin does not wait until the <em>ut</em> to start guessing. Six little words &mdash; <em>tam, tantus, tālis, tot, adeō, sīc/ita</em> &mdash; sit in the main clause and lean forward, promising a consequence. Learn to see them and half of this module's work is already done. Learn <strong>which ones decline</strong> and you will stop making the mistake that costs almost everyone marks.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the six signpost words and say what each one attaches to.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> make <em>tantus</em> and <em>tālis</em> agree with their nouns, and leave <em>tam, tot,</em> and <em>adeō</em> alone.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use this module's new vocabulary, and explain why a signpost is a warning rather than a guarantee.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE SIX SIGNPOSTS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">All six mean roughly <strong>&ldquo;so&rdquo;</strong> or <strong>&ldquo;such.&rdquo;</strong> What separates them is <em>what they attach to</em> in the main clause.</p>
+        <table class="para">
+            <tr><th style="width:17%">Signpost</th><th style="width:23%">Means</th><th style="width:22%">Attaches to</th><th>Example in a main clause</th></tr>
+            <tr><td class="lab"><em>tam</em></td><td>so</td><td>an <strong>adjective</strong> or <strong>adverb</strong></td><td><em>tam callidus</em> &mdash; so clever<br><em>tam ācriter</em> &mdash; so fiercely</td></tr>
+            <tr><td class="lab"><em>tantus, tanta, tantum</em></td><td>so great, so much</td><td>a <strong>noun</strong> &mdash; and it <span style="color:#AA1E2D;"><strong>agrees</strong></span></td><td><em>tantus timor</em> &mdash; so great a fear<br><em>tanta dissēnsiō</em> &mdash; so great a disagreement</td></tr>
+            <tr><td class="lab"><em>tālis, tāle</em></td><td>such, of such a kind</td><td>a <strong>noun</strong> &mdash; and it <span style="color:#AA1E2D;"><strong>agrees</strong></span></td><td><em>tālis vir</em> &mdash; such a man<br><em>tāle scelus</em> &mdash; such a crime</td></tr>
+            <tr><td class="lab"><em>tot</em></td><td>so many</td><td>a <strong>plural noun</strong> &mdash; never changes</td><td><em>tot coniūrātī</em> &mdash; so many conspirators<br><em>tot verba</em> &mdash; so many words</td></tr>
+            <tr><td class="lab"><em>adeō</em></td><td>to such a degree, so much</td><td>usually a <strong>verb</strong></td><td><em>adeō timēbant</em> &mdash; they were afraid to such a degree</td></tr>
+            <tr><td class="lab"><em>sīc</em> &middot; <em>ita</em></td><td>so, in such a way</td><td>a <strong>verb</strong></td><td><em>sīc dīxit</em> &mdash; he spoke in such a way<br><em>ita rem gessit</em> &mdash; he handled the matter in such a way</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Two of them are near-twins.</strong> <em>Sīc</em> and <em>ita</em> both mean &ldquo;so, in this way,&rdquo; and for reading purposes you can treat them as one item. <em>Adeō</em> is close to them too; the difference is that <em>sīc</em> and <em>ita</em> describe the <em>manner</em> of the action (&ldquo;in such a way&rdquo;) while <em>adeō</em> describes its <em>degree</em> (&ldquo;to such an extent&rdquo;). You will also meet <em>adeō</em> attached to an adjective or adverb from time to time; when that happens it is doing <em>tam</em>'s job, and nothing about the result clause changes.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE TRAP: WHO DECLINES AND WHO DOES NOT</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:4px 0 12px 0;">
+            <div style="flex:1; min-width:240px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:6px;">ADJECTIVES &mdash; THEY AGREE</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>tantus, -a, -um</em> &middot; <em>tālis, tāle</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">They describe a noun, so they take that noun's gender, number, and case &mdash; like any adjective you have ever met.</div>
+            </div>
+            <div style="flex:1; min-width:240px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8A1F16; margin-bottom:6px;">ADVERBS AND ONE ODDITY &mdash; NEVER CHANGE</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>tam</em> &middot; <em>adeō</em> &middot; <em>sīc</em> &middot; <em>ita</em> &middot; <em>tot</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">Four adverbs, plus <em>tot</em>, which is an <strong>indeclinable</strong> word. There is no such form as <em>tamus</em>, <em>tama</em>, <em>tamum</em>, or <em>totī</em> meaning &ldquo;so many.&rdquo;</div>
+            </div>
+        </div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 18px 0 6px 0;"><em>Tantus</em> agreeing, four times over</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;"><em>Tantus</em> declines like <em>magnus, -a, -um</em> &mdash; a perfectly ordinary 1st/2nd-declension adjective. Read this table across:</p>
+        <table class="para">
+            <tr><th style="width:26%">Noun</th><th style="width:24%">Gender, case, number</th><th style="width:24%">Correct form</th><th>Means</th></tr>
+            <tr><td class="lab"><em>timor</em> &mdash; fear</td><td>m., nom. sg.</td><td class="end"><em>tantus timor</em></td><td>so great a fear</td></tr>
+            <tr><td class="lab"><em>dissēnsiō</em> &mdash; disagreement</td><td>f., nom. sg.</td><td class="end"><em>tanta dissēnsiō</em></td><td>so great a disagreement</td></tr>
+            <tr><td class="lab"><em>perīculum</em> &mdash; danger</td><td>n., nom. sg.</td><td class="end"><em>tantum perīculum</em></td><td>so great a danger</td></tr>
+            <tr><td class="lab"><em>audāciam</em> &mdash; boldness</td><td>f., acc. sg.</td><td class="end"><em>tantam audāciam</em></td><td>such great boldness</td></tr>
+        </table>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 18px 0 6px 0;"><em>Tālis</em> agreeing &mdash; a 3rd-declension adjective</h3>
+        <table class="para">
+            <tr><th style="width:26%">Noun</th><th style="width:24%">Gender, case, number</th><th style="width:24%">Correct form</th><th>Means</th></tr>
+            <tr><td class="lab"><em>vir</em> &mdash; man</td><td>m., nom. sg.</td><td class="end"><em>tālis vir</em></td><td>such a man</td></tr>
+            <tr><td class="lab"><em>ōrātiō</em> &mdash; speech</td><td>f., nom. sg.</td><td class="end"><em>tālis ōrātiō</em></td><td>such a speech</td></tr>
+            <tr><td class="lab"><em>scelus</em> &mdash; crime</td><td>n., nom. sg.</td><td class="end"><em>tāle scelus</em></td><td>such a crime</td></tr>
+            <tr><td class="lab"><em>virum</em> &mdash; man</td><td>m., acc. sg.</td><td class="end"><em>tālem virum</em></td><td>such a man (as object)</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The mistake almost everyone makes once.</strong> Students who have just learned that <em>tantus</em> agrees start making <em>tam</em> agree too, and write things like <em>tama fortis</em> or <em>tamus timor</em>. Those are not Latin words. <em>Tam</em> is an adverb; adverbs do not decline, ever. The same goes for <em>adeō</em>, <em>sīc</em>, <em>ita</em>, and (although it looks like an adjective) <em>tot</em>. Say it once and keep it: <strong><em>tantus</em> and <em>tālis</em> dress to match. The rest wear the same clothes every day.</strong></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; PICK THE RIGHT SIGNPOST</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five rows. Ask two questions each time: <em>what does the signpost attach to?</em> and <em>does that word need agreement?</em></p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Complete each main clause with the correct signpost.</div>
+            <div class="widget-row" data-correct="c" data-hint="Perīculum is neuter. Which form of tantus is neuter singular?">
+                <div class="widget-row-prompt"><em>____ erat perīculum ut senātōrēs sententiam mūtārent.</em> (&ldquo;The danger was so great that&hellip;&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Tantus is masculine. Perīculum is a neuter noun, so the adjective must be neuter too.">Tantus</button>
+                    <button data-choice="b" data-fb="Tanta is feminine (or neuter plural). Perīculum is neuter singular.">Tanta</button>
+                    <button data-choice="c" data-fb="Right — tantum, neuter nominative singular, agreeing with perīculum. &quot;So great was the danger that the senators changed their vote.&quot;">Tantum</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="What kind of word is callidus — a noun, or an adjective?">
+                <div class="widget-row-prompt"><em>Caesar ____ callidus erat ut multī eī crēderent.</em> (&ldquo;Caesar was so clever that&hellip;&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — tam, because callidus is an adjective. Tam never changes its form: tam callidus, tam callida, tam callidī, always tam.">tam</button>
+                    <button data-choice="b" data-fb="Tantus goes with a noun, not with another adjective. Here the word being intensified is callidus, &quot;clever.&quot;">tantus</button>
+                    <button data-choice="c" data-fb="There is no such word as tamus. Tam is an adverb and has exactly one form.">tamus</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Dissēnsiō is feminine. And note the case: it is the subject.">
+                <div class="widget-row-prompt"><em>____ erat dissēnsiō ut senātōrēs saepe clāmārent.</em> (&ldquo;The disagreement was so great that&hellip;&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Tantum is neuter. Dissēnsiō, dissēnsiōnis is a feminine 3rd-declension noun.">Tantum</button>
+                    <button data-choice="b" data-fb="Right — tanta, feminine nominative singular, agreeing with dissēnsiō. This is the line the Module 9 reading opens with.">Tanta</button>
+                    <button data-choice="c" data-fb="Adeō attaches to a verb, not to a noun. Here the intensified word is dissēnsiō, &quot;disagreement.&quot;">Adeō</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Coniūrātī is plural, and the English is &quot;so many.&quot;">
+                <div class="widget-row-prompt"><em>____ erant coniūrātī ut tōta urbs timēret.</em> (&ldquo;There were so many conspirators that the whole city was afraid.&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Tantī would mean &quot;so great&quot; in the plural, not &quot;so many.&quot; Latin has a separate word for &quot;so many.&quot;">Tantī</button>
+                    <button data-choice="b" data-fb="Tālēs means &quot;of such a kind,&quot; which is not the same claim as &quot;so many.&quot;">Tālēs</button>
+                    <button data-choice="c" data-fb="Right — tot, &quot;so many.&quot; It is indeclinable: tot coniūrātī, tot custōdēs, tot verba, always tot.">Tot</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Timēbant is a verb. Which signposts attach to verbs?">
+                <div class="widget-row-prompt"><em>____ timēbant ut nēmō loquerētur.</em> (&ldquo;They were afraid to such a degree that no one spoke.&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — adeō, which intensifies the verb itself: &quot;they feared to such a degree.&quot; Sīc or ita would also be possible here.">Adeō</button>
+                    <button data-choice="b" data-fb="Tam needs an adjective or adverb to attach to, and there is none here — timēbant is a verb.">Tam</button>
+                    <button data-choice="c" data-fb="Tanta needs a noun to agree with, and there is no noun here for it to describe.">Tanta</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 4 &middot; A WARNING, NOT A GUARANTEE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Signposts are the fastest clue you have, and they are right the great majority of the time. But they are clues, not laws. All six of these words are perfectly ordinary Latin in their own right, and they can appear with no result clause anywhere in sight:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Ita Cicerō dīxit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Cicero spoke in this way.&rdquo; Full stop. No <em>ut</em>, no result clause &mdash; just an adverb doing its plain job.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Caesar tālī exemplō nōn crēdēbat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Caesar did not trust such a precedent.&rdquo; <em>Tālī</em> is a signpost word, correctly agreeing with <em>exemplō</em> (ablative singular) &mdash; but nothing follows it. <span style="color:#8a6416;">Gloss: <em>exemplum, exemplī</em> n. &mdash; example, precedent.</span></div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>So what is the rule?</strong> A signpost tells you to <strong>look ahead for <em>ut</em> plus a subjunctive.</strong> If you find one, you have a result clause and you can translate with confidence. If you do not, the signpost is simply an intensifier and you translate it as &ldquo;so,&rdquo; &ldquo;such,&rdquo; or &ldquo;in this way.&rdquo; Two words together make the construction: the signpost <em>and</em> the <em>ut</em> clause.</div>
+    </div>
+
+    <!-- VOCABULARY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; MODULE 9 VOCABULARY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">The six signposts, plus the words the Senate-debate reading will need. Add all of these to your running list.</p>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 10px 0;">
+            <ul class="gl">
+                <li><em>tam</em> (adv.) &mdash; so <span style="color:#666;">(with an adjective or adverb)</span></li>
+                <li><em>tantus, tanta, tantum</em> &mdash; so great, so much <span style="color:#666;">(agrees with its noun)</span></li>
+                <li><em>tālis, tāle</em> &mdash; such, of such a kind <span style="color:#666;">(agrees with its noun)</span></li>
+                <li><em>tot</em> (indeclinable) &mdash; so many</li>
+                <li><em>adeō</em> (adv.) &mdash; to such a degree, so much, so far</li>
+                <li><em>sīc</em>, <em>ita</em> (adv.) &mdash; so, thus, in such a way</li>
+                <li><em>crēdō, crēdere, crēdidī, crēditum</em> (+ dative) &mdash; to believe, trust <span style="color:#666;">(<em>crēdō Cicerōnī</em> &mdash; &ldquo;I believe Cicero&rdquo;)</span></li>
+                <li><em>sententia, sententiae</em> f. &mdash; opinion, vote, motion <span style="color:#666;">(in the Senate, the formal opinion a senator gives when asked)</span></li>
+                <li><em>dissēnsiō, dissēnsiōnis</em> f. &mdash; disagreement, dissent</li>
+                <li><em>supplicium, suppliciī</em> n. &mdash; punishment; the death penalty</li>
+                <li><em>carcer, carceris</em> m. &mdash; prison</li>
+                <li><em>scelus, sceleris</em> n. &mdash; crime, wickedness</li>
+                <li><em>exemplum, exemplī</em> n. &mdash; example, precedent</li>
+                <li><em>ācriter</em> (adv.) &mdash; fiercely, sharply, keenly <span style="color:#666;">(from <em>ācer, ācris, ācre</em>)</span></li>
+                <li><em>callidē</em> (adv.) &mdash; cleverly, shrewdly <span style="color:#666;">(from <em>callidus, -a, -um</em> &mdash; clever, and often slightly sly)</span></li>
+                <li><em>diū</em> (adv.) &mdash; for a long time; <em>diūtius</em> &mdash; longer, any longer</li>
+                <li><em>postrēmō</em> (adv.) &mdash; finally, at last</li>
+                <li><em>pateō, patēre, patuī</em> &mdash; to lie open, be evident; <em>patet</em> &mdash; &ldquo;it is obvious&rdquo;</li>
+            </ul>
+        </div>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128220; DERIVATIVE MINUTE &middot; CLICK EACH CARD</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>crēdō</em></div><div class="hint">what English words?</div><div class="back"><strong>credible, incredible, credit, credence, creed, credential.</strong> Every one of them is about <em>trust</em> &mdash; a creed is what you believe, a credential is what makes you believable.</div></div>
+                <div class="flip-card"><div class="front"><em>tālis</em></div><div class="hint">what English word?</div><div class="back"><strong>retaliate.</strong> Through Latin <em>tāliō</em>, punishment &ldquo;of such a kind&rdquo; as the offence &mdash; the old law of like for like. To retaliate is to give back <em>the same sort of thing</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>pateō</em></div><div class="hint">what English words?</div><div class="back"><strong>patent, patently.</strong> Something patent lies open to view. A patent for an invention is a document that makes a claim public and open.</div></div>
+                <div class="flip-card"><div class="front"><em>dissēnsiō</em></div><div class="hint">what English words?</div><div class="back"><strong>dissent, dissension.</strong> From <em>dis-</em> (&ldquo;apart&rdquo;) + <em>sentiō</em> (&ldquo;to feel, think&rdquo;) &mdash; people whose thinking has gone in different directions. Which is exactly what December 5th was.</div></div>
+                <div class="flip-card"><div class="front"><em>ācer</em>, <em>ācriter</em></div><div class="hint">what English words?</div><div class="back"><strong>acrid, acrimony, acerbic.</strong> The root idea is <em>sharp</em>. Cato speaking <em>ācriter</em> is Cato speaking with an edge on him.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 9.03 &mdash; <em>Nē</em> or <em>Ut Nōn</em>?</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The one place where purpose and result stop looking alike. In the negative they use different words &mdash; and that makes the negative the most reliable test in this whole module.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><em>Tam, tantus, tālis, tot, adeō, sīc/ita</em> &mdash; when one of these is in the main clause, look ahead for <em>ut</em> plus a subjunctive. And remember which ones move: <strong><em>tantus</em> and <em>tālis</em> agree with their noun; <em>tam</em>, <em>tot</em>, <em>adeō</em>, <em>sīc</em>, and <em>ita</em> never change at all.</strong></p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 9.02 &middot; The Signposts</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

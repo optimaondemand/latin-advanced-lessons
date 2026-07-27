@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 5.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 5</div>
+        <div style="font-size: 12px; color: #666;">Gerundives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Cicero and the Duty to Act</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Cicero and the Duty to Act</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Review &amp; Self-Check</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Ten gerundives in one short speech &mdash; and a consul naming, out loud, whose job each one is.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Cicero is standing in front of the Senate with proof in his hand and no legal power to act alone. Watch what the grammar does for him: every claim comes out as an obligation rather than a proposal, and the datives distribute the blame. This is what you learned this week, being used to win an argument.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> parse and translate every gerundive in an adapted passage of Cicero.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> sort any <em>-nd-</em> form into gerund, gerundive-for-gerund-plus-object, or gerundive of obligation.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why an orator with no power to act alone would choose obligation language.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Cicero, <em>In Catilīnam</em> I and III.</strong> A simplified Latin retelling drawing on both speeches &mdash; not Cicero's own sentences. Every <span style="color:#AA1E2D;"><strong>gerundive</strong></span> is marked in red. Read it once straight through for sense before you parse anything.</p>
+        <div class="rd">
+            <p>Cicerō cōnsul erat. Catilīna in urbe manēbat et bellum parābat. Multa cōnsulī <b>agenda erant</b>, sed sine testibus nihil facere poterat.</p>
+            <p>Tandem epistulae inventae sunt. Coniūrātī enim litterās ad Gallōs mīserant, et illae litterae in manūs cōnsulis vēnērunt. Nunc Cicerō documentum habēbat.</p>
+            <p>Cicerō in senātum vēnit et locūtus est: "Patrēs cōnscrīptī, rēs pūblica nōbīs <b>dēfendenda est</b>. Diū patientēs fuimus; nunc patientia <b>dēpōnenda est</b>. Hae epistulae <b>legendae sunt</b>, quia senātōrēs vēritātem audīre dēbent."</p>
+            <p>Litterīs lēctīs, senātōrēs tacuērunt. Lentulus, quī signum suum vīderat, nihil dīcere potuit.</p>
+            <p>"Vidētis," inquit Cicerō. "Coniūrātī <b>capiendī</b> et <b>custōdiendī sunt</b>. Catilīna ex urbe <b>expellendus est</b>. Hodiē <b>agendum est</b>, nōn crās. Mihi haec omnia <b>suscipienda sunt</b>, quia cōnsul sum; vōbīs cōnsilium <b>capiendum est</b>, quia senātōrēs estis."</p>
+            <p>Senātus cōnsēnsit. Sīc Cicerō officium suum fēcit.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list</div>
+            <ul class="gl">
+                <li><em>sine</em> (+ abl.) &mdash; without</li>
+                <li><em>testibus</em> &mdash; abl. pl. of <em>testis, testis</em> m., "witness"</li>
+                <li><em>tandem</em> (adv.) &mdash; at last, finally</li>
+                <li><em>inventae sunt</em> &mdash; "were found" (perfect passive of <em>inveniō</em>)</li>
+                <li><em>enim</em> &mdash; for, in fact (always the second word in its clause)</li>
+                <li><em>litterae, litterārum</em> f. pl. &mdash; a letter, a dispatch (plural in form, singular in sense)</li>
+                <li><em>Gallōs</em> &mdash; acc. pl., "the Gauls" &mdash; here the Allobroges, a Gallic people the conspirators tried to recruit</li>
+                <li><em>manūs</em> &mdash; acc. pl. of <em>manus, manūs</em> f., "hand"; <em>in manūs</em> &mdash; "into the hands"</li>
+                <li><em>documentum, documentī</em> n. &mdash; proof, evidence</li>
+                <li><em>illae litterae</em> &mdash; "those letters" (<em>illae</em>, fem. nom. pl. of <em>ille</em>)</li>
+                <li><em>patrēs cōnscrīptī</em> &mdash; "Enrolled Fathers," the formal way of addressing the Roman Senate</li>
+                <li><em>hae</em> &mdash; "these" (fem. nom. pl. of <em>hic</em>) &middot; <em>haec omnia</em> &mdash; "all these things" (neut. nom. pl.)</li>
+                <li><em>inquit</em> &mdash; "he says / he said," inserted inside a quotation</li>
+                <li><em>diū</em> (adv.) &mdash; for a long time</li>
+                <li><em>patiēns, patientis</em> &mdash; patient, enduring; <em>patientēs fuimus</em> &mdash; "we have been patient"</li>
+                <li><em>patientia, patientiae</em> f. &mdash; patience, forbearance</li>
+                <li><em>dēpōnō, dēpōnere, dēposuī, dēpositum</em> &mdash; to lay aside, put down &mdash; the verb behind the word <em>deponent</em></li>
+                <li><em>quia</em> &mdash; because</li>
+                <li><em>vēritās, vēritātis</em> f. &mdash; truth</li>
+                <li><em>tacuērunt</em> &mdash; "fell silent" (perfect of <em>taceō</em>)</li>
+                <li><em>signum, signī</em> n. &mdash; sign; here the <strong>seal</strong> pressed into the wax of a letter</li>
+                <li><em>Lentulus, Lentulī</em> m. &mdash; Publius Cornelius Lentulus Sura, a senator and one of the chief conspirators</li>
+                <li><em>hodiē</em> (adv.) &mdash; today &middot; <em>crās</em> (adv.) &mdash; tomorrow</li>
+                <li><em>suscipiō, suscipere, suscēpī, susceptum</em> &mdash; to take on, undertake</li>
+                <li><em>cōnsilium capere</em> &mdash; idiom, "to take a decision, form a plan"</li>
+                <li><em>cōnsēnsit</em> &mdash; "agreed" (perfect of <em>cōnsentiō</em>)</li>
+                <li><em>sīc</em> (adv.) &mdash; thus, in this way</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>An honest note about the adaptation.</strong> Cicero's actual sentences here are two or three times longer than these, and they are packed with a verb mood you have not met yet &mdash; the <strong>subjunctive</strong>, which arrives in <strong>Module 6</strong>. This retelling keeps his gerundives, his datives and his argument, and rebuilds everything else out of grammar you already own. What you are reading is genuinely Ciceronian in <em>structure</em>; it is not Ciceronian in <em>wording</em>. By Module 16 you will be able to handle a good deal more of the real thing.</div>
+    </div>
+
+    <!-- PART 2 - INVENTORY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 2 &middot; GERUNDIVE INVENTORY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Parse each red form yourself before you look. Then check &mdash; this table is also your revision sheet for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:19%">Form</th><th style="width:13%">From</th><th style="width:19%">Gender &middot; number &middot; case</th><th style="width:15%">Agrees with</th><th style="width:12%">Agent</th><th>Meaning</th></tr>
+            <tr><td class="lab"><em>agenda erant</em></td><td><em>agō</em></td><td>neut. nom. pl.</td><td><em>multa</em></td><td><em>cōnsulī</em></td><td>many things had to be done by the consul</td></tr>
+            <tr><td class="lab"><em>dēfendenda est</em></td><td><em>dēfendō</em></td><td>fem. nom. sg.</td><td><em>rēs pūblica</em></td><td><em>nōbīs</em></td><td>the republic must be defended by us</td></tr>
+            <tr><td class="lab"><em>dēpōnenda est</em></td><td><em>dēpōnō</em></td><td>fem. nom. sg.</td><td><em>patientia</em></td><td>none stated</td><td>patience must now be laid aside</td></tr>
+            <tr><td class="lab"><em>legendae sunt</em></td><td><em>legō</em></td><td>fem. nom. pl.</td><td><em>epistulae</em></td><td>none stated</td><td>these letters must be read</td></tr>
+            <tr><td class="lab"><em>capiendī</em></td><td><em>capiō</em></td><td>masc. nom. pl.</td><td><em>coniūrātī</em></td><td>none stated</td><td>(the conspirators) must be captured</td></tr>
+            <tr><td class="lab"><em>custōdiendī sunt</em></td><td><em>custōdiō</em></td><td>masc. nom. pl.</td><td><em>coniūrātī</em></td><td>none stated</td><td>the conspirators must be guarded</td></tr>
+            <tr><td class="lab"><em>expellendus est</em></td><td><em>expellō</em></td><td>masc. nom. sg.</td><td><em>Catilīna</em></td><td>none stated</td><td>Catiline must be driven out</td></tr>
+            <tr><td class="lab"><em>agendum est</em></td><td><em>agō</em></td><td>neut. nom. sg.</td><td>nothing &mdash; impersonal</td><td>none stated</td><td>there must be action; we must act</td></tr>
+            <tr><td class="lab"><em>suscipienda sunt</em></td><td><em>suscipiō</em></td><td>neut. nom. pl.</td><td><em>haec omnia</em></td><td><em>mihi</em></td><td>all these things must be undertaken by me</td></tr>
+            <tr><td class="lab"><em>capiendum est</em></td><td><em>capiō</em></td><td>neut. nom. sg.</td><td><em>cōnsilium</em></td><td><em>vōbīs</em></td><td>a decision must be taken by you</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Two contrasts the passage sets up on purpose.</strong> First: <em>epistulae inventae sunt</em> ("the letters were found") is a real perfect passive with a participle, three lines before <em>epistulae legendae sunt</em> ("the letters must be read") with a gerundive. Same noun, two different constructions, and the <em>-nd-</em> is the only visible difference. Second: Cicero says <em>senātōrēs vēritātem audīre dēbent</em> &mdash; "the senators ought to hear the truth" &mdash; using <em>dēbeō</em> with the senators as an active subject. One sentence later he switches to <em>vōbīs cōnsilium capiendum est</em>. Same people, same obligation, and a completely different feel: the second one has the duty landing on them rather than the two of them agreeing about it.</div>
+    </div>
+
+    <!-- PART 3 - CONSOLIDATION -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; GERUND AND GERUNDIVE: THE WHOLE PICTURE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You now have both halves of the <em>-nd-</em> system, Module 4 and Module 5 together. Here is every use in one place. Learn this table and there is nothing in the <em>-nd-</em> family that can surprise you.</p>
+        <table class="para">
+            <tr><th style="width:24%">Construction</th><th style="width:22%">How to spot it</th><th style="width:26%">Example</th><th>Translation</th></tr>
+            <tr><td class="lab"><strong>Gerund</strong><br><span style="font-size:13px; color:#666;">Module 4</span></td><td>neuter singular; no noun agreeing with it; no nominative form exists</td><td><em>ad pugnandum</em><br><em>dīcendī causā</em><br><em>scrībendō</em></td><td>for fighting<br>for the sake of speaking<br>by writing</td></tr>
+            <tr><td class="lab"><strong>Gerundive replacing gerund + object</strong><br><span style="font-size:13px; color:#666;">Lesson 5.02</span></td><td>two words whose endings match; no form of <em>esse</em></td><td><em>reī pūblicae dēfendendae causā</em><br><em>ad urbem dēfendendam</em></td><td>for the sake of defending the republic<br>for defending the city</td></tr>
+            <tr><td class="lab"><strong>Gerundive of obligation</strong><br><span style="font-size:13px; color:#666;">Lesson 5.03</span></td><td>nominative noun + agreeing gerundive + a form of <em>esse</em></td><td><em>Urbs dēfendenda est.</em></td><td>The city must be defended.</td></tr>
+            <tr><td class="lab"><strong>&hellip;with a named agent</strong><br><span style="font-size:13px; color:#666;">Lesson 5.04</span></td><td>the same, plus a bare dative &mdash; no <em>ā/ab</em></td><td><em>Urbs nōbīs dēfendenda est.</em></td><td>The city must be defended by us. / We must defend the city.</td></tr>
+            <tr><td class="lab"><strong>Impersonal gerundive of obligation</strong><br><span style="font-size:13px; color:#666;">Lesson 5.03</span></td><td>neuter <em>-ndum</em> + <em>esse</em>, and no nominative noun anywhere</td><td><em>Nōbīs pugnandum est.</em></td><td>There must be fighting by us. / We must fight.</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-left:5px solid #0E1C42; border-radius:6px; padding:14px 18px; font-size:16px; color:#1a2340; line-height:1.7;">&#9989; <strong>The three-second sort.</strong> You meet an <em>-nd-</em> form. Ask:<br>
+        <strong>1. Is there a form of <em>esse</em>?</strong> Yes &rarr; gerundive of obligation. Now find the nominative noun; if there is none, it is impersonal.<br>
+        <strong>2. No <em>esse</em>. Is there a noun beside it whose ending matches?</strong> Yes &rarr; gerundive replacing gerund + object.<br>
+        <strong>3. Neither?</strong> Gerund. Translate it as "___ing" and let the case do the rest.</div>
+    </div>
+
+    <!-- PART 4 - TRANSLATE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 4 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out before you flip. These four are the best possible warm-up for tonight's translation assignment.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Multa cōnsulī agenda erant, sed sine testibus nihil facere poterat.</em></div><div class="hint">click to compare</div><div class="back">"<strong>Many things had to be done by the consul</strong>, but without witnesses he could do nothing." <em>Agenda</em> is neuter nominative plural agreeing with <em>multa</em>; <em>erant</em> makes the obligation past; <em>cōnsulī</em> is the dative of agent. A smoother English version: "The consul had many things to do."</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Rēs pūblica nōbīs dēfendenda est.</em></div><div class="hint">click to compare</div><div class="back">"<strong>The republic must be defended by us</strong>" &mdash; or, more naturally, "we must defend the republic." <em>Dēfendenda</em> is feminine nominative singular agreeing with <em>rēs pūblica</em>; <em>nōbīs</em> is dative, never <em>ā nōbīs</em>. Note that Cicero says this before he says anything about himself: the duty is everyone's first, his second.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Coniūrātī capiendī et custōdiendī sunt; Catilīna ex urbe expellendus est.</em></div><div class="hint">click to compare</div><div class="back">"<strong>The conspirators must be captured and guarded; Catiline must be driven out of the city.</strong>" Two masculine nominative plurals agreeing with <em>coniūrātī</em>, then a masculine nominative singular agreeing with <em>Catilīna</em>. No agent is named in either clause &mdash; the tasks are stated as simple facts, which is a choice.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Mihi haec omnia suscipienda sunt, quia cōnsul sum.</em></div><div class="hint">click to compare</div><div class="back">"<strong>All these things must be undertaken by me, because I am consul.</strong>" <em>Suscipienda</em> is neuter nominative plural agreeing with <em>haec omnia</em>; <em>mihi</em> is the dative of agent. The <em>quia</em> clause is the whole argument in miniature: the office creates the obligation, and the obligation is not optional.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; A CONSUL WHO COULD NOT ACT ALONE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Cicero was consul, the highest office Rome had. He was also, in the crisis of 63 BC, close to powerless on his own. Executing Roman citizens without trial was not something a consul could simply order; he needed the Senate behind him, in public, on the record. Everything he says in these speeches is shaped by that one fact.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Which is why the gerundive is his instrument of choice. Look at what the construction does for a speaker in his position. <em>Catilīna expellendus est</em> does not say "I want Catiline gone" &mdash; a personal wish, which anyone can refuse. It says the expulsion is <strong>owed</strong>, that it exists as a duty independent of who happens to be speaking. And when he needs to assign it, the dative does the work quietly: <em>mihi haec suscipienda sunt</em>, these are mine to take on; <em>vōbīs cōnsilium capiendum est</em>, the decision is yours to make. He has just told several hundred senators what their job is, without once giving them an order.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">The evidence mattered as much as the grammar. The conspirators had tried to recruit a Gallic people, the Allobroges, who reported the approach instead; letters were intercepted and brought before the Senate, and the men who had sealed them were confronted with their own seals in front of witnesses. Cicero prized this episode for the rest of his life, and later wrote about the duties of public office at length &mdash; his treatise <em>Dē Officiīs</em>, "On Duties," is one of the most widely read books of the ancient world. The word in its title is this module's virtue.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>Worth keeping in view.</strong> Roman <em>officium</em> was closer to a debt than a feeling &mdash; something owed and accounted for, to family, allies, city, and gods. The gerundive of obligation is what that idea sounds like in a sentence. It is also worth asking, as you read: is Cicero describing duties that genuinely existed, or manufacturing them out of grammar? Romans argued about that at the time, and the argument outlived them all. Sallust, whom you have been reading since Module 0, tells the same story with a noticeably cooler eye.</p>
+    </div>
+
+    <!-- MODULE REVIEW -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; MODULE 5 IN FIVE LINES</div>
+        <table class="para">
+            <tr><th style="width:22%">Lesson</th><th>The one thing to keep</th></tr>
+            <tr><td class="lab">5.01</td><td>A gerundive is a verbal <strong>adjective</strong> &mdash; <strong>passive</strong> in force, forward-looking, and it <strong>agrees</strong>. Read it first as "needing to be ___ed."</td></tr>
+            <tr><td class="lab">5.02</td><td>It declines like <em>bonus, bona, bonum</em>. When a gerund would have taken an object, Latin promotes the object and lets the gerundive agree with it.</td></tr>
+            <tr><td class="lab">5.03</td><td>Gerundive + <em>esse</em> = "must be ___ed." The tense lives in <em>esse</em>. With nothing to agree with, the neuter goes impersonal: <em>pugnandum est</em>.</td></tr>
+            <tr><td class="lab">5.04</td><td>The one who must act goes in the <strong>bare dative</strong> &mdash; <em>mihi, nōbīs, cōnsulī, senātuī</em> &mdash; never <em>ā/ab</em> + ablative.</td></tr>
+            <tr><td class="lab">5.05</td><td>In real oratory the gerundive turns a wish into a duty and hands it to somebody by name. Grammar is how obligation gets assigned.</td></tr>
+        </table>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; FINAL SELF-CHECK BEFORE THE QUIZ</div>
+            <div class="widget-question">Five questions across the whole module.</div>
+            <div class="widget-row" data-correct="b" data-hint="Is the city the doer or the thing done to?">
+                <div class="widget-row-prompt"><em>Urbs mihi dēfendenda est.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This flips the voice. A gerundive is passive in force — the city is defended, it does not defend.">"The city must defend me."</button>
+                    <button data-choice="b" data-fb="Right — 'The city must be defended by me,' or naturally 'I must defend the city.' Mihi is the dative of agent.">"The city must be defended by me."</button>
+                    <button data-choice="c" data-fb="'Was defended' is urbs ā mē dēfēnsa est — an ordinary perfect passive with a participle and ā + ablative. The -nd- form means the defending is still owed.">"The city was defended by me."</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Find the -nd- form, then look at how its agent is expressed.">
+                <div class="widget-row-prompt">Which sentence contains an <strong>error</strong>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Correct as written: mittō gives a real perfect passive missa est, so ā Lentulō is the right ablative of agent.">Epistula ā Lentulō missa est.</button>
+                    <button data-choice="b" data-fb="Correct as written: legenda is a gerundive, and its agent senātuī is in the dative with no preposition.">Epistula senātuī legenda est.</button>
+                    <button data-choice="c" data-fb="Right — this is the error. Scrībendae is a gerundive, so its agent cannot take ā. It should be Lēgēs senātuī scrībendae sunt.">Lēgēs ā senātū scrībendae sunt.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Is there any noun for this form to agree with?">
+                <div class="widget-row-prompt">In <em>ad pugnandum</em>, the form <em>pugnandum</em> is:</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a gerund. Neuter singular accusative after ad, with no noun to agree with, expressing purpose: 'for fighting.'">a gerund</button>
+                    <button data-choice="b" data-fb="A gerundive has to agree with something, and there is no noun here at all. Compare ad urbem dēfendendam, where there is one.">a gerundive agreeing with an unstated noun</button>
+                    <button data-choice="c" data-fb="A gerundive of obligation needs a form of esse. There is none — just the preposition ad.">a gerundive of obligation</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Erant is which tense of esse, and what does that do to the obligation?">
+                <div class="widget-row-prompt"><em>Multa senātuī facienda erant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="'Many things were done' drops the obligation entirely. That would be multa facta sunt, with the participle facta.">"Many things were done by the Senate."</button>
+                    <button data-choice="b" data-fb="'Will have to be done' needs the future erunt. Erant is imperfect, so the obligation belongs to the past.">"Many things will have to be done by the Senate."</button>
+                    <button data-choice="c" data-fb="Right — 'Many things had to be done by the Senate.' Imperfect erant gives past obligation; senātuī is the dative of agent.">"Many things had to be done by the Senate."</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="What gender and number is epistulae here, and what does esse tell you?">
+                <div class="widget-row-prompt">Complete correctly: <em>Epistulae mihi ____ sunt.</em> ("The letters must be read by me.")</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Legendus is masculine singular. Epistulae is feminine plural, and sunt confirms the plural.">legendus</button>
+                    <button data-choice="b" data-fb="Right — legendae: feminine nominative plural, agreeing with epistulae, matching the plural sunt.">legendae</button>
+                    <button data-choice="c" data-fb="Legenda is neuter plural or feminine singular. Neither matches a feminine plural noun.">legenda</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- THIS WEEK'S WORK -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; YOUR GRADED WORK FOR MODULE 5</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Lūdus V &mdash; <em>Quid Faciendum Est?</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">75 seconds of gerund-versus-gerundive, agreement, voice, and the dative of agent. <strong>Best of unlimited attempts.</strong></div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 5 Quiz</strong> &middot; auto-graded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Formation and parsing, form production, obligation and the dative of agent, gerund-versus-gerundive, vocabulary and derivatives, and short translation from this passage.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 5 Translation</strong> &middot; read by your teacher</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five sentences into Latin, three out of Latin, every one built on a gerundive of obligation. Full vocabulary provided &mdash; you are being assessed on <em>forms and syntax</em>, not on memory.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 5 Reflection</strong> &middot; ungraded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tell your teacher what clicked and what did not, before the subjunctive arrives next week.</div>
+            </div>
+        </div>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; margin-top:14px; font-size:16px; color:#1a2340; line-height:1.6;">&#128196; <strong>M365 step for the translation.</strong> Write it in <strong>Microsoft Word</strong>. Put your Latin in <em>italics</em> (Ctrl+I) and leave your English in plain text. Save to <strong>OneDrive</strong> as <code>Lastname_Firstname_LatinAdv_M05_Translation.docx</code> and submit through Canvas. On one of your English-to-Latin sentences, add a Word <strong>Comment</strong> (Review &rarr; New Comment) naming the case of your agent and saying why it is not <em>ā/ab</em> + ablative.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT'S COMING</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M6</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 6 &mdash; The Subjunctive Arrives</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Every verb you have met for two years has been <em>indicative</em> &mdash; the mood of statement and fact. Next week you get a second mood, built for wishes, possibilities, doubts, and everything not-quite-yet. It is the largest single addition of the course, and it is the reason the readings can start sounding like Cicero rather than like a version of Cicero. The reading is the most famous opening in Roman oratory: <em>Quō ūsque tandem&hellip;?</em></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The gerundive of obligation is the grammar of duty. It states a task as something owed rather than something wanted, and the dative names whose it is. When Cicero says <em>mihi haec suscipienda sunt</em>, he is not volunteering &mdash; he is reading out a debt with his own name against it. That is <em>officium</em>, and this week you learned to write it.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.05 &middot; Cicero and the Duty to Act</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

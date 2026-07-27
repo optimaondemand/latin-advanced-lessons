@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 0.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.85; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #0E1C42; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 0</div>
+        <div style="font-size: 12px; color: #666;">Welcome &amp; Orientation</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 0.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Big Three, and Your First Sallust</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 0.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Big Three, and Your First Sallust</div>
+        <div style="font-size: 16px; color: #666;">Review Lesson &middot; Reading</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Three constructions do most of the heavy lifting in Roman prose.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Ablative absolute, indirect statement, relative clause. You already know all three. Today you refresh them side by side &mdash; and then meet them in the wild, in your first passage of adapted <strong>Sallust</strong>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell an ablative absolute apart from a participle that simply agrees with the subject.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> spot an indirect statement by its accusative subject and infinitive.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted passage of Sallust and name the constructions in it.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE BIG THREE, SIDE BY SIDE</div>
+
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 6px 0 6px 0;">1 &middot; Ablative absolute</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">A noun and a participle (or a second noun), both in the <strong>ablative</strong>, sitting outside the grammar of the main sentence. It sets the circumstances: <em>when</em>, <em>because</em>, <em>although</em>, or <em>after</em>.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerōne cōnsule, Catilīna coniūrātiōnem fēcit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"With Cicero as consul &mdash; <strong>when Cicero was consul</strong> &mdash; Catiline formed a conspiracy."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Two ablative nouns, no participle needed: Latin has no present participle of <em>esse</em>, so <em>Cicerōne cōnsule</em> does the job on its own.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The test that never fails.</strong> An ablative absolute is <em>absolute</em> &mdash; "loosened," standing free. Its noun is <strong>not</strong> the subject of the main verb and has no other job in the sentence. If the participle instead agrees with the subject in the <strong>nominative</strong>, it is not an ablative absolute at all: <em>senātōrēs perterritī audiēbant</em> = "the senators, frightened, listened." Same participle idea, different structure. You will be asked to tell these apart today.</div>
+
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">2 &middot; Indirect statement</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">After a verb of <strong>saying, thinking, knowing, or perceiving</strong>, Latin reports the content as <strong>accusative + infinitive</strong>. The infinitive's tense shows time <em>relative to</em> the main verb.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerō crēdidit Catilīnam esse perīculōsum.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Cicero believed <strong>that Catiline was dangerous</strong>."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Catilīnam</em> = accusative subject &middot; <em>esse</em> = present infinitive, so the danger is going on <em>at the same time</em> as the believing. English needs "that"; Latin needs no word for it at all.</div>
+        </div>
+
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">3 &middot; Relative clause</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;"><em>Quī, quae, quod</em> takes its <strong>gender and number from its antecedent</strong> but its <strong>case from its own job</strong> inside the relative clause. That split is the whole skill.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Senātor quem Cicerō laudāvit fortis erat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"The senator <strong>whom Cicero praised</strong> was brave."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Quem</em> is masculine singular because <em>senātor</em> is &mdash; but accusative because it is the object of <em>laudāvit</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 2 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; YOUR FIRST SALLUST</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Sallust, <em>Bellum Catilīnae</em> 1&ndash;2 and 5.</strong> This is a simplified retelling in Latin, not Sallust's own sentences &mdash; it keeps his ideas and his portrait of Catiline while staying inside the grammar you already know. Read it straight through once for the sense before you analyze anything.</p>
+        <div class="rd">
+            <p>Sallustius, historicus Rōmānus, dē bellō Catilīnae scrīpsit. In prīmō capitulō librī suī Sallustius dīxit <b>animum hominis esse summum</b>: "Hominēs," inquit, "mente, nōn corpore, clārī esse dēbent." Itaque Sallustius opus suum ad memoriam posteritātis scrīpsit.</p>
+            <p>Catilīna autem erat vir <b>magnae audāciae</b> sed <b>malī animī</b>. Multōs virōs dēspērātōs et perīculōsōs in ūnum locum convocāvit. Ille crēdidit <b>sē Rōmam capere posse</b> et rem pūblicam dēlēre.</p>
+            <p>Sed Cicerō, cōnsul Rōmānus <b>quī tum rem pūblicam regēbat</b>, omnia coniūrātiōnis cōnsilia cognōvit. Senātuī nūntiāvit <b>Catilīnam esse hostem reī pūblicae</b>. Tum senātōrēs, <b>verbīs Cicerōnis perterritī</b>, magnā cūrā audiēbant.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list</div>
+            <ul class="gl">
+                <li><em>historicus, historicī</em> m. &mdash; historian</li>
+                <li><em>capitulum, capitulī</em> n. &mdash; chapter, section</li>
+                <li><em>summus, -a, -um</em> &mdash; highest, greatest</li>
+                <li><em>mente</em> &mdash; abl. sg. of <em>mēns, mentis</em> f., mind &mdash; here ablative of means, "by the mind"</li>
+                <li><em>corpore</em> &mdash; abl. sg. of <em>corpus, corporis</em> n., body &mdash; ablative of means</li>
+                <li><em>clārus, -a, -um</em> &mdash; famous, distinguished</li>
+                <li><em>inquit</em> &mdash; "he says / he said" (a verb that appears only in a few forms; always inserted inside a quotation)</li>
+                <li><em>opus, operis</em> n. &mdash; work, literary work</li>
+                <li><em>posteritās, posteritātis</em> f. &mdash; posterity, future generations</li>
+                <li><em>audācia, audāciae</em> f. &mdash; boldness, audacity</li>
+                <li><em>dēspērātus, -a, -um</em> &mdash; desperate, without hope (PPP of <em>dēspērō</em>, used as an adjective)</li>
+                <li><em>convocō, convocāre, convocāvī, convocātum</em> &mdash; to call together, summon</li>
+                <li><em>rēs pūblica, reī pūblicae</em> f. &mdash; the republic, the state (two words, each declining: acc. <em>rem pūblicam</em>, gen. <em>reī pūblicae</em>)</li>
+                <li><em>dēleō, dēlēre, dēlēvī, dēlētum</em> &mdash; to destroy, wipe out</li>
+                <li><em>coniūrātiō, coniūrātiōnis</em> f. &mdash; conspiracy</li>
+                <li><em>perterritus, -a, -um</em> &mdash; thoroughly frightened (PPP of <em>perterreō</em>; <em>per-</em> = thoroughly)</li>
+                <li><em>cūra, cūrae</em> f. &mdash; care, attention, anxiety</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; NAME THE CONSTRUCTION</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Each phrase below is bold in the passage. What construction is it?</div>
+            <div class="widget-row" data-correct="b" data-hint="What kind of verb is dīxit, and what case is animum?">
+                <div class="widget-row-prompt"><em>Sallustius dīxit <strong>animum hominis esse summum</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="No ablatives here at all — animum is accusative and there is no participle.">Ablative absolute</button>
+                    <button data-choice="b" data-fb="Right — indirect statement: dīxit is a verb of saying, animum is the accusative subject, esse is the infinitive. 'Sallust said that the mind of a human being is the greatest thing.'">Indirect statement</button>
+                    <button data-choice="c" data-fb="A relative clause needs quī/quae/quod. There is no relative pronoun in this phrase.">Relative clause</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Whose boldness? Or is the boldness describing the man?">
+                <div class="widget-row-prompt"><em>Catilīna erat vir <strong>magnae audāciae</strong> sed <strong>malī animī</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dative of reference would be magnae audāciae in form — but the sense here is 'a man OF great boldness,' which is genitive. And malī animī can only be genitive.">Dative of reference</button>
+                    <button data-choice="b" data-fb="Close — it is genitive, but not possession. The boldness does not belong to the man the way a house does; it describes what sort of man he is.">Genitive of possession</button>
+                    <button data-choice="c" data-fb="Right — genitive of description: 'a man of great boldness but of an evil mind.' Sallust characterizes people this way constantly.">Genitive of description</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Reflexive sē plus two infinitives — what triggered them?">
+                <div class="widget-row-prompt"><em>Ille crēdidit <strong>sē Rōmam capere posse</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — indirect statement after crēdidit. Sē is the accusative subject (referring back to Catiline himself), posse is the infinitive, and capere is a further infinitive depending on posse: 'he believed that he was able to capture Rome.'">Indirect statement with reflexive subject</button>
+                    <button data-choice="b" data-fb="There is no ablative here, and no participle. Rōmam is accusative — the object of capere.">Ablative absolute</button>
+                    <button data-choice="c" data-fb="Purpose clauses use ut or nē with a subjunctive verb. You have not met the subjunctive yet — and there is none here.">Purpose clause</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="What case is quī, and what is it doing in its own clause?">
+                <div class="widget-row-prompt"><em>Cicerō, cōnsul Rōmānus <strong>quī tum rem pūblicam regēbat</strong>, cōnsilia cognōvit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not accusative — quem would be accusative. Quī is nominative, and it is doing the ruling, not receiving it.">Relative clause, <em>quī</em> accusative</button>
+                    <button data-choice="b" data-fb="Right — relative clause with quī nominative singular masculine: it agrees with cōnsul in gender and number, and it is nominative because it is the subject of regēbat.">Relative clause, <em>quī</em> nominative</button>
+                    <button data-choice="c" data-fb="Indirect statement needs an accusative subject and an infinitive. Regēbat is a finite indicative verb.">Indirect statement</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Careful. What case is perterritī, and who is it describing?">
+                <div class="widget-row-prompt"><em>Tum senātōrēs, <strong>verbīs Cicerōnis perterritī</strong>, magnā cūrā audiēbant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A tempting trap — there IS an ablative here (verbīs). But an ablative absolute needs its noun AND its participle in the ablative, and perterritī is not ablative.">Ablative absolute: "with the words having frightened them"</button>
+                    <button data-choice="b" data-fb="Not quite. Verbīs is ablative, but it is ablative of MEANS — the words are the instrument of the frightening, not an independent circumstance.">Ablative absolute: <em>verbīs</em> plus a participle</button>
+                    <button data-choice="c" data-fb="Right — perterritī is nominative plural masculine, agreeing with senātōrēs (the subject). It is a participle describing the subject, with verbīs as ablative of means: 'the senators, thoroughly frightened by Cicero's words, were listening.'">A PPP agreeing with the subject, plus ablative of means</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>That last one is the single most common error in advanced reading.</strong> Whenever you see an ablative near a participle, check the participle's own case first. Ablative participle plus ablative noun, unconnected to the subject &rarr; ablative absolute. Nominative participle agreeing with the subject &rarr; ordinary participial phrase. Get in the habit now; the subjunctive clauses coming later will pile on top of these.</div>
+    </div>
+
+    <!-- PART 4 - translate -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 4 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write out your English for each sentence <em>before</em> you flip the card. Use the gloss freely &mdash; that is what it is for.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Hominēs mente, nōn corpore, clārī esse dēbent.</em></div><div class="hint">click to compare</div><div class="back">"Human beings ought to be distinguished <strong>by the mind, not by the body</strong>." Both <em>mente</em> and <em>corpore</em> are ablatives of means; <em>clārī</em> is nominative plural agreeing with <em>hominēs</em>.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Multōs virōs dēspērātōs et perīculōsōs in ūnum locum convocāvit.</em></div><div class="hint">click to compare</div><div class="back">"He called together <strong>many desperate and dangerous men</strong> into one place." Three accusatives agreeing: <em>multōs virōs dēspērātōs</em>. <em>In</em> + accusative = motion into.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cicerō senātuī nūntiāvit Catilīnam esse hostem reī pūblicae.</em></div><div class="hint">click to compare</div><div class="back">"Cicero announced <strong>to the Senate</strong> that Catiline <strong>was an enemy of the republic</strong>." <em>Senātuī</em> dative; <em>Catilīnam esse hostem</em> indirect statement, with <em>hostem</em> accusative as the predicate noun; <em>reī pūblicae</em> genitive.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; WHO WAS SALLUST?</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;"><strong>Gāius Sallustius Crispus</strong> (about 86&ndash;35 BC) was a Roman senator before he was a historian, and not an especially admired one. He served under Julius Caesar, held the office of tribune of the plebs, and governed the province of Africa Nova &mdash; where he was accused of enriching himself. The charge never came to trial, but it stuck to his name.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">He then left politics and wrote history. He chose two subjects, and both are studies in failure: the conspiracy of Catiline, and Rome's war against the Numidian king Jugurtha. His argument in both is the same &mdash; that Rome's real crisis was moral, that <em>virtūs</em> had given way to <em>avāritia</em> (greed) and <em>ambitiō</em> (self-seeking ambition).</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;">His opening move, which you just read in adapted form, is a trap worth noticing. He says human greatness lives in the <em>animus</em>, the mind, not the body. That sounds noble. But if he is right, then the Roman ruling class of his own day &mdash; chasing money, villas, and offices &mdash; stands condemned by its own standard. Sallust is never only telling you about Catiline. Read him knowing that he had reasons of his own, and enemies of his own.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 0.05 &mdash; Ready for the Subjunctive</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A self-check across everything in this module, a first look at Cicero's most famous opening sentence, and your handoff to the Lūdus and the diagnostic quiz.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Before you translate a participle, <strong>find its case</strong>. Ablative with an ablative noun of its own means "under these circumstances." Nominative agreeing with the subject just describes the subject. One question, asked every time, and half of advanced Latin reading gets easier.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 0.04 &middot; The Big Three, and Your First Sallust</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

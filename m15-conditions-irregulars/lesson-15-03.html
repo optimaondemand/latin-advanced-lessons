@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 15.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 15</div>
+        <div style="font-size: 12px; color: #666;">Conditions &amp; Irregular Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 15.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">What Would Have Been</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 15.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">What Would Have Been</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; past contrary to fact &middot; <em>nisi</em> &middot; vocabulary</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Module 13 gave you a tense with no obvious use. Here is what it was for.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The <strong>pluperfect subjunctive</strong> &mdash; <em>fuisset</em>, <em>fēcisset</em>, <em>dēcrēvisset</em> &mdash; is the form Latin uses in <strong>both halves</strong> of a condition about the past that did not happen. &ldquo;If the Senate <em>had not</em> acted, the republic <em>would have</em> fallen.&rdquo; This one pattern is the grammar of nearly every argument about history, every regret, and every self-defence. Today you also get <em>nisi</em>, &ldquo;unless,&rdquo; which is how Latin makes a protasis negative, and this module's vocabulary &mdash; most of which is the vocabulary of that argument.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build a <strong>past contrary-to-fact</strong> condition with the pluperfect subjunctive in both halves, and translate it &ldquo;had&hellip;would have.&rdquo;</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> make a protasis negative with <strong><em>nisi</em></strong> and an apodosis negative with <strong><em>nōn</em></strong>, and say why they are different words.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use this module's twelve new words, and name the English descendants of five of them.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; TYPE 4: THE PLUPERFECT, IN BOTH HALVES</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><em>Sī</em> + <strong>pluperfect subjunctive</strong> &hellip; , &nbsp;<strong>pluperfect subjunctive</strong>.<br><span style="font-size:16px; color:#1a2340;">English: &ldquo;If X <strong>had</strong> happened, Y <strong>would have</strong> happened.&rdquo; &mdash; <em>and X did not happen</em>.</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">No new endings. From Lesson 13.02: <strong>perfect stem + <em>-issem, -issēs, -isset, -issēmus, -issētis, -issent</em></strong> &mdash; or, if you prefer, the perfect active infinitive plus <em>-m, -s, -t&hellip;</em> And the good news from that lesson still holds: nothing else in the Latin language ends in <em>-isset</em>, so this is the one completely unambiguous form in the module.</p>
+        <table class="para">
+            <tr><th style="width:22%">Verb</th><th style="width:26%">Perfect stem</th><th>Pluperfect subjunctive, 3 sg. / 3 pl.</th></tr>
+            <tr><td class="lab"><em>amō, amāre, amāvī</em></td><td><em>amāv-</em></td><td><em>amāvisset</em> &middot; <em>amāvissent</em></td></tr>
+            <tr><td class="lab"><em>moneō, monēre, monuī</em></td><td><em>monu-</em></td><td><em>monuisset</em> &middot; <em>monuissent</em></td></tr>
+            <tr><td class="lab"><em>regō, regere, rēxī</em></td><td><em>rēx-</em></td><td><em>rēxisset</em> &middot; <em>rēxissent</em></td></tr>
+            <tr><td class="lab"><em>capiō, capere, cēpī</em></td><td><em>cēp-</em></td><td><em>cēpisset</em> &middot; <em>cēpissent</em></td></tr>
+            <tr><td class="lab"><em>audiō, audīre, audīvī</em></td><td><em>audīv-</em></td><td><em>audīvisset</em> &middot; <em>audīvissent</em></td></tr>
+            <tr><td class="lab"><em>sum, esse, fuī</em></td><td><em>fu-</em></td><td class="end"><em>fuisset</em> &middot; <em>fuissent</em></td></tr>
+            <tr><td class="lab"><em>possum, posse, potuī</em></td><td><em>potu-</em></td><td><em>potuisset</em> &middot; <em>potuissent</em></td></tr>
+            <tr><td class="lab"><em>faciō, facere, fēcī</em></td><td><em>fēc-</em></td><td><em>fēcisset</em> &middot; <em>fēcissent</em></td></tr>
+            <tr><td class="lab"><em>sequor, sequī, secūtus sum</em> <span style="font-size:13px; color:#666;">(deponent)</span></td><td>PPP + <em>essem</em></td><td><em>secūtus esset</em> &middot; <em>secūtī essent</em></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 8px 0;">Now put two of them in one sentence, matched:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī Catilīna in urbe <strong>mānsisset</strong>, Cicerō eum <strong>accūsāvisset</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If Catiline had stayed in the city, Cicero would have accused him.&rdquo; <strong>Understood:</strong> he did not stay, and so Cicero did not accuse him &mdash; he left, and was declared an enemy of the state instead.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī coniūrātī <strong>tacuissent</strong>, nēmō cōnsilium <strong>invēnisset</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If the conspirators had kept quiet, no one would have discovered the plan.&rdquo; <strong>Understood:</strong> they did not keep quiet. Somebody talked &mdash; which is, in fact, how the conspiracy came apart.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī Lentulus <strong>fūgisset</strong>, in carcere <strong>nōn mortuus esset</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If Lentulus had fled, he would not have died in prison.&rdquo; Two things to notice: <em>mortuus esset</em> is the deponent <em>morior</em> (Module 2), PPP + <em>essem</em> as always; and the apodosis is made negative with plain <strong><em>nōn</em></strong>. Hold on to that &mdash; Part 3 is about the other half.</div>
+        </div>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#127881; <strong>The promise from Module 7 is now fully paid.</strong> Back then you were given a four-cell table with two cells greyed out and told to wait. Module 13 opened the grey cells. This lesson is the first construction in the course where the <em>pluperfect</em> subjunctive is not merely allowed but <strong>required</strong> &mdash; nothing else can express a past contrary to fact. Four tenses, four types of condition, one system.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; WHY ROMANS ARGUED IN THIS TENSE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A past contrary-to-fact condition is a claim about a world that does not exist. You cannot check it. There is no evidence anywhere for what <em>would have</em> happened, because it did not happen. And yet these sentences are not empty: some of them are well argued and some are nonsense, and telling the difference is most of what a historian does.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">This is why the type sits here in the course, three lessons before you read Cicero looking back at his own consulship. Every man in that story had a sentence of this shape to offer:</p>
+        <table class="para">
+            <tr><th style="width:50%">The claim, in Latin</th><th>Who is making it, and what it buys him</th></tr>
+            <tr><td class="lab"><em>Sī senātus tardius dēcrēvisset, urbs incēnsa esset.</em><br><span style="font-size:14px; color:#666;">&ldquo;If the Senate had decreed too late, the city would have been burned.&rdquo;</span></td><td>Cicero. It turns an emergency execution into a rescue, and nobody can prove otherwise.</td></tr>
+            <tr><td class="lab"><em>Nisi cōnsul tam celeriter ēgisset, quīnque cīvēs adhūc vīverent.</em><br><span style="font-size:14px; color:#666;">&ldquo;If the consul had not acted so quickly, five citizens would still be alive.&rdquo;</span></td><td class="end">His enemies. It turns the same rescue into a killing, and nobody can prove otherwise either.</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Look carefully at the second sentence, because it is not a plain type 4.</strong> The protasis is pluperfect subjunctive (<em>ēgisset</em>, about the past) but the apodosis is <strong>imperfect</strong> subjunctive (<em>vīverent</em>, about now) &mdash; &ldquo;they <em>would still be</em> alive,&rdquo; not &ldquo;they would have been.&rdquo; Real Latin authors <strong>mix</strong> the types when the thought requires it, and this is the commonest mix: a past cause with a present consequence. You are not asked to produce a mixed condition on the quiz or the translation. You are asked not to be surprised by one, because Lesson 15.05's reading contains one and the honest thing is to tell you now.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#128161; <strong>A reader's habit worth building.</strong> Whenever you meet a contrary-to-fact condition in an argument, ask the question the grammar cannot answer for you: <em>how would anybody know?</em> Sometimes there is a real answer &mdash; a letter, a troop movement, a confession. Sometimes the sentence is doing nothing but flattering the person who said it. Both kinds of sentence look exactly the same in Latin.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; <em>NISI</em>: HOW A PROTASIS GOES NEGATIVE</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><strong><em>nisi</em></strong> = &ldquo;<strong>unless</strong>&rdquo; = &ldquo;<strong>if&hellip;not</strong>&rdquo;<br><span style="font-size:16px; color:#1a2340;">It is one word doing the work of two: <em>nī</em> (an old negative) + <em>sī</em>.</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">The negatives in a conditional sentence divide up neatly, and this is the whole rule:</p>
+        <table class="para">
+            <tr><th style="width:26%">Which half</th><th style="width:24%">Negative word</th><th>Example</th></tr>
+            <tr><td class="lab">protasis &mdash; the <em>sī</em> half</td><td class="end"><em><strong>nisi</strong></em><br><span style="font-size:14px; color:#1a2340; font-weight:normal;">replaces <em>sī</em> altogether</span></td><td><em><strong>Nisi</strong> Cicerō vigilāvisset, coniūrātī urbem incendissent.</em><br><span style="font-size:14px; color:#666;">&ldquo;If Cicero had not been watchful, the conspirators would have set the city on fire.&rdquo;</span></td></tr>
+            <tr><td class="lab">apodosis &mdash; the main half</td><td class="end"><em><strong>nōn</strong></em><br><span style="font-size:14px; color:#1a2340; font-weight:normal;">the ordinary negative</span></td><td><em>Sī Lentulus fūgisset, in carcere <strong>nōn</strong> mortuus esset.</em><br><span style="font-size:14px; color:#666;">&ldquo;If Lentulus had fled, he would not have died in prison.&rdquo;</span></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Not <em>nē</em>.</strong> By now <em>nē</em> has done four jobs for you &mdash; negative purpose (m08), indirect command (m08), fear clause (m12), and negative jussive or wish (m14). It does <strong>not</strong> do this one. A conditional protasis never uses <em>nē</em>. If you see <em>nē</em>, you are not in a condition; if you are in a condition and want a negative, you want <em>nisi</em>.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 8px 0;"><em>Nisi</em> works with every condition type, indicative included:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Nisi hoc crēdis, errās.</em> &nbsp;&middot;&nbsp; <em>Nisi fallor, Catilīna iam abest.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Unless you believe this, you are wrong.&rdquo; &middot; &ldquo;Unless I am mistaken, Catiline is already gone.&rdquo; Both indicative, both plain factual conditions. The second is an everyday Latin phrase and a good one to own. <span style="color:#8a6416;">Gloss: <em>fallō, fallere, fefellī, falsum</em> &mdash; to deceive; <em>fallor</em> &mdash; I am mistaken; <em>absum, abesse, āfuī</em> &mdash; to be away, be absent.</span></div>
+        </div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;"><em>Nisi</em> or <em>sī nōn</em>?</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Latin has both, and they are not quite the same. The useful rule of thumb: <strong><em>nisi</em> sets aside the whole supposition</strong> &mdash; &ldquo;except in the case that&hellip;&rdquo; &mdash; while <strong><em>sī nōn</em> denies one particular word in it</strong>, usually because something else is being put in that word's place.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:18px; color:#0e1c42;"><em>Nisi Cicerō cōnsul fuisset, rēs pūblica cecidisset.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Unless Cicero had been consul, the republic would have fallen.&rdquo; The whole supposition is set aside: take away the Cicero-being-consul case and disaster follows.</div>
+            <div style="font-size:18px; color:#0e1c42; margin-top:12px;"><em>Sī Catilīna nōn Rōmae, sed in Etrūriā fuisset, aliter ēgissēmus.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If Catiline had been not at Rome but in Etruria, we would have acted differently.&rdquo; Here <em>nōn</em> is attached to one word, <em>Rōmae</em>, and <em>sed</em> supplies the replacement. <em>Nisi</em> would be wrong: nothing is being excepted.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>For your own writing, keep it simple:</strong> if the English says <em>unless</em>, or says <em>if&hellip;not</em> about the whole idea, write <em>nisi</em>. That will be right nearly every time, and the second pattern above is something to recognise rather than something you need to produce.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; THE PAST THAT DID NOT HAPPEN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five items. Two ask you to read, two to build, and one to spot an error.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Read the endings, then decide.</div>
+
+            <div class="widget-row" data-correct="c" data-hint="Both verbs end in -isset. Which tense is that, and which type of condition owns it?">
+                <div class="widget-row-prompt"><em>Sī senātus tardius dēcrēvisset, urbs incēnsa esset.</em> &mdash; what is this sentence claiming?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nothing here is in the indicative. Dēcrēvisset is pluperfect subjunctive (-isset), and incēnsa esset is the pluperfect subjunctive PASSIVE — PPP plus essem, exactly as Lesson 13.03 built it.">That the Senate did decree late, and the city burned</button>
+                    <button data-choice="b" data-fb="'Should decree… would be burned' is the future less vivid, which needs the PRESENT subjunctive: sī dēcernat… incendātur. This sentence is in the pluperfect and is about the past.">That if the Senate should decree late, the city would burn</button>
+                    <button data-choice="c" data-fb="Right — past contrary to fact. 'If the Senate had decreed too late, the city would have been burned' — and understood: it did not decree late, and the city was not burned. This is Cicero's whole defence in one sentence.">That the Senate did <em>not</em> decree late, so the city was <em>not</em> burned</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Which half is negative — the sī half or the main half?">
+                <div class="widget-row-prompt">Make the protasis negative: &ldquo;If Cicero had <strong>not</strong> been watchful, the conspirators would have set the city on fire.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. Nisi replaces sī and carries the negative by itself: Nisi Cicerō vigilāvisset, coniūrātī urbem incendissent. Both halves pluperfect subjunctive, matched.">
+                        <em>Nisi Cicerō vigilāvisset&hellip;</em></button>
+                    <button data-choice="b" data-fb="Nē never introduces a conditional protasis. It belongs to purpose, indirect command, fear clauses and negative wishes — four jobs, none of them this one.">
+                        <em>Nē Cicerō vigilāvisset&hellip;</em></button>
+                    <button data-choice="c" data-fb="Not wrong Latin, but not what a Roman would write here: sī nōn is for denying one particular word, usually with sed supplying a replacement. For a whole negative supposition, use nisi.">
+                        <em>Sī Cicerō nōn vigilāvisset&hellip;</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Compare the two verb endings. Are they the same tense?">
+                <div class="widget-row-prompt">A student writes: <em>Sī Catilīna mānsisset, Cicerō eum accūsāret.</em> What has gone wrong?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nisi would only be needed if the English said 'had not stayed'. The problem is in the second verb, not the first word.">The protasis should have used <em>nisi</em></button>
+                    <button data-choice="b" data-fb="Right — the halves do not match. Mānsisset is pluperfect subjunctive but accūsāret is imperfect. For a plain past contrary to fact you want accūsāvisset: 'would have accused'. As written, the sentence is a mixed condition meaning 'would now be accusing him', which may not be what the student meant.">The tenses do not match &mdash; <em>accūsāret</em> should be <em>accūsāvisset</em></button>
+                    <button data-choice="c" data-fb="Both verbs are subjunctive. The perfect indicative would be mānsit and accūsāvit; neither of those is here.">One of the verbs is indicative</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Which tense goes in BOTH halves for 'had… would have'?">
+                <div class="widget-row-prompt">Build it: &ldquo;If the conspirators had kept quiet, no one would have discovered the plan.&rdquo; &mdash; <em>Sī coniūrātī ____, nēmō cōnsilium ____.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Tacērent and invenīret are imperfect subjunctive: 'if they were keeping quiet (and they are not), nobody would be discovering the plan.' Present, not past.">
+                        <em>tacērent &hellip; invenīret</em></button>
+                    <button data-choice="b" data-fb="Tacuērunt and invēnit are perfect INDICATIVE, which would make this a plain factual condition about what did happen: 'if they kept quiet, nobody discovered the plan.' The English says 'would have' — that is not it.">
+                        <em>tacuērunt &hellip; invēnit</em></button>
+                    <button data-choice="c" data-fb="Right — tacuissent and invēnisset, pluperfect subjunctive in both halves. Perfect stems tacu- and invēn-, plus -issent and -isset.">
+                        <em>tacuissent &hellip; invēnisset</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Look at the two tenses separately: is each half about the past, or about now?">
+                <div class="widget-row-prompt"><em>Nisi cōnsul tam celeriter ēgisset, quīnque cīvēs adhūc vīverent.</em> &mdash; why are the two verbs in different tenses?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a mixed condition. The protasis is about the past (ēgisset, 'had not acted'), the apodosis about the present (vīverent, 'would still be alive' — note adhūc, 'still'). A past cause with a present consequence, and it is the commonest mix in real Latin.">The halves are about different times &mdash; a past cause, a present consequence</button>
+                    <button data-choice="b" data-fb="It is not an error. Cicero, Sallust and every other Latin author write conditions like this when the thought needs it; the matching rule is the default, not a law of physics.">It is a mistake &mdash; the halves must always match</button>
+                    <button data-choice="c" data-fb="Nisi has no effect at all on the tense of either verb. It only supplies the negative in the protasis; the tenses are chosen by what the writer means about time.">Because <em>nisi</em> requires an imperfect in the apodosis</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 5 &middot; THIS MODULE'S VOCABULARY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Twelve words. Notice what they have in common: almost all of them are words for <strong>weighing, deciding, saving and losing</strong>. That is not an accident &mdash; conditions are the grammar of argument, and this is the vocabulary Roman argument used.</p>
+        <table class="para">
+            <tr><th style="width:34%">Latin</th><th style="width:28%">English</th><th>Notes</th></tr>
+            <tr><td class="lab"><em>nisi</em> (conj.)</td><td>unless; if&hellip;not</td><td><em>nī</em> + <em>sī</em>. Also means &ldquo;except&rdquo;: <em>nihil nisi vēritās</em>, &ldquo;nothing except the truth.&rdquo;</td></tr>
+            <tr><td class="lab"><em>aliter</em> (adv.)</td><td>otherwise, in another way</td><td>From <em>alius</em>, &ldquo;other&rdquo; &mdash; the family that gives English <em>alias</em>, <em>alibi</em>, <em>alien</em>.</td></tr>
+            <tr><td class="lab"><em>profectō</em> (adv.)</td><td>assuredly, certainly</td><td>A word for the middle of an argument: &ldquo;then certainly&hellip;&rdquo; Often stands in the apodosis.</td></tr>
+            <tr><td class="lab"><em>dēcernō, dēcernere, dēcrēvī, dēcrētum</em></td><td>to decide, decree, vote</td><td>What a senate does. English <em>decree</em>, and <em>decretal</em>.</td></tr>
+            <tr><td class="lab"><em>incendō, incendere, incendī, incēnsum</em></td><td>to set on fire, burn</td><td>English <em>incendiary</em>; and <em>incense</em>, both the resin and the anger.</td></tr>
+            <tr><td class="lab"><em>ēvertō, ēvertere, ēvertī, ēversum</em></td><td>to overturn, destroy</td><td><em>ē-</em> + <em>vertō</em>, &ldquo;turn out.&rdquo; Same root as <em>convert</em>, <em>subvert</em>, <em>reverse</em>.</td></tr>
+            <tr><td class="lab"><em>cōnservō, cōnservāre, cōnservāvī, cōnservātum</em></td><td>to preserve, keep safe</td><td>English <em>conserve</em>, <em>conservation</em>. Cicero's favourite word for what he did.</td></tr>
+            <tr><td class="lab"><em>dētrīmentum, dētrīmentī</em> n.</td><td>harm, loss, damage</td><td class="end">The key word of the emergency decree of 63 BC &mdash; see Lesson 15.05. English <em>detriment</em>.</td></tr>
+            <tr><td class="lab"><em>auctōritās, auctōritātis</em> f.</td><td>authority, influence, prestige</td><td>From <em>auctor</em>. Not legal power (<em>potestās</em>) but the weight of a person's word.</td></tr>
+            <tr><td class="lab"><em>ratiō, ratiōnis</em> f.</td><td>reason, method, account</td><td>English <em>ratio</em>, <em>rational</em>, <em>reason</em> &mdash; three descendants of one word.</td></tr>
+            <tr><td class="lab"><em>incolumis, incolume</em></td><td>unharmed, safe</td><td>Third-declension adjective, two endings. No English descendant &mdash; some words leave none.</td></tr>
+            <tr><td class="lab"><em>gravitās, gravitātis</em> f.</td><td>weight, seriousness, dignity</td><td class="end">This module's virtue. From <em>gravis</em>; English <em>gravity</em> and <em>gravitas</em>.</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">Say the English before you click.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; DERIVATIVE MINUTE &middot; SAY IT FIRST, THEN CLICK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>dētrīmentum</em></div><div class="hint">harm, loss &middot; click</div><div class="back">English <strong>detriment</strong>. The Senate's emergency formula told the consuls to see that the republic <em>suffered no dētrīmentum</em> &mdash; deliberately vague about how.</div></div>
+                <div class="flip-card"><div class="front"><em>auctōritās</em></div><div class="hint">influence &middot; click</div><div class="back">English <strong>authority</strong>, <strong>author</strong>. A Roman with <em>auctōritās</em> was listened to; that is different from being obeyed, which is <em>potestās</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>ratiō</em></div><div class="hint">reason, method &middot; click</div><div class="back">English <strong>ratio</strong>, <strong>rational</strong>, and by a long French road <strong>reason</strong>. It can also mean an account-book: reasoning and accounting were one idea.</div></div>
+                <div class="flip-card"><div class="front"><em>incendō</em></div><div class="hint">to set on fire &middot; click</div><div class="back">English <strong>incendiary</strong>, <strong>incense</strong>. The conspirators' plan to fire the city is why this verb keeps appearing in Sallust and Cicero.</div></div>
+                <div class="flip-card"><div class="front"><em>ēvertō</em></div><div class="hint">to overturn &middot; click</div><div class="back">From <em>vertō</em>, &ldquo;turn&rdquo; &mdash; the family of <strong>convert</strong>, <strong>subvert</strong>, <strong>reverse</strong>, <strong>version</strong>. To <em>ēvertere</em> the republic is to turn it over.</div></div>
+                <div class="flip-card"><div class="front"><em>incolumis</em></div><div class="hint">unharmed &middot; click</div><div class="back">No English descendant at all, and that is the honest answer. Not every useful Latin word left children in English; <em>incolumis</em> is one of the ones that did not.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 15.04 &mdash; Six Verbs That Refuse to Behave</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">A change of subject, and the heaviest lesson of the module: <em>ferō, eō, volō, nōlō, mālō, fīō</em> &mdash; six of the commonest verbs in Latin, and six that do not fit any conjugation. Full paradigms, the traps, and the English words they left behind. Give it more than twenty minutes; it is meant to.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong><em>-isset&hellip;-isset</em></strong> is a past that did not happen. That is the whole of type 4, and the pluperfect subjunctive is unmistakable, so this is the easiest of the four types to recognise on the page and the hardest to argue about honestly. Negatives: <strong><em>nisi</em> in the protasis, <em>nōn</em> in the apodosis</strong>, and never <em>nē</em> in either.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 15.03 &middot; What Would Have Been</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

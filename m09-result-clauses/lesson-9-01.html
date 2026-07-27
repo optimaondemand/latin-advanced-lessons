@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 9.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 9</div>
+        <div style="font-size: 12px; color: #666;">Result Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 9.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">What Actually Happened</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 9.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">What Actually Happened</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:6px;">&#127881; YOU ARE THROUGH THE GATE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">Module 8 was a <strong>mastery gate</strong>, and you cleared it. That means you can already build the subjunctive in two tenses, pick the right one by sequence, and read a purpose clause without stopping to think. Good &mdash; because Module 9 takes that exact machinery and asks it to do a second job. There is almost nothing new to memorize this week. There is one new question to ask.</p>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two different sentences. Identical grammar.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><em>Catō surrēxit ut dīceret</em> means &ldquo;Cato stood up <strong>in order to</strong> speak.&rdquo; <em>Tam ācriter dīxit ut omnēs audīrent</em> means &ldquo;He spoke so fiercely <strong>that</strong> everyone listened.&rdquo; Same <em>ut</em>. Same imperfect subjunctive. Two completely different claims about the world &mdash; one about somebody's <strong>intention</strong>, the other about the <strong>outcome</strong>. Today you learn the second one: the <strong>result clause</strong>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what a result clause claims, and how that claim differs from a purpose clause.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> translate a positive result clause with &ldquo;so &hellip; that&rdquo; or &ldquo;with the result that.&rdquo;</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose the subjunctive tense in a result clause using the two-row sequence rule from Module 7.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE SHAPE IS ALREADY FAMILIAR</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is the entire construction, in one line:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0; text-align:center;">
+            <div style="font-size:23px; color:#0e1c42;"><em>ut</em> + subjunctive</div>
+            <div style="font-size:16px; color:#666; margin-top:6px;">&ldquo;that&hellip;&rdquo; &middot; &ldquo;so that&hellip;&rdquo; &middot; &ldquo;with the result that&hellip;&rdquo;</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">That is exactly what a purpose clause looks like. Latin has no separate word for &ldquo;result&rdquo; &mdash; it re-uses <em>ut</em> and expects the reader to work out which job the clause is doing. That sounds unfair. It is actually a gift, because it means <strong>you already know how to build one.</strong> Compare:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:6px;">PURPOSE &middot; MODULE 8</div>
+                <div style="font-size:19px; color:#0e1c42;"><em>Catō surrēxit <strong>ut dīceret</strong>.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;Cato stood up <strong>in order to speak</strong>.&rdquo;</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">What he was <em>trying to do</em>. Looks forward, out of his mind.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:6px;">RESULT &middot; THIS MODULE</div>
+                <div style="font-size:19px; color:#0e1c42;"><em>Tam ācriter dīxit <strong>ut omnēs audīrent</strong>.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;He spoke so fiercely <strong>that everyone listened</strong>.&rdquo;</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">What actually <em>followed</em>. Looks back, at the world.</div>
+            </div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why the subjunctive at all?</strong> In Module 6 you learned that the subjunctive is the mood of what is not simply asserted as bare fact. A result clause is one step away from bare fact as well: it does not merely report an event, it reports an event <em>as the consequence of something else</em>. Latin marks that dependence with the subjunctive &mdash; even though in English we translate it with an ordinary indicative: &ldquo;everyone listened.&rdquo;</div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Latin uses one word, <em>ut</em>, for two very different jobs. Before you read on: what do you expect will help you tell them apart?</div>
+            <div class="widget-options">
+                <button data-response="That is the professional answer, and it is the second of your two tests. Purpose is intended; result merely happened. You will practise it all week, and by Lesson 9.04 you will be doing it in a few seconds.">The meaning of the whole sentence</button>
+                <button data-response="Exactly right, and it is your first and fastest test. Latin usually plants a warning word — tam, tantus, tālis, tot, adeō, sīc, ita — in the main clause before a result clause arrives. Lesson 9.02 is nothing but those words.">Some clue earlier in the sentence</button>
+                <button data-response="Reasonable guess, but no — the verb forms are identical. Present and imperfect subjunctive serve in both constructions, chosen by exactly the same sequence rule. The difference is never in the ending, which is why this module is about reading rather than about new forms.">A different set of verb endings</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; WHAT A RESULT CLAUSE CLAIMS</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;">A <strong>result clause</strong> states the <strong>consequence</strong> of the main clause &mdash; what followed, whether or not anyone meant it to.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">English does this with <strong>&ldquo;so &hellip; that&rdquo;</strong> and <strong>&ldquo;such &hellip; that.&rdquo;</strong> You use it constantly:</p>
+        <ul style="font-size:17px; color:#1a2340; line-height:1.75; margin:0 0 12px 0;">
+            <li>The fear was <strong>so</strong> great <strong>that</strong> the senators fled.</li>
+            <li>Catiline was <strong>such</strong> a man <strong>that</strong> even his friends were afraid of him.</li>
+            <li>There were <strong>so many</strong> conspirators <strong>that</strong> nobody could count them.</li>
+        </ul>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Notice what those three have in common: a small intensifying word (<strong>so, such, so many</strong>) sits in the main clause and <em>leans forward</em>, promising a consequence. Latin does the same, and its intensifiers are tomorrow's whole lesson. Here are the three you meet most often:</p>
+        <table class="para">
+            <tr><th style="width:16%">Latin</th><th style="width:24%">Means</th><th>Example</th></tr>
+            <tr><td class="lab"><em>tam</em></td><td>so <span style="font-size:13px; color:#666;">(with an adjective or adverb)</span></td><td><em>Catilīna <strong>tam</strong> callidus erat ut omnēs eum timērent.</em><br><span style="font-size:15px; color:#666;">&ldquo;Catiline was so clever that everyone feared him.&rdquo;</span></td></tr>
+            <tr><td class="lab"><em>tantus, -a, -um</em></td><td>so great, so much <span style="font-size:13px; color:#666;">(with a noun)</span></td><td><em><strong>Tantus</strong> erat timor ut multī ex urbe fugerent.</em><br><span style="font-size:15px; color:#666;">&ldquo;The fear was so great that many fled from the city.&rdquo;</span></td></tr>
+            <tr><td class="lab"><em>adeō</em></td><td>to such a degree, so much <span style="font-size:13px; color:#666;">(with a verb)</span></td><td><em><strong>Adeō</strong> timēbant ut nēmō loquerētur.</em><br><span style="font-size:15px; color:#666;">&ldquo;They were afraid to such a degree that no one spoke.&rdquo;</span></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>How to put it into English.</strong> Any of these will do, and you should choose whichever sounds least awkward: <strong>&ldquo;so &hellip; that&rdquo;</strong> (<em>tam ācriter dīxit ut omnēs audīrent</em> &rarr; &ldquo;he spoke so fiercely that everyone listened&rdquo;), <strong>&ldquo;with the result that&rdquo;</strong> (&ldquo;he spoke fiercely, with the result that everyone listened&rdquo;), or a plain <strong>&ldquo;that&rdquo;</strong> after an English intensifier. What you must <em>never</em> write is &ldquo;in order that&rdquo; &mdash; that is purpose, and it is a different claim about the world.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; SEQUENCE: NOTHING NEW</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The tense of the subjunctive is chosen exactly as in Module 7. Look at the <strong>main</strong> verb and use the two rows:</p>
+        <table class="para">
+            <tr><th style="width:40%">Main verb is&hellip;</th><th style="width:22%">Sequence</th><th>Subjunctive in the <em>ut</em> clause</th></tr>
+            <tr><td class="lab">present or future</td><td>primary</td><td class="end">present subjunctive</td></tr>
+            <tr><td class="lab">any past tense <span style="font-size:13px; color:#666;">(imperfect, perfect, pluperfect)</span></td><td>secondary</td><td class="end">imperfect subjunctive</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">Watch one sentence move from present into the past. <strong>Only the endings change; the construction does not.</strong></p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerō tam clārē <strong>dīcit</strong> ut omnēs cīvēs <strong>audiant</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Cicero speaks so clearly that all the citizens hear him.&rdquo;</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Dīcit</em> is present &rarr; primary sequence &rarr; <em>audiant</em>, present subjunctive of <em>audiō</em>.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerō tam clārē <strong>dīxit</strong> ut omnēs cīvēs <strong>audīrent</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Cicero spoke so clearly that all the citizens heard him.&rdquo;</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Dīxit</em> is perfect &rarr; secondary sequence &rarr; <em>audīrent</em>, imperfect subjunctive: present infinitive <em>audīre</em> plus the personal endings.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Tantus <strong>erat</strong> timor ut multī senātōrēs ex urbe <strong>fugerent</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;The fear was so great that many senators fled from the city.&rdquo;</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Erat</em> is imperfect &rarr; secondary &rarr; <em>fugerent</em>, from the infinitive <em>fugere</em>. Note <em>tantus</em> agreeing with <em>timor</em> &mdash; masculine nominative singular.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>One honest footnote, then put it away.</strong> Because a result genuinely happened, Latin authors sometimes bend the sequence rule in a result clause to stress that the outcome was <em>completed</em> &mdash; using a subjunctive tense you meet in <strong>Module 13</strong>. You will not see it in this module, and nothing you are asked to write needs it. Every result clause in Module 9 follows the two rows above.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; FIRST PASS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four questions. Read the whole Latin sentence before you choose.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Positive result clauses, sequence, and translation.</div>
+            <div class="widget-row" data-correct="b" data-hint="What does tam do to the sentence that follows it?">
+                <div class="widget-row-prompt"><em>Catō tam ācriter locūtus est ut omnēs senātōrēs audīrent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="&quot;In order that&quot; is purpose — it claims Cato was aiming at being listened to. But tam announces a consequence: the listening is what followed, not what he intended.">Cato spoke fiercely in order that all the senators might listen</button>
+                    <button data-choice="b" data-fb="Right. Tam ācriter, &quot;so fiercely,&quot; is the signpost, and the ut clause reports what followed. Locūtus est is perfect, so the subjunctive is imperfect: audīrent.">Cato spoke so fiercely that all the senators listened</button>
+                    <button data-choice="c" data-fb="Audīrent cannot mean &quot;were heard&quot; — that would be the passive audīrentur. Here the senators are the ones doing the listening.">Cato spoke so fiercely that all the senators were heard</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Check the tense of the main verb first, then pick the sequence row.">
+                <div class="widget-row-prompt">Complete it: <em>Cicerō tam clārē dīcit ut omnēs ____.</em> (&ldquo;&hellip;that everyone hears&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Audiēbant is imperfect indicative, not subjunctive at all. A result clause always takes the subjunctive.">audiēbant</button>
+                    <button data-choice="b" data-fb="Audīrent is imperfect subjunctive, which belongs with a PAST main verb. Dīcit is present, so you need primary sequence.">audīrent</button>
+                    <button data-choice="c" data-fb="Right — dīcit is present, so primary sequence, so the present subjunctive audiant.">audiant</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which word in the main clause is leaning forward, promising a consequence?">
+                <div class="widget-row-prompt">In <em>Tantus erat timor ut multī fugerent</em>, which word warns you that a result clause is coming?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — tantus, &quot;so great.&quot; A signpost like this in the main clause is the fastest single clue that the ut ahead is result, not purpose.">tantus</button>
+                    <button data-choice="b" data-fb="Erat is just the main verb. It tells you the sequence — past, so imperfect subjunctive — but says nothing about which kind of clause follows.">erat</button>
+                    <button data-choice="c" data-fb="Multī simply means &quot;many&quot; and is the subject inside the ut clause. It carries no warning.">multī</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Ask of each one: did somebody plan this, or did it just follow?">
+                <div class="widget-row-prompt">Which sentence reports an <strong>intention</strong> rather than an <strong>outcome</strong>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Adeō, &quot;to such a degree,&quot; makes this an outcome: they were so afraid that, as a consequence, no one spoke.">Adeō timēbant ut nēmō loquerētur.</button>
+                    <button data-choice="b" data-fb="Tālis, &quot;such a man,&quot; makes this an outcome too: being feared is what followed from the kind of man he was.">Catilīna tālis vir erat ut omnēs eum timērent.</button>
+                    <button data-choice="c" data-fb="Right — no signpost anywhere, and the sense is plainly &quot;in order to&quot;: Cato stood up because he wanted to speak. Purpose clause, Module 8.">Catō surrēxit ut dīceret.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> a Roman senate meeting &mdash; benches facing each other, one man on his feet, the rest listening or shouting him down. This is the room Module 9's reading takes place in. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things in the scene &mdash; for example <em>senātor</em> (&ldquo;senator&rdquo;), <em>senātōrēs</em> (&ldquo;senators&rdquo;), <em>sella</em> (&ldquo;chair&rdquo;), <em>ōrātiō</em> (&ldquo;speech&rdquo;), <em>vir loquēns</em> (&ldquo;the man speaking&rdquo;), <em>magna dissēnsiō</em> (&ldquo;great disagreement&rdquo;). <span style="color:#666;">[ARTHUR: labelling steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write one Latin sentence</strong> about the scene containing a <strong>result clause</strong>, with a signpost word in the main clause. Model: <em>Tanta erat dissēnsiō ut senātōrēs clāmārent.</em> &mdash; &ldquo;The disagreement was so great that the senators shouted.&rdquo; <span style="color:#666;">[ARTHUR: where to save or submit the written line]</span> This session is <strong>formative and ungraded</strong>: the graded ARTHUR project was Module 8, and the next one comes at Module 16.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; VĒRITĀS &middot; HONESTY</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Vēritās, vēritātis</em> f. is truth &mdash; and for Romans it named truthfulness as a <em>habit</em>, not accuracy on one occasion. This module's grammar rests on it. A purpose clause reports what someone <strong>wanted</strong>. A result clause reports what <strong>followed</strong>, and it does not care whether anybody wanted it. When Sallust writes <em>ita &hellip; ut</em>, he is making a claim of fact: this really did come out of that.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">The distinction is worth having in your own speech. &ldquo;I was trying to help&rdquo; is a purpose clause. &ldquo;It came out so badly that nobody spoke to me for a week&rdquo; is a result clause. Both can be true at once, and an honest account gives you both. Blurring them is how people talk their way out of consequences &mdash; and it is also, this week, how students lose marks.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 9.02 &mdash; The Signposts</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The words that announce a result clause before it arrives &mdash; <em>tam, tantus, tālis, tot, adeō, sīc/ita</em> &mdash; plus the trap that catches almost everyone: which of them decline, and which never change at all.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A result clause is <em>ut</em> + subjunctive meaning <strong>&ldquo;with the result that&rdquo;</strong> &mdash; the same machinery as a purpose clause, doing the opposite job. Purpose looks forward out of somebody's mind; result looks back at what the world actually did.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 9.01 &middot; What Actually Happened</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

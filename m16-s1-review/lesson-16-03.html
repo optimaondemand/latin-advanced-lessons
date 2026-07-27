@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 16.03</title>
+<!-- Module 16 is a review module: NO new grammar. This lesson consolidates the whole subjunctive system (m06-m15). -->
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step-n { min-width: 34px; height: 34px; border-radius: 8px; background: #0E1C42; color: #fff; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-b { font-size: 17px; color: #1a2340; line-height: 1.6; }
+    .step-b strong { color: #0e1c42; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 16</div>
+        <div style="font-size: 12px; color: #666;">Semester 1 Review</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 16.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Subjunctive, Whole</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 16.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Subjunctive, Whole</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You have never seen the whole system on one page. Nobody has shown it to you, because until Module 15 it was not finished.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Ten modules built the subjunctive one piece at a time: two tenses, then a sequence rule, then a purpose clause, then result, <em>cum</em>, questions, fear, then two more tenses, then main-clause uses, then conditions. Today it goes on one page in five tables: <strong>the four tenses</strong>, <strong>the sequence grid</strong>, <strong>the five subordinate constructions</strong>, <strong>the four main-clause uses</strong>, and <strong>the four conditions</strong>. Nothing here is new. Everything here is examinable.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build any of the four subjunctive tenses, active or passive, from the principal parts alone.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose the right subjunctive tense from the sequence grid, given a main verb and a time relationship.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the five subordinate constructions, the four main-clause uses, and the four kinds of condition, with the signal word for each.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE FOUR TENSES, BUILT FROM THE PRINCIPAL PARTS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every subjunctive form in Latin comes out of a principal part plus a marker. Here is the whole active system:</p>
+        <table class="para">
+            <tr><th style="width:16%">Tense</th><th style="width:30%">Recipe</th><th>3rd singular, four specimen verbs</th></tr>
+            <tr><td class="lab"><strong>Present</strong><br><span style="font-size:13px;color:#666;">m06</span></td><td>stem + marker: <strong>-e-</strong> (1st), <strong>-ea-</strong> (2nd), <strong>-a-</strong> (3rd), <strong>-ia-</strong> (3rd io &amp; 4th)</td><td class="end"><em>amet</em> &middot; <em>moneat</em> &middot; <em>regat</em> &middot; <em>audiat</em></td></tr>
+            <tr><td class="lab"><strong>Imperfect</strong><br><span style="font-size:13px;color:#666;">m06</span></td><td>the <strong>present infinitive</strong>, whole, + <strong>-m, -s, -t, -mus, -tis, -nt</strong></td><td class="end"><em>amāret</em> &middot; <em>monēret</em> &middot; <em>regeret</em> &middot; <em>audīret</em></td></tr>
+            <tr><td class="lab"><strong>Perfect</strong><br><span style="font-size:13px;color:#666;">m13</span></td><td><strong>perfect stem</strong> + <strong>-erim, -erīs, -erit, -erīmus, -erītis, -erint</strong></td><td class="end"><em>amāverit</em> &middot; <em>monuerit</em> &middot; <em>rēxerit</em> &middot; <em>audīverit</em></td></tr>
+            <tr><td class="lab"><strong>Pluperfect</strong><br><span style="font-size:13px;color:#666;">m13</span></td><td><strong>perfect stem</strong> + <strong>-issem, -issēs, -isset, -issēmus, -issētis, -issent</strong></td><td class="end"><em>amāvisset</em> &middot; <em>monuisset</em> &middot; <em>rēxisset</em> &middot; <em>audīvisset</em></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 8px 0;">And the passive, which behaves exactly like the indicative passive did in 16.02 &mdash; two tenses in one word, two tenses in two words. Deponents use the passive column and mean it actively:</p>
+        <table class="para">
+            <tr><th style="width:16%">Tense</th><th style="width:30%">Passive</th><th>Deponent (active meaning)</th></tr>
+            <tr><td class="lab"><strong>Present</strong></td><td>one word: <em>regātur</em> &mdash; he may be ruled</td><td class="end"><em>loquātur</em> &mdash; he may speak</td></tr>
+            <tr><td class="lab"><strong>Imperfect</strong></td><td>one word: <em>regerētur</em></td><td class="end"><em>loquerētur</em></td></tr>
+            <tr><td class="lab"><strong>Perfect</strong></td><td><strong>two</strong> words: PPP + <em>sim, sīs, sit&hellip;</em> &mdash; <em>rectum sit</em></td><td class="end"><em>locūtus sit</em> &mdash; he has spoken</td></tr>
+            <tr><td class="lab"><strong>Pluperfect</strong></td><td><strong>two</strong> words: PPP + <em>essem, essēs, esset&hellip;</em> &mdash; <em>rectum esset</em></td><td class="end"><em>locūtus esset</em> &mdash; he had spoken</td></tr>
+            <tr><td class="lab"><em><strong>sum</strong></em></td><td colspan="2" style="background:#EEF1F8;">present <em>sim, sīs, sit, sīmus, sītis, sint</em> &middot; imperfect <em>essem&hellip;</em> &middot; perfect <em>fuerim&hellip;</em> &middot; pluperfect <em>fuissem&hellip;</em> &mdash; the commonest subjunctives in Latin. Say all four aloud.</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The collision Module 13 warned you about, and it has not gone away.</strong> <em>Rēxerit</em> is the 3rd singular <strong>perfect subjunctive</strong> and also the 3rd singular <strong>future perfect indicative</strong>. Identical spelling, two different moods. There is no ending that separates them, so nothing about the word will help you &mdash; only its <strong>clause</strong> will. If it sits after <em>ut</em>, <em>nē</em>, <em>cum</em>, a question word or a verb of fearing, it is subjunctive. If it is the main verb of its own sentence, it is future perfect indicative. Mood is decided by position, not by spelling.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE SEQUENCE GRID &mdash; FOUR BOXES, AND THAT IS ALL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Module 7 gave you two rows and left two boxes grey because you did not own the perfect and pluperfect subjunctive yet. Module 13 filled them in. This is the finished grid, and it answers every &ldquo;which tense?&rdquo; question in the entire course:</p>
+        <table class="para">
+            <tr><th style="width:26%">Main verb is&hellip;</th><th style="width:37%">Clause happens at the <strong>same time</strong> (or later)</th><th>Clause was <strong>already finished</strong></th></tr>
+            <tr><td class="lab"><strong>PRIMARY</strong><br>present &middot; future &middot; future perfect<br><span style="font-size:14px;color:#666;"><em>rogat, rogābit, nescit</em></span></td><td class="end">PRESENT subjunctive<br><span style="font-size:14px;color:#1a2340;font-weight:normal;"><em>Rogat quid faciat.</em> &mdash; He asks what he is doing.</span></td><td class="end">PERFECT subjunctive<br><span style="font-size:14px;color:#1a2340;font-weight:normal;"><em>Rogat quid fēcerit.</em> &mdash; He asks what he did.</span></td></tr>
+            <tr><td class="lab"><strong>SECONDARY</strong><br>imperfect &middot; perfect &middot; pluperfect<br><span style="font-size:14px;color:#666;"><em>rogābat, rogāvit, rogāverat</em></span></td><td class="end">IMPERFECT subjunctive<br><span style="font-size:14px;color:#1a2340;font-weight:normal;"><em>Rogāvit quid faceret.</em> &mdash; He asked what he was doing.</span></td><td class="end">PLUPERFECT subjunctive<br><span style="font-size:14px;color:#1a2340;font-weight:normal;"><em>Rogāvit quid fēcisset.</em> &mdash; He asked what he had done.</span></td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;">Read the grid in this order, always: <strong>which row does my main verb put me in? Then which column does the meaning put me in?</strong> Row first, column second. Row is mechanical &mdash; you read the main verb off the page. Column asks one question about meaning: has the clause's action already happened, or not?</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The one row-error everybody makes at least once.</strong> <strong>Future is primary.</strong> <em>Cognōscet quot coniūrātī maneant</em> &mdash; a future main verb takes the <em>present</em> subjunctive, not the imperfect. Students reason that a future main verb must want something other than the present, and there is no other row for it to go in. Two rows, and future sits in the first one.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Where the grid does not apply.</strong> Sequence governs subjunctives in <em>subordinate</em> clauses. It has nothing to say about the four main-clause uses in Part 4 &mdash; a jussive or an optative has no main verb above it to be sequenced against, so it chooses its tense by <em>meaning</em> instead. And conditions (Part 5) choose their tenses by <em>type</em>. So: five constructions use the grid, and everything else does not. Knowing which is which is half of tomorrow's lesson.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE FIVE SUBORDINATE CONSTRUCTIONS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Five constructions, each with a signal you can read off the page and a negative you have to know. All five obey the sequence grid.</p>
+        <table class="para">
+            <tr><th style="width:15%">Construction</th><th style="width:24%">The signal</th><th style="width:16%">Its negative</th><th>Example, and what the clause is doing</th></tr>
+            <tr><td class="lab"><strong>Purpose</strong><br><span style="font-size:13px;color:#666;">m08</span></td><td><em>ut</em> &mdash; and <strong>no signpost word</strong> in the main clause</td><td class="end"><em>nē</em><br><span style="font-size:14px;color:#AA1E2D;font-weight:normal;">never <em>ut nōn</em></span></td><td><em>Cicerō vēnit ut populus audīret.</em> &mdash; answers &ldquo;why?&rdquo; Something intended, whether or not it happened.</td></tr>
+            <tr><td class="lab"><strong>Indirect command</strong><br><span style="font-size:13px;color:#666;">m08</span></td><td>a verb of ordering, urging or asking + <em>ut</em></td><td class="end"><em>nē</em></td><td><em>Senātōribus imperāvit ut cōnstituerent.</em> &mdash; <em>imperō</em> and <em>persuādeō</em> put the person in the <strong>dative</strong>; <em>moneō, rogō, ōrō</em> in the accusative; <em>iubeō</em> takes accusative + <strong>infinitive</strong> and no <em>ut</em> at all.</td></tr>
+            <tr><td class="lab"><strong>Result</strong><br><span style="font-size:13px;color:#666;">m09</span></td><td><em>ut</em> &mdash; and a <strong>signpost</strong> in the main clause: <em>tam, tantus, tālis, tot, adeō</em></td><td class="end"><em>ut nōn</em><br><span style="font-size:14px;color:#AA1E2D;font-weight:normal;">never <em>nē</em></span></td><td><em>Tanta erat audācia ut nēmō tacēret.</em> &mdash; states what <strong>actually followed</strong>. The signpost is the difference from purpose.</td></tr>
+            <tr><td class="lab"><em><strong>Cum</strong></em> <strong>clause</strong><br><span style="font-size:13px;color:#666;">m10</span></td><td><em>cum</em> + a subjunctive verb inside the group</td><td class="end"><em>nōn</em> inside the clause</td><td>Three meanings: temporal &ldquo;when,&rdquo; causal &ldquo;since,&rdquo; concessive &ldquo;although.&rdquo; <em>Tamen</em> in the main clause marks the concessive. <em>Cum</em> + <strong>indicative</strong> is plain &ldquo;when&rdquo; and nothing more.</td></tr>
+            <tr><td class="lab"><strong>Indirect question</strong><br><span style="font-size:13px;color:#666;">m11</span></td><td>a verb of asking, knowing or not knowing + a <strong>question word</strong>: <em>quis, quid, cūr, ubi, quandō, quōmodo, quot, quantus, uter</em>&hellip; or <em>num / -ne</em> (whether), <em>utrum&hellip;an</em>, <em>necne</em></td><td class="end"><em>nōn</em> inside the clause</td><td><em>Rogāvit utrum lēnitās an sevēritās ūtilis esset.</em> &mdash; reports a question. No antecedent, unlike a relative clause.</td></tr>
+            <tr><td class="lab"><strong>Fear clause</strong><br><span style="font-size:13px;color:#666;">m12</span></td><td>a verb of fearing &mdash; <em>timeō, vereor, metuō</em>, or the noun phrase <em>metus est</em> &mdash; + <em>nē</em></td><td class="end"><em>nē nōn</em><br><span style="font-size:14px;color:#1a2340;font-weight:normal;">(rarely <em>ut</em>)</span></td><td><em>Timēbat nē urbem incenderent.</em> &mdash; &ldquo;that they <strong>would</strong> burn it.&rdquo; <strong>Nē turns around here.</strong> <em>Nē nōn veniat</em> = &ldquo;afraid that he will <em>not</em> come.&rdquo;</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>And the sixth thing on this list, which has no subjunctive at all.</strong> <strong>Indirect statement</strong> &mdash; accusative + infinitive, from 0706010 &mdash; reports without a subjunctive: <em>Dīxit Catilīnam in urbe esse</em>. It belongs beside these five because it does the same job (reporting) and because after a semester of subjunctives students start reading one into it. When you meet a reported sentence, the very first question is: <em>is there a subjunctive here at all?</em></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE FOUR MAIN-CLAUSE USES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Module 14's whole point: sometimes the subjunctive <em>is</em> the main verb, with no subordinating word in front of it. Four uses, and the person of the verb usually tells you which:</p>
+        <table class="para">
+            <tr><th style="width:16%">Use</th><th style="width:20%">Signature</th><th style="width:18%">Negative</th><th>Example and translation</th></tr>
+            <tr><td class="lab"><strong>Jussive</strong></td><td><strong>3rd person</strong>, no subordinating word</td><td class="end"><em>nē</em></td><td><em>Veniat.</em> &mdash; &ldquo;Let him come.&rdquo; &nbsp;<em>Nē veniat.</em> &mdash; &ldquo;Let him not come.&rdquo;</td></tr>
+            <tr><td class="lab"><strong>Hortatory</strong></td><td><strong>1st person plural</strong></td><td class="end"><em>nē</em></td><td><em>Faciāmus quod officium poscit.</em> &mdash; &ldquo;Let us do what duty demands.&rdquo; &nbsp;<em>Nē cūnctēmur.</em> &mdash; &ldquo;Let us not hesitate.&rdquo;</td></tr>
+            <tr><td class="lab"><strong>Optative</strong></td><td><em><strong>utinam</strong></em> &mdash; the one word that gives it away</td><td class="end"><em>utinam nē</em></td><td>Tense carries the meaning: <em>utinam veniat</em> &mdash; &ldquo;I wish he may come&rdquo; (still possible); <em>utinam venīret</em> &mdash; &ldquo;I wish he were coming&rdquo; (he is not); <em>utinam vēnisset</em> &mdash; &ldquo;I wish he had come&rdquo; (he did not).</td></tr>
+            <tr><td class="lab"><strong>Deliberative</strong></td><td>a <strong>question</strong>, usually 1st person</td><td class="end"><em>nōn</em></td><td><em>Quid faciam?</em> &mdash; &ldquo;What am I to do?&rdquo; &nbsp;<em>Quō mē vertam?</em> &mdash; &ldquo;Where am I to turn?&rdquo; Not asking for information; asking what is <em>to be done</em>.</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;"><strong>Three of the four take <em>nē</em>. The fourth takes <em>nōn</em>.</strong> Jussive, hortatory and optative negate with <strong><em>nē</em></strong> &mdash; that is <em>nē</em>'s fourth job. The <strong>deliberative question negates with <em>nōn</em></strong>: <em>An ego nōn venīrem?</em> &mdash; &ldquo;Was I not to come?&rdquo;</div>
+            <div style="font-size:17px; color:#1a2340; line-height:1.6; margin-top:8px;">And there is a reason, not just a list to memorise. <em>Nē</em> negates a <strong>willed</strong> action &mdash; something somebody wants to happen, or wants not to happen. A jussive, a hortatory and a wish are all willed: <em>let him not come</em>, <em>let us not hesitate</em>, <em>if only he had not come</em>. A deliberative question wills nothing; it is <em>asking</em>. There is no wish inside it for <em>nē</em> to negate, so it uses the ordinary negative like any other question.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Two honest ambiguities in this table.</strong> (1) <em>Quid faciam?</em> is spelled identically to the future indicative &ldquo;what shall I do?&rdquo; &mdash; and in a question the two readings are very close in sense, which is probably how the deliberative arose in the first place. Do not agonise over it. (2) The 3rd-person jussive and a bare purpose clause with the <em>ut</em> omitted can look alike in a long sentence. The test is whether anything subordinates the verb: no <em>ut</em>, no <em>nē</em>, no <em>cum</em>, no question word, and a main clause of its own &rarr; main-clause use.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 5 &middot; THE FOUR CONDITIONS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A condition has two halves and Module 15 named them: the <strong>protasis</strong> is the <em>sī</em> clause, the <strong>apodosis</strong> is the main clause. <em>Nisi</em> means &ldquo;unless, if&hellip; not.&rdquo; What decides the type is not the meaning of the words but <strong>the mood and tense in the two halves</strong>, and in the three subjunctive types <em>both halves use the same tense</em> &mdash; which makes them the easiest thing in the semester to identify:</p>
+        <table class="para">
+            <tr><th style="width:20%">Type</th><th style="width:26%">Both halves use</th><th>Example and translation</th></tr>
+            <tr><td class="lab"><strong>Simple / factual</strong><br><span style="font-size:13px;color:#666;">0706010, reviewed in m15</span></td><td class="end">the <strong>INDICATIVE</strong></td><td><em>Sī hoc dīcis, errās.</em> &mdash; &ldquo;If you say this, you are wrong.&rdquo; No claim about likelihood at all; the speaker just lays out a case.</td></tr>
+            <tr><td class="lab"><strong>Future less vivid</strong><br><span style="font-size:13px;color:#666;">m15</span></td><td class="end"><strong>PRESENT</strong> subjunctive</td><td><em>Sī hoc dīcās, errēs.</em> &mdash; &ldquo;Should you say this, you would be wrong.&rdquo; Possible, but held at arm's length.</td></tr>
+            <tr><td class="lab"><strong>Contrary to fact,<br>present</strong><br><span style="font-size:13px;color:#666;">m15</span></td><td class="end"><strong>IMPERFECT</strong> subjunctive</td><td><em>Sī hoc dīcerēs, errārēs.</em> &mdash; &ldquo;If you were saying this, you would be wrong.&rdquo; You are not saying it. The grammar says so.</td></tr>
+            <tr><td class="lab"><strong>Contrary to fact,<br>past</strong><br><span style="font-size:13px;color:#666;">m15 + m13</span></td><td class="end"><strong>PLUPERFECT</strong> subjunctive</td><td><em>Sī hoc dīxissēs, errāvissēs.</em> &mdash; &ldquo;If you had said this, you would have been wrong.&rdquo; You did not say it, and the sentence tells you that without saying it.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why the past contrary-to-fact matters more than the others.</strong> It is the grammar of counterfactual history, and it is the one construction that lets you say something about the past that you know did not happen: <em>Sī Catilīna hanc vim animī reī pūblicae dedisset, magnam glōriam adeptus esset.</em> Historians live in that sentence shape. It is also the construction your ARTHUR Project asks you to write, so it is worth being fluent in by Friday: <strong>pluperfect subjunctive in both halves, and nothing else.</strong></div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>And the irregular verbs, which are vocabulary as much as paradigm.</strong> Module 15's six show up in conditions constantly, so keep their subjunctives to hand: <em>ferō</em> &rarr; <em>feram / ferrem</em> &middot; <em>eō</em> &rarr; <em>eam / īrem</em> &middot; <em>volō</em> &rarr; <em>velim / vellem</em> &middot; <em>nōlō</em> &rarr; <em>nōlim / nōllem</em> &middot; <em>mālō</em> &rarr; <em>mālim / māllem</em> &middot; <em>fīō</em> &rarr; <em>fīam / fierem</em>. Note the double letters in <em>ferrem, vellem, nōllem, māllem</em> &mdash; that is how you tell the imperfect subjunctive from the present.</div>
+    </div>
+
+    <!-- PART 6 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 6 &middot; SIX QUESTIONS OFF THE FIVE TABLES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Answer from the tables above, then check. If you need to scroll up, that is fine today &mdash; but not tomorrow.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which form or which construction, and why?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Row first: what tense is nesciēbat? Column second: had the burning already happened when he did not know?">
+                <div class="widget-row-prompt">Complete: <em>Nesciēbat quis urbem ________.</em> (&ldquo;He did not know who <strong>had set fire to</strong> the city.&rdquo;) &mdash; <em>incendō, incendere, incendī, incēnsum</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Incenderet is the imperfect subjunctive — the same-time box of the secondary row. That would mean 'who was setting fire to the city' at the moment he did not know. The English says 'had set fire,' which is the already-finished column.">
+                    <em>incenderet</em></button>
+                    <button data-choice="b" data-fb="Right — secondary row (nesciēbat is imperfect), already-finished column, so PLUPERFECT subjunctive: incendisset. Perfect stem incend- plus -isset. 'He did not know who had set fire to the city.'">
+                    <em>incendisset</em></button>
+                    <button data-choice="c" data-fb="Incenderit is the perfect subjunctive, which lives in the PRIMARY row. A main verb in the imperfect puts you in the secondary row, and the already-finished box there is the pluperfect. (Incenderit is also the future perfect indicative — the collision from Part 1.)">
+                    <em>incenderit</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Look for a signpost word in the main clause. Is one there or not?">
+                <div class="widget-row-prompt"><em>Cicerō praesidia disposuit ut urbs tūta esset.</em> &mdash; and compare <em>Adeō timēbant ut nēmō ex aedibus exīret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Both cannot be result: the first has no signpost word in its main clause, and disposuit is something Cicero did on purpose. Purpose is the ut clause with no signpost; result is the ut clause announced by one.">Both are result clauses</button>
+                    <button data-choice="b" data-fb="Reversed. The second one carries adeō, which is a result signpost — 'they were so afraid that no one went out of the houses.' The first has no signpost at all.">The first is result, the second is purpose</button>
+                    <button data-choice="c" data-fb="Right. First: ut with no signpost, and an intention — purpose, 'Cicero posted guards so that the city might be safe.' Second: adeō in the main clause points forward to a consequence — result, 'They were so afraid that no one went out of the houses.' Same word ut, two constructions, and the signpost is what separates them.">The first is purpose, the second is result</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Which verb governs the nē clause? That is the only question that matters here.">
+                <div class="widget-row-prompt"><em>Verēbātur nē cōnsul sērō venīret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a fear clause. Vereor is a verb of fearing, so nē reverses: 'He was afraid that the consul would come too late.' Not 'so that the consul should not come.' Vereor is also a deponent, so verēbātur is passive in shape and active in meaning.">A fear clause &mdash; &ldquo;afraid that he <em>would</em> come too late&rdquo;</button>
+                    <button data-choice="b" data-fb="This is the reading a student gives who has not checked the main verb. 'He was afraid in order that the consul should not come too late' is not English and it is not what the Latin says. A verb of fearing changes what nē means — that is the whole of Module 12.">A negative purpose clause &mdash; &ldquo;so that he should not come late&rdquo;</button>
+                    <button data-choice="c" data-fb="An indirect command needs a verb of ordering, urging or asking. Vereor is a verb of fearing, and nobody is being told to do anything.">A negative indirect command</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Look at the tense of the two subjunctives, then look at the four-condition table.">
+                <div class="widget-row-prompt"><em>Sī cōnsul cūnctārētur, rēs pūblica perīret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Future less vivid uses the PRESENT subjunctive in both halves — sī cūnctētur, pereat, 'should he hesitate, it would perish.' These are imperfect subjunctives (cūnctārētur, perīret), which is one step further from reality.">Future less vivid &mdash; &ldquo;should he hesitate, it would perish&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — contrary to fact in present time: imperfect subjunctive in both halves. 'If the consul were hesitating, the republic would be perishing.' The grammar tells you he is not hesitating. Note cūnctārētur is a deponent and perīret is from pereō, one of Module 15's irregulars.">Contrary to fact, present time &mdash; &ldquo;if he were hesitating&hellip;&rdquo;</button>
+                    <button data-choice="c" data-fb="A simple condition uses the indicative in both halves — sī cūnctātur, perit. There are two subjunctives here, so the sentence is making a claim about something that is not the case.">A simple condition &mdash; &ldquo;if he hesitates, it perishes&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Is there any subordinating word in front of dīcat? And what person is it?">
+                <div class="widget-row-prompt"><em>Dīcat quod sentit. Nē taceat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A purpose clause needs ut or nē in front of the verb it governs, and something for it to depend on. Dīcat has nothing in front of it at all — it opens the sentence.">Two purpose clauses</button>
+                    <button data-choice="b" data-fb="Hortatory is 1st person plural — dīcāmus, 'let us say.' Dīcat and taceat are 3rd person singular, which is the jussive signature.">Two hortatory subjunctives</button>
+                    <button data-choice="c" data-fb="Right — two jussives. 3rd person singular, no subordinating word: 'Let him say what he thinks. Let him not be silent.' And note the negative: nē taceat, not nōn taceat. Three of the four main-clause uses take nē.">Two jussive subjunctives &mdash; &ldquo;let him say&hellip; let him not be silent&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Rogābit is future. Which row of the grid does future belong to?">
+                <div class="widget-row-prompt">Complete: <em>Rogābit cūr Cicerō tam diū ________.</em> (&ldquo;He will ask why Cicero is speaking so long.&rdquo;) &mdash; <em>loquor, loquī, locūtus sum</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — future is PRIMARY, and the clause is same-time, so the present subjunctive: loquātur. Deponent, so passive in shape and active in meaning. This is the sequence item that separates the class, and it is worth getting into your bones before Friday.">
+                    <em>loquātur</em></button>
+                    <button data-choice="b" data-fb="Loquerētur is the imperfect subjunctive — the secondary row. Future main verbs are PRIMARY. There are only two rows and future is in the first one with the present.">
+                    <em>loquerētur</em></button>
+                    <button data-choice="c" data-fb="Loquēretur does not exist, and neither does any active form of loquor: it is a deponent, so the present subjunctive is loquātur, with passive endings. Watch out for inventing active forms of deponents under pressure.">
+                    <em>loquēret</em></button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 16.04 &mdash; The Great Sorter</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The most useful page of the semester, and the one to print. One procedure that sorts every construction from Module 8 to Module 15, one unlabelled pile containing all of them, and the summary table of every job <em>nē</em> and <em>ut</em> do &mdash; nine jobs between two words of two letters each.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">The subjunctive is not one thing that means one thing. It is a <strong>mood</strong> &mdash; a signal that the verb is not being asserted as plain fact &mdash; and what it means on any given line is decided by <strong>where it sits</strong>. Same form, different clause, different meaning. That is why every table today had a &ldquo;signal&rdquo; column, and why tomorrow's procedure starts by asking where the verb is rather than what it is.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 16.03 &middot; The Subjunctive, Whole</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

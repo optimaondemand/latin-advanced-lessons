@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 14.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 14</div>
+        <div style="font-size: 12px; color: #666;">Main-Clause Subjunctives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 14.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Subjunctive Steps Out</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 14.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Subjunctive Steps Out</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Every subjunctive you have met since Module 6 has been somebody's dependent. Today one walks out on its own.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Purpose, indirect command, result, <em>cum</em>, indirect question, fear &mdash; six constructions, and in all six the subjunctive verb sat <strong>inside a subordinate clause</strong>, introduced by a signal word and governed by a main verb somewhere else in the sentence. Latin also uses the subjunctive as the <strong>main verb of a sentence</strong>, with nothing in front of it and nothing governing it. When it does, it stops meaning &ldquo;that&rdquo; or &ldquo;when&rdquo; or &ldquo;whether&rdquo; and starts meaning something much more direct: <strong>let him do it. Let us do it.</strong> That is today.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell a <strong>main-clause</strong> subjunctive from a subordinate one by looking for the signal word that is not there.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form and translate the <strong>jussive</strong> (3rd person, &ldquo;let him&hellip;&rdquo;) and the <strong>hortatory</strong> (1st person plural, &ldquo;let us&hellip;&rdquo;).</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> make both of them negative with <em>nē</em>, and say why <em>nōn</em> is wrong there.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; SIX MODULES, ALL INSIDE SOMETHING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Look at what you have built. Every row is a subjunctive, and every row has a word in front of it doing the introducing.</p>
+        <table class="para">
+            <tr><th style="width:22%">Construction</th><th style="width:16%">Signal word</th><th>An example you have read</th></tr>
+            <tr><td class="lab">purpose &middot; m08</td><td class="end"><em>ut</em> / <em>nē</em></td><td><em>Cicerō vēnit <strong>ut</strong> Catilīnam accūsāret.</em></td></tr>
+            <tr><td class="lab">indirect command &middot; m08</td><td class="end"><em>ut</em> / <em>nē</em></td><td><em>Cōnsul imperāvit <strong>ut</strong> coniūrātī dūcerentur.</em></td></tr>
+            <tr><td class="lab">result &middot; m09</td><td class="end"><em>ut</em> / <em>ut nōn</em></td><td><em>Tam foedus erat locus <strong>ut</strong> nēmō eum aspiceret.</em></td></tr>
+            <tr><td class="lab"><em>cum</em> clause &middot; m10</td><td class="end"><em>cum</em></td><td><em><strong>Cum</strong> Lentulus praetor esset, magistrātū sē abdicāvit.</em></td></tr>
+            <tr><td class="lab">indirect question &middot; m11</td><td class="end">a question word</td><td><em>Cicerō rogāvit <strong>ubi</strong> Catilīna esset.</em></td></tr>
+            <tr><td class="lab">fear clause &middot; m12</td><td class="end"><em>nē</em> / <em>nē nōn</em></td><td><em>Timeō <strong>nē</strong> coniūrātī urbem incendant.</em></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">Notice the shape they all share. Each sentence has <strong>two</strong> verbs: an indicative main verb (<em>vēnit</em>, <em>imperāvit</em>, <em>rogāvit</em>, <em>timeō</em>) and a subjunctive one tucked inside a clause. The subjunctive was never the whole sentence. It was always an ingredient.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;">Now delete the main verb and the signal word, and leave the subjunctive standing by itself:</div>
+            <div style="font-size:24px; color:#0e1c42; margin-top:10px;"><em>Veniat.</em></div>
+            <div style="font-size:17px; color:#1a2340; margin-top:8px;">One word. Present subjunctive, third person singular. No <em>ut</em>, no <em>cum</em>, no question word, no main verb anywhere. It is the whole sentence &mdash; and it means <strong>&ldquo;Let him come.&rdquo;</strong></div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>This is not a new tense or a new set of endings.</strong> <em>Veniat</em> is the same form you have written a hundred times in purpose clauses. Nothing about the <em>form</em> changes in this module. What changes is <strong>where the form is standing</strong> &mdash; and standing alone gives it a different job. Module 14 is the only module this year that teaches you no new endings at all.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE JUSSIVE &mdash; GIVING AN ORDER TO SOMEBODY ELSE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The word comes from <em>iubeō, iubēre, iussī</em> &mdash; &ldquo;to order.&rdquo; A <strong>jussive subjunctive</strong> is a command in the <strong>third person</strong>, and Latin needs it for a simple reason: you cannot give an order directly to somebody who is not there.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><strong>Jussive = present subjunctive, 3rd person singular or plural, standing as the main verb.</strong></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">Translate it with <strong>&ldquo;let him / let her / let them&hellip;&rdquo;</strong> &mdash; or, when the tone is more official, <strong>&ldquo;he is to&hellip; / they are to&hellip;&rdquo;</strong>, or <strong>&ldquo;may he&hellip;&rdquo;</strong> when it is closer to a blessing.</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:26%">Verb</th><th style="width:24%">3rd singular</th><th style="width:24%">3rd plural</th><th>&ldquo;Let&hellip;&rdquo;</th></tr>
+            <tr><td class="lab"><em>laudō, laudāre</em> (1st)</td><td><em>laud<span class="end">et</span></em></td><td><em>laud<span class="end">ent</span></em></td><td>let him praise / let them praise</td></tr>
+            <tr><td class="lab"><em>maneō, manēre</em> (2nd)</td><td><em>mane<span class="end">at</span></em></td><td><em>mane<span class="end">ant</span></em></td><td>let him stay / let them stay</td></tr>
+            <tr><td class="lab"><em>dīcō, dīcere</em> (3rd)</td><td><em>dīc<span class="end">at</span></em></td><td><em>dīc<span class="end">ant</span></em></td><td>let him speak / let them speak</td></tr>
+            <tr><td class="lab"><em>faciō, facere</em> (3rd io)</td><td><em>faci<span class="end">at</span></em></td><td><em>faci<span class="end">ant</span></em></td><td>let him do / let them do</td></tr>
+            <tr><td class="lab"><em>veniō, venīre</em> (4th)</td><td><em>veni<span class="end">at</span></em></td><td><em>veni<span class="end">ant</span></em></td><td>let him come / let them come</td></tr>
+            <tr><td class="lab"><em>sum, esse</em></td><td><em>s<span class="end">it</span></em></td><td><em>s<span class="end">int</span></em></td><td>let him be / let them be</td></tr>
+            <tr><td class="lab"><em>loquor, loquī</em> (deponent, m02)</td><td><em>loqu<span class="end">ātur</span></em></td><td><em>loqu<span class="end">antur</span></em></td><td>let him speak / let them speak</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">In sentences, from the world of the module:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Reus ipse respondeat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>Let</strong> the defendant answer <strong>himself</strong>.&rdquo; <span style="color:#8a6416;">Gloss: <em>reus, reī</em> m. &mdash; defendant, the accused.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Iūdicēs lēgem spectent, nōn hominem.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>Let</strong> the jurors look at the law, not at the man.&rdquo; <span style="color:#8a6416;">Gloss: <em>iūdex, iūdicis</em> m. &mdash; juror, judge.</span> Note that <em>nōn hominem</em> here is negating a <em>noun</em>, not the verb &mdash; that is ordinary Latin and has nothing to do with the rule in Part 4.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Salva sit rēs pūblica.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>May</strong> the republic <strong>be</strong> safe.&rdquo; A jussive of <em>sum</em>, and the same form you would use for a prayer. <span style="color:#8a6416;">Gloss: <em>salvus, -a, -um</em> &mdash; safe, unharmed.</span></div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>English does the same thing and hides it better.</strong> &ldquo;Let him come&rdquo; is not really about permission &mdash; nobody is being let. English has to borrow the verb &ldquo;let&rdquo; because it has no third-person command form of its own. Latin has one, so it just uses it: <em>veniat</em>. When you translate, the word &ldquo;let&rdquo; is <strong>English scaffolding</strong>, not a Latin word you have to find in the sentence.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Before the drills: does it surprise you that the same form can mean &ldquo;so that he may come&rdquo; in one sentence and &ldquo;let him come&rdquo; in another? What is your instinct about why that works?</div>
+            <div class="widget-options">
+                <button data-response="That is very close to how grammarians describe it. The subjunctive's underlying job is to present an action as willed, imagined or not-yet-fact rather than as a report of what is. A purpose clause wills the action for somebody else's sentence; a jussive wills it outright. Same mood, different amount of sentence around it.">Both are about something wanted, not something reported</button>
+                <button data-response="A fair guess, and it is how many languages work — but here it is the other way round. The main-clause uses are almost certainly the OLDER ones: a standalone wish or command is a simple thing to say, and the subordinate uses look like main-clause subjunctives that got swallowed by a bigger sentence. So the version you are learning last may well be the version Latin had first.">The clause version came first and this is a shortcut</button>
+                <button data-response="Understandable, and it is exactly the worry Lesson 14.04 exists to answer. In practice it is nearly always clear, because a subordinate subjunctive has a signal word in front of it and a main verb elsewhere in the sentence. Take away both of those and there is only one thing the form can be doing.">It sounds like a recipe for confusing the two</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE HORTATORY &mdash; PULLING YOURSELF IN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">From <em>hortor, hortārī, hortātus sum</em>, the deponent you met in Module 2: &ldquo;to urge, encourage.&rdquo; A <strong>hortatory subjunctive</strong> is the <strong>first person plural</strong>, and it means <strong>&ldquo;let us&hellip;&rdquo;</strong> &mdash; the speaker urging a group that includes himself.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><strong>Hortatory = present subjunctive, 1st person plural, standing as the main verb.</strong></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">Translate with <strong>&ldquo;let us&hellip;&rdquo;</strong> or, in more natural English, <strong>&ldquo;let's&hellip;&rdquo;</strong>. Some books call it the <em>exhortative</em> or file it with the jussive as one construction; the form and the meaning are the same whatever it is called.</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:32%">Verb</th><th style="width:28%">1st plural subjunctive</th><th>&ldquo;Let us&hellip;&rdquo;</th></tr>
+            <tr><td class="lab"><em>laudō, laudāre</em> (1st)</td><td><em>laud<span class="end">ēmus</span></em></td><td>let us praise</td></tr>
+            <tr><td class="lab"><em>maneō, manēre</em> (2nd)</td><td><em>man<span class="end">eāmus</span></em></td><td>let us stay</td></tr>
+            <tr><td class="lab"><em>dīcō, dīcere</em> (3rd)</td><td><em>dīc<span class="end">āmus</span></em></td><td>let us speak</td></tr>
+            <tr><td class="lab"><em>faciō, facere</em> (3rd io)</td><td><em>fac<span class="end">iāmus</span></em></td><td>let us do, let us make</td></tr>
+            <tr><td class="lab"><em>audiō, audīre</em> (4th)</td><td><em>aud<span class="end">iāmus</span></em></td><td>let us listen</td></tr>
+            <tr><td class="lab"><em>veniō, venīre</em> (4th)</td><td><em>ven<span class="end">iāmus</span></em></td><td>let us come</td></tr>
+            <tr><td class="lab"><em>sum, esse</em></td><td><em>s<span class="end">īmus</span></em></td><td>let us be</td></tr>
+            <tr><td class="lab"><em>sequor, sequī</em> (deponent, m02)</td><td><em>sequ<span class="end">āmur</span></em></td><td>let us follow</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Nunc videāmus quid rēs pūblica postulet.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Now <strong>let us see</strong> what the republic demands.&rdquo; <span style="color:#8a6416;">Gloss: <em>postulō, postulāre</em> &mdash; to demand, require.</span> Two subjunctives in one sentence, doing two entirely different jobs: <em>videāmus</em> is a hortatory main verb, and <em>postulet</em> is an indirect question hanging off it. You will sort sentences like this on Thursday.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Rem pūblicam dēfendāmus dum possumus.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>Let us defend</strong> the republic while we can.&rdquo; <span style="color:#8a6416;">Gloss: <em>dum</em> (+ indicative) &mdash; while.</span></div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The most famous hortatory in Latin is one you may not use yet.</strong> <em>Eāmus</em> &mdash; &ldquo;let us go&rdquo; &mdash; is the example every textbook reaches for, and it comes from the irregular verb <em>eō, īre</em>, which is <strong>Module 15</strong>. So does <em>ferāmus</em>, from <em>ferō</em>. This module builds everything on regular verbs and on <em>sum</em>: <em>veniāmus, dīcāmus, faciāmus, audiāmus, sequāmur, sīmus</em>. When you reach Module 15 and the irregulars arrive, they will slot into this construction with no new rule at all &mdash; which is the point of doing the construction first.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE NEGATIVE IS <em>NĒ</em>, AND THAT MATTERS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is the rule, and it is one line long:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;">A jussive or hortatory subjunctive is made negative with <strong><em>nē</em></strong>, never with <em>nōn</em>.</div>
+            <div style="font-size:17px; color:#1a2340; margin-top:10px; line-height:1.7;"><em>Veniat.</em> &rarr; <em><strong>Nē</strong> veniat.</em> &mdash; &ldquo;Let him <strong>not</strong> come.&rdquo;<br>
+            <em>Dīcāmus.</em> &rarr; <em><strong>Nē</strong> dīcāmus.</em> &mdash; &ldquo;Let us <strong>not</strong> speak.&rdquo;<br>
+            <em>Iūdicēs hominem spectent.</em> &rarr; <em><strong>Nē</strong> iūdicēs hominem spectent.</em> &mdash; &ldquo;Let the jurors <strong>not</strong> look at the man.&rdquo;</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">Say the reason out loud, because it is the reason for the whole family: <strong><em>nōn</em> denies a fact; <em>nē</em> blocks a wish.</strong> <em>Nōn venit</em> means &ldquo;he is not coming&rdquo; &mdash; a report about the world. <em>Nē veniat</em> does not report anything; it pushes against an action nobody has taken yet. Latin keeps two different words for those two different jobs, and the indicative gets one of them while the willed subjunctive gets the other.</p>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>And this is now <em>nē</em>'s fourth job.</strong> Negative purpose (m08). Negative indirect command (m08). Fear clause &mdash; where it means the opposite, &ldquo;that <em>will</em> happen&rdquo; (m12). And now the negative of a main-clause subjunctive (m14). Four jobs, one word, and no ending anywhere tells you which. That is Thursday's whole lesson, and it is the most useful thing in this module. Do not try to solve it today &mdash; just notice that the pile has got one item bigger.</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">One more thing about the form, and then we stop</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every jussive and hortatory in this lesson is in the <strong>present</strong> subjunctive. That is not an accident of the examples: a command or an exhortation is about what should happen <em>now or next</em>, so the present is the tense that fits. And notice what does <strong>not</strong> apply here &mdash; <strong>sequence of tenses</strong>. The two-row table from Module 7 tells a <em>subordinate</em> subjunctive which tense to take by looking at its main verb. A main-clause subjunctive has no main verb above it. There is nothing to sequence against, so the tense is chosen by <strong>meaning alone</strong>. Tomorrow that fact does real work, because with wishes the tense is the entire point.</p>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>For recognition only, not for production.</strong> You will sometimes see <em>nē</em> plus a <strong>perfect</strong> subjunctive used to forbid something to a person being addressed directly: <em>nē dīxerīs</em>, &ldquo;don't say it.&rdquo; That is a real classical prohibition, it uses the m13 form you built last week, and it is worth being able to recognise. This module will not ask you to write one, and it is not on the quiz.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; FIRST SORT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five items. Two are about the person, two are about the negative, and one is the sort you will spend Thursday on.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What is this form doing?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Look at the person and number of the verb. Who is being told to do something?">
+                <div class="widget-row-prompt"><em>Coniūrātī ex urbe discēdant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Hortatory is the FIRST person plural — it would have to include the speaker: discēdāmus, &quot;let us leave.&quot; Discēdant is third plural, so the speaker is not in the group.">Hortatory &mdash; &ldquo;let us leave the city&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — jussive. Discēdant is third person plural present subjunctive standing as the main verb, with no signal word in front of it: &quot;Let the conspirators leave the city.&quot; Gloss: discēdō, discēdere, discessī — to depart, leave.">Jussive &mdash; &ldquo;let the conspirators leave the city&rdquo;</button>
+                    <button data-choice="c" data-fb="A purpose clause needs ut or nē in front of the subjunctive and a main verb elsewhere in the sentence. This sentence has neither — discēdant is the only verb there is.">A purpose clause with the <em>ut</em> left out</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="First person plural. Which construction owns the first person plural?">
+                <div class="widget-row-prompt"><em>Rem pūblicam sine sanguine dēfendāmus.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Jussive is the third person — someone else is being ordered. Dēfendāmus is &quot;we,&quot; which means the speaker has put himself inside the command.">Jussive &mdash; &ldquo;let them defend the republic&rdquo;</button>
+                    <button data-choice="b" data-fb="Dēfendāmus is subjunctive, not indicative. The indicative &quot;we are defending&quot; would be dēfendimus — one letter apart, and the whole difference between reporting and urging.">Indicative &mdash; &ldquo;we are defending the republic&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — hortatory. First person plural present subjunctive as the main verb: &quot;Let us defend the republic without bloodshed.&quot; Gloss: sanguis, sanguinis m. — blood.">Hortatory &mdash; &ldquo;let us defend the republic&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="You want to say &ldquo;let him not&hellip;&rdquo;. Which negative belongs to a willed action?">
+                <div class="widget-row-prompt">&ldquo;Let the consul not hesitate.&rdquo; &mdash; <em>____ cōnsul dubitet.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — Nē cōnsul dubitet. Nē is the negative for every main-clause subjunctive: jussive, hortatory and (tomorrow) the wish.">Nē</button>
+                    <button data-choice="b" data-fb="Nōn cōnsul dubitet is not Latin. Nōn denies a fact — nōn dubitat, &quot;he is not hesitating.&quot; It cannot block an action that has not happened.">Nōn</button>
+                    <button data-choice="c" data-fb="Ut nōn is the negative of a RESULT clause (m09), and a result clause needs a signpost word like tam or tantus in a main clause. There is no main clause here — the subjunctive IS the main clause.">Ut nōn</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="There are two verbs here. Which one is the main verb, and does it have a signal word in front of it?">
+                <div class="widget-row-prompt"><em>Videāmus quid Catilīna in Etrūriā faciat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Both are subjunctive, but they are not doing the same job. Faciat has a question word (quid) in front of it and a verb of perceiving above it — that is an indirect question, and it is subordinate.">Two hortatory subjunctives</button>
+                    <button data-choice="b" data-fb="Right, and this is the sentence shape the whole module turns on. Videāmus is a hortatory MAIN verb — nothing in front of it. Faciat is a SUBORDINATE subjunctive inside an indirect question opened by quid. &quot;Let us see what Catiline is doing in Etruria.&quot;">A hortatory main verb, then an indirect question</button>
+                    <button data-choice="c" data-fb="A purpose clause would need ut or nē. The word in front of faciat is quid, &quot;what&quot; — an interrogative, which makes the clause a reported question (m11), not a purpose.">A hortatory main verb, then a purpose clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two of these are jussive or hortatory. One is the subordinate subjunctive you have known since Module 8.">
+                <div class="widget-row-prompt">Which of these is <strong>not</strong> a main-clause subjunctive?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Sit is a main-clause subjunctive here — a jussive of sum, &quot;let the republic be safe.&quot; It has no signal word and no main verb above it.">Salva <em>sit</em> rēs pūblica.</button>
+                    <button data-choice="b" data-fb="Maneāmus is a hortatory main verb: &quot;Let us stay in the city.&quot; First person plural, nothing in front of it.">In urbe <em>maneāmus</em>.</button>
+                    <button data-choice="c" data-fb="Right. Maneat here sits inside a purpose clause opened by ut, with the indicative vēnit as the main verb of the sentence: &quot;Cicero came so that the republic might remain safe.&quot; Same form as a jussive, completely different job — because it is not the main verb.">Cicerō vēnit ut rēs pūblica salva <em>maneat</em>.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the Forum Rōmānum late in 63 BC, with a trial under way in the open air &mdash; a raised platform for the presiding magistrate, benches of jurors, an advocate on his feet, and a crowd standing round listening because anyone could. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things in the scene in Latin &mdash; for example <em>forum</em>, <em>iūdicēs</em> (the jurors), <em>reus</em> (the defendant), <em>ōrātor</em> (the speaker), <em>turba</em> (the crowd), <em>rōstra</em> (the speaker's platform). <span style="color:#666;">[ARTHUR: label tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write two Latin sentences</strong> that the advocate might say to this crowd, each with a <strong>main-clause subjunctive</strong>, and put the type in brackets after it. Make one a <strong>jussive</strong> and one a <strong>hortatory</strong>. Models: <em>Iūdicēs lēgem spectent.</em> [jussive] &mdash; &ldquo;Let the jurors look at the law.&rdquo; &middot; <em>Nunc dē salūte omnium cōgitēmus.</em> [hortatory] &mdash; &ldquo;Now let us think about everyone's safety.&rdquo; Then make one of them negative with <em>nē</em>. Formative and ungraded; the graded ARTHUR projects are Modules 8 and 16 only.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; OFFICIUM &middot; SERVICE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Officium, officiī</em> n. is built from <em>ob</em> (&ldquo;toward&rdquo;) and <em>facere</em> (&ldquo;to do&rdquo;) &mdash; a thing done <em>toward</em> somebody else. You met it in Module 5, where the gerundive of obligation named what must be done and whose name was on it. It gives English <em>office</em>, <em>officer</em>, and <em>official</em>: all words for a duty that belongs to a person because of where they stand.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">Module 5's <em>officium</em> was something owed by you. This module's is something you <strong>ask of other people</strong>, and that is a harder thing to do honestly. Every sentence in this lesson is aimed outward: <em>veniat</em>, let him come; <em>dēfendāmus</em>, let us defend. A jussive is a man with no army and no power of arrest asking a room full of strangers to act. That was most of what a Roman advocate had. Cicero could not compel a jury, and in the speech you will read on Friday he does not pretend to &mdash; he asks. Notice, too, what the <strong>hortatory</strong> does that the jussive cannot: <em>dēfendāmus</em> puts the speaker inside the duty he is naming. &ldquo;Let <em>us</em>&rdquo; costs the speaker something; &ldquo;let <em>them</em>&rdquo; does not. It is worth watching, in Cicero and in yourself, which of the two a person reaches for.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 14.02 &mdash; <em>Utinam</em>: Three Kinds of Wish</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">One little word, <em>utinam</em>, turns a subjunctive into a wish &mdash; and then the <strong>tense</strong> decides what kind of wish it is: one that might still come true, one about how things are now and are not, or one about a past that did not happen. This is where last week's perfect and pluperfect subjunctive suddenly pay for themselves.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A subjunctive with nothing in front of it is not a broken clause with a missing <em>ut</em>. It is a <strong>command or a wish</strong>, and it is the whole sentence. Third person means &ldquo;let him&rdquo;; first person plural means &ldquo;let us&rdquo;; and either one goes negative with <em>nē</em>.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 14.01 &middot; The Subjunctive Steps Out</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

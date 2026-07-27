@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 4.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .chant { background: #0E1C42; border-radius: 8px; padding: 20px 24px; margin: 14px 0; text-align: center; }
+    .chant .line { font-size: 24px; color: #ffffff; font-style: italic; line-height: 1.7; }
+    .chant .cap { font-size: 12px; color: #55C8E8; letter-spacing: 1px; margin-bottom: 10px; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 4</div>
+        <div style="font-size: 12px; color: #666;">Gerunds</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">All Its Cases</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Gerund in All Its Cases</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Four cases. Three endings. Nothing new to memorize.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A gerund declines exactly like <em>bellum</em> in the singular &mdash; you have known those endings since your first year. What is new is <strong>what each case means</strong> when the noun in question is an action. Today you learn one job per case, with one worked sentence each.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> decline a gerund through its four cases and say what each case is for.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> translate <em>ars dīcendī</em>, <em>ad dīcendum</em>, and <em>dīcendō</em> without stopping to think.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use context to decide whether <em>-ndō</em> is dative or ablative.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE WHOLE PARADIGM, ON ONE LINE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Model verb: <em>dīcō, dīcere</em> &mdash; "to speak, to say." Neuter singular, second declension, no nominative:</p>
+        <table class="para">
+            <tr><th style="width:16%">Case</th><th style="width:18%">Form</th><th style="width:26%">Core job</th><th>Worked example</th></tr>
+            <tr><td class="lab">Nominative</td><td style="color:#8A1F16;">&mdash; none &mdash;</td><td>Use the <strong>infinitive</strong> instead</td><td><em>Dīcere est difficile.</em> &mdash; Speaking is difficult.</td></tr>
+            <tr><td class="lab">Genitive</td><td><em>dīcend<span class="end">ī</span></em></td><td>"of speaking" &mdash; and purpose with <em>causā/grātiā</em></td><td><em>ars dīcendī</em> &mdash; the art of speaking</td></tr>
+            <tr><td class="lab">Dative</td><td><em>dīcend<span class="end">ō</span></em></td><td>"for speaking" &mdash; <strong>rare</strong>; see Part 4</td><td>Recognize it; you will not have to produce it.</td></tr>
+            <tr><td class="lab">Accusative</td><td><em>dīcend<span class="end">um</span></em></td><td>After a preposition &mdash; nearly always <em>ad</em>, for purpose</td><td><em>ad dīcendum</em> &mdash; for the purpose of speaking</td></tr>
+            <tr><td class="lab">Ablative</td><td><em>dīcend<span class="end">ō</span></em></td><td>"by speaking" (means), or after <em>in</em>, <em>dē</em>, <em>ex</em></td><td><em>dīcendō</em> &mdash; by speaking; <em>in dīcendō</em> &mdash; in the act of speaking</td></tr>
+        </table>
+        <div class="chant">
+            <div class="cap">&#127925; MEMORY WORK &middot; SAY IT ALOUD THREE TIMES</div>
+            <div class="line">dīcendī, dīcendō, dīcendum, dīcendō &mdash;<br>of speaking, for speaking, for speaking, by speaking</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0 0;">Say the Latin and the English together. Four slots, and only three different sounds &mdash; which is your warning that the fourth slot is going to need context.</p>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE GENITIVE &mdash; "OF DOING"</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This is the gerund's home. It attaches to a noun and says what that noun is <em>about</em>:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Ars <strong>dīcendī</strong> est difficilis.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"The art <strong>of speaking</strong> is difficult."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Dīcendī</em> is genitive, depending on <em>ars</em>. Grammarians call this an <strong>objective genitive</strong>: the art is directed <em>at</em> speaking. Same shape as <em>amor patriae</em>, "love of country."</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Tempus <strong>tacendī</strong> iam nōn erat; tempus <strong>agendī</strong> vēnerat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"It was no longer the time <strong>for keeping silent</strong>; the time <strong>for acting</strong> had come."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Two genitive gerunds hanging off <em>tempus</em>, perfectly balanced. This is how Cicero thinks. <span style="color:#8a6416;">Gloss: <em>taceō, tacēre</em> &mdash; to be silent; <em>agō, agere</em> &mdash; to do, act, drive.</span></div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Nouns that love a genitive gerund.</strong> <em>ars</em> (art, skill) &middot; <em>tempus</em> (time) &middot; <em>cupiditās</em> (desire) &middot; <em>studium</em> (enthusiasm) &middot; <em>occāsiō</em> (opportunity) &middot; <em>facultās</em> (capacity). When you meet one of these and then hit an <em>-ndī</em>, you already know what is happening: <em>cupiditās pugnandī</em>, "a desire for fighting."</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 0 0;">The genitive has a second, even more common job &mdash; expressing <strong>purpose</strong> with the words <em>causā</em> and <em>grātiā</em>. That gets a whole lesson of its own tomorrow, because it is one of the two constructions you will meet on every page of Cicero.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; ACCUSATIVE AND ABLATIVE</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 4px 0 6px 0;">Accusative &mdash; almost always after <span style="color:#c7922c;">ad</span></h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">A gerund in the accusative shows up as the object of a preposition, and the preposition is overwhelmingly <em>ad</em>. <em>Ad</em> + gerund means <strong>purpose</strong>: "for the purpose of doing," "in order to do."</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Senātōrēs <strong>ad audiendum</strong> convēnērunt.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"The senators gathered <strong>to listen</strong>." (Literally: "for the purpose of listening.")</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><span style="color:#8a6416;">Gloss: <em>conveniō, convenīre, convēnī, conventum</em> &mdash; to come together, assemble.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Cicerō <strong>ad discendum</strong> in Graeciam nāvigāvit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Cicero sailed to Greece <strong>for learning</strong> &mdash; in order to learn."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">True, by the way: Cicero really did study rhetoric in Greece and on Rhodes as a young man. <span style="color:#8a6416;">Gloss: <em>discō, discere, didicī</em> &mdash; to learn; <em>nāvigō, nāvigāre</em> &mdash; to sail.</span></div>
+        </div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">Ablative &mdash; <span style="color:#c7922c;">means</span>, or after a preposition</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">A bare ablative gerund is an <strong>ablative of means</strong> &mdash; exactly the same idea as <em>gladiō</em>, "with a sword." Only here the instrument is an action:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Cicerō <strong>dīcendō</strong> senātōrēs mōvit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Cicero moved the senators <strong>by speaking</strong>."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">No preposition, so read it as means. Compare <em>Cicerō verbīs senātōrēs mōvit</em>, "by words" &mdash; identical grammar, ordinary noun.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em><strong>In legendō</strong> multa discimus.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"<strong>In reading</strong> we learn many things."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">With <em>in</em>, the sense shifts from "by means of" to "in the course of, while." Watch for <em>in</em>, <em>dē</em>, and <em>ex</em> in front of an <em>-ndō</em>.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>English does this too, and you never noticed.</strong> "You get better <em>by practicing</em>." "<em>In writing</em> this letter I realized something." Those are ablative-of-means and <em>in</em>-plus-ablative gerunds in English clothing. Latin just marks them with an ending instead of a preposition.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE DATIVE, BRIEFLY AND HONESTLY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The dative gerund exists, and it is <strong>rare</strong>. You should be able to recognize the ending and move on; this course will not ask you to produce one. It turns up mostly in fixed official and legal phrases, where it means "for the purpose of":</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Ille <strong>solvendō</strong> nōn erat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"He was not up to <strong>paying</strong>" &mdash; the Roman legal way of saying <em>he was insolvent</em>.</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">A set idiom, <em>solvendō esse</em>, with a dative gerund. Treat it as vocabulary, not as a pattern to copy. <span style="color:#8a6416;">Gloss: <em>solvō, solvere</em> &mdash; to loosen, pay, settle a debt.</span></div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Dative and ablative share the form <em>-ndō</em>.</strong> That is not a problem you solve by staring harder at the word &mdash; it is a problem you solve by <strong>reading around it</strong>:
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin:10px 0 4px 0;">
+                <div style="flex:1; min-width:210px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:19px; color:#0e1c42;"><em>in dīcendō</em></div><div style="font-size:15px; color:#1a2340;">Preposition <em>in</em> in front &rarr; must be <strong>ablative</strong>.</div></div>
+                <div style="flex:1; min-width:210px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:19px; color:#0e1c42;"><em>dīcendō senātōrēs mōvit</em></div><div style="font-size:15px; color:#1a2340;">No preposition, and the sense is "by" &rarr; <strong>ablative of means</strong>.</div></div>
+            </div>
+            Ninety-nine times out of a hundred, an <em>-ndō</em> in your reading is an ablative. Start there.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#128220; <strong>One famous Roman title, and a warning.</strong> Rome once appointed a commission called the <em>decemvirī lēgibus scrībendīs</em> &mdash; "the ten men for writing the laws." (Our oldest sources spell it with an older ending, <em>scrībundīs</em>; the classical spelling is the one above.) It looks like a dative gerund, but look closer: <em>scrībendīs</em> is <strong>plural</strong>, agreeing with <em>lēgibus</em>. A gerund is always neuter singular, so this cannot be one. It is the <strong>gerundive</strong> &mdash; the adjective twin you meet on Thursday and study properly in Module 5. File the phrase away; on Thursday you will be able to explain it.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; NAME THE CASE, THEN THE JOB</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Every bold form is a gerund. Identify the case and what it is doing.</div>
+            <div class="widget-row" data-correct="c" data-hint="What noun does the gerund depend on?">
+                <div class="widget-row-prompt"><em>Cupiditās <strong>pugnandī</strong> in mīlitibus magna erat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ablative would be pugnandō. This form ends in -ī.">Ablative of means &mdash; "by fighting"</button>
+                    <button data-choice="b" data-fb="There is no preposition here, and the accusative would be pugnandum. Look at the ending.">Accusative after <em>ad</em> &mdash; "for fighting"</button>
+                    <button data-choice="c" data-fb="Right &mdash; genitive, depending on cupiditās: 'The desire for fighting was great in the soldiers.' Cupiditās is one of the nouns that regularly takes a genitive gerund.">Genitive with <em>cupiditās</em> &mdash; "of/for fighting"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Is there a preposition in front of it?">
+                <div class="widget-row-prompt"><em>Catilīna <strong>fallendō</strong> multōs cīvēs dēcēpit.</em> (<em>fallō</em> &mdash; to deceive; <em>dēcipiō</em> &mdash; to trick)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; bare ablative, so ablative of means: 'Catiline tricked many citizens by deceiving.' The gerund is the instrument.">Ablative of means &mdash; "by deceiving"</button>
+                    <button data-choice="b" data-fb="A dative here would have to be governed by something — an adjective or a set idiom — and there is nothing to govern it. Default to the ablative.">Dative &mdash; "for deceiving"</button>
+                    <button data-choice="c" data-fb="Genitive would be fallendī, and it would need a noun like ars or tempus to depend on. Neither is here.">Genitive &mdash; "of deceiving"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Which case does ad govern?">
+                <div class="widget-row-prompt">Complete correctly: "Cicero rose <em>in order to speak</em>" &mdash; <em>Cicerō ad ____ surrēxit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dīcendī is genitive. Ad never takes a genitive — it is an accusative preposition, always.">dīcendī</button>
+                    <button data-choice="b" data-fb="Right &mdash; ad takes the accusative, so ad dīcendum: 'Cicero rose in order to speak.'">dīcendum</button>
+                    <button data-choice="c" data-fb="Dīcendō is dative or ablative. Ad governs neither.">dīcendō</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which form does Latin not have at all?">
+                <div class="widget-row-prompt">Which of these is <strong>not possible</strong> as a gerund?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This is a perfectly ordinary genitive gerund of legō, 'of reading.'">legendī</button>
+                    <button data-choice="b" data-fb="This is the ablative or dative gerund of scrībō, 'by writing.'">scrībendō</button>
+                    <button data-choice="c" data-fb="Right &mdash; there is no plural gerund. A gerund is always neuter SINGULAR. If you see a plural -nd- form, you are looking at a gerundive agreeing with a plural noun.">audienda (plural)</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="What changes when a preposition is added?">
+                <div class="widget-row-prompt">How does <em>in scrībendō</em> differ in sense from bare <em>scrībendō</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; bare ablative gives means ('by writing'); in + ablative gives the situation or activity you are inside of ('in writing, while writing').">Bare = "by writing"; <em>in</em> + abl. = "while writing"</button>
+                    <button data-choice="b" data-fb="Neither form is a nominative — the gerund has no nominative at all. Adding a preposition never creates one.">Adding <em>in</em> makes it nominative</button>
+                    <button data-choice="c" data-fb="There is a real difference in sense. If the two were identical, Latin would not bother with the preposition.">There is no difference; <em>in</em> is decoration</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 4.03 &mdash; Two Ways to Say Purpose</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;"><em>Causā</em> + genitive and <em>ad</em> + accusative &mdash; the two gerund constructions Cicero actually uses &mdash; plus this module's vocabulary and the surprisingly large family of English words built on <em>-nd-</em>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">One job per case: <strong>genitive</strong> = "of doing," hanging off a noun &middot; <strong>accusative</strong> = purpose, after <em>ad</em> &middot; <strong>ablative</strong> = "by doing," or "while doing" after <em>in</em> &middot; <strong>dative</strong> = rare, recognize and move on. And a gerund is <em>never</em> plural &mdash; if it looks plural, it is not a gerund.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.02 &middot; The Gerund in All Its Cases</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 4.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 4</div>
+        <div style="font-size: 12px; color: #666;">Gerunds</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Cicero Prepares to Speak</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Cicero Prepares to Speak</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Review &amp; Self-Check</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Eleven gerunds, and every one of them is an argument.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Read the morning of 8 November 63 BC: a consul who has not slept, a chamber where nobody will sit near one man, and a speech that opens with a question instead of a charge. Then look at the gerunds. Cicero uses the <em>same construction twice</em> to force a choice between two purposes &mdash; and that is not grammar decorating rhetoric. That is grammar <em>doing</em> rhetoric.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find and parse every gerund in an adapted passage from Cicero's <em>In Catilīnam</em> I.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> translate gerunds in several cases inside continuous prose.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how a repeated gerund construction turns a description into an accusation.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Cicero, <em>In Catilīnam</em> I.</strong> A simplified Latin retelling of the morning of the speech &mdash; not Cicero's own sentences. Every <span style="color:#AA1E2D;"><strong>gerund</strong></span> is marked in red. Read it once straight through for sense before you parse anything.</p>
+        <div class="rd">
+            <p>Māne, ante lūcem, Cicerō in domō suā sōlus sedēbat. Cōnsul erat, et illō diē ōrātiōnem habēre parābat. Tōtam noctem <b>cōgitandō</b> ēgerat, quia perīculum reī pūblicae maximum erat.</p>
+            <p>Ars <b>dīcendī</b> Cicerōnī nōn nova erat. Iuvenis in Graeciā studuerat; multōs annōs in Forō Rōmānō dīxerat. Sed hoc perīculum maius erat quam omnia alia.</p>
+            <p>Tandem stilum cēpit et pauca verba scrīpsit; nam ōrātōrēs Rōmānī memoriā ūtēbantur. Deinde <b>dīcendī causā</b> festīnāvit &mdash; nōn ad Cūriam, sed ad templum, quia illō diē senātus in templō convēnerat.</p>
+            <p>In templō senātōrēs iam <b>ad audiendum</b> sedēbant. Catilīna ipse aderat. Nēmō prope eum sedēbat: omnēs ab eō discesserant, et sellae circum eum vacuae erant. Illud silentium ipsum ōrātiō erat.</p>
+            <p>Cicerō surrēxit. Tempus <b>tacendī</b> iam nōn erat; tempus <b>agendī</b> vēnerat. Sed nōn statim Catilīnam accūsāvit: prīmum interrogāvit, nam <b>interrogandō</b> ōrātor animōs audientium movet.</p>
+            <p>"Quō ūsque tandem, Catilīna, patientiā nostrā abūtēris? Ars tua <b>fallendī</b> iam omnibus nōta est. Tū in hōc templō <b>fallendī grātiā</b> sedēs, nōn dē salūte reī pūblicae <b>cōgitandī causā</b>. Ego autem semper <b>ad dēfendendum</b> parātus sum."</p>
+            <p>Catilīna nihil respondit. Senātōrēs tacēbant. In illō silentiō omnēs intellegēbant Cicerōnem vēra dīcere.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list, in the form it appears</div>
+            <ul class="gl">
+                <li><em>māne</em> (adv.) &mdash; in the morning, early</li>
+                <li><em>ante lūcem</em> &mdash; before daylight (literally "before the light")</li>
+                <li><em>sōlus, -a, -um</em> &mdash; alone</li>
+                <li><em>illō diē</em> &mdash; on that day (ablative of time when)</li>
+                <li><em>ōrātiōnem habēre</em> &mdash; to deliver a speech (idiom)</li>
+                <li><em>parābat</em> &mdash; was preparing, was getting ready (<em>parō, parāre</em>; here with an infinitive)</li>
+                <li><em>tōtam noctem&hellip;ēgerat</em> &mdash; "he had spent the whole night" (<em>agō</em> with <em>noctem</em> means "spend, pass"; <em>ēgerat</em> is pluperfect)</li>
+                <li><em>quia</em> &mdash; because</li>
+                <li><em>maximum</em> &mdash; very great, greatest (superlative of <em>magnus</em>)</li>
+                <li><em>Cicerōnī</em> &mdash; dative, "to Cicero" &mdash; a dative of reference: "the art of speaking was not new <em>to him</em>"</li>
+                <li><em>iuvenis</em> &mdash; "as a young man" (<em>iuvenis, iuvenis</em> m., a young man)</li>
+                <li><em>studuerat</em> &mdash; had studied (pluperfect of <em>studeō, studēre</em>)</li>
+                <li><em>multōs annōs</em> &mdash; for many years (accusative of duration)</li>
+                <li><em>maius&hellip;quam</em> &mdash; greater than (neuter comparative of <em>magnus</em>)</li>
+                <li><em>tandem</em> (adv.) &mdash; at last, finally</li>
+                <li><em>stilum</em> &mdash; stylus, writing tool (<em>stilus, stilī</em> m.)</li>
+                <li><em>pauca verba</em> &mdash; a few words</li>
+                <li><em>nam</em> &mdash; for, because</li>
+                <li><em>memoriā ūtēbantur</em> &mdash; "used memory" &mdash; <em>ūtor</em> is a deponent from Module 2 and takes the <strong>ablative</strong></li>
+                <li><em>deinde</em> (adv.) &mdash; then, next</li>
+                <li><em>Cūria, Cūriae</em> f. &mdash; the Senate House, the Senate's usual meeting building</li>
+                <li><em>templum, templī</em> n. &mdash; temple</li>
+                <li><em>convēnerat</em> &mdash; had assembled (pluperfect of <em>conveniō</em>)</li>
+                <li><em>ipse</em> &mdash; himself, in person (intensive pronoun)</li>
+                <li><em>aderat</em> &mdash; was present (<em>adsum, adesse</em>)</li>
+                <li><em>nēmō</em> &mdash; no one</li>
+                <li><em>prope</em> (prep. + acc.) &mdash; near</li>
+                <li><em>discesserant</em> &mdash; had moved away, had withdrawn (pluperfect of <em>discēdō</em>)</li>
+                <li><em>sellae</em> &mdash; seats, benches (<em>sella, sellae</em> f.)</li>
+                <li><em>circum</em> (prep. + acc.) &mdash; around</li>
+                <li><em>vacuae</em> &mdash; empty (<em>vacuus, -a, -um</em>)</li>
+                <li><em>silentium, silentiī</em> n. &mdash; silence</li>
+                <li><em>surrēxit</em> &mdash; rose, stood up (perfect of <em>surgō</em>)</li>
+                <li><em>tacendī</em> &mdash; gerund of <em>taceō, tacēre</em>, to be silent</li>
+                <li><em>agendī</em> &mdash; gerund of <em>agō, agere</em>, to do, act, drive</li>
+                <li><em>statim</em> (adv.) &mdash; at once, immediately</li>
+                <li><em>accūsāvit</em> &mdash; accused (<em>accūsō, accūsāre</em>)</li>
+                <li><em>prīmum</em> (adv.) &mdash; first, at first</li>
+                <li><em>interrogāvit</em>, <em>interrogandō</em> &mdash; questioned / by questioning (<em>interrogō, interrogāre</em>)</li>
+                <li><em>animōs audientium</em> &mdash; "the minds of those listening" (<em>audientium</em> is the genitive plural of the participle <em>audiēns</em>)</li>
+                <li><em>quō ūsque tandem</em> &mdash; "how long, in the end?" &mdash; a set phrase, and the most famous opening in Latin oratory</li>
+                <li><em>patientiā nostrā</em> &mdash; ablative, "our patience" &mdash; <em>abūtor</em> governs the ablative, not the accusative</li>
+                <li><em>abūtēris</em> &mdash; "will you go on abusing?" (2nd singular future of <em>abūtor</em>, a deponent from Module 2)</li>
+                <li><em>nōta est</em> &mdash; is known (<em>nōtus, -a, -um</em>, with a dative of the person who knows it: <em>omnibus</em>)</li>
+                <li><em>hōc templō</em> &mdash; in this temple (ablative after <em>in</em>)</li>
+                <li><em>fallendī</em> &mdash; gerund of <em>fallō, fallere, fefellī, falsum</em>, to deceive, cheat</li>
+                <li><em>autem</em> &mdash; however, on the other hand (postpositive &mdash; it never comes first)</li>
+                <li><em>vēra dīcere</em> &mdash; "to be telling the truth" (literally "to say true things")</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Three notes about the adaptation, so you know exactly what you are reading.</strong>
+            <div style="margin-top:8px;">&bull; <strong>The sentences are not Cicero's.</strong> This is a simplified retelling built to stay inside the grammar you have. Cicero's real sentences in this speech are far longer, and they use the <strong>subjunctive mood</strong> constantly &mdash; which you begin in Module 6.</div>
+            <div style="margin-top:6px;">&bull; <strong>One form was regularized.</strong> Cicero actually wrote <em>abūt<strong>ēre</strong></em>, using an older alternative ending for the 2nd person singular. This retelling writes the regular <em>abūt<strong>ēris</strong></em> so the form matches what you learned in Module 2. Both are correct Latin; you met the real one in Module 0.</div>
+            <div style="margin-top:6px;">&bull; <strong>The temple is historically right.</strong> The Senate normally met in the <em>Cūria</em>, but for this session Cicero summoned it to a temple instead &mdash; see the callout below.</div>
+        </div>
+    </div>
+
+    <!-- PART 2 - ONE REAL LINE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; FOUR REAL WORDS OF CICERO</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A few lines into the speech, Cicero interrupts his own argument to cry out. These are <strong>his own words, unadapted</strong> &mdash; four of the most quoted words in Latin:</p>
+        <div style="background:#0E1C42; border-radius:8px; padding:22px 26px; margin:14px 0; text-align:center;">
+            <div style="font-size:30px; color:#ffffff; font-style:italic; line-height:1.5;">Ō tempora, ō mōrēs!</div>
+            <div style="font-size:14px; color:#55c8e8; margin-top:10px;">Cicero, <em>In Catilīnam</em> I.2 (unadapted)</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:24%">Word</th><th>What it is</th></tr>
+            <tr><td class="lab"><em>ō</em></td><td>An exclamation &mdash; "oh!" Latin uses it to open a cry of outrage or grief.</td></tr>
+            <tr><td class="lab"><em>tempora</em></td><td>From <em>tempus, temporis</em> n. &mdash; not "times" on a clock but <strong>"the age we live in."</strong> Plural.</td></tr>
+            <tr><td class="lab"><em>mōrēs</em></td><td>From <em>mōs, mōris</em> m. &mdash; <strong>"customs, morals, the way people behave."</strong> Plural. The Romans' own word for their standards of conduct; <em>mōrēs maiōrum</em>, "the ways of our ancestors," was practically a national creed.</td></tr>
+            <tr><td class="lab">the case</td><td>Both nouns are <strong>accusative</strong> &mdash; Latin's <em>accusative of exclamation</em>, used after <em>ō</em>. There is no verb; there does not need to be one.</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:17px; color:#0e1c42;"><strong>"What an age! What behavior!"</strong> &mdash; or, in the old translation everyone quotes, "O the times, O the morals!"</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why this is worth noticing.</strong> Cicero has been building a careful argument, and then he stops and simply shouts. Four words, no verb, no subordination &mdash; the opposite of everything else in the speech. That contrast is the point: after a long stretch of controlled prose, a bare exclamation lands like a struck table. Rhetoric is not only about what you build; it is about knowing when to stop building.</div>
+    </div>
+
+    <!-- PART 3 - INVENTORY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 3 &middot; GERUND INVENTORY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Go back through the passage and parse each red form yourself before you read this table. Then use it as your revision sheet for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:22%">Form</th><th style="width:16%">From</th><th style="width:16%">Case</th><th style="width:22%">Construction</th><th>Meaning</th></tr>
+            <tr><td class="lab"><em>cōgitandō</em></td><td><em>cōgitō</em></td><td>ablative</td><td>bare abl. of means</td><td>by thinking</td></tr>
+            <tr><td class="lab"><em>dīcendī</em></td><td><em>dīcō</em></td><td>genitive</td><td>with <em>ars</em> (objective gen.)</td><td>of speaking</td></tr>
+            <tr><td class="lab"><em>dīcendī causā</em></td><td><em>dīcō</em></td><td>genitive</td><td><em>causā</em> &mdash; purpose</td><td>for the sake of speaking</td></tr>
+            <tr><td class="lab"><em>ad audiendum</em></td><td><em>audiō</em></td><td>accusative</td><td><em>ad</em> &mdash; purpose</td><td>for listening, in order to listen</td></tr>
+            <tr><td class="lab"><em>tacendī</em></td><td><em>taceō</em></td><td>genitive</td><td>with <em>tempus</em></td><td>for keeping silent</td></tr>
+            <tr><td class="lab"><em>agendī</em></td><td><em>agō</em></td><td>genitive</td><td>with <em>tempus</em></td><td>for acting</td></tr>
+            <tr><td class="lab"><em>interrogandō</em></td><td><em>interrogō</em></td><td>ablative</td><td>bare abl. of means</td><td>by questioning</td></tr>
+            <tr><td class="lab"><em>fallendī</em></td><td><em>fallō</em></td><td>genitive</td><td>with <em>ars</em> (objective gen.)</td><td>of deceiving</td></tr>
+            <tr><td class="lab"><em>fallendī grātiā</em></td><td><em>fallō</em></td><td>genitive</td><td><em>grātiā</em> &mdash; purpose</td><td>for the sake of deceiving</td></tr>
+            <tr><td class="lab"><em>cōgitandī causā</em></td><td><em>cōgitō</em></td><td>genitive</td><td><em>causā</em> &mdash; purpose</td><td>for the sake of thinking (about)</td></tr>
+            <tr><td class="lab"><em>ad dēfendendum</em></td><td><em>dēfendō</em></td><td>accusative</td><td><em>ad</em> &mdash; purpose</td><td>for defending</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Look at what the passage does twice.</strong> <em>Ars <strong>dīcendī</strong></em> in paragraph 2 is Cicero's skill. <em>Ars tua <strong>fallendī</strong></em> in paragraph 6 is Catiline's. Identical construction, identical shape, opposite content &mdash; and the reader is quietly invited to put the two men side by side and compare their arts. Nobody had to say "Catiline is a fraud." The grammar said it.</div>
+    </div>
+
+    <!-- PART 4 - TRANSLATE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 4 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out on paper before flipping. These four are good practice for the translation assignment.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Tōtam noctem cōgitandō ēgerat.</em></div><div class="hint">click to compare</div><div class="back">"He had spent the whole night <strong>in thinking</strong>." Or: "&hellip;<strong>by thinking</strong>." <em>Cōgitandō</em> is a bare ablative gerund &mdash; ablative of means. Pluperfect <em>ēgerat</em> puts it before everything else in the story.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Tempus tacendī iam nōn erat; tempus agendī vēnerat.</em></div><div class="hint">click to compare</div><div class="back">"It was no longer the time <strong>for keeping silent</strong>; the time <strong>for acting</strong> had come." Two genitive gerunds, both hanging off <em>tempus</em>, in matched positions. Notice how much shorter the Latin is than the English.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Nam interrogandō ōrātor animōs audientium movet.</em></div><div class="hint">click to compare</div><div class="back">"For <strong>by questioning</strong>, a speaker moves the minds of those listening." <em>Interrogandō</em> = ablative of means. <em>Audientium</em> is a participle used as a noun, genitive plural &mdash; "of the ones listening."</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Tū in hōc templō fallendī grātiā sedēs, nōn dē salūte reī pūblicae cōgitandī causā.</em></div><div class="hint">click to compare</div><div class="back">"You are sitting in this temple <strong>for the sake of deceiving</strong>, not <strong>for the sake of thinking</strong> about the safety of the republic." The whole sentence is one purpose construction set against itself. Remember that <em>grātiā</em> and <em>causā</em> come <em>after</em> their genitives &mdash; read backwards from them.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; THE EMPTY SEATS</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Two details about that morning are worth pausing on, because both of them are arguments made without words.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;"><strong>First, the building.</strong> The Senate normally met in the <em>Cūria</em>. For this session Cicero summoned it to a temple instead &mdash; the temple of Jupiter Stator, on the slope below the Palatine. The stated reason was security; he had just survived an attempt on his life. But the choice of venue also says something. A meeting held under a god's roof, in a hastily changed location, tells every senator walking in that the situation is not normal before a single word is spoken.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;"><strong>Second, the seats.</strong> Catiline came. He was still, technically, a senator, and he took his place. According to Cicero, the men around him got up and moved, leaving the benches beside him bare and empty. We have this detail because Cicero puts it into the speech itself and points at it &mdash; which is worth remembering: <em>our source for the scene is the man arguing the case</em>. Still, the picture he gives is a real Roman instrument. Rome did much of its politics through visible, physical signals: where you sat, who walked with you through the Forum, whose door you were seen at in the morning. An empty bench was public information.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>The Roman word for it: <em>gravitās</em>.</strong> Cicero does not begin by shouting; he begins by asking a question the whole room already knows the answer to. That restraint is <em>gravitās</em> &mdash; weight carried, not thrown. And the gerunds are part of the same discipline: <em>fallendī grātiā</em>, <em>cōgitandī causā</em>. He does not call Catiline a traitor. He simply names, in exactly parallel grammar, the two possible reasons a man might be sitting in that room, and lets the empty seats finish the sentence.</p>
+    </div>
+
+    <!-- MODULE REVIEW -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; MODULE 4 IN FIVE LINES</div>
+        <table class="para">
+            <tr><th style="width:22%">Lesson</th><th>The one thing to keep</th></tr>
+            <tr><td class="lab">4.01</td><td>A gerund is a <strong>verbal noun</strong>: infinitive minus <em>-re</em>, plus <em>-nd-</em>, plus neuter singular endings. No nominative &mdash; the infinitive does that.</td></tr>
+            <tr><td class="lab">4.02</td><td><strong>Genitive</strong> "of doing" &middot; <strong>accusative</strong> purpose after <em>ad</em> &middot; <strong>ablative</strong> "by doing" or "while doing" after <em>in</em> &middot; <strong>dative</strong> rare.</td></tr>
+            <tr><td class="lab">4.03</td><td>Two purpose constructions: <em>-ndī causā / grātiā</em> (postpositive!) and <em>ad -ndum</em>. A third, <em>ut</em> + subjunctive, arrives in Module 8.</td></tr>
+            <tr><td class="lab">4.04</td><td>Not neuter singular, or something agrees with it &rarr; <strong>gerundive</strong>. Otherwise <strong>gerund</strong>. Recognition only this week.</td></tr>
+            <tr><td class="lab">4.05</td><td>In real oratory a repeated gerund construction becomes an argument. Grammar is a rhetorical choice.</td></tr>
+        </table>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; FINAL SELF-CHECK BEFORE THE QUIZ</div>
+            <div class="widget-question">Four questions across the whole module.</div>
+            <div class="widget-row" data-correct="b" data-hint="How many forms does a gerund have, and what gender and number are they?">
+                <div class="widget-row-prompt">Which statement about the gerund is true?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A gerund has no gender variation at all — it is always neuter. Gender agreement belongs to the gerundive.">It changes gender to match the noun it belongs to</button>
+                    <button data-choice="b" data-fb="Right &mdash; four forms, all neuter singular: -ndī, -ndō, -ndum, -ndō. No nominative, no plural, no gender choice.">It is neuter singular only, in four cases, with no nominative</button>
+                    <button data-choice="c" data-fb="It has no nominative. That gap is filled by the infinitive: Dīcere est difficile.">It has all five cases, like any noun</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Where does causā sit relative to its genitive?">
+                <div class="widget-row-prompt">You are reading and your eye hits <em>causā</em>. What should you do?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; causā is postpositive, so the genitive it governs is behind it. Look back, and if you find an -ndī, you have a purpose phrase.">Look <em>back</em> for a genitive, especially one ending in <em>-ndī</em></button>
+                    <button data-choice="b" data-fb="Reading forward is the instinct English gives you, and here it is the wrong one. Causā follows the word it governs.">Look <em>forward</em> for the noun it governs</button>
+                    <button data-choice="c" data-fb="Causā governs the genitive, not the ablative. Its own -ā ending is ablative, which is what makes it easy to misfile.">Look for an ablative to go with it</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Apply step 1 of the three-second test.">
+                <div class="widget-row-prompt">In <em>cōnsilium urbis capiendae</em>, what is <em>capiendae</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A gerund is never feminine. Capiendae is feminine genitive singular, which puts it outside the gerund's four forms.">A gerund in the genitive</button>
+                    <button data-choice="b" data-fb="It is not a perfect passive participle — that would be captae. This is built on the present stem with -nd-.">A perfect passive participle</button>
+                    <button data-choice="c" data-fb="Right &mdash; a gerundive agreeing with urbis (feminine genitive singular): 'a plan for taking the city.' Recognition only this module; you deploy it in Module 5.">A gerundive agreeing with <em>urbis</em></button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Is there a preposition in front of it, and if so which one?">
+                <div class="widget-row-prompt">Translate <em>in legendō</em> and <em>legendō</em>. Which pair is right?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Reversed. In + ablative gives 'while / in the course of'; the bare ablative gives means, 'by.'">"by reading" / "while reading"</button>
+                    <button data-choice="b" data-fb="Right &mdash; in + ablative = 'in the act of reading, while reading'; bare ablative = ablative of means, 'by reading.'">"while reading" / "by reading"</button>
+                    <button data-choice="c" data-fb="Neither is 'of reading' — that would be the genitive, legendī.">"of reading" / "for reading"</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- THIS WEEK'S WORK -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; YOUR GRADED WORK FOR MODULE 4</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Lūdus IV &mdash; <em>Ars Dīcendī</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">75 seconds of gerund formation, case identification, purpose constructions, and gerund-versus-gerundive. <strong>Best of unlimited attempts.</strong></div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 4 Quiz</strong> &middot; auto-graded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Identification and parsing, form production, case-and-use, vocabulary and derivatives, and Latin-to-English from this passage.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 4 Translation</strong> &middot; read by your teacher</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five sentences into Latin, three out of Latin, every one involving a gerund. Full vocabulary provided &mdash; you are assessed on <em>forms and syntax</em>, not on memory. No gerundives required.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 4 Reflection</strong> &middot; ungraded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tell your teacher what clicked and what did not.</div>
+            </div>
+        </div>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; margin-top:14px; font-size:16px; color:#1a2340; line-height:1.6;">&#128196; <strong>M365 step for the translation.</strong> Write it in <strong>Microsoft Word</strong>. Put your Latin in <em>italics</em> (Ctrl+I) and leave your English in plain text. Then add <strong>one comment</strong> (Insert &rarr; Comment) on any sentence where you chose a gerund construction, saying <em>which</em> one you used and <em>why</em> &mdash; a single line is enough. Save to <strong>OneDrive</strong> as <code>Lastname_Firstname_LatinAdv_M04_Translation.docx</code> and submit through Canvas.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT'S COMING</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 5 &mdash; Gerundives</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">You can already spot a gerundive. Next week you use one &mdash; and you meet the construction that makes Latin able to say <em>must</em> in a single adjective: <em>-ndus/-nda/-ndum</em> plus <em>esse</em>, the <strong>gerundive of obligation</strong>. Reading stays with Cicero: the duty to act, and who is answerable for acting. The virtue is <em>officium</em>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A gerund turns an action into a thing &mdash; and a thing can be weighed. Cicero puts <em>fallendī grātiā</em> and <em>cōgitandī causā</em> in the same shape on purpose, so that the room has to choose between them. That is what <em>gravitās</em> looks like in grammar: naming what you are doing plainly enough that you can be held to it.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.05 &middot; Cicero Prepares to Speak</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

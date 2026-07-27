@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 5.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 5</div>
+        <div style="font-size: 12px; color: #666;">Gerundives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 5.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Verbal Adjective</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 5.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Gerund, Meet Gerundive</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Last week a verb turned into a noun. This week it turns into an adjective &mdash; and starts giving orders.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The <strong>gerund</strong> you learned in Module 4 is stuck: neuter, singular, four cases, no nominative. Its twin, the <strong>gerundive</strong>, has the full run of the language &mdash; three genders, every case, singular and plural &mdash; because it is an <strong>adjective</strong>. And out of that one difference comes the sentence Romans used to say <em>this has to happen, and here is who has to do it.</em></div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the one difference between a gerund and a gerundive, and say what follows from it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build the gerundive of a verb in any of the four conjugations, including a deponent.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> look at an <em>-nd-</em> form in a sentence and decide whether it is a gerund or a gerundive.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; WHAT YOU ALREADY HAVE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Module 4 gave you the <strong>gerund</strong>: a verb wearing a noun's clothes. It let you put an action into a case slot &mdash; <em>ars scrībendī</em> ("the art of writing"), <em>ad pugnandum</em> ("for fighting"), <em>scrībendō</em> ("by writing"), <em>dīcendī causā</em> ("for the sake of speaking"). Always <strong>neuter</strong>, always <strong>singular</strong>, and no nominative, because Latin already had the infinitive for that job.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Now look closely at the piece the gerund is made of: the letters <strong>-nd-</strong>. Latin got a lot of mileage out of that little block. Attach neuter noun endings and you get a gerund. Attach <strong>full adjective endings</strong> and you get something else entirely.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:240px; background:#EEF1F8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:6px;">GERUND &middot; MODULE 4</div>
+                <div style="font-size:21px; color:#0e1c42;"><em>dēfende<span style="color:#c7922c;">nd</span>ī</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">"of defending"</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">A verbal <strong>noun</strong>. Neuter singular, no nominative. Four case forms in total.</div>
+            </div>
+            <div style="flex:1; min-width:240px; background:#FDF3E3; border:1px solid #E6D59A; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:6px;">GERUNDIVE &middot; THIS WEEK</div>
+                <div style="font-size:21px; color:#0e1c42;"><em>dēfende<span style="color:#c7922c;">nd</span>us, -a, -um</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">"needing to be defended"</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">A verbal <strong>adjective</strong>. Three genders, all five cases, singular and plural &mdash; thirty-odd forms.</div>
+            </div>
+        </div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">If the gerundive is an <em>adjective</em>, it has to agree with some noun. Before you read on: what do you think that noun turns out to be, in a sentence like "the city must be defended"?</div>
+            <div class="widget-options">
+                <button data-response="Exactly right, and it is the whole key to this module. The gerundive attaches to the thing the action lands on — the city — not to the person doing the defending. That is why the construction comes out passive: urbs dēfendenda est, 'the city must be defended.'">The city &mdash; the thing being defended</button>
+                <button data-response="That is the natural guess in English, where we say 'we must defend the city' and put the doer first. Latin does the opposite here: the gerundive agrees with the city. The doer gets a separate case of its own, which you will meet in Lesson 5.04.">The person who has to do the defending</button>
+                <button data-response="Reasonable, but no — esse is a verb, and adjectives do not agree with verbs. Esse is in the sentence, but only to supply the tense. The agreement is with a noun, and it is the noun the action is done to.">Some form of <em>esse</em>, since it is a linking verb</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE DEFINITION, AND THE ONE THING TO GET RIGHT</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;">A <strong>gerundive</strong> is a verbal <strong>adjective</strong>. It is <strong>passive</strong> in force, it looks <strong>forward</strong> in time, and it <strong>agrees</strong> with its noun in gender, number, and case.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Take those three pieces one at a time.</p>
+        <table class="para">
+            <tr><th style="width:22%">The gerundive is&hellip;</th><th style="width:26%">Which means</th><th>Worked example</th></tr>
+            <tr><td class="lab"><strong>passive</strong> in force</td><td>the noun it describes <em>receives</em> the action</td><td><em>urbs dēfendenda</em> &mdash; "the city <strong>to be defended</strong>," never "the city that defends"</td></tr>
+            <tr><td class="lab"><strong>forward-looking</strong></td><td>the action has not happened yet; it is owed, due, waiting</td><td><em>epistula legenda</em> &mdash; "the letter <strong>still to be read</strong>," not "the letter that was read"</td></tr>
+            <tr><td class="lab"><strong>an adjective</strong></td><td>it changes ending to match its noun, like <em>bonus, bona, bonum</em></td><td><em>urb<span class="end">s</span> dēfendend<span class="end">a</span></em> (fem. sg.) &middot; <em>lēgēs scrībend<span class="end">ae</span></em> (fem. pl.) &middot; <em>officium faciend<span class="end">um</span></em> (neut. sg.)</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The error to kill on day one.</strong> <em>Urbs dēfendenda est</em> means <strong>"the city must be defended."</strong> It does <em>not</em> mean "the city must defend." Almost every student who loses points on this module loses them right here &mdash; they see a nominative noun, assume it is the doer, and flip the voice. The gerundive is passive. The nominative noun is what <strong>gets</strong> done to.
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0 4px 0;">
+                <div style="flex:1; min-width:220px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:14px; color:#8A1F16;">&#10060; WRONG</div><div style="font-size:17px; color:#1a2340;">"The city must defend."</div></div>
+                <div style="flex:1; min-width:220px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:14px; color:#1A6B3D;">&#9989; RIGHT</div><div style="font-size:17px; color:#1a2340;">"The city must be defended."</div></div>
+            </div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>A translation crutch that actually works.</strong> Whenever you meet a gerundive, say it to yourself first as "<strong>needing to be ___ed</strong>." <em>Dēfendendus</em> &rarr; "needing to be defended." <em>Legenda</em> &rarr; "needing to be read." <em>Faciendum</em> &rarr; "needing to be done." It is clumsy English, but it locks in the passive force and the forward look at the same time &mdash; and you can smooth it out afterwards.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; HOW TO BUILD ONE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The recipe is the gerund's recipe with different endings on the end &mdash; so you already know two of the three steps.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.8;"><strong>1.</strong> Take the <strong>present stem</strong> (the infinitive minus <em>-re</em>).<br>
+            <strong>2.</strong> Add <strong>-nd-</strong>.<br>
+            <strong>3.</strong> Add the endings of <em>bonus, bona, bonum</em> &mdash; a 1st/2nd-declension adjective.</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:20%">Conjugation</th><th style="width:22%">Infinitive</th><th style="width:30%">Gerundive (m. / f. / n.)</th><th>Meaning</th></tr>
+            <tr><td class="lab"><strong>1st</strong></td><td><em>laudāre</em></td><td><em>lauda<span class="end">ndus</span>, laudanda, laudandum</em></td><td>needing to be praised</td></tr>
+            <tr><td class="lab"><strong>2nd</strong></td><td><em>habēre</em></td><td><em>habe<span class="end">ndus</span>, habenda, habendum</em></td><td>needing to be held, delivered</td></tr>
+            <tr><td class="lab"><strong>3rd</strong></td><td><em>dēfendere</em></td><td><em>dēfende<span class="end">ndus</span>, dēfendenda, dēfendendum</em></td><td>needing to be defended</td></tr>
+            <tr><td class="lab"><strong>3rd io-stem</strong></td><td><em>capere</em></td><td><em>capie<span class="end">ndus</span>, capienda, capiendum</em></td><td>needing to be seized, captured</td></tr>
+            <tr><td class="lab"><strong>4th</strong></td><td><em>audīre</em></td><td><em>audie<span class="end">ndus</span>, audienda, audiendum</em></td><td>needing to be heard</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two spelling notes worth ten points later.</strong> In the 2nd conjugation the long vowel of the infinitive <strong>shortens</strong>: <em>hab<u>ē</u>re</em> but <em>hab<u>e</u>ndus</em>; <em>dēl<u>ē</u>re</em> but <em>dēl<u>e</u>ndus</em>. And in the 3rd io-stem and the 4th conjugation an <strong>-i-</strong> shows up before the <em>-nd-</em>: <em>capiendus</em>, <em>audiendus</em>, <em>faciendus</em>, <em>custōdiendus</em>, <em>pūniendus</em>. These are exactly the same vowel patterns you already learned for the gerund, so if the gerund is solid the gerundive is nearly free.</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">Deponents have gerundives too &mdash; and they are <span style="color:#c7922c;">passive</span></h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This will feel strange for about ten seconds. A deponent has no passive meaning anywhere else in its paradigm (Module 2), but its <strong>gerundive is passive in force like everybody else's</strong>:</p>
+        <table class="para">
+            <tr><th style="width:30%">Deponent</th><th style="width:28%">Gerundive</th><th>Meaning</th></tr>
+            <tr><td class="lab"><em>hortor, hortārī</em> &mdash; urge</td><td><em>hortandus, -a, -um</em></td><td>needing to be urged, encouraged</td></tr>
+            <tr><td class="lab"><em>sequor, sequī</em> &mdash; follow</td><td><em>sequendus, -a, -um</em></td><td>needing to be followed</td></tr>
+            <tr><td class="lab"><em>mīror, mīrārī</em> &mdash; admire</td><td><em>mīrandus, -a, -um</em></td><td>needing to be admired; admirable</td></tr>
+            <tr><td class="lab"><em>patior, patī</em> &mdash; endure</td><td><em>patiendus, -a, -um</em></td><td>needing to be endured</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 8px 0 0 0;">So <em>dux nōbīs sequendus est</em> is perfectly good Latin: "the leader must be followed by us." A deponent's <em>form</em> looks passive and means active; a deponent's <em>gerundive</em> means passive. Latin is consistent about this; it just takes a moment to believe.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; GERUND OR GERUNDIVE?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">One test settles every case: <strong>is there a noun for this form to agree with?</strong> If yes, and the endings match &mdash; gerundive. If there is nothing to agree with and the form is sitting there as a neuter noun on its own &mdash; gerund.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Look at the <em>-nd-</em> form. Noun to agree with, or no noun to agree with?</div>
+            <div class="widget-row" data-correct="a" data-hint="Is there any noun in the phrase whose gender, number and case the form could be matching?">
+                <div class="widget-row-prompt"><em>dīcendī causā</em> &mdash; "for the sake of speaking"</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — gerund. Nothing here for it to agree with; dīcendī is simply a neuter verbal noun in the genitive, which is what causā requires.">Gerund &mdash; nothing to agree with</button>
+                    <button data-choice="b" data-fb="There is no noun in the phrase at all. Causā is a noun in form, but it governs the genitive rather than being described by it — the gerundive would have to match a noun that is not there.">Gerundive agreeing with <em>causā</em></button>
+                    <button data-choice="c" data-fb="A gerundive of obligation needs a form of esse and a noun to describe. Neither is present.">Gerundive of obligation</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Check the endings of both words. Do they match?">
+                <div class="widget-row-prompt"><em>lēgum scrībendārum causā</em> &mdash; "for the sake of writing laws"</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A gerund is neuter singular. Scrībendārum is feminine plural — no gerund ever looks like that.">Gerund in the genitive plural</button>
+                    <button data-choice="b" data-fb="Present participles end in -ns, -ntis: scrībēns, scrībentis. This is an -nd- form, so it is gerund or gerundive.">Present active participle</button>
+                    <button data-choice="c" data-fb="Right — gerundive. Lēgum is genitive plural feminine, and scrībendārum matches it exactly. The two words agree, which is only possible for an adjective.">Gerundive agreeing with <em>lēgum</em></button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Nominative noun plus an -nd- form plus est. What construction is that?">
+                <div class="widget-row-prompt"><em>Urbs dēfendenda est.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Gerunds have no nominative at all, so a gerund cannot be the thing agreeing with urbs.">Gerund in the nominative</button>
+                    <button data-choice="b" data-fb="Right — gerundive, feminine nominative singular, agreeing with urbs, plus est. This is the construction the whole module is built on: 'the city must be defended.'">Gerundive agreeing with <em>urbs</em></button>
+                    <button data-choice="c" data-fb="A perfect passive participle of dēfendō is dēfēnsa — 'defended,' already done. Dēfendenda points forward: still needing to be defended.">Perfect passive participle</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which one has two words whose endings match each other?">
+                <div class="widget-row-prompt">Which of these contains a <strong>gerundive</strong>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ad pugnandum is a gerund after ad — accusative, neuter, singular, with no noun attached. This is the Module 4 purpose construction.">ad pugnandum</button>
+                    <button data-choice="b" data-fb="Scrībendō on its own is an ablative gerund, 'by writing' — the ablative of means from Module 4. No noun, no agreement.">scrībendō</button>
+                    <button data-choice="c" data-fb="Right — ad coniūrātōs capiendōs. Coniūrātōs is accusative plural masculine and capiendōs matches it: 'for capturing the conspirators.' Agreement means gerundive.">ad coniūrātōs capiendōs</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> Cicero's <em>tablīnum</em> &mdash; the study of a Roman house &mdash; on a night in late November, 63 BC. Wax tablets, a lamp, a chest of intercepted letters, and a consul deciding what he is obliged to do before morning. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> objects in the room. At least <strong>two</strong> labels must use a gerundive &mdash; for example <em>epistulae legendae</em> ("letters needing to be read"), <em>ōrātiō habenda</em> ("a speech needing to be delivered"), <em>cōnsilium capiendum</em> ("a decision needing to be taken"). The rest can be plain: <em>lucerna</em> (lamp), <em>tabula</em> (writing tablet), <em>stilus</em> (stylus), <em>sella</em> (chair). <span style="color:#666;">[ARTHUR: labeling tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write one Latin sentence</strong> in the shape you will learn on Wednesday: a noun, a gerundive that agrees with it, and <em>est</em>. Example: <em>Officium mihi faciendum est.</em> &mdash; "The duty must be done by me." Formative and ungraded; the graded ARTHUR project comes at Module 8.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; OFFICIUM &middot; SERVICE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><em>Officium</em> is built from <em>ob</em> ("toward") and <em>facere</em> ("to do") &mdash; something done <em>toward</em> somebody else. For Romans it was not a warm feeling but close to a debt: you owed <em>officia</em> to your family, your allies, your city, the gods, and people kept count. This module's grammar is that idea turned into a sentence pattern. A gerundive of obligation names a thing that has to be done and, in the dative, the person it falls to &mdash; <em>what must be done, and by whom.</em> Notice how little room the construction leaves for wanting. It does not say "I would like to defend the republic." It says <em>rēs pūblica mihi dēfendenda est</em> &mdash; the defending is already owed, and my name is on it. That is service in the Roman sense, and it is the shape of every hard decision Cicero makes this semester.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 5.02 &mdash; Declining and Agreeing</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The full gerundive paradigm, all thirty forms &mdash; and the swap Latin makes when a gerund would have picked up a direct object.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A gerund is a verbal <strong>noun</strong>; a gerundive is a verbal <strong>adjective</strong> that <strong>agrees</strong> with something and is <strong>passive</strong> in force. Read every gerundive as "needing to be ___ed" before you smooth it into English, and you will never flip the voice.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 5.01 &middot; Gerund, Meet Gerundive</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

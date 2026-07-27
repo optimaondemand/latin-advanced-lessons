@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 12.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step-n { min-width: 34px; height: 34px; border-radius: 8px; background: #0E1C42; color: #fff; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-b { font-size: 17px; color: #1a2340; line-height: 1.6; }
+    .step-b strong { color: #0e1c42; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 12</div>
+        <div style="font-size: 12px; color: #666;">Fear Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 12.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Fear in Sequence</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 12.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Fear in Sequence</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The strangest construction of the semester runs on a rule you have had since Module 7. No new machinery today.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Lessons 12.01 and 12.02 settled <em>which marker word</em> to use &mdash; <em>nē</em>, <em>nē nōn</em>, or the rare <em>ut</em>. They left one question open: <strong>which tense of the subjunctive goes inside the clause?</strong> The answer is the two-row sequence table you already own, applied without a single change. Once that is nailed down we do the full paradigm of the deponent <em>vereor</em>, this module's word list, and the <em>metus</em> trap &mdash; the one that catches everybody exactly once.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose the present or the imperfect subjunctive for a fear clause by reading the main verb first.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> write out the present and imperfect subjunctive of the deponent <em>vereor</em> from memory.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> spot a fear clause hanging off a <em>noun</em> &mdash; <em>metus est nē&hellip;</em>, <em>timor erat nē&hellip;</em> &mdash; where English uses a verb.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE TWO-ROW RULE, UNCHANGED</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Here is the table from Module 7. Read it again knowing that it governs fear clauses too, exactly as it governs purpose, result, <em>cum</em> and indirect questions. <strong>Look at the main verb. It picks the tense. That is the whole rule.</strong></p>
+        <table class="para">
+            <tr><th style="width:32%">Tense of the main verb</th><th style="width:16%">Sequence</th><th style="width:26%">Subjunctive you use <em>now</em></th><th>The other box</th></tr>
+            <tr><td class="lab">present &middot; future &middot; future perfect<br><span style="font-size:14px;color:#666;"><em>timeō, timēbō, metuit</em> (pres.)</span></td><td><strong>primary</strong></td><td class="end">present subjunctive</td><td style="color:#8a8a8a;">perfect subjunctive &mdash; Module 13</td></tr>
+            <tr><td class="lab">imperfect &middot; perfect &middot; pluperfect<br><span style="font-size:14px;color:#666;"><em>timēbam, timuī, timueram</em></span></td><td><strong>secondary</strong></td><td class="end">imperfect subjunctive</td><td style="color:#8a8a8a;">pluperfect subjunctive &mdash; Module 13</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two of the four boxes are still shut.</strong> That grey right-hand column has been grey since Module 7, and it stays grey for one more week. Every subjunctive you write in this module is <strong>present or imperfect</strong> &mdash; no exceptions, in the lessons, the drills, the quiz or the translation. Module 13 opens the column, and it opens it on purpose right after this one, because a fear is the natural place to want to say &ldquo;I am afraid something <em>has already</em> happened.&rdquo; You cannot say that yet. You can say everything else.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#128161; <strong>Why fear clauses barely miss the shut boxes.</strong> A fear points <em>forward</em>. You are afraid of something that has not settled yet, which is why your English keeps reaching for &ldquo;will&rdquo; and &ldquo;would.&rdquo; Forward-looking fear lives in the left-hand column: present subjunctive after a present main verb, imperfect after a past one. The module works cleanly without Module 13 because that is where fear naturally sits.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; FOUR MAIN VERBS, FOUR DECISIONS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Same construction each time. Only the main verb moves, and the subjunctive follows it. Cover the Latin, read the English, and say which tense you would write before you look.</p>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Vereor nē hiems viās claudat.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;">&ldquo;I am afraid that winter will close the roads.&rdquo;<br>
+            <strong>Main verb</strong> <em>vereor</em>, present &rarr; <strong>primary</strong> &rarr; <strong>present</strong> subjunctive <em>claudat</em>. <span style="color:#8a6416;">Gloss: <em>hiems, hiemis</em> f. &mdash; winter; <em>claudō, claudere, clausī</em> &mdash; to close, block.</span></div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Verēbātur nē mīlitēs spem salūtis āmitterent.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;">&ldquo;He was afraid that the soldiers would lose hope of safety.&rdquo;<br>
+            <strong>Main verb</strong> <em>verēbātur</em>, imperfect &rarr; <strong>secondary</strong> &rarr; <strong>imperfect</strong> subjunctive <em>āmitterent</em>. <span style="color:#8a6416;">Gloss: <em>spēs, speī</em> f. &mdash; hope; <em>salūs, salūtis</em> f. &mdash; safety; <em>āmittō, āmittere, āmīsī</em> &mdash; to lose.</span></div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Metuent nē dux ipse in aciē cadat.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;">&ldquo;They will dread that the leader himself will fall in the battle line.&rdquo;<br>
+            <strong>Main verb</strong> <em>metuent</em>, <strong>future</strong> &rarr; and future is <strong>primary</strong> &rarr; <strong>present</strong> subjunctive <em>cadat</em>. This is the row students get wrong, and they got it wrong in Module 11 too: a future main verb does not want a future-looking subjunctive. There is no such thing. It sits in the top row with the present. <span style="color:#8a6416;">Gloss: <em>dux, ducis</em> m. &mdash; leader; <em>aciēs, aciēī</em> f. &mdash; battle line; <em>cadō, cadere, cecidī</em> &mdash; to fall.</span></div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Timor erat nē nūntius ad castra nōn pervenīret.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;">&ldquo;There was a fear that the messenger would not reach the camp.&rdquo;<br>
+            <strong>Main verb</strong> <em>erat</em>, imperfect &rarr; <strong>secondary</strong> &rarr; <strong>imperfect</strong> subjunctive <em>pervenīret</em>. Two other things are happening here and both come back later on this page: the fear is carried by a <strong>noun</strong>, <em>timor</em>, not a verb; and the <em>nōn</em> of <em>nē nōn</em> does not have to sit glued to <em>nē</em>. It can stand next to the verb it negates. <span style="color:#8a6416;">Gloss: <em>nūntius, nūntiī</em> m. &mdash; messenger; <em>perveniō, pervenīre, pervēnī</em> &mdash; to arrive, reach.</span></div>
+        </div>
+
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>The English will not tell you.</strong> Notice that three of the four sentences came out in English with &ldquo;will&rdquo; or &ldquo;would,&rdquo; which are not tenses Latin has here at all. If you choose your subjunctive by translating first and then guessing, you will guess. Read the Latin main verb, name its tense, name the sequence, write the form. Four seconds, no guessing.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; <em>VEREOR</em> IN FULL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Lesson 12.01 introduced <em>vereor, verērī, veritus sum</em> and promised the paradigm. Here it is. Nothing in it is new: it is a <strong>2nd-conjugation deponent</strong>, so it takes passive endings and means something active, exactly as <em>hortor</em> and <em>sequor</em> have since Module 2. Three principal parts, because the perfect is built from a participle.</p>
+
+        <div style="font-size:13px; color:#8a6416; letter-spacing:.4px; margin:14px 0 4px 0;">INDICATIVE &mdash; PRESENT SYSTEM</div>
+        <table class="para">
+            <tr><th style="width:22%">&nbsp;</th><th style="width:26%">Present</th><th style="width:26%">Imperfect</th><th>Future</th></tr>
+            <tr><td class="lab">1st sing.</td><td><em>vereor</em> &mdash; I fear</td><td><em>verēbar</em></td><td><em>verēbor</em></td></tr>
+            <tr><td class="lab">2nd sing.</td><td><em>verēris</em></td><td><em>verēbāris</em></td><td><em>verēberis</em></td></tr>
+            <tr><td class="lab">3rd sing.</td><td><em>verētur</em></td><td><em>verēbātur</em></td><td><em>verēbitur</em></td></tr>
+            <tr><td class="lab">1st pl.</td><td><em>verēmur</em></td><td><em>verēbāmur</em></td><td><em>verēbimur</em></td></tr>
+            <tr><td class="lab">2nd pl.</td><td><em>verēminī</em></td><td><em>verēbāminī</em></td><td><em>verēbiminī</em></td></tr>
+            <tr><td class="lab">3rd pl.</td><td><em>verentur</em></td><td><em>verēbantur</em></td><td><em>verēbuntur</em></td></tr>
+        </table>
+
+        <div style="font-size:13px; color:#8a6416; letter-spacing:.4px; margin:14px 0 4px 0;">SUBJUNCTIVE &mdash; THE TWO TENSES YOU HAVE</div>
+        <table class="para">
+            <tr><th style="width:22%">&nbsp;</th><th style="width:32%">Present subjunctive</th><th style="width:32%">Imperfect subjunctive</th><th>Perfect &amp; pluperfect</th></tr>
+            <tr><td class="lab">1st sing.</td><td class="end"><em>verear</em></td><td class="end"><em>verērer</em></td><td style="color:#8a8a8a;" rowspan="6">Module 13.<br>Do not use them yet.</td></tr>
+            <tr><td class="lab">2nd sing.</td><td><em>vereāris</em></td><td><em>verērēris</em></td></tr>
+            <tr><td class="lab">3rd sing.</td><td><em>vereātur</em></td><td><em>verērētur</em></td></tr>
+            <tr><td class="lab">1st pl.</td><td><em>vereāmur</em></td><td><em>verērēmur</em></td></tr>
+            <tr><td class="lab">2nd pl.</td><td><em>vereāminī</em></td><td><em>verērēminī</em></td></tr>
+            <tr><td class="lab">3rd pl.</td><td><em>vereantur</em></td><td><em>verērentur</em></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Both subjunctives are built the way every 2nd-conjugation passive is built, and you can check them without memorising anything. The present subjunctive swaps the stem vowel for <strong>-eā-</strong> (<em>moneātur</em> &rarr; <em>vereātur</em>). The imperfect subjunctive takes the whole present active infinitive and adds passive endings &mdash; and since a deponent has no active infinitive on show, use the shape: <em>verē-</em> + <strong>-rer, -rēris, -rētur</strong> (<em>monērētur</em> &rarr; <em>verērētur</em>).</p>
+
+        <div style="font-size:13px; color:#8a6416; letter-spacing:.4px; margin:14px 0 4px 0;">THE OTHER PARTS</div>
+        <table class="para">
+            <tr><td class="lab" style="width:34%">Present infinitive</td><td><em>verērī</em> &mdash; to fear</td></tr>
+            <tr><td class="lab">Perfect indicative</td><td><em>veritus sum, veritus es, veritus est&hellip;</em> &mdash; I feared, you feared, he feared</td></tr>
+            <tr><td class="lab">Participles</td><td><em>verēns, verentis</em> &mdash; fearing &middot; <em>veritus, -a, -um</em> &mdash; having feared</td></tr>
+            <tr><td class="lab">Imperative</td><td><em>verēre</em> (one person) &middot; <em>verēminī</em> (more than one) &mdash; &ldquo;be afraid!&rdquo;</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The one error to refuse.</strong> <em>Veritus sum</em> means <strong>&ldquo;I feared,&rdquo;</strong> never &ldquo;I was feared.&rdquo; <em>Verēbātur</em> means <strong>&ldquo;he was afraid,&rdquo;</strong> never &ldquo;he was being feared.&rdquo; That is Module 2's rule and it has not moved. A deponent looks passive and is not; the only verb whose voice you have to think about in a fear clause is the one <em>inside</em> the clause.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 4 &middot; THE MODULE WORD LIST &middot; CLICK EACH CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Say the meaning out loud before you flip. Several of these turn up in Friday's reading, and three of them have left English words behind that you use without knowing it.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; SAY IT FIRST</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>timeō, timēre,<br>timuī</em></div><div class="hint">click</div><div class="back">to <strong>fear, be afraid</strong><br><span style="color:#666;">The everyday word. English <em>timid</em> comes from its relative <em>timidus</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>metuō, metuere,<br>metuī</em></div><div class="hint">click</div><div class="back">to <strong>dread</strong><br><span style="color:#666;">Colder and heavier than <em>timeō</em>. English <em>meticulous</em> came from <em>metus</em> by way of <em>meticulōsus</em>, &ldquo;full of fear&rdquo; &mdash; a careful person is a frightened one.</span></div></div>
+                <div class="flip-card"><div class="front"><em>vereor, verērī,<br>veritus sum</em></div><div class="hint">click</div><div class="back">to <strong>fear, revere</strong><br><span style="color:#666;">Deponent. English <em>revere</em> and <em>reverence</em> are its descendants &mdash; which tells you how close fear and respect sat for a Roman.</span></div></div>
+                <div class="flip-card"><div class="front"><em>timor, timōris</em> m.<br><em>metus, metūs</em> m.</div><div class="hint">click</div><div class="back"><strong>fear</strong> &middot; <strong>dread</strong><br><span style="color:#666;"><em>Timor</em> is 3rd declension. <em>Metus</em> is <strong>4th</strong>: <em>metus, metūs, metuī, metum, metū</em>. Never <em>metō</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>aciēs, aciēī</em> f.</div><div class="hint">click</div><div class="back"><strong>battle line</strong> (also: edge, sharp point)<br><span style="color:#666;">5th declension, like <em>rēs</em> and <em>spēs</em>. <em>In prīmā aciē</em> &mdash; &ldquo;in the front line.&rdquo;</span></div></div>
+                <div class="flip-card"><div class="front"><em>proelium,<br>proeliī</em> n.</div><div class="hint">click</div><div class="back"><strong>battle</strong><br><span style="color:#666;"><em>Proelium committere</em> &mdash; to join battle. <em>Sine proeliō</em> &mdash; without a fight.</span></div></div>
+                <div class="flip-card"><div class="front"><em>effugiō, effugere,<br>effūgī</em></div><div class="hint">click</div><div class="back">to <strong>escape, get away</strong><br><span style="color:#666;">A compound of <em>fugiō</em>. Present subj. <em>effugiat</em>; imperfect subj. <em>effugeret</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>dīlābor, dīlābī,<br>dīlāpsus sum</em></div><div class="hint">click</div><div class="back">to <strong>slip away, melt away</strong><br><span style="color:#666;">Deponent. Used of an army coming apart without fighting &mdash; men leaving in ones and twos. Imperfect subj. <em>dīlāberētur, dīlāberentur</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>spēs, speī</em> f.<br><em>dēspērō, dēspērāre</em></div><div class="hint">click</div><div class="back"><strong>hope</strong> &middot; to <strong>give up hope</strong><br><span style="color:#666;">Look at the second word: <em>dē-</em> (away from) + <em>spēs</em>. To <em>despair</em> is to be away from hope.</span></div></div>
+                <div class="flip-card"><div class="front"><em>ferōcia,<br>ferōciae</em> f.<br><em>vultus, vultūs</em> m.</div><div class="hint">click</div><div class="back"><strong>fierceness, defiance</strong> &middot; <strong>face, expression</strong><br><span style="color:#666;">Hold on to these two. Friday's reading ends with them in the same sentence, and it is the most famous sentence Sallust wrote.</span></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 5 &middot; THE <em>METUS</em> TRAP</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every fear clause you have met so far hung off a <em>verb</em>: <em>timeō</em>, <em>metuēbant</em>, <em>vereor</em>. Latin does not require one. It will happily hang the clause off a <strong>noun</strong>:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0; text-align:center;">
+            <div style="font-size:23px; color:#0e1c42;"><em>Metus erat nē cōpiae in montibus dēficerent.</em></div>
+            <div style="font-size:17px; color:#1a2340; margin-top:8px;">&ldquo;There was a fear that the forces would give out in the mountains.&rdquo;</div>
+            <div style="font-size:15px; color:#8a6416; margin-top:6px;">Gloss: <em>cōpiae, cōpiārum</em> f. pl. &mdash; forces, troops; <em>dēficiō, dēficere, dēfēcī</em> &mdash; to fail, give out.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Here is why it catches people. The student runs the habit from 12.01 &mdash; <em>look at the verb in front of</em> nē &mdash; and the verb in front of <em>nē</em> is <strong><em>erat</em></strong>. &ldquo;Was&rdquo; is not a verb of fearing. So the sentence looks like it has no fear in it, the student falls back on the Module 8 reflex, and out comes &ldquo;there was a fear so that the forces would not give out&rdquo; &mdash; which is nonsense, and which they can usually hear is nonsense without being able to say why.</p>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:14px 18px; font-size:17px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The repair is one word wider.</strong> Do not look for a verb of fearing. Look for a <strong>fear word</strong> &mdash; verb <em>or</em> noun. If <em>timeō</em>, <em>metuō</em>, <em>vereor</em>, <em>timor</em> or <em>metus</em> is anywhere in the main clause, you are in a fear clause and <em>nē</em> means &ldquo;that.&rdquo;</div>
+        <table class="para">
+            <tr><th style="width:44%">Latin</th><th>English</th></tr>
+            <tr><td><em>Metus est nē hostēs veniant.</em></td><td>There is a fear that the enemy will come.</td></tr>
+            <tr><td><em>Magnus timor erat nē urbs incenderētur.</em></td><td>There was great fear that the city would be set on fire.</td></tr>
+            <tr><td><em>Metus nōn erat nē nōn satis frūmentī habērent.</em></td><td>There was no fear that they would not have enough grain.</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">Two smaller things about <em>metus</em> while you have it in front of you. It is <strong>4th declension</strong>, so the ablative is <em>metū</em> &mdash; <em>magnō metū</em>, &ldquo;in great dread&rdquo; &mdash; and never <em>metō</em>. And the verb <em>metuō</em> has a spelling collision worth knowing: <em>metuit</em> is both <strong>present</strong> (&ldquo;he dreads&rdquo;) and <strong>perfect</strong> (&ldquo;he dreaded&rdquo;). Only the sentence around it tells you which, and in a fear clause the tense of the subjunctive will usually settle it for you: <em>metuit nē veniat</em> is present, <em>metuit nē venīret</em> is perfect.</p>
+
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING &middot; SIX ROWS</div>
+            <div class="widget-question">Sequence, forms, and the noun trap. Read the main clause before you choose.</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Vereor is present tense. Which row of the two-row table does the present sit in?">
+                <div class="widget-row-prompt"><em>Vereor nē hostēs castra nostra ____.</em> &mdash; &ldquo;I am afraid that the enemy will attack our camp.&rdquo; <span style="font-style:normal; color:#8a6416;">(<em>oppugnō, oppugnāre</em> &mdash; to attack)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Oppugnārent is the imperfect subjunctive, which needs a past main verb. Vereor is present, so you are in primary sequence.">oppugnārent</button>
+                    <button data-choice="b" data-fb="Right — oppugnent. Vereor is present, primary sequence, so present subjunctive. The English 'will attack' is not a Latin future; it is what English does with a forward-looking fear.">oppugnent</button>
+                    <button data-choice="c" data-fb="Oppugnant is present INDICATIVE. A fear clause always takes the subjunctive, so the -a- has to become -e-: oppugnent.">oppugnant</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Same sentence, one letter changed in the main verb. What did that do to the sequence?">
+                <div class="widget-row-prompt"><em>Verēbāmur nē hostēs castra nostra ____.</em> &mdash; &ldquo;We were afraid that the enemy would attack our camp.&rdquo;</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — oppugnārent. Verēbāmur is imperfect, so secondary sequence, so the imperfect subjunctive. Compare the row above: the clause did not change its meaning, only its tense, and only because the main verb moved into the past.">oppugnārent</button>
+                    <button data-choice="b" data-fb="Oppugnent is the present subjunctive, correct after a present main verb. Verēbāmur is imperfect — a past tense — so you need the imperfect subjunctive.">oppugnent</button>
+                    <button data-choice="c" data-fb="Oppugnābant is imperfect INDICATIVE. Right tense, wrong mood. A fear clause is always subjunctive.">oppugnābant</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Metuet is future. Careful — this is the row that caught the class in Module 11.">
+                <div class="widget-row-prompt"><em>Metuet nē nūntius nōn ____.</em> &mdash; &ldquo;He will dread that the messenger will not arrive.&rdquo; <span style="font-style:normal; color:#8a6416;">(<em>perveniō, pervenīre</em> &mdash; to arrive)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Pervenīret is imperfect subjunctive and needs a past main verb. Metuet is future — and future is in the TOP row of the table, with the present.">pervenīret</button>
+                    <button data-choice="b" data-fb="Pervenit is indicative. The mood has to be subjunctive; the question is only which tense.">pervenit</button>
+                    <button data-choice="c" data-fb="Right — perveniat. Future main verb, primary sequence, present subjunctive. There is no future subjunctive in Latin, so nothing else was ever on offer.">perveniat</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Which word in the main clause is the fear word? It is not a verb.">
+                <div class="widget-row-prompt"><em>Magnus metus erat nē cōpiae in montibus dēficerent.</em> &mdash; what makes this a fear clause?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. The fear word is the NOUN metus, and erat is only the verb 'to be' holding it up. English says it the same way: 'there was great fear that…'. Nē still means a plain 'that.'">the noun <em>metus</em> in the main clause</button>
+                    <button data-choice="b" data-fb="Erat means 'there was.' It is not a verb of fearing at all — that is exactly the trap. Widen the search from 'verb of fearing' to 'fear word, verb or noun.'">the verb <em>erat</em>, which here means &ldquo;feared&rdquo;</button>
+                    <button data-choice="c" data-fb="Dēficerent is the verb INSIDE the clause — the thing feared, not the fearing. Every subordinate clause you have met this semester has a subjunctive in it; that alone never tells you which construction you are in.">the subjunctive <em>dēficerent</em> in the clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Three real forms of vereor. Which one is imperfect subjunctive, 3rd person plural?">
+                <div class="widget-row-prompt">Which form of <em>vereor</em> would you write after <em>Mīlitēs&hellip;</em> in a secondary-sequence fear clause?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Verentur is present INDICATIVE, 3rd plural: 'they fear.' Right person and number, wrong mood and tense.">verentur</button>
+                    <button data-choice="b" data-fb="Verēbantur is imperfect INDICATIVE: 'they were afraid.' This is the form you use as a MAIN verb, not inside a clause.">verēbantur</button>
+                    <button data-choice="c" data-fb="Right — verērentur, imperfect subjunctive 3rd plural. Build it as verē- + -rentur, the same way monērentur is built. Remember the -r- endings mean nothing about voice here: vereor is deponent.">verērentur</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Which declension does metus belong to? Count back to Lesson 12.01's card.">
+                <div class="widget-row-prompt">In <em>magnō metū coniūrātī fūgērunt</em>, the form <em>metū</em> is:</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="If metus were 2nd declension the ablative would be metō — and that is the form to refuse. Metus does not belong to the declension its nominative looks like.">ablative singular of a 2nd-declension <em>metus, metī</em></button>
+                    <button data-choice="b" data-fb="Right — metus, metūs is FOURTH declension, so the ablative singular is metū. 'The conspirators fled in great dread.' Compare exercitus, exercitū, and magistrātus, magistrātū, both of which you have already met.">ablative singular of the 4th-declension <em>metus, metūs</em></button>
+                    <button data-choice="c" data-fb="The dative and ablative plural of metus would be metibus. A single word ending in a long -ū here is the ablative singular of a 4th-declension noun.">dative plural</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 12.04 &mdash; Three Jobs Each</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;"><em>Nē</em> now does three different jobs and <em>ut</em> does three, and the marker word never tells you which. A five-step procedure that reads the <strong>main clause</strong> first, an unlabelled pile mixing Modules 8, 9, 10, 11 and 12, and an honest look at the two places where the categories genuinely overlap.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A fear clause adds <strong>no new machinery</strong>. Marker word from 12.01 and 12.02; tense from the Module 7 table; forms from the conjugations you have had since 0706010. The only genuinely new things this module asks you to hold are a <em>translation</em> habit &mdash; <em>nē</em> is &ldquo;that&rdquo; &mdash; and a <em>searching</em> habit: look for a fear word in the main clause, verb <strong>or</strong> noun.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 12.03 &middot; Fear in Sequence</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

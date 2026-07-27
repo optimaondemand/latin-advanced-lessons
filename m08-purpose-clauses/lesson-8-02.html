@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 8.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 8</div>
+        <div style="font-size: 12px; color: #666;">Purpose Clauses &amp; Indirect Command</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">One Word for "So That&hellip;Not"</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><em>Nē</em>: One Word for "So That&hellip;Not"</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">English needs four words. Latin needs two letters.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">"So that the envoys would <strong>not</strong> escape" &mdash; in Latin that is <em><strong>nē</strong> lēgātī effugerent</em>. One little word, <em>nē</em>, replaces both <em>ut</em> and the negative. And it is <strong>not</strong> <em>ut nōn</em>. Of everything in this module, that is the distinction most worth owning.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build and translate a negative purpose clause with <em>nē</em> + subjunctive, in either sequence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the rule that negative purpose is <em>nē</em>, never <em>ut nōn</em>, and say what <em>ut nōn</em> is reserved for.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> put a <strong>passive</strong> or <strong>deponent</strong> verb inside a purpose clause with the right subjunctive endings.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; SWAP ONE WORD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">To make a purpose clause negative, you change exactly one thing: <em>ut</em> becomes <em>nē</em>. The verb does not move. The sequence rule does not change. Nothing else happens.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:4px;">POSITIVE PURPOSE</div>
+                <div style="font-size:19px; color:#0e1c42;"><em><strong>ut</strong> Catilīna suspicārētur</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"so that Catiline <strong>might</strong> suspect"</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8A1F16; margin-bottom:4px;">NEGATIVE PURPOSE</div>
+                <div style="font-size:19px; color:#0e1c42;"><em><strong>nē</strong> Catilīna suspicārētur</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"so that Catiline <strong>might not</strong> suspect"</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Three sentences, both sequences, with the English you would actually write:</p>
+        <table class="para">
+            <tr><th style="width:46%">Latin</th><th>English</th></tr>
+            <tr><td><em>Cicerō tacuit <strong>nē</strong> Catilīna suspicārētur.</em></td><td>Cicero kept quiet <strong>so that Catiline would not suspect</strong>. <span style="font-size:14px; color:#666;">(<em>tacuit</em> perfect &rarr; secondary &rarr; imperfect subj.)</span></td></tr>
+            <tr><td><em>Cōnsul custōdēs pōnet <strong>nē</strong> lēgātī effugiant.</em></td><td>The consul will station guards <strong>so that the envoys may not escape</strong>. <span style="font-size:14px; color:#666;">(<em>pōnet</em> future &rarr; primary &rarr; present subj.)</span></td></tr>
+            <tr><td><em>Cicerō cōnsilia cēpit <strong>nē</strong> rēs pūblica dēlērētur.</em></td><td>Cicero made plans <strong>so that the republic would not be destroyed</strong>. <span style="font-size:14px; color:#666;">(passive subjunctive &mdash; see Part 3.)</span></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>An older English word that fits <em>nē</em> perfectly:</strong> <em>lest</em>. "Cicero kept quiet <em>lest</em> Catiline suspect." You do not have to write that way, and "so that&hellip;not" is always acceptable &mdash; but if you meet <em>lest</em> in an older translation or a dictionary entry, now you know it is a <em>nē</em> clause underneath.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 2 &middot; THE MISTAKE WORTH NOT MAKING</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:18px; color:#1a2340; line-height:1.6; margin-bottom:12px;"><strong>Negative purpose is <em>nē</em>. It is never <em>ut nōn</em>.</strong></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The temptation is obvious. You know <em>ut</em> means "so that" and you know <em>nōn</em> means "not," so <em>ut nōn</em> looks like it should mean "so that&hellip;not." It is a reasonable guess and it is wrong. Latin reserves <em>ut nōn</em> for a <em>different construction</em> &mdash; one you have not met yet.</p>
+        <div style="background:#EEF1F8; border-left:5px solid #0E1C42; border-radius:6px; padding:14px 18px; font-size:16px; color:#1a2340; line-height:1.6; margin:12px 0;">&#128271; <strong>Forward glance &mdash; not yet studied.</strong> <em>Ut nōn</em> belongs to <strong>result clauses</strong>, which you learn in <strong>Module 9</strong>: clauses that report what actually happened <em>as a consequence</em>, rather than what someone was aiming at. You will not be asked to read or write one this module, and nothing on the Module 8 quiz or translation requires it. All you need now is the boundary: <strong><em>nē</em> for negative purpose; <em>ut nōn</em> is Module 9's job.</strong></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Two more traps, both smaller, both common:</p>
+        <table class="para">
+            <tr><th style="width:32%">Do not write</th><th style="width:26%">Write</th><th>Why</th></tr>
+            <tr><td><em>ut&hellip;nōn</em> <span style="color:#8A1F16;">&#10007;</span></td><td><em>nē</em> <span style="color:#1A6B3D;">&#10003;</span></td><td>Negative purpose has its own word. Using <em>ut nōn</em> tells your reader you meant a result clause.</td></tr>
+            <tr><td><em>nē nōn</em> <span style="color:#8A1F16;">&#10007;</span></td><td><em>nē</em> <span style="color:#1A6B3D;">&#10003;</span></td><td><em>Nē</em> already contains the negative. Adding <em>nōn</em> double-negates it.</td></tr>
+            <tr><td><em>nē</em> + indicative <span style="color:#8A1F16;">&#10007;</span></td><td><em>nē</em> + subjunctive <span style="color:#1A6B3D;">&#10003;</span></td><td>A purpose is still an intention whether it is positive or negative. The mood does not change.</td></tr>
+        </table>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; PASSIVE AND DEPONENT INSIDE THE CLAUSE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Cicero constantly wants to say "so that <em>something might be done</em>" &mdash; passive. And half his narrative verbs are deponents from Modules 2 and 3. Both go into a purpose clause with no special rules: you just need the passive-shaped subjunctive endings from Module 6.</p>
+        <table class="para">
+            <tr><th style="width:24%">Verb</th><th style="width:38%">Present subjunctive passive</th><th>Imperfect subjunctive passive</th></tr>
+            <tr><td class="lab">1st &mdash; <em>amō</em></td><td><em>amer, amēris, amētur, amēmur, amēminī, amentur</em></td><td><em>amārer, amārēris, amārētur, amārēmur, amārēminī, amārentur</em></td></tr>
+            <tr><td class="lab">2nd &mdash; <em>moneō</em></td><td><em>monear, moneāris, moneātur&hellip;</em></td><td><em>monērer, monērēris, monērētur&hellip;</em></td></tr>
+            <tr><td class="lab">3rd &mdash; <em>regō</em></td><td><em>regar, regāris, regātur&hellip;</em></td><td><em>regerer, regerēris, regerētur&hellip;</em></td></tr>
+            <tr><td class="lab">3rd io &mdash; <em>capiō</em></td><td><em>capiar, capiāris, capiātur&hellip;</em></td><td><em>caperer, caperēris, caperētur&hellip;</em></td></tr>
+            <tr><td class="lab">4th &mdash; <em>audiō</em></td><td><em>audiar, audiāris, audiātur&hellip;</em></td><td><em>audīrer, audīrēris, audīrētur&hellip;</em></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-bottom:12px;">&#128161; <strong>The pattern is the one you already know.</strong> Take the active subjunctive, then swap the active personal endings for the passive set <em>-r, -ris, -tur, -mur, -minī, -ntur</em>. <em>Amem</em> &rarr; <em>amer</em>. <em>Amārem</em> &rarr; <em>amārer</em>. That is the same trade you have been making since 0706010.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">And a deponent, being passive in form and active in meaning, simply uses those same passive-shaped endings with an active sense:</p>
+        <table class="para">
+            <tr><th style="width:24%">Deponent</th><th style="width:30%">Present subjunctive</th><th style="width:30%">Imperfect subjunctive</th><th>Means</th></tr>
+            <tr><td class="lab"><em>loquor</em></td><td><em>loquar, loquāris, loquātur</em></td><td><em>loquerer, loquerēris, loquerētur</em></td><td>speak</td></tr>
+            <tr><td class="lab"><em>sequor</em></td><td><em>sequar, sequāris, sequātur</em></td><td><em>sequerer, sequerēris, sequerētur</em></td><td>follow</td></tr>
+            <tr><td class="lab"><em>suspicor</em></td><td><em>suspicer, suspicēris, suspicētur</em></td><td><em>suspicārer, suspicārēris, suspicārētur</em></td><td>suspect</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Read the two boxes above against each other.</strong> <em>Regerētur</em> means "he might be ruled" &mdash; a genuine passive. <em>Loquerētur</em> means "he might speak" &mdash; a deponent, active in sense. Identical endings, opposite direction, exactly as in Module 2. The subjunctive changes nothing about that.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; <em>UT</em> OR <em>NĒ</em>, AND WHICH FORM?</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Four rows. Decide the marker word and the form together.</div>
+            <div class="widget-row" data-correct="c" data-hint="Is the purpose positive or negative? And what tense is <em>posuit</em>?">
+                <div class="widget-row-prompt">"The praetors were stationed so that the envoys would not escape." <em>Cōnsul praetōrēs posuit ____ lēgātī ____ .</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ut nōn is the result-clause negative (Module 9), not negative purpose. And effugiant is present subjunctive, which needs a present or future main verb.">ut nōn &hellip; effugiant</button>
+                    <button data-choice="b" data-fb="Nē is right, but effugiant is present subjunctive. Posuit is perfect — a past tense — so the clause needs the imperfect: effugerent.">nē &hellip; effugiant</button>
+                    <button data-choice="c" data-fb="Right — nē effugerent. Negative purpose takes nē, and posuit (perfect) puts you in secondary sequence, so imperfect subjunctive: effugere + nt.">nē &hellip; effugerent</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="<em>Ōrat</em> is present. What does that do to the clause?">
+                <div class="widget-row-prompt">"Cicero begs the citizens so that they may hold the memory of this day." <em>Cicerō cīvēs ōrat ut memoriam huius diēī ____ .</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — teneant. Ōrat is present, so primary sequence, so present subjunctive: teneam, teneās, teneat, teneāmus, teneātis, teneant.">teneant</button>
+                    <button data-choice="b" data-fb="Tenērent is imperfect subjunctive, which belongs after a past main verb. Ōrat is present.">tenērent</button>
+                    <button data-choice="c" data-fb="Tenent is present indicative. A purpose clause never takes the indicative.">tenent</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Look at the meaning: is anyone intending this, or is it being described as a consequence?">
+                <div class="widget-row-prompt">Which of these is <strong>not</strong> how you say negative purpose in Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nē + imperfect subjunctive is exactly right for negative purpose after a past main verb.">nē &hellip; effugerent</button>
+                    <button data-choice="b" data-fb="Right — ut nōn is not negative purpose. Latin keeps it for result clauses, which arrive in Module 9. For purpose, use nē.">ut nōn &hellip; effugerent</button>
+                    <button data-choice="c" data-fb="Nē + present subjunctive is right for negative purpose after a present or future main verb.">nē &hellip; effugiant</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="The republic is not doing the destroying &mdash; it is having it done to it.">
+                <div class="widget-row-prompt">"Cicero made plans so that the republic would not be destroyed." <em>Cicerō cōnsilia cēpit nē rēs pūblica ____ .</em> <span style="font-style:normal; color:#8a6416;">(<em>dēleō, dēlēre</em>)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dēlēret is active — 'so that the republic might not destroy.' You need the passive: the republic is the thing at risk of being destroyed.">dēlēret</button>
+                    <button data-choice="b" data-fb="Dēleātur is present subjunctive passive, and the form is well built — but cēpit is perfect, so this clause needs the imperfect.">dēleātur</button>
+                    <button data-choice="c" data-fb="Right — dēlērētur: imperfect subjunctive passive (dēlēre + rētur), secondary sequence after cēpit, and passive because the republic is the victim, not the agent.">dēlērētur</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 5 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out before you flip. Two of these four are negative; one has a passive inside the clause.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cicerō omnia dīligenter custōdīvit nē quid ad hostēs mānāret.</em></div><div class="hint">click to compare</div><div class="back">"Cicero guarded everything carefully <strong>so that nothing might leak out</strong> to the enemy." <em>Nē quid</em> = "so that nothing" (after <em>nē</em>, <em>quid</em> means "anything"). <em>Mānāret</em> is imperfect subjunctive of <em>mānō, mānāre</em>, "to flow, leak" &mdash; secondary sequence after <em>custōdīvit</em>.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cōnsul ad Forum prōcēdit ut populus omnia audiat.</em></div><div class="hint">click to compare</div><div class="back">"The consul goes forward to the Forum <strong>so that the people may hear</strong> everything." <em>Prōcēdit</em> is present &rarr; primary &rarr; present subjunctive <em>audiat</em>. Gloss: <em>prōcēdō, prōcēdere, prōcessī</em> &mdash; to go forward, advance.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cicerō tacēbat nē coniūrātī cōnsilium suum cognōscerent.</em></div><div class="hint">click to compare</div><div class="back">"Cicero was keeping quiet <strong>so that the conspirators would not learn</strong> his plan." <em>Tacēbat</em> is imperfect &rarr; secondary &rarr; imperfect subjunctive <em>cognōscerent</em> (<em>cognōscere</em> + <em>nt</em>). Gloss: <em>taceō, tacēre, tacuī</em> &mdash; to be silent.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Litterae ad senātum portātae sunt ut signa agnōscerentur.</em></div><div class="hint">click to compare</div><div class="back">"The letters were carried to the Senate <strong>so that the seals might be identified</strong>." <em>Agnōscerentur</em> is imperfect subjunctive <strong>passive</strong> &mdash; the seals are not identifying, they are being identified. Secondary sequence after the perfect passive <em>portātae sunt</em>. Gloss: <em>agnōscō, agnōscere, agnōvī</em> &mdash; to recognize, identify; <em>signum, signī</em> n. &mdash; sign, seal.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 8.03 &mdash; Reported Orders</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The same <em>ut/nē</em> + subjunctive shape, doing a different job: <strong>indirect command</strong>. Plus the case trap that catches everybody &mdash; <em>imperō</em> takes the dative, <em>rogō</em> takes the accusative, and <em>iubeō</em> refuses <em>ut</em> altogether.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Negative purpose is <strong><em>nē</em></strong> &mdash; one word covering both "so that" and "not." Never <em>ut nōn</em>: Latin is saving that phrase for a different construction in Module 9. Everything else about the clause &mdash; mood, sequence, passive and deponent endings &mdash; stays exactly as it was.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.02 &middot; <em>Nē</em>: One Word for "So That&hellip;Not"</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

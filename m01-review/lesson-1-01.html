@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 1.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Review in Context</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Reading Without the Tables</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Reading Without the Tables</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Last week you had the tables. This week the tables are gone.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">No new grammar arrives in Module 1 &mdash; not one form. What changes is where the forms live. In Module 0 they sat in charts you could look at. This week they are buried inside continuous Latin about a real Roman conspiracy, and you have to <strong>pull them out</strong>. That is a different skill, and it is the one the rest of the year runs on.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> work through a Latin sentence with three questions, asked in the same order every time.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the case, tense, or construction of a form inside a phrase, with no paradigm table in front of me.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say who Catiline was and why Sallust turned him into a character study.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; WHAT ACTUALLY CHANGES THIS WEEK</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:10px 0;">
+            <div style="flex:1; min-width:240px; background:#EEF1F8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:16px; color:#0e1c42;"><strong>Module 0 asked</strong></div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.6; margin-top:6px;">"Here is the imperfect passive table. Which row is <em>timēbātur</em>?"</div>
+            </div>
+            <div style="flex:1; min-width:240px; background:#D8F0DD; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:16px; color:#1A6B3D;"><strong>Module 1 asks</strong></div>
+                <div style="font-size:16px; color:#1a2340; line-height:1.6; margin-top:6px;">"Here are nine lines of Sallust. What is <em>premēbantur</em> doing, and to whom?"</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">Both questions use the same grammar. Only the second one builds a reader. Looking a form up in a chart <em>feels</em> like learning, because it feels smooth. Digging it out of a sentence feels slower and rougher &mdash; and that is the feeling of the knowledge actually moving into a place you can reach it from later.</p>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>So no tables this week?</strong> There are a few, but they come <em>after</em> you have worked, as a way to check yourself &mdash; never as the first thing you see. If you want the full charts again, Module 0 is still there and you should use it. Just try the sentence first.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Be honest: what usually happens when you hit a Latin sentence that does not come apart on the first read?</div>
+            <div class="widget-options">
+                <button data-response="Extremely common, and it is the habit this week is designed to replace. Guessing from vocabulary works until the sentence has an ablative absolute in it, and then it collapses. Part 2 gives you something to do instead of guessing.">I guess from the words I recognize</button>
+                <button data-response="That is not cheating &mdash; looking things up is what Latinists do all day. But do it in the right order: try the three questions in Part 2 first, then check. The looking-up sticks much better when it answers a question you already had.">I go look up the endings</button>
+                <button data-response="A real answer, and a common one. The good news is that stalling usually means you are missing one specific thing &mdash; almost always a participle's case or a verb's voice. Part 2 turns the stall into a checklist.">I stall out and read it again and again</button>
+                <button data-response="Then you already have the habit this lesson is trying to build. Use this week to make it faster and more automatic, and push yourself on lesson 1.04, which is the longest reading in the module.">I slow down and work through it word by word</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; THREE QUESTIONS, ASKED IN ORDER</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This is the whole method. It is not clever &mdash; it is just fixed, which is what makes it fast.</p>
+        <table class="para">
+            <tr><th style="width:8%">&nbsp;</th><th style="width:32%">Ask</th><th>Because</th></tr>
+            <tr><td class="lab"><strong>1</strong></td><td><strong>Where is the main verb, and what is it?</strong> Person, number, tense, voice.</td><td>The verb tells you how many people are involved, when it happened, and whether the subject is acting or being acted on. Nothing else can be settled first.</td></tr>
+            <tr><td class="lab"><strong>2</strong></td><td><strong>Who is the subject?</strong> Find a nominative that agrees with the verb &mdash; or accept that the ending alone is the subject.</td><td>Latin often leaves the subject inside the verb: <em>trāxit</em> already means "he dragged." Do not go hunting for a noun that is not there.</td></tr>
+            <tr><td class="lab"><strong>3</strong></td><td><strong>For every remaining word: what case, and what job?</strong> If it is a participle, find its <strong>case</strong> before anything else.</td><td>A participle's case is what tells you whether you have an ablative absolute, a phrase describing the subject, or part of a verb form. Get the case first and the rest follows.</td></tr>
+        </table>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">Worked example</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">Here is one sentence from the passage you will read tomorrow. Nine words, no new grammar, and it will not open if you read it out of order.</p>
+        <div style="background:#0E1C42; border-radius:8px; padding:20px 24px; margin:12px 0; text-align:center;">
+            <div style="font-size:23px; color:#ffffff; font-style:italic; line-height:1.5;">Verbīs blandīs multōs virōs dēceptōs in coniūrātiōnem suam trāxit.</div>
+            <div style="font-size:14px; color:#55c8e8; margin-top:10px;">adapted from Sallust, <em>Bellum Catilīnae</em> 14</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:22%">Step</th><th>What you find</th></tr>
+            <tr><td class="lab"><strong>1 &middot; the verb</strong></td><td><em>trāxit</em> &mdash; perfect stem <em>trāx-</em> plus <em>-it</em>. Perfect active, 3rd singular: "he dragged, he drew."</td></tr>
+            <tr><td class="lab"><strong>2 &middot; the subject</strong></td><td>There is no nominative noun in the sentence at all. The subject is inside the ending: <strong>he</strong> &mdash; Catiline, from the sentence before. Stop looking.</td></tr>
+            <tr><td class="lab"><strong>3 &middot; the rest</strong></td><td><em>verbīs blandīs</em> &mdash; ablative plural, and nothing else in the sentence needs them, so this is <strong>ablative of means</strong>: "by flattering words."<br>
+            <em>multōs virōs</em> &mdash; accusative plural, the direct object of <em>trāxit</em>.<br>
+            <em>dēceptōs</em> &mdash; a participle. <strong>Case first:</strong> accusative plural masculine, so it agrees with <em>virōs</em>, not with the subject. PPP, so it happened <em>before</em> the dragging: "men who had been deceived."<br>
+            <em>in coniūrātiōnem suam</em> &mdash; <em>in</em> + accusative, so motion into: "into his own conspiracy."</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:17px; color:#0e1c42;"><strong>"By flattering words he drew many men, once they had been deceived, into his conspiracy."</strong></div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Or more naturally: "He deceived many men with flattery and drew them into his conspiracy."</div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Notice where the danger was.</strong> Two ablatives and a participle sat side by side, and the temptation was to read <em>verbīs blandīs&hellip;dēceptōs</em> as one ablative absolute. It is not one, because <em>dēceptōs</em> is accusative. Question 3 caught it. That single check &mdash; <em>what case is the participle?</em> &mdash; is the most valuable habit in this module.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 3 &middot; FOUR PHRASES, NO TABLES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each phrase comes from the story you are about to read. Answer from what the ending tells you &mdash; then check.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; RETRIEVE, DO NOT LOOK UP</div>
+            <div class="widget-question">Name the form or the construction.</div>
+            <div class="widget-row" data-correct="c" data-hint="Two markers to spot: what sits before the ending, and what the ending itself is.">
+                <div class="widget-row-prompt">Multī hominēs magnīs dēbitīs <strong>premēbantur</strong>. (<em>premō</em> &mdash; to press, weigh down)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Imperfect active 3rd plural would be premēbant, ending in -nt. The -ntur ending is passive.">Imperfect active, 3rd pl.</button>
+                    <button data-choice="b" data-fb="Present passive 3rd plural is premuntur &mdash; no -bā- in it. The -bā- here can only be imperfect.">Present passive, 3rd pl.</button>
+                    <button data-choice="c" data-fb="Right &mdash; -bā- gives imperfect, -ntur gives passive: 'many men were being weighed down by great debts.' The men are receiving the action, not doing it.">Imperfect passive, 3rd pl.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Both words are ablative. Does either of them have another job in the main sentence?">
+                <div class="widget-row-prompt"><strong>Multīs virīs convocātīs</strong>, Catilīna dux factus est.</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; ablative absolute. Both words are ablative, and neither is the subject, object, or anything else in the main clause: 'once many men had been summoned&hellip;'">Ablative absolute</button>
+                    <button data-choice="b" data-fb="Ablative of means answers 'by what?' &mdash; but summoned men are not the instrument Catiline used to become leader. And an ablative of means would not carry a participle agreeing with it like this.">Ablative of means</button>
+                    <button data-choice="c" data-fb="The subject of the main clause is Catilīna, nominative. Virīs is ablative, so it cannot be the subject of anything.">The subject of the sentence</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Find the ending -ūrus. Which of the three participles ends that way?">
+                <div class="widget-row-prompt">Iam bellum <strong>gestūrus</strong>, Catilīna arma parābat. (<em>gerō</em> &mdash; to wage; <em>bellum gerere</em> &mdash; to wage war)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="'Having waged' is not available here: gerō is an ordinary verb, so its perfect participle gestum is passive &mdash; 'having been waged.'">PPP &mdash; having waged war</button>
+                    <button data-choice="b" data-fb="Right &mdash; FAP, nominative singular masculine, agreeing with Catilīna: 'about to wage war, on the point of waging war.' Its action comes after parābat.">FAP &mdash; about to wage war</button>
+                    <button data-choice="c" data-fb="'Waging' would be gerēns, the present active participle. The -ūrus ending always means the future one.">PAP &mdash; waging war</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="What kind of verb is scrīpsit, and what case is Catilīnam?">
+                <div class="widget-row-prompt">Sallustius scrīpsit <strong>Catilīnam multōs adulēscentēs corrūpisse</strong>. (<em>corrumpō</em> &mdash; to corrupt)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A relative clause needs quī, quae, or quod. There is no relative pronoun anywhere in this phrase.">Relative clause</button>
+                    <button data-choice="b" data-fb="No ablatives here at all &mdash; Catilīnam and adulēscentēs are both accusative, and corrūpisse is an infinitive, not a participle.">Ablative absolute</button>
+                    <button data-choice="c" data-fb="Right &mdash; indirect statement after a verb of writing: accusative subject Catilīnam plus the perfect infinitive corrūpisse. 'Sallust wrote that Catiline had corrupted many young men.' Perfect infinitive, so it happened before the writing.">Indirect statement, accusative + infinitive</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127963;&#65039; PART 4 &middot; THE MAN YOU ARE READING ABOUT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><strong>Lūcius Sergius Catilīna</strong> was born around 108 BC into one of Rome's oldest patrician families, the Sergii. By birth he should have been one of the great men of the Republic. He served in Sulla's campaigns, governed a province, and ran for the consulship &mdash; and lost. Twice. By 63 BC he was deep in debt, out of options, and surrounded by other men in the same position.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Everything we know about him comes from two men who wanted him destroyed or condemned: Cicero, who beat him, and Sallust, who wrote about him twenty years later. Keep that in view all week. It does not mean the story is false. It means you are reading a <em>case</em> against someone, made by skilled people, and part of your job is to notice how it is built.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:14px 0;">
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:17px; color:#0e1c42;"><strong>What is not in dispute</strong></div>
+                <div style="font-size:15px; color:#1a2340; line-height:1.6; margin-top:6px;">A conspiracy existed. Men gathered. Cicero exposed it as consul in 63 BC, and Catiline died fighting a Roman army the next year.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#F5E7E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:17px; color:#AA1E2D;"><strong>What is argument</strong></div>
+                <div style="font-size:15px; color:#1a2340; line-height:1.6; margin-top:6px;">What kind of man he was, and whether Rome's crisis was his fault or its own. That is where Sallust does his work &mdash; and where you should read hardest.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the <em>domus</em> of a late-Republican Roman senator &mdash; the <em>ātrium</em> you enter through, the <em>tablīnum</em> where he keeps his records, the <em>triclīnium</em> where he entertains the men whose votes he needs. This is the kind of room where the men in this week's reading actually met. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things, using Latin you already own &mdash; <em>ātrium</em> (entrance hall), <em>iānua</em> (door), <em>mēnsa</em> (table), <em>lectus</em> (couch), <em>lucerna</em> (lamp), <em>liber</em> (book/scroll), <em>aqua</em> (water), <em>servus</em> (household slave).</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write one Latin sentence</strong> as an <strong>indirect statement</strong> about what the owner of this house thought or said. For example: <em>Senātor putāvit domum suam esse tūtam.</em> &mdash; "The senator thought that his house was safe." Accusative subject, then an infinitive. Formative and ungraded; the graded ARTHUR project comes at Module 8. <span style="color:#666;">[ARTHUR: capture / share step]</span></p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; CŌNSTANTIA &middot; PERSEVERANCE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><em>Cōnstantia</em> is built from <em>cōnstāre</em>, "to stand together, to hold firm." Romans used it for the person who keeps standing in the same place when standing there has stopped being comfortable. It is not the same as being stubborn, and it is not the same as being fast. This week asks exactly that of you: no new grammar to be excited about, no fresh paradigm to conquer &mdash; just the same forms you already know, now demanding to be found rather than looked up. That is the least glamorous work in the course and the work that decides how the rest of it goes. <em>Cōnstantia</em> is what carries a reader through a sentence that does not open on the first pass.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 1.02 &mdash; Catiline's Portrait</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The most famous character sketch in Latin prose, adapted: eight lines in which Sallust hands Catiline every advantage a Roman could want and then shows what he did with them. You will parse every participle in it.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Three questions, in this order: <strong>what is the main verb</strong>, <strong>who is the subject</strong>, <strong>what case is everything else</strong>. And when you reach a participle, ask its case before you ask its meaning. That one habit is worth more this year than any chart.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.01 &middot; Reading Without the Tables</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

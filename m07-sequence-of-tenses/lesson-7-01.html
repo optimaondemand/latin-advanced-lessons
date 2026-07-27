@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 7.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 7</div>
+        <div style="font-size: 12px; color: #666;">Sequence of Tenses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Who Decides the Tense?</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Who Decides the Tense?</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You can build the forms. Now: which one does Latin actually want?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Last module you learned to make the present and imperfect subjunctive. This module you learn something stranger: when a subjunctive sits in a subordinate clause, <strong>you do not get to pick its tense</strong>. The main verb picks it for you. Latin calls this the <strong>sequence of tenses</strong>, and it means time inside a Latin sentence is measured by <em>relationship</em>, not by the clock.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what "sequence of tenses" means and why a subordinate subjunctive's tense is not a free choice.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> sort a main verb into <strong>primary</strong> or <strong>secondary</strong> sequence by looking only at its tense.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name which subjunctive tense each sequence calls for &mdash; and say honestly which part of the table is not mine yet.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; RETRIEVE, DO NOT RELEARN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Nothing new is being built today. Everything this module does, it does with the <strong>two subjunctive tenses you already have</strong> from Module 6. Pull them back before you read further &mdash; cover the right-hand side, say the form, then click.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY IT FIRST &middot; THEN CLICK TO CHECK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front">1st conj. &mdash; present subj.</div><div class="hint"><em>amō</em> &middot; click</div><div class="back"><em>amem, am<strong>ē</strong>s, amet, amēmus, amētis, ament</em> &mdash; the <strong>-e-</strong> is the marker</div></div>
+                <div class="flip-card"><div class="front">2nd, 3rd, 4th &mdash; present subj.</div><div class="hint"><em>moneam, regam, audiam</em> &middot; click</div><div class="back"><em>moneam, regam, capiam, audiam</em> &mdash; the <strong>-a-</strong> is the marker in every conjugation except the 1st</div></div>
+                <div class="flip-card"><div class="front">Any verb &mdash; imperfect subj.</div><div class="hint">the easy one &middot; click</div><div class="back"><strong>Present infinitive + -m, -s, -t, -mus, -tis, -nt.</strong> <em>amāre &rarr; amārem</em> &middot; <em>monēre &rarr; monērem</em> &middot; <em>regere &rarr; regerem</em> &middot; <em>capere &rarr; caperem</em> &middot; <em>audīre &rarr; audīrem</em></div></div>
+                <div class="flip-card"><div class="front"><em>esse</em> &mdash; both tenses</div><div class="hint">the one you will meet most &middot; click</div><div class="back">Present: <em>sim, sīs, sit, sīmus, sītis, sint</em>. Imperfect: <em>essem, essēs, esset, essēmus, essētis, essent</em>.</div></div>
+                <div class="flip-card"><div class="front">Passive and deponent</div><div class="hint">same markers &middot; click</div><div class="back">Passive: <em>amer, amēris, amētur</em> &middot; <em>amārer, amārēris, amārētur</em>. Deponent: <em>loquar, loquāris, loquātur</em> &middot; <em>loquerer, loquerēris, loquerētur</em>.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The macron that decides the mood.</strong> <em>am<strong>ā</strong>s</em> = "you love" (present <em>indicative</em>). <em>am<strong>ē</strong>s</em> = present <em>subjunctive</em>. One vowel, two moods. Keep your eye on it all week.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE PROBLEM, IN TWO SENTENCES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here are two Latin sentences. Everything is the same except the first verb &mdash; and yet the <em>last</em> verb changes too. Look at what moves.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#E8F6FB; border:1px solid #C5DCE5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1B6A94; margin-bottom:6px;">MAIN VERB IS PRESENT</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Cicerō <strong>vigilat</strong> ut cīvēs tūtī <strong>sint</strong>.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">"Cicero keeps watch so that the citizens may be safe."</div>
+                <div style="font-size:15px; color:#1B6A94; margin-top:6px;"><em>sint</em> = <strong>present</strong> subjunctive</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:6px;">MAIN VERB IS PAST</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Cicerō <strong>vigilābat</strong> ut cīvēs tūtī <strong>essent</strong>.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">"Cicero was keeping watch so that the citizens might be safe."</div>
+                <div style="font-size:15px; color:#8a6416; margin-top:6px;"><em>essent</em> = <strong>imperfect</strong> subjunctive</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">Notice what did <em>not</em> happen. The meaning of the <em>ut</em> clause did not change &mdash; both times the citizens are simply "safe." No new information arrived. The only thing that changed was the main verb, and the subjunctive followed it like a shadow.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;">That following is the rule. The tense of a subjunctive in a subordinate clause is <strong>governed by the tense of the main verb</strong>. Latin calls this the <strong>sequence of tenses</strong> &mdash; <em>cōnsecūtiō temporum</em>.</div>
+        </div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Before you read the rule: <em>why</em> would a language do this? What is a subordinate clause getting out of being told what tense to be?</div>
+            <div class="widget-options">
+                <button data-response="That is very close to the truth. A subordinate clause is not making its own independent time claim — it is describing something positioned relative to the main verb. Matching the main verb's time zone is how Latin marks that dependence out loud.">Maybe it shows the clause belongs to the main verb</button>
+                <button data-response="Reasonable guess, and there is something to it — the pattern is so regular that a Roman reader could predict the ending before hearing it. But prediction is a side effect. The main job is marking dependence: the clause is anchored to the main verb's time, not to the calendar.">Maybe it makes the sentence easier to predict</button>
+                <button data-response="Understandable, but no — this is not decoration. Changing sequence changes the grammar of the sentence, and getting it wrong is a real error a Roman reader would notice immediately, the way an English speaker notices 'he say' instead of 'he says.'">Maybe it is just a habit with no real job</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE RULE: TWO SEQUENCES, TWO TENSES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every main verb in Latin falls into one of two camps. The camp has a name, and the name tells you which subjunctive to use.</p>
+        <table class="para">
+            <tr><th style="width:32%">If the MAIN verb is&hellip;</th><th style="width:24%">the sequence is&hellip;</th><th>then the subordinate subjunctive is&hellip;</th></tr>
+            <tr><td class="lab"><strong>present</strong> or <strong>future</strong><br><span style="font-size:14px; color:#666;"><em>vigilat</em>, <em>vigilābit</em>, <em>rogat</em>, <em>rogābit</em></span></td><td><strong>PRIMARY</strong><br><span style="font-size:14px; color:#666;">(also called "present" sequence)</span></td><td class="end">PRESENT subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;"><em>sit</em>, <em>sint</em>, <em>amet</em>, <em>regat</em>, <em>audiat</em>, <em>loquātur</em></span></td></tr>
+            <tr><td class="lab"><strong>imperfect</strong>, <strong>perfect</strong>, or <strong>pluperfect</strong><br><span style="font-size:14px; color:#666;"><em>vigilābat</em>, <em>vigilāvit</em>, <em>vigilāverat</em></span></td><td><strong>SECONDARY</strong><br><span style="font-size:14px; color:#666;">(also called "historic" sequence)</span></td><td class="end">IMPERFECT subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;"><em>esset</em>, <em>essent</em>, <em>amāret</em>, <em>regeret</em>, <em>audīret</em>, <em>loquerētur</em></span></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>The one that catches everybody.</strong> A <strong>future</strong> main verb is <em>primary</em>, not secondary. <em>Vigilābit ut cīvēs tūtī <strong>sint</strong></em> &mdash; "he will keep watch so that the citizens may be safe." It feels like it should reach for something other than the present, because in English we say "so that they <em>would</em> be safe." Latin does not care. Future is a non-past tense, so it lives in the primary camp with the present.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>"Historic" is the better nickname.</strong> Secondary sequence is the sequence of <em>narrative</em> &mdash; of things told as history. Sallust's narration runs almost entirely in secondary sequence, because he is telling you what happened. Cicero, arguing live in front of a crowd, keeps sliding into primary, because he is talking about now. Once you know the two camps, you can hear an author's stance from his subjunctives.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; WHAT THIS TABLE IS HONESTLY MISSING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You deserve to know the shape of the whole thing, even though you will only use half of it this module. The real sequence table has <strong>four</strong> cells, not two.</p>
+        <table class="para">
+            <tr><th style="width:26%">Main verb</th><th style="width:20%">Sequence</th><th style="width:27%">Same time as the main verb</th><th>Already finished before it</th></tr>
+            <tr><td class="lab">present / future</td><td><strong>PRIMARY</strong></td><td class="end">present subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#10004; yours now</span></td><td style="background:#F6F6F6; color:#777;">perfect subjunctive<br><span style="font-size:13px;">&#128274; Module 13</span></td></tr>
+            <tr><td class="lab">imperfect / perfect / pluperfect</td><td><strong>SECONDARY</strong></td><td class="end">imperfect subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#10004; yours now</span></td><td style="background:#F6F6F6; color:#777;">pluperfect subjunctive<br><span style="font-size:13px;">&#128274; Module 13</span></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">The greyed-out column handles a subordinate action that was <strong>already completed</strong> when the main verb happened &mdash; "he asks what you <em>have done</em>," "he asked what you <em>had done</em>." That needs two subjunctive tenses you have not built yet, and building them is the whole job of <strong>Module 13</strong>. Until then, every subordinate clause you meet in this course is describing something happening <strong>at the same time</strong> as the main verb, and the two-row rule in Part 3 covers it completely.</p>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>So do not go looking for the grey column.</strong> If you meet a form ending in <em>-erit</em> or <em>-isset</em> in outside reading this week, you have found the Module 13 half. Note it, gloss it, move on. Nothing in this module's quiz or translation will ask you for one, and you should not offer one.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; FIRST SORT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each main verb is given with its tense named, so this is purely about the rule &mdash; not about parsing.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Primary or secondary? And therefore which subjunctive?</div>
+            <div class="widget-row" data-correct="b" data-hint="Is the present a past tense?">
+                <div class="widget-row-prompt">Main verb <em>rogat</em> (present) &mdash; the clause after it will use&hellip;</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Secondary is for past main verbs. Rogat is present, so it is primary.">Secondary &rarr; imperfect subjunctive</button>
+                    <button data-choice="b" data-fb="Right — present main verb, primary sequence, present subjunctive. Rogat cūr discēdat.">Primary &rarr; present subjunctive</button>
+                    <button data-choice="c" data-fb="Primary is correct, but primary takes the PRESENT subjunctive for same-time action. The imperfect belongs to secondary sequence.">Primary &rarr; imperfect subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Perfect is a past tense. Which camp is that?">
+                <div class="widget-row-prompt">Main verb <em>rogāvit</em> (perfect) &mdash; the clause after it will use&hellip;</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A past main verb never takes the present subjunctive under this rule. Rogāvit is perfect, so it is secondary.">Primary &rarr; present subjunctive</button>
+                    <button data-choice="b" data-fb="The camp is right — secondary — but secondary takes the IMPERFECT subjunctive. The pluperfect subjunctive is a Module 13 form and is not yours yet.">Secondary &rarr; pluperfect subjunctive</button>
+                    <button data-choice="c" data-fb="Right — perfect main verb, secondary sequence, imperfect subjunctive. Rogāvit cūr discēderet.">Secondary &rarr; imperfect subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Future is not a past tense.">
+                <div class="widget-row-prompt">Main verb <em>rogābit</em> (future) &mdash; the clause after it will use&hellip;</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — and this is the one people miss. Future is a non-past tense, so it sits in PRIMARY sequence and takes the present subjunctive.">Primary &rarr; present subjunctive</button>
+                    <button data-choice="b" data-fb="The English 'so that he would...' pulls you this way, but Latin does not follow English here. Future main verbs are primary.">Secondary &rarr; imperfect subjunctive</button>
+                    <button data-choice="c" data-fb="There is no third camp. Every main verb is either primary or secondary; there is no 'future sequence.'">Future sequence &rarr; future subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Three tenses share the secondary camp. Which three?">
+                <div class="widget-row-prompt">Which list gives <strong>all</strong> the main-verb tenses that trigger <strong>secondary</strong> sequence?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Present and future are the PRIMARY camp — the opposite answer.">present, future</button>
+                    <button data-choice="b" data-fb="Right — imperfect, perfect, and pluperfect. All three are past tenses, and all three call for the imperfect subjunctive.">imperfect, perfect, pluperfect</button>
+                    <button data-choice="c" data-fb="Perfect and pluperfect are indeed secondary, but you have left out the imperfect, which is the most common secondary main verb in narrative.">perfect, pluperfect</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which two subjunctive tenses do you actually own right now?">
+                <div class="widget-row-prompt">This module works with exactly two subjunctive tenses. Which two?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Perfect and pluperfect subjunctive are Module 13. You have not built them and will not be asked for them.">perfect and pluperfect</button>
+                    <button data-choice="b" data-fb="There is no future subjunctive in Latin at all — that gap is part of why sequence of tenses exists.">present and future</button>
+                    <button data-choice="c" data-fb="Right — present and imperfect subjunctive, exactly the two you built in Module 6. One per sequence.">present and imperfect</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the Forum Rōmānum on the morning after Catiline left the city &mdash; a crowd gathering in front of the <em>Rōstra</em>, the speaker's platform. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things in the scene in Latin &mdash; for example <em>Rōstra</em> (the platform), <em>forum</em>, <em>populus</em> (the crowd), <em>cōnsul</em>, <em>templum</em>, <em>Capitōlium</em>. <span style="color:#666;">[ARTHUR: label tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write two Latin sentences</strong> about the scene &mdash; the <em>same</em> sentence twice, once with a present main verb and once with a past main verb, so that the subjunctive has to change. Model: <em>Cicerō vigilat ut cīvēs tūtī sint</em> &rarr; <em>Cicerō vigilābat ut cīvēs tūtī essent.</em> Formative and ungraded; the graded ARTHUR project comes at Module 8.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; ADMĪRĀTIŌ &middot; WONDER</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Admīrātiō</em> is built from <em>ad-</em> ("toward") and <em>mīror</em> ("to wonder at") &mdash; the deponent you met in Module 2. It is the act of turning toward something and finding it larger than you expected. It gives us <em>admire</em>, <em>marvel</em>, <em>miracle</em>, and &mdash; through the same root &mdash; <em>mirror</em>.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">Here is what is worth wondering at today. You have spent years assuming that a verb's tense reports <em>when</em> something happened, measured against now. Sequence of tenses says: not in a subordinate clause. There, tense reports a <strong>relationship</strong> &mdash; this action stands beside that one. Latin built a grammar in which time is relative before anyone had a word for relativity. When a rule like that stops looking arbitrary and starts looking designed, that shift is <em>admīrātiō</em>, and it is the whole reason to study an old language carefully.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 7.02 &mdash; Primary Sequence</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Present and future main verbs, and the present subjunctive that answers them &mdash; in all four conjugations, passive, deponent, and <em>esse</em>. Plus the words this module needs.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">In a subordinate clause you do not choose the subjunctive's tense &mdash; the main verb chooses it. <strong>Present or future main verb &rarr; primary &rarr; present subjunctive. Imperfect, perfect, or pluperfect main verb &rarr; secondary &rarr; imperfect subjunctive.</strong> Two rows, and they are enough until Module 13.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.01 &middot; Who Decides the Tense?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 13.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 13</div>
+        <div style="font-size: 12px; color: #666;">Perfect &amp; Pluperfect Subjunctive</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 13.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Easiest Form, and the Most Dangerous</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 13.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Easiest Form, and the Most Dangerous</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; the pluperfect subjunctive, and one honest collision</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two jobs today: one that takes ninety seconds, and one that takes real care.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The <strong>pluperfect subjunctive</strong> is the easiest tense in the Latin verb system &mdash; you already know the rule and just have not been told that it applies. Then, having finished the easy half of the lesson, you will look straight at the one place where Latin genuinely does not tell you what mood it is in: <em>amāverit</em> is both a perfect subjunctive and a future perfect indicative. That is not a mistake in your textbook. It is the language. You will learn a test that works anyway.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form the <strong>pluperfect subjunctive active</strong> for any verb in Latin, including <em>sum</em> and <em>possum</em>, from one rule.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say exactly which persons of the perfect subjunctive and future perfect indicative are identical, which differ only by a macron, and which differ outright.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> decide which mood I am reading by looking at the <em>clause</em>, not at the word.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE NINETY-SECOND TENSE</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;">Pluperfect subjunctive active = <strong>the perfect active infinitive</strong> + <strong><em>-m, -s, -t, -mus, -tis, -nt</em></strong>.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">You have already met that rule &mdash; in Lesson 6.03, where the <strong>present</strong> infinitive plus the same endings gave you the imperfect subjunctive. Latin does the identical trick twice:</p>
+        <table class="para">
+            <tr><th style="width:34%">Take this infinitive</th><th style="width:22%">Add the endings</th><th>and you get</th></tr>
+            <tr><td class="lab"><strong>present</strong> infinitive &mdash; <em>amāre</em></td><td><em>-m, -s, -t&hellip;</em></td><td><em>amārem</em> &mdash; <strong>imperfect</strong> subjunctive <span style="font-size:13px; color:#666;">(Module 6)</span></td></tr>
+            <tr><td class="lab"><strong>perfect</strong> infinitive &mdash; <em>amāvisse</em></td><td><em>-m, -s, -t&hellip;</em></td><td class="end"><em>amāvissem</em> &mdash; <strong>pluperfect</strong> subjunctive <span style="font-size:13px; color:#1a2340; font-weight:normal;">(today)</span></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">Where does the perfect infinitive come from? Perfect stem + <em>-isse</em>. So <em>amāv-</em> gives <em>amāvisse</em>, and <em>amāvisse</em> gives <em>amāvissem</em>. If you prefer to skip the middle step, the shortcut is: <strong>perfect stem + <em>-issem, -issēs, -isset, -issēmus, -issētis, -issent</em></strong>.</p>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:18%"><em>amō</em> (1st)</th><th style="width:17%"><em>moneō</em> (2nd)</th><th style="width:17%"><em>regō</em> (3rd)</th><th style="width:17%"><em>capiō</em> (3rd io)</th><th><em>audiō</em> (4th)</th></tr>
+            <tr><td class="lab">1 sg. <span class="end">-issem</span></td><td><em>amāvissem</em></td><td><em>monuissem</em></td><td><em>rēxissem</em></td><td><em>cēpissem</em></td><td><em>audīvissem</em></td></tr>
+            <tr><td class="lab">2 sg. <span class="end">-issēs</span></td><td><em>amāvissēs</em></td><td><em>monuissēs</em></td><td><em>rēxissēs</em></td><td><em>cēpissēs</em></td><td><em>audīvissēs</em></td></tr>
+            <tr><td class="lab">3 sg. <span class="end">-isset</span></td><td><em>amāvisset</em></td><td><em>monuisset</em></td><td><em>rēxisset</em></td><td><em>cēpisset</em></td><td><em>audīvisset</em></td></tr>
+            <tr><td class="lab">1 pl. <span class="end">-issēmus</span></td><td><em>amāvissēmus</em></td><td><em>monuissēmus</em></td><td><em>rēxissēmus</em></td><td><em>cēpissēmus</em></td><td><em>audīvissēmus</em></td></tr>
+            <tr><td class="lab">2 pl. <span class="end">-issētis</span></td><td><em>amāvissētis</em></td><td><em>monuissētis</em></td><td><em>rēxissētis</em></td><td><em>cēpissētis</em></td><td><em>audīvissētis</em></td></tr>
+            <tr><td class="lab">3 pl. <span class="end">-issent</span></td><td><em>amāvissent</em></td><td><em>monuissent</em></td><td><em>rēxissent</em></td><td><em>cēpissent</em></td><td><em>audīvissent</em></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Same macron rule as always.</strong> Long <em>ē</em> before <em>-s, -mus, -tis</em>; short <em>e</em> before <em>-m, -t, -nt</em>. <em>Amāvissem</em> but <em>amāvissēs</em>; <em>amāvisset</em> but <em>amāvissētis</em>. You have now applied that one pattern to four different subjunctive tenses.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 6px 0;">And once again, the irregular verbs simply obey:</p>
+        <table class="para">
+            <tr><th style="width:26%">Verb</th><th style="width:24%">Perfect infinitive</th><th>Pluperfect subjunctive</th></tr>
+            <tr><td class="lab"><em>sum, esse, fuī</em></td><td><em>fuisse</em></td><td><em>fuissem, fuissēs, fuisset, fuissēmus, fuissētis, fuissent</em></td></tr>
+            <tr><td class="lab"><em>possum, posse, potuī</em></td><td><em>potuisse</em></td><td><em>potuissem, potuissēs, potuisset, potuissēmus, potuissētis, potuissent</em></td></tr>
+            <tr><td class="lab"><em>dīcō, dīcere, dīxī</em></td><td><em>dīxisse</em></td><td><em>dīxissem, dīxissēs, dīxisset&hellip;</em></td></tr>
+            <tr><td class="lab"><em>faciō, facere, fēcī</em></td><td><em>fēcisse</em></td><td><em>fēcissem, fēcissēs, fēcisset&hellip;</em></td></tr>
+        </table>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#127881; <strong>The best news in the module.</strong> Nothing else in the Latin verb system ends in <em>-issem, -issēs, -isset, -issēmus, -issētis, -issent</em>. The pluperfect <em>indicative</em> is <em>amāveram, amāverās, amāverat</em> &mdash; nowhere near it. So the pluperfect subjunctive is completely unambiguous: <strong>if you see <em>-isset</em> or <em>-issent</em>, you have found a pluperfect subjunctive, full stop.</strong> Hold on to that, because the next section is not like this.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE COLLISION, STATED HONESTLY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is the perfect subjunctive you built yesterday, set beside the <strong>future perfect indicative</strong> you have known since 0706010. Same verb, same six persons. Read the right-hand column before you read anything else.</p>
+        <table class="para">
+            <tr><th style="width:12%">Person</th><th style="width:24%">Perfect <strong>subjunctive</strong></th><th style="width:26%">Future perfect <strong>indicative</strong></th><th>How different?</th></tr>
+            <tr><td class="lab">1 sg.</td><td><em>amāverim</em></td><td><em>amāverō</em></td><td style="background:#D8F0DD;"><strong>Completely different words.</strong> This is the one person you can always tell apart.</td></tr>
+            <tr><td class="lab">2 sg.</td><td><em>amāver<span class="end">ī</span>s</em></td><td><em>amāveris</em></td><td style="background:#FDF3E3;">Macron only &mdash; long <em>ī</em> for the subjunctive, short <em>i</em> for the indicative.</td></tr>
+            <tr><td class="lab">3 sg.</td><td><em>amāverit</em></td><td><em>amāverit</em></td><td style="background:#FDECEC;"><strong>Identical.</strong> Not even a macron separates them.</td></tr>
+            <tr><td class="lab">1 pl.</td><td><em>amāver<span class="end">ī</span>mus</em></td><td><em>amāverimus</em></td><td style="background:#FDF3E3;">Macron only.</td></tr>
+            <tr><td class="lab">2 pl.</td><td><em>amāver<span class="end">ī</span>tis</em></td><td><em>amāveritis</em></td><td style="background:#FDF3E3;">Macron only.</td></tr>
+            <tr><td class="lab">3 pl.</td><td><em>amāverint</em></td><td><em>amāverint</em></td><td style="background:#FDECEC;"><strong>Identical.</strong></td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>And now the part nobody tells you.</strong> Romans did not write macrons. Not on stone, not on papyrus, not in any manuscript. Macrons are a modern teaching aid, added by editors so that you can hear the word correctly. So in a real Latin text, the "macron only" rows are <strong>identical too</strong>. Five of the six persons of these two tenses are indistinguishable on the page. Latin lived with that for a thousand years without confusion, because Latin readers were not looking at the word. They were looking at the clause.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE TEST THAT ACTUALLY WORKS</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;">Do not ask "what form is this?" Ask <strong>"what kind of clause am I in?"</strong> The clause decides the mood, and then the mood tells you what the form must be.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">You already own the whole list. Every construction below <strong>requires</strong> a subjunctive, so a <em>-erit</em> inside one of them is a perfect subjunctive, no argument:</p>
+        <table class="para">
+            <tr><th style="width:34%">If the clause is introduced by&hellip;</th><th style="width:26%">the construction is&hellip;</th><th>and the mood is&hellip;</th></tr>
+            <tr><td class="lab"><em>ut</em> / <em>nē</em> after a verb of intending or ordering</td><td>purpose or indirect command <span style="font-size:13px; color:#666;">(m08)</span></td><td class="end">subjunctive</td></tr>
+            <tr><td class="lab"><em>ut</em> / <em>ut nōn</em> after <em>tam, tantus, tālis, tot, adeō, sīc, ita</em></td><td>result <span style="font-size:13px; color:#666;">(m09)</span></td><td class="end">subjunctive</td></tr>
+            <tr><td class="lab"><em>cum</em> meaning "when / since / although" in narrative</td><td><em>cum</em> clause <span style="font-size:13px; color:#666;">(m10)</span></td><td class="end">subjunctive</td></tr>
+            <tr><td class="lab">a question word (<em>quid, cūr, ubi, quam, num, utrum</em>) after a verb of asking, knowing, or wondering</td><td>indirect question <span style="font-size:13px; color:#666;">(m11)</span></td><td class="end">subjunctive</td></tr>
+            <tr><td class="lab"><em>nē</em> / <em>ut</em> after <em>timeō, vereor, metuō</em></td><td>fear clause <span style="font-size:13px; color:#666;">(m12)</span></td><td class="end">subjunctive</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 10px 0;">A future perfect indicative turns up somewhere quite different: in a <strong>main clause</strong>, or in a plain time clause pointing <em>forward</em>, where the main verb is future. Watch the same six letters do two jobs:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#E8F6FB; border:1px solid #C5DCE5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1B6A94; margin-bottom:6px;">FUTURE PERFECT INDICATIVE</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Cum Catilīna ex urbe <strong>discesserit</strong>, cīvēs tūtī erunt.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">"When Catiline <strong>has left</strong> the city, the citizens will be safe."</div>
+                <div style="font-size:15px; color:#1B6A94; margin-top:6px;">The main verb is <strong>future</strong> (<em>erunt</em>) and the <em>cum</em> clause is pure clock-time, pointing forward. No narrative, no cause, no concession &mdash; so <em>cum</em> takes the <strong>indicative</strong>, exactly as Module 10 taught you.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:6px;">PERFECT SUBJUNCTIVE</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Cicerō rogat cūr Catilīna ex urbe <strong>discesserit</strong>.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">"Cicero asks why Catiline <strong>has left</strong> the city."</div>
+                <div style="font-size:15px; color:#8a6416; margin-top:6px;"><em>Cūr</em> after <em>rogat</em> is an indirect question, and an indirect question is always subjunctive. Primary sequence, finished action &mdash; top-right cell.</div>
+            </div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>A second clue, when the clause type is genuinely unclear: look at the main verb's tense.</strong> A future perfect indicative is describing something that will be finished <em>in the future</em>, so the main verb is normally future or future perfect. A perfect subjunctive in primary sequence answers a present or future main verb but reports something already <strong>over</strong>. If the main verb is <em>rogat</em>, <em>sciō</em>, <em>mīrantur</em> &mdash; verbs of asking and knowing &mdash; you are in an indirect question, and you are in the subjunctive.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>What this means for your own writing.</strong> When <em>you</em> write Latin for this course, you know which mood you intend, so write the macrons that belong to it: <em>amāverīs</em> for the subjunctive, <em>amāveris</em> for the future perfect. On the module quiz, macron-free spellings are accepted &mdash; but if you type a macron, type the right one.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; MOOD BY CLAUSE, NOT BY WORD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Every sentence below contains a form that could be either mood. Decide from the clause.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Perfect subjunctive, or future perfect indicative?</div>
+            <div class="widget-row" data-correct="b" data-hint="What introduces the clause, and what verb governs it?">
+                <div class="widget-row-prompt"><em>Nesciō quid Catilīna in senātū <strong>dīxerit</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Future perfect would mean 'will have said,' but nesciō ('I do not know') is a verb of knowing, and quid after it opens an indirect question. Indirect questions are subjunctive without exception.">Future perfect indicative</button>
+                    <button data-choice="b" data-fb="Right — perfect subjunctive. Quid after nesciō is an indirect question; nesciō is present, so primary sequence; the saying is over, so the finished column. 'I do not know what Catiline said in the Senate.'">Perfect subjunctive</button>
+                    <button data-choice="c" data-fb="Pluperfect subjunctive would be dīxisset. Nothing here ends in -isset.">Pluperfect subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Look at the tense of the main verb, and at what kind of cum this is.">
+                <div class="widget-row-prompt"><em>Cum cōnsul ōrātiōnem <strong>habuerit</strong>, populus discēdet.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An indirect question needs a question word — quid, cūr, ubi, num. There is none here; cum is a conjunction, not a question word.">Perfect subjunctive in an indirect question</button>
+                    <button data-choice="b" data-fb="Cum plus subjunctive is the narrative construction from Module 10 — 'when / since / although,' with a PAST main verb. Here the main verb discēdet is future, which puts you in plain clock-time cum, and clock-time cum takes the indicative.">Perfect subjunctive in a cum clause</button>
+                    <button data-choice="c" data-fb="Right — future perfect indicative. The main verb discēdet is future, and this cum is pure time pointing forward: 'When the consul has delivered his speech, the people will leave.'">Future perfect indicative</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which verb governs the clause, and what does nē after it signal?">
+                <div class="widget-row-prompt"><em>Timent nē coniūrātī iam ex urbe <strong>effūgerint</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — perfect subjunctive. Nē after timent is a fear clause (Module 12), which is always subjunctive; timent is present, so primary, and the escaping is already over. 'They are afraid that the conspirators have already escaped from the city.'">Perfect subjunctive</button>
+                    <button data-choice="b" data-fb="A future perfect indicative cannot appear after nē. Nē does not introduce indicative clauses at all in the constructions you have learned.">Future perfect indicative</button>
+                    <button data-choice="c" data-fb="Present subjunctive would be effugiant, and it would mean 'that they are escaping right now.' The English says 'have already escaped' — finished action.">Present subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Only one person of these two tenses is spelled differently in every text.">
+                <div class="widget-row-prompt">Which single person can you <strong>always</strong> tell apart, even in a manuscript with no macrons?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="3rd singular is the worst case, not the best: amāverit is spelled identically in both tenses.">3rd singular</button>
+                    <button data-choice="b" data-fb="Right — 1st singular. Amāverim (perfect subjunctive) and amāverō (future perfect indicative) share no ending at all. It is the only person that gives itself away for free.">1st singular</button>
+                    <button data-choice="c" data-fb="3rd plural amāverint is identical in both tenses — another of the two worst cases.">3rd plural</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which ending belongs to only one tense in the whole language?">
+                <div class="widget-row-prompt">You see the form <em>fēcisset</em>. What do you know instantly?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nothing in Latin ends -isset in the indicative. The pluperfect indicative of faciō is fēcerat.">It could be indicative or subjunctive</button>
+                    <button data-choice="b" data-fb="Perfect subjunctive would be fēcerit. The -isse- in the middle is the pluperfect marker.">It is a perfect subjunctive</button>
+                    <button data-choice="c" data-fb="Right — pluperfect subjunctive, 3rd singular, and there is no other possibility. The -issem/-isset endings are unique in the language, which makes the pluperfect subjunctive the one completely safe form in this module.">It is a pluperfect subjunctive, with no ambiguity</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 5 &middot; FOUR FIRST PERSONS</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 20px; margin:10px 0;">
+            <div style="font-size:13px; color:#6b7a99; margin-bottom:6px;">MEMORY WORK &middot; ONE VERB, ALL FOUR SUBJUNCTIVE TENSES</div>
+            <div style="font-size:22px; color:#0e1c42; line-height:1.7;"><em>amem &middot; amārem &middot; amāverim &middot; amāvissem</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">Present, imperfect, perfect, pluperfect. Say it out loud until the order is automatic, then do the same for the other four conjugations: <em>moneam &middot; monērem &middot; monuerim &middot; monuissem</em>. <em>Regam &middot; regerem &middot; rēxerim &middot; rēxissem</em>. <em>Capiam &middot; caperem &middot; cēperim &middot; cēpissem</em>. <em>Audiam &middot; audīrem &middot; audīverim &middot; audīvissem</em>. Twenty forms, and the entire subjunctive system is inside them.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">Say the form first, then click to check. Watch what happens to <em>sum</em> in particular &mdash; four tenses, four completely different shapes.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY IT FIRST &middot; THEN CLICK TO CHECK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>sum</em> &mdash; all four</div><div class="hint">3 sg. each time &middot; click</div><div class="back"><em>sit</em> (pres.) &middot; <em>esset</em> (imperf.) &middot; <em>fuerit</em> (perf.) &middot; <em>fuisset</em> (pluperf.). Four tenses, three different stems.</div></div>
+                <div class="flip-card"><div class="front"><em>possum</em> &mdash; all four</div><div class="hint">3 sg. each time &middot; click</div><div class="back"><em>possit</em> &middot; <em>posset</em> &middot; <em>potuerit</em> &middot; <em>potuisset</em>. The first two differ by one letter; guard them.</div></div>
+                <div class="flip-card"><div class="front"><em>faciō</em> &mdash; all four</div><div class="hint">3 sg. each time &middot; click</div><div class="back"><em>faciat</em> &middot; <em>faceret</em> &middot; <em>fēcerit</em> &middot; <em>fēcisset</em>. The perfect stem <em>fēc-</em> takes over for the last two.</div></div>
+                <div class="flip-card"><div class="front"><em>discēdō</em> &mdash; all four</div><div class="hint">3 sg. each time &middot; click</div><div class="back"><em>discēdat</em> &middot; <em>discēderet</em> &middot; <em>discesserit</em> &middot; <em>discessisset</em>. These four turn up constantly this module &mdash; Catiline is always leaving.</div></div>
+                <div class="flip-card"><div class="front">the two 3 sg. traps</div><div class="hint">what is identical? &middot; click</div><div class="back"><em>amāverit</em> = perfect subjunctive <strong>and</strong> future perfect indicative &mdash; identical. <em>amāvisset</em> = pluperfect subjunctive only &mdash; unique. Never confuse which of the two is the dangerous one.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 13.03 &mdash; Passive, Deponent, and <em>Esse</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Two words instead of one: PPP + <em>sim</em> and PPP + <em>essem</em>. Plus the deponents, which come out looking passive and meaning active &mdash; exactly as they have since Module 2 &mdash; and this module's vocabulary.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>Perfect infinitive + <em>-m, -s, -t, -mus, -tis, -nt</em></strong> gives the pluperfect subjunctive, and <em>-isset</em> can be nothing else in Latin. The perfect subjunctive is the risky one: <em>-erit</em> and <em>-erint</em> are shared with the future perfect indicative, and macrons do not exist in real texts. So <strong>read the clause, not the word</strong> &mdash; if it is a purpose, result, <em>cum</em>, indirect-question, or fear clause, it is subjunctive.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 13.02 &middot; The Easiest Form, and the Most Dangerous</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

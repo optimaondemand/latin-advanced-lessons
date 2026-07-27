@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 14.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step-n { min-width: 34px; height: 34px; border-radius: 8px; background: #0E1C42; color: #fff; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-b { font-size: 17px; color: #1a2340; line-height: 1.6; }
+    .step-b strong { color: #0e1c42; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 14</div>
+        <div style="font-size: 12px; color: #666;">Main-Clause Subjunctives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 14.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Main Clause or Subordinate?</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 14.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Main Clause or Subordinate?</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Ten constructions now use the subjunctive. One question sorts them into two piles, and it is free.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Purpose, indirect command, result, <em>cum</em>, indirect question, fear &mdash; and now jussive, hortatory, optative and deliberative. That is a lot of things one mood can be doing. But the first cut is easy and mechanical: <strong>is this subjunctive the main verb of its sentence, or is it inside a clause?</strong> Answer that and you have halved the problem before thinking about meaning at all. Then you get the table this whole week has been pointing at &mdash; <em>nē</em> and its <strong>four</strong> different jobs.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> run the four-step sort on any subjunctive I meet, and say whether it is a main verb or inside a clause.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name all <strong>four</strong> jobs of <em>nē</em> and the one question that tells them apart.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> sort an unlabelled pile of sentences drawn from Modules 8 to 14 without being told which is which.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE FOUR-STEP SORT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Steps 1 and 2 are pure counting and reading &mdash; you can run them on a sentence you do not understand at all. Only steps 3 and 4 ask about meaning, and by then the field is down to a handful of options.</p>
+
+        <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-b"><strong>Find every verb in the sentence and mark each one indicative or subjunctive.</strong><br>
+            <span style="color:#666;">This is reading the endings, nothing more. <em>Timeō</em> indicative &middot; <em>condemnētur</em> subjunctive &middot; <em>ōrāvit</em> indicative &middot; <em>faciat</em> subjunctive.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-b"><strong>Is there an <em>indicative</em> verb that could be the main verb of the sentence?</strong><br>
+            <span style="color:#1A6B3D;"><strong>No</strong> &mdash; the subjunctive is the only verb there is &rarr; it is a <strong>MAIN-CLAUSE</strong> subjunctive. Go to step 3.</span><br>
+            <span style="color:#666;">Yes &rarr; the subjunctive is almost certainly <strong>SUBORDINATE</strong>, hanging off that indicative verb. Go to step 4.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-b"><strong>MAIN CLAUSE. Which of the four? Ask in this order:</strong><br>
+            <span style="color:#1A6B3D;">Is there a <strong><em>utinam</em></strong>? &rarr; <strong>optative wish</strong>, and the tense says which kind (present = still open &middot; imperfect = not so now &middot; pluperfect = did not happen).</span><br>
+            <span style="color:#1A6B3D;">Is it a <strong>question</strong> &mdash; a question word and a question mark? &rarr; <strong>deliberative</strong>: &ldquo;am I to&hellip;?&rdquo; / &ldquo;was I to&hellip;?&rdquo;</span><br>
+            <span style="color:#1A6B3D;">Is the verb <strong>1st person plural</strong>? &rarr; <strong>hortatory</strong>: &ldquo;let us&hellip;&rdquo;</span><br>
+            <span style="color:#1A6B3D;">Is the verb <strong>3rd person</strong>? &rarr; <strong>jussive</strong>: &ldquo;let him / let them&hellip;&rdquo;</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">4</div>
+            <div class="step-b"><strong>SUBORDINATE. Read the word that opens the clause, and look at the main verb.</strong><br>
+            <span style="color:#666;"><em>ut</em> + signpost (<em>tam, tantus, tālis, tot, adeō</em>) &rarr; result &middot; <em>ut</em> after a verb of ordering &rarr; indirect command &middot; <em>ut</em> otherwise &rarr; purpose &middot; <em>nē</em> after a verb of fearing &rarr; fear clause &middot; <em>nē</em> otherwise &rarr; negative purpose or negative indirect command &middot; <em>cum</em> &rarr; temporal, causal or concessive &middot; a question word after a verb of asking or knowing &rarr; indirect question.</span></div>
+        </div>
+
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Why step 2 is the valuable one.</strong> Every construction from Modules 8 to 13 needs <em>two</em> verbs: an indicative one running the sentence and a subjunctive one inside a clause. Every construction in Module 14 needs <strong>one</strong>. So counting verbs &mdash; a thing you can do without knowing what a single word means &mdash; puts you in the right half of the map immediately. Do it first, every time.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#128161; <strong>One more free clue you already own.</strong> A <strong>subordinate</strong> subjunctive got its tense from the <strong>sequence rule</strong> &mdash; it had to look up at its main verb. A <strong>main-clause</strong> subjunctive has no main verb to look at, so <strong>sequence of tenses does not apply to it at all</strong>. That is why a wish can choose freely between present, imperfect and pluperfect: nothing is governing it. If you catch yourself asking &ldquo;is this primary or secondary sequence?&rdquo; about a sentence with only one verb in it, you have already gone wrong at step 2.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; FOUR WORKED WALK-THROUGHS &mdash; ALL WITH <em>NĒ</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every sentence below contains <em>nē</em>. Every one means something different by it. Watch the steps run.</p>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Nē veniat.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>1.</strong> One verb: <em>veniat</em>, subjunctive. &nbsp;<strong>2.</strong> Any indicative verb? <strong>No</strong> &rarr; main clause. &nbsp;<strong>3.</strong> No <em>utinam</em>, not a question, 3rd singular &rarr; <strong>jussive, negative</strong>.<br>
+            &ldquo;<strong>Let him not come.</strong>&rdquo; The <em>nē</em> is not introducing anything &mdash; there is nothing for it to introduce. It is simply the negative of the command.</div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Cōnsul mīlitēs collocāvit nē coniūrātī ex urbe fugerent.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>1.</strong> Two verbs: <em>collocāvit</em> indicative, <em>fugerent</em> subjunctive. &nbsp;<strong>2.</strong> Indicative main verb present &rarr; subordinate. &nbsp;<strong>4.</strong> Opens with <em>nē</em>; <em>collocāvit</em> is not a verb of fearing and not a verb of ordering; the clause answers &ldquo;why did he post them?&rdquo; &rarr; <strong>negative purpose (m08)</strong>.<br>
+            &ldquo;The consul stationed soldiers <strong>so that</strong> the conspirators <strong>would not</strong> escape from the city.&rdquo; <span style="color:#8a6416;">Gloss: <em>collocō, collocāre</em> &mdash; to station, post.</span></div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Cicerō ōrāvit nē iūdicēs Murēnam condemnārent.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>1.</strong> <em>Ōrāvit</em> indicative, <em>condemnārent</em> subjunctive. &nbsp;<strong>2.</strong> Subordinate. &nbsp;<strong>4.</strong> <em>Nē</em>, and the main verb is a verb of <strong>asking</strong> &rarr; <strong>negative indirect command (m08)</strong>.<br>
+            &ldquo;Cicero begged the jurors <strong>not to</strong> condemn Murena.&rdquo; Notice the English: an indirect command comes out as an infinitive, not as a &ldquo;so that&rdquo; clause. That is how you can tell your own translation which one you chose.</div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Cicerō timēbat nē iūdicēs Murēnam condemnārent.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>1.</strong> <em>Timēbat</em> indicative, <em>condemnārent</em> subjunctive. &nbsp;<strong>2.</strong> Subordinate. &nbsp;<strong>4.</strong> <em>Nē</em>, and the main verb is a verb of <strong>fearing</strong> &rarr; <strong>fear clause (m12)</strong>, where <em>nē</em> flips its meaning.<br>
+            &ldquo;Cicero was afraid <strong>that</strong> the jurors <strong>would</strong> condemn Murena.&rdquo; <strong>Compare the sentence above it word for word.</strong> The subordinate clause is <em>identical</em> &mdash; <em>nē iūdicēs Murēnam condemnārent</em>. Only the main verb changed, from <em>ōrāvit</em> to <em>timēbat</em>, and the meaning of <em>nē</em> reversed from &ldquo;not to&rdquo; to &ldquo;that&hellip; will.&rdquo; This is the pair the whole of Module 12 was about, and it is why step 4 says to look at the main verb.</div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; <em>NĒ</em> AND ITS FOUR JOBS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is the table. It is the single most useful thing in Module 14, and the whole of it is driven by <strong>what is above the <em>nē</em></strong>.</p>
+        <table class="para">
+            <tr><th style="width:24%">What is above the <em>nē</em></th><th style="width:22%">Construction</th><th style="width:22%">What <em>nē</em> means</th><th>Example</th></tr>
+            <tr><td class="lab"><strong>nothing</strong> &mdash; no other verb in the sentence</td><td>main-clause negative<br><span style="font-size:14px; color:#666;">jussive &middot; hortatory &middot; optative (m14)</span></td><td class="end">plain &ldquo;not&rdquo;</td><td><em>Nē veniat.</em><br><em>Nē dīcāmus.</em><br><em>Utinam nē veniat!</em></td></tr>
+            <tr><td class="lab">a verb of <strong>fearing</strong><br><span style="font-size:14px; color:#666;"><em>timeō, vereor, metuō, metus est</em></span></td><td>fear clause (m12)</td><td class="end">&ldquo;<strong>that</strong> [it will happen]&rdquo; &mdash; the reversal</td><td><em>Timeō nē veniat.</em><br>&ldquo;I am afraid that he will come.&rdquo;</td></tr>
+            <tr><td class="lab">a verb of <strong>ordering or asking</strong><br><span style="font-size:14px; color:#666;"><em>imperō, rogō, ōrō, moneō, persuādeō, cēnseō</em></span></td><td>negative indirect command (m08)</td><td class="end">&ldquo;<strong>not to</strong>&rdquo;</td><td><em>Ōrāvit nē venīret.</em><br>&ldquo;He begged him not to come.&rdquo;</td></tr>
+            <tr><td class="lab"><strong>any other</strong> main verb, and the clause answers &ldquo;why?&rdquo;</td><td>negative purpose (m08)</td><td class="end">&ldquo;so that&hellip; <strong>not</strong>&rdquo; &middot; &ldquo;lest&rdquo;</td><td><em>Fūgit nē caperētur.</em><br>&ldquo;He fled so that he would not be caught.&rdquo;</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;"><strong>So the <em>nē</em> procedure is two questions, and only two.</strong><br>
+            <strong>First:</strong> is there another verb in this sentence at all? No &rarr; main clause, and <em>nē</em> just means &ldquo;not.&rdquo;<br>
+            <strong>Second:</strong> if yes, <strong>what kind of verb is it?</strong> Fearing &rarr; the reversal. Ordering or asking &rarr; &ldquo;not to.&rdquo; Anything else &rarr; &ldquo;so that&hellip; not.&rdquo;</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">And while the table is out, here is <em>ut</em> for comparison. It has three jobs, and none of them is a main-clause use &mdash; <strong><em>ut</em> never introduces a main-clause subjunctive</strong>, so its presence is itself a reliable sign that you are in a subordinate clause.</p>
+        <table class="para">
+            <tr><th style="width:30%">What you see</th><th style="width:26%">Construction</th><th>How you know</th></tr>
+            <tr><td class="lab"><em>ut</em> + signpost in the main clause<br><span style="font-size:14px; color:#666;"><em>tam, tantus, tālis, tot, adeō</em></span></td><td>result (m09)</td><td class="end">The signpost points forward to a consequence.</td></tr>
+            <tr><td class="lab"><em>ut</em> after a verb of ordering or asking</td><td>indirect command (m08)</td><td class="end">Translate with an English infinitive: &ldquo;ordered him <em>to</em>&hellip;&rdquo;</td></tr>
+            <tr><td class="lab"><em>ut</em> with no signpost, answering &ldquo;why?&rdquo;</td><td>purpose (m08)</td><td class="end">Translate &ldquo;so that&hellip; may / might&hellip;&rdquo;</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Two honest limits on the procedure.</strong> <strong>(1)</strong> Step 3 cannot always separate a <strong>jussive</strong> from an <strong>optative wish</strong> in the third person: <em>Salva sit rēs pūblica</em> is &ldquo;let the republic be safe&rdquo; or &ldquo;may the republic be safe,&rdquo; and grammars file it both ways. Where there is no <em>utinam</em>, either answer is defensible and nothing in this module is graded on it. <strong>(2)</strong> Step 2 says the subjunctive is &ldquo;almost certainly&rdquo; subordinate when there is an indicative verb about &mdash; because a sentence can contain both. <em>Videāmus quid Catilīna faciat</em> has a main-clause hortatory <em>and</em> a subordinate indirect question, and no indicative anywhere. Read the whole sentence, not just the first verb you find.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; THE UNLABELLED PILE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six sentences from Modules 8 to 14, in no helpful order and with nothing marked. Run the four steps before you look at the options.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is this?</div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 1: how many verbs? Step 2: is any of them indicative?">
+                <div class="widget-row-prompt"><em>Iūdicēs lēgem spectent, nōn hominem.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — jussive. One verb, spectent, subjunctive; no indicative verb anywhere, so it is the main verb; third person plural, no utinam, no question mark. &quot;Let the jurors look at the law, not at the man.&quot;">A jussive &mdash; main-clause command</button>
+                    <button data-choice="b" data-fb="A purpose clause needs ut or nē in front of the subjunctive AND a main verb elsewhere. This sentence has neither: spectent is all there is.">A purpose clause with <em>ut</em> understood</button>
+                    <button data-choice="c" data-fb="Hortatory is first person plural — spectēmus, &quot;let us look.&quot; Spectent is third plural, so the speaker is telling somebody else what to do.">A hortatory &mdash; &ldquo;let us look at the law&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two verbs. What kind of verb is the indicative one?">
+                <div class="widget-row-prompt"><em>Cicerō timēbat nē iūdicēs Murēnam condemnārent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A negative purpose clause would answer &quot;why was he afraid?&quot; — and it does not. Also, purpose after timēbat makes no sense: he was not being afraid in order to prevent anything.">A negative purpose clause &mdash; &ldquo;so that they would not condemn&rdquo;</button>
+                    <button data-choice="b" data-fb="An indirect command would need a verb of ordering or asking, like ōrāvit or imperāvit. Timēbat is a verb of fearing, which is a different row of the table and reverses the meaning of nē.">A negative indirect command &mdash; &ldquo;he begged them not to condemn&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — a fear clause (m12). The main verb timēbat is a verb of fearing, so nē means &quot;that... will&quot;: &quot;Cicero was afraid that the jurors would condemn Murena.&quot; Compare Cicerō ōrāvit nē... — identical clause, opposite meaning, because the main verb changed.">A fear clause &mdash; &ldquo;he was afraid that they would condemn&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Find the signpost word. Then find the tense, and ask what it claims about right now.">
+                <div class="widget-row-prompt"><em>Utinam nē tantum perīculum reī pūblicae imminēret!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Tantum is a result signpost in m09 — but a result clause needs ut and a second verb, and there is neither here. Here tantum is simply the adjective &quot;so great&quot; agreeing with perīculum.">A result clause announced by <em>tantum</em></button>
+                    <button data-choice="b" data-fb="Right — an optative wish, imperfect. Utinam marks the wish; imminēret is imperfect subjunctive, so the wish is about the present and the speaker is admitting the danger IS hanging over the republic. &quot;If only so great a danger were not hanging over the republic!&quot;">An optative wish about the present &mdash; and the danger is real</button>
+                    <button data-choice="c" data-fb="An imperfect subjunctive in a wish is not about the past — that would need the pluperfect, imminuisset-type forms. The imperfect puts the wish squarely in the present and says the present is wrong.">An optative wish about the past</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two verbs, and the indicative one is neither fearing nor ordering. So what is the nē clause doing?">
+                <div class="widget-row-prompt"><em>Cōnsul mīlitēs in viīs collocāvit nē coniūrātī ex urbe fugerent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A fear clause needs a verb of fearing above it. Collocāvit means &quot;stationed&quot; — nobody is afraid in this sentence.">A fear clause &mdash; &ldquo;he was afraid they would escape&rdquo;</button>
+                    <button data-choice="b" data-fb="A main-clause negative would mean nē was simply the negative of the only verb — but there are two verbs here, and collocāvit is indicative and runs the sentence.">A main-clause negative &mdash; &ldquo;let them not escape&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — negative purpose (m08). Collocāvit is an ordinary indicative main verb, and the nē clause answers &quot;why did he post them?&quot; &quot;The consul stationed soldiers in the streets so that the conspirators would not escape from the city.&quot;">A negative purpose clause &mdash; &ldquo;so that they would not escape&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Is there a verb of asking anywhere? And is there a question mark?">
+                <div class="widget-row-prompt"><em>Quid igitur faciam, iūdicēs?</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a deliberative question. One verb, subjunctive, no indicative main verb, a question word and a real question mark: &quot;What then am I to do, gentlemen of the jury?&quot; And remember this is the one main-clause use that takes nōn, not nē, for its negative.">A deliberative question &mdash; &ldquo;what am I to do?&rdquo;</button>
+                    <button data-choice="b" data-fb="An indirect question is REPORTED — it needs a verb of asking or knowing above it, like rogāvit quid faceret. Here the question is asked out loud, with a question mark at the end.">An indirect question after an understood verb of asking</button>
+                    <button data-choice="c" data-fb="A hortatory is first person plural: faciāmus, &quot;let us do.&quot; Faciam is first person singular, and the question mark makes it a question rather than an exhortation.">A hortatory &mdash; &ldquo;let us do it, then&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two subjunctives, no indicative. That means one of them is a main verb and one is not.">
+                <div class="widget-row-prompt"><em>Videāmus tandem quid rēs pūblica hōc tempore postulet.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="They are not both main-clause uses. Postulet has the question word quid in front of it and videāmus above it, which makes its clause a reported question — subordinate.">Two main-clause subjunctives, one after the other</button>
+                    <button data-choice="b" data-fb="Neither verb is subordinate to an indicative, so this cannot be a purpose clause: purpose needs ut or nē, and the word in front of postulet is quid, an interrogative.">A hortatory main verb, then a purpose clause</button>
+                    <button data-choice="c" data-fb="Right, and this is the sentence shape the module is built around. Videāmus: first person plural, nothing in front of it, no indicative anywhere → hortatory MAIN verb. Postulet: quid in front of it, videāmus above it → SUBORDINATE indirect question. &quot;Let us see at last what the republic demands at this moment.&quot;">A hortatory main verb, then an indirect question</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 5 &middot; SPEED SORT &middot; CLICK EACH CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Main clause or subordinate &mdash; say it out loud, then flip. Aim for a second a card. Tomorrow's reading has nine of these in twelve lines.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; MAIN CLAUSE OR SUBORDINATE?</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>Nē veniat.</em></div><div class="hint">which job?</div><div class="back"><strong>MAIN &mdash; jussive, negative.</strong> One verb only. <em>Nē</em> is just &ldquo;not.&rdquo; &ldquo;Let him not come.&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>Timeō nē veniat.</em></div><div class="hint">which job?</div><div class="back"><strong>SUBORDINATE &mdash; fear clause (m12).</strong> A verb of fearing above it flips <em>nē</em> to &ldquo;that&hellip; will.&rdquo; &ldquo;I am afraid that he will come.&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>Ōrāvit nē venīret.</em></div><div class="hint">which job?</div><div class="back"><strong>SUBORDINATE &mdash; negative indirect command (m08).</strong> A verb of asking above it. &ldquo;He begged him not to come.&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>Fūgit nē caperētur.</em></div><div class="hint">which job?</div><div class="back"><strong>SUBORDINATE &mdash; negative purpose (m08).</strong> An ordinary main verb, and the clause answers &ldquo;why?&rdquo; &ldquo;He fled so that he would not be caught.&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>Utinam nē vēnisset!</em></div><div class="hint">which job?</div><div class="back"><strong>MAIN &mdash; optative wish, pluperfect.</strong> &ldquo;If only he had not come!&rdquo; &mdash; and he did.</div></div>
+                <div class="flip-card"><div class="front"><em>Quid faciam?</em></div><div class="hint">which job?</div><div class="back"><strong>MAIN &mdash; deliberative question.</strong> &ldquo;What am I to do?&rdquo; The only one of the four whose negative is <em>nōn</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>Rogāvit quid facerem.</em></div><div class="hint">which job?</div><div class="back"><strong>SUBORDINATE &mdash; indirect question (m11).</strong> <em>Rogāvit</em> above it, so the question has been reported, and <em>facerem</em> got its tense from the sequence rule.</div></div>
+                <div class="flip-card"><div class="front"><em>Tam foedus erat ut nēmō aspiceret.</em></div><div class="hint">which job?</div><div class="back"><strong>SUBORDINATE &mdash; result (m09).</strong> The signpost <em>tam</em> in the main clause and <em>ut</em> opening the clause. <em>Ut</em> never marks a main-clause subjunctive.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 14.05 &mdash; <em>Prō Murēnā</em>: The Consul Pleads</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Cicero, still consul, in a courtroom in the Forum, defending a man elected to succeed him against a charge of buying the election &mdash; under a law Cicero himself had just written. Twelve adapted lines with a jussive, a hortatory, three wishes, two deliberative questions, an indirect command and a purpose clause in them. Then the module review and your graded work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>Count the verbs first.</strong> One verb, and it is subjunctive &rarr; you are in Module 14, and <em>nē</em> just means &ldquo;not.&rdquo; Two verbs &rarr; you are in Modules 8 to 13, and the <em>kind</em> of main verb tells you what <em>nē</em> means. It is the cheapest question in the course and it does most of the work.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 14.04 &middot; Main Clause or Subordinate?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

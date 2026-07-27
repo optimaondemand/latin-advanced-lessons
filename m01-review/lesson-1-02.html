@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 1.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Review in Context</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Catiline's Portrait</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Catiline's Portrait</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Participles in Context</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Sallust gives Catiline every gift a Roman could want. Then he shows you the bill.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Eight lines of adapted Sallust, and <strong>seven participles</strong> inside them. Noble birth, a body that could take anything, a mind quick enough for anything &mdash; all of it real, all of it turned the wrong way. Read for the man first. Then go back and find every participle.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted passage of Sallust's portrait of Catiline and say what it claims about him.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find every participle in that passage and give its type, case, number, and gender.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how Sallust builds a character sketch, and why the structure is itself an argument.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Sallust, <em>Bellum Catilīnae</em> 5 and 14.</strong> A simplified Latin retelling of Sallust's portrait of Catiline &mdash; not Sallust's own sentences. Forms worth stopping on are marked in <span style="color:#AA1E2D;"><strong>red</strong></span>. Read it once straight through for the man before you analyze anything.</p>
+        <div class="rd">
+            <p>Catilīna nōbilī genere <b>nātus erat</b>, sed vir malī animī et ingeniī prāvī fuit. Corpus eius <b>patiēns</b> labōrum et frīgoris erat; animus audāx et callidus semper nova et perīculōsa <b>cupiēbat</b>. Ab adulēscentiā bella et caedēs <b>amāverat</b>.</p>
+            <p>Catilīna, pecūniam aliēnam semper <b>petēns</b>, suam prōfundēbat. Itaque multī hominēs, <b>quī pecūniam suam iam āmīserant</b>, ad eum veniēbant. Verbīs blandīs multōs virōs <b>dēceptōs</b> in coniūrātiōnem suam trāxit.</p>
+            <p>Sallustius scrīpsit <b>Catilīnam multōs adulēscentēs corrūpisse</b>. Tandem, <b>multīs virīs convocātīs</b>, Catilīna dux coniūrātiōnis <b>factus est</b>; iam bellum <b>gestūrus</b>, arma parābat.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list</div>
+            <ul class="gl">
+                <li><em>nōbilis, -e</em> &mdash; noble, of distinguished birth (abl. sg. <em>nōbilī</em>)</li>
+                <li><em>genus, generis</em> n. &mdash; birth, family, stock; <em>nōbilī genere</em> &mdash; ablative of origin, "of noble family"</li>
+                <li><em>nātus erat</em> &mdash; "had been born." <strong>Not yet studied &mdash; gloss provided.</strong> It comes from <em>nāscor</em>, one of a class of verbs that look passive but mean something active. You meet the whole class next week, in Module 2. For now treat <em>nātus erat</em> as a single vocabulary item meaning "had been born."</li>
+                <li><em>ingenium, ingeniī</em> n. &mdash; natural character, disposition, talent</li>
+                <li><em>prāvus, -a, -um</em> &mdash; crooked, warped, depraved</li>
+                <li><em>patiēns</em> (gen. <em>patientis</em>) &mdash; able to endure, tough against (takes the genitive of what is endured) &mdash; a 3rd-declension adjective</li>
+                <li><em>labor, labōris</em> m. &mdash; hardship, toil</li>
+                <li><em>frīgus, frīgoris</em> n. &mdash; cold, the cold</li>
+                <li><em>audāx</em> (gen. <em>audācis</em>) &mdash; bold, daring, reckless</li>
+                <li><em>callidus, -a, -um</em> &mdash; shrewd, cunning, crafty</li>
+                <li><em>nova et perīculōsa</em> &mdash; "new and dangerous things" (neuter plural adjectives used as nouns)</li>
+                <li><em>adulēscentia, adulēscentiae</em> f. &mdash; youth, young manhood</li>
+                <li><em>caedēs, caedis</em> f. &mdash; slaughter, bloodshed (acc. pl. <em>caedēs</em>)</li>
+                <li><em>aliēnus, -a, -um</em> &mdash; another's, belonging to somebody else</li>
+                <li><em>prōfundēbat</em> &mdash; "was pouring away, was squandering" (imperfect of <em>prōfundō, prōfundere, prōfūdī, prōfūsum</em>)</li>
+                <li><em>āmīserant</em> &mdash; "had lost" (pluperfect of <em>āmittō, āmittere, āmīsī, āmissum</em>)</li>
+                <li><em>blandus, -a, -um</em> &mdash; flattering, coaxing, smooth</li>
+                <li><em>dēceptōs</em> &mdash; PPP of <em>dēcipiō, dēcipere, dēcēpī, dēceptum</em> (to deceive) &mdash; "having been deceived"</li>
+                <li><em>coniūrātiō, coniūrātiōnis</em> f. &mdash; conspiracy</li>
+                <li><em>trāxit</em> &mdash; "he dragged, he drew" (perfect of <em>trahō, trahere, trāxī, tractum</em>)</li>
+                <li><em>adulēscēns, adulēscentis</em> m. &mdash; young man</li>
+                <li><em>corrūpisse</em> &mdash; perfect active infinitive of <em>corrumpō, corrumpere, corrūpī, corruptum</em> (to corrupt, spoil)</li>
+                <li><em>tandem</em> (adv.) &mdash; at last, finally</li>
+                <li><em>convocātīs</em> &mdash; PPP of <em>convocō, convocāre, convocāvī, convocātum</em> (to call together) &mdash; "having been summoned"</li>
+                <li><em>factus est</em> &mdash; "was made" (perfect passive of <em>faciō</em>); with a predicate noun: <em>dux factus est</em> &mdash; "was made leader"</li>
+                <li><em>gestūrus</em> &mdash; FAP of <em>gerō, gerere, gessī, gestum</em>; <em>bellum gerere</em> &mdash; "to wage war," so <em>gestūrus</em> &mdash; "about to wage"</li>
+                <li><em>arma, armōrum</em> n. pl. &mdash; weapons, arms</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>One note about the adaptation.</strong> Sallust's own version of the first sentence is famously compressed &mdash; he stacks descriptive genitives and ablatives without a main verb for whole clauses at a time, and English has to unpack every one of them. The adaptation here keeps his ideas and his order of attack, but supplies the verbs he leaves out. What you are reading is easier than Sallust. What it <em>says</em> is his.</div>
+    </div>
+
+    <!-- PART 2 - PARTICIPLE INVENTORY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 2 &middot; PARTICIPLE INVENTORY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Go back through the passage and find every participle <strong>before</strong> you read this table. Write down type, case, number, gender, and what it attaches to. Then check yourself here &mdash; this is also your revision sheet for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:18%">Form</th><th style="width:14%">From</th><th style="width:14%">Type</th><th style="width:22%">Case &middot; number &middot; gender</th><th>What it is doing</th></tr>
+            <tr><td class="lab"><em>nātus</em></td><td><em>nāscor</em></td><td>perfect</td><td>nom. sg. m.</td><td>Inside the verb form <em>nātus erat</em>, agreeing with <em>Catilīna</em>. Glossed this week; the class of verb arrives in Module 2.</td></tr>
+            <tr><td class="lab"><em>patiēns</em></td><td><em>patior</em></td><td>present, used as an adjective</td><td>nom. sg. n.</td><td>Agrees with <em>corpus</em> (neuter) as a predicate adjective, and governs the genitives <em>labōrum et frīgoris</em>.</td></tr>
+            <tr><td class="lab"><em>petēns</em></td><td><em>petō</em></td><td><strong>PAP</strong></td><td>nom. sg. m.</td><td>Agrees with <em>Catilīna</em>, the subject. Same time as <em>prōfundēbat</em>: he was seeking and squandering at once &mdash; which is the point.</td></tr>
+            <tr><td class="lab"><em>dēceptōs</em></td><td><em>dēcipiō</em></td><td><strong>PPP</strong></td><td>acc. pl. m.</td><td>Agrees with <em>virōs</em>, the object. Before <em>trāxit</em>: they were deceived first, then drawn in.</td></tr>
+            <tr><td class="lab"><em>convocātīs</em></td><td><em>convocō</em></td><td><strong>PPP</strong></td><td>abl. pl. m.</td><td>With <em>multīs virīs</em> it forms an <strong>ablative absolute</strong> &mdash; both words ablative, neither with any other job. Before the main verb.</td></tr>
+            <tr><td class="lab"><em>factus</em></td><td><em>faciō</em></td><td><strong>PPP</strong></td><td>nom. sg. m.</td><td>Not a modifier &mdash; part of the perfect passive verb <em>factus est</em>, agreeing with the subject <em>Catilīna</em>.</td></tr>
+            <tr><td class="lab"><em>gestūrus</em></td><td><em>gerō</em></td><td><strong>FAP</strong></td><td>nom. sg. m.</td><td>Agrees with <em>Catilīna</em>. After <em>parābat</em>: he is preparing now in order to fight later.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Three participles, three times.</strong> <em>Dēceptōs</em> (PPP) is earlier than the main verb. <em>Petēns</em> (PAP) is at the same time as it. <em>Gestūrus</em> (FAP) is later than it. One short passage just walked you through the entire time system of the Latin participle &mdash; and it did it without a chart.</div>
+    </div>
+
+    <!-- PART 3 - TRANSLATE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 3 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out <em>before</em> you flip. Use the gloss freely &mdash; that is what it is for. These four are the sentences most worth having under your belt before Friday.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Corpus eius patiēns labōrum et frīgoris erat.</em></div><div class="hint">click to compare</div><div class="back">"His body was <strong>able to endure hardship and cold</strong>." <em>Patiēns</em> is a predicate adjective agreeing with <em>corpus</em> (neuter), and the two genitives <em>labōrum</em> and <em>frīgoris</em> tell you <em>what</em> it endured. Sallust's point is that the toughness was genuine.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Catilīna, pecūniam aliēnam semper petēns, suam prōfundēbat.</em></div><div class="hint">click to compare</div><div class="back">"Catiline, <strong>always going after other people's money</strong>, was pouring away his own." <em>Petēns</em> is nominative and agrees with <em>Catilīna</em> &mdash; not an ablative absolute. <em>Suam</em> is accusative feminine and agrees with an understood <em>pecūniam</em>.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Multī hominēs, quī pecūniam suam iam āmīserant, ad eum veniēbant.</em></div><div class="hint">click to compare</div><div class="back">"Many men, <strong>who had already lost their own money</strong>, kept coming to him." <em>Quī</em> is masculine plural because <em>hominēs</em> is, and nominative because it is the subject of <em>āmīserant</em>. The pluperfect puts their ruin <em>before</em> their arrival &mdash; they came because they were already ruined.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Sallustius scrīpsit Catilīnam multōs adulēscentēs corrūpisse.</em></div><div class="hint">click to compare</div><div class="back">"Sallust wrote <strong>that Catiline had corrupted many young men</strong>." Indirect statement: accusative subject <em>Catilīnam</em>, perfect infinitive <em>corrūpisse</em>. The perfect infinitive puts the corrupting <em>before</em> the writing &mdash; which is why English needs "had."</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; HOW TO BUILD A PORTRAIT</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Sallust's sketch of Catiline is one of the most imitated passages in Latin prose, and its power is structural. Look at the order he moves in: <strong>birth, then body, then mind, then appetite.</strong> Each item is a genuine advantage. Noble family. Physical endurance. Quickness of thought. A Roman reader would have recognized that list &mdash; it is the description of a man built for the consulship.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Then Sallust turns each gift over. The tough body is spent on nights of crime. The quick mind is <em>callidus</em>, shrewd rather than wise. The appetite is for <em>nova et perīculōsa</em> &mdash; new things, dangerous things &mdash; never for anything finished or kept. He never has to say "Catiline was a bad man." He arranges the good qualities so that the reader draws the conclusion, and then the reader owns it.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>The Roman word for what is missing: <em>moderātiō</em></strong> &mdash; measure, restraint, the sense of a proper limit. Roman moral writing treats <em>virtūs</em> without <em>moderātiō</em> as not really <em>virtūs</em> at all, just force pointed somewhere. That is the standard Sallust is holding Catiline to. It is worth noticing that it is also the standard he holds the Roman ruling class of his own generation to &mdash; and by that standard, Catiline is a symptom, not a cause.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 1.03 &mdash; The Participle Question</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">One question, asked six times, on the construction that trips up more advanced readers than any other: is that phrase an ablative absolute, or a participle agreeing with the subject? Plus the four ways to put an ablative absolute into English.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A participle carries <strong>two</strong> pieces of information at once: <em>time</em> relative to the main verb (PPP before, PAP alongside, FAP after) and <em>who it belongs to</em>, which you read off its case. Sallust puts all three in eight lines because his whole argument is about a man doing several things at the same time.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.02 &middot; Catiline's Portrait</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

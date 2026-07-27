@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 2.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">Deponent Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Perfect System &amp; Vocabulary</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Perfect System, and Your Deponent Vocabulary</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core &middot; Vocabulary</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;"><em>Locūtus sum</em> and <em>laudātus sum</em> look like twins. They are not.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">One means "I was praised." The other means "I spoke." Same shape, opposite voice &mdash; and the only thing that tells you which is which is <strong>knowing the verb</strong>. So today you also lock in the twelve deponents you will meet again and again all year.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> form and translate the perfect, pluperfect, and future perfect of a deponent verb.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> make the deponent participle agree with its subject in gender and number.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> give the meaning and principal parts of twelve core deponent verbs.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; PERFECT, PLUPERFECT, FUTURE PERFECT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The recipe is the one you learned for the perfect passive last year: <strong>participle + a form of <em>esse</em></strong>. Only the meaning is active.</p>
+        <table class="para">
+            <tr><th style="width:22%">Tense</th><th style="width:38%">Form (3rd sg. masculine)</th><th>Meaning</th></tr>
+            <tr><td class="lab">Perfect</td><td><em>locūtus <span class="end">est</span></em></td><td>he spoke, he has spoken</td></tr>
+            <tr><td class="lab">Pluperfect</td><td><em>locūtus <span class="end">erat</span></em></td><td>he had spoken</td></tr>
+            <tr><td class="lab">Future perfect</td><td><em>locūtus <span class="end">erit</span></em></td><td>he will have spoken</td></tr>
+        </table>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 18px 0 6px 0;">Full perfect of <em>loquor</em></h3>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>locūtus / locūta sum</em> &mdash; I spoke</td><td><em>locūtī / locūtae sumus</em> &mdash; we spoke</td></tr>
+            <tr><td class="lab">2nd</td><td><em>locūtus / locūta es</em> &mdash; you spoke</td><td><em>locūtī / locūtae estis</em> &mdash; you (pl.) spoke</td></tr>
+            <tr><td class="lab">3rd</td><td><em>locūtus / locūta / locūtum est</em> &mdash; he/she/it spoke</td><td><em>locūtī / locūtae / locūta sunt</em> &mdash; they spoke</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The participle is an adjective, so it agrees.</strong> A woman says <em>locūta sum</em>; a man says <em>locūtus sum</em>; a group of men says <em>locūtī sumus</em>. This is not decoration &mdash; in Sallust it is often how you know <em>who</em> is speaking. <em>Coniūrātī secūtī sunt</em> ("the conspirators followed") has a masculine plural participle because <em>coniūrātī</em> is masculine plural.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 2 &middot; THE TWINS THAT ARE NOT TWINS</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:10px 0;">
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border-radius:7px; padding:16px 20px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:6px;">ORDINARY VERB &middot; <em>laudō</em></div>
+                <div style="font-size:22px; color:#0e1c42;"><em>laudātus sum</em></div>
+                <div style="font-size:17px; color:#1a2340; margin-top:8px;">"I <strong>was praised</strong>."</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">Real perfect passive. Somebody else did the praising.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:16px 20px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:6px;">DEPONENT &middot; <em>loquor</em></div>
+                <div style="font-size:22px; color:#0e1c42;"><em>locūtus sum</em></div>
+                <div style="font-size:17px; color:#1a2340; margin-top:8px;">"I <strong>spoke</strong>."</div>
+                <div style="font-size:15px; color:#666; margin-top:6px;">Perfect tense, active meaning. <em>I</em> did the speaking.</div>
+            </div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9940; <strong>Never translate a deponent perfect as a passive.</strong> <em>Locūtus sum</em> is not "I was spoken." <em>Profectus est</em> is not "he was set out." <em>Mortuus est</em> is not "he was died" &mdash; it means <strong>"he died."</strong> If the English comes out as nonsense, that is your signal that you are looking at a deponent.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>A bonus Latin usually cannot offer.</strong> Ordinary Latin has no active participle meaning "having done" something &mdash; you cannot say "having praised" in one word. Deponents can: <em>profectus</em> means <strong>"having set out"</strong>, actively. That is why Sallust reaches for deponents when he wants to stack events tightly: <em>Catilīna, ex urbe profectus, ad castra contendit</em> &mdash; "Catiline, having set out from the city, hurried to the camp."</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; VOCABULARY &mdash; TWELVE CORE DEPONENTS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;">Learn all three principal parts of each. Say the meaning before you flip.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; 1ST CONJUGATION &middot; INFINITIVE IN -ĀRĪ</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>hortor, hortārī,<br>hortātus sum</em></div><div class="hint">click</div><div class="back">to <strong>urge, encourage, exhort</strong><br><span style="color:#666;">Sallust's word for Catiline working on a crowd.</span></div></div>
+                <div class="flip-card"><div class="front"><em>cōnor, cōnārī,<br>cōnātus sum</em></div><div class="hint">click</div><div class="back">to <strong>try, attempt</strong> (+ infinitive)<br><span style="color:#666;">Trying, not succeeding — note the difference.</span></div></div>
+                <div class="flip-card"><div class="front"><em>mīror, mīrārī,<br>mīrātus sum</em></div><div class="hint">click</div><div class="back">to <strong>wonder at, be amazed by, admire</strong> (+ acc.)</div></div>
+                <div class="flip-card"><div class="front"><em>arbitror, arbitrārī,<br>arbitrātus sum</em></div><div class="hint">click</div><div class="back">to <strong>think, judge, consider</strong><br><span style="color:#666;">A verb of thinking — so it takes indirect statement.</span></div></div>
+            </div>
+            <div class="widget-kicker" style="color:#c7922c; margin-top:8px;">&#128269; 3RD CONJUGATION &middot; INFINITIVE IN -Ī</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>loquor, loquī,<br>locūtus sum</em></div><div class="hint">click</div><div class="back">to <strong>speak, talk</strong><br><span style="color:#666;">The model deponent.</span></div></div>
+                <div class="flip-card"><div class="front"><em>sequor, sequī,<br>secūtus sum</em></div><div class="hint">click</div><div class="back">to <strong>follow, pursue</strong> (+ acc.)</div></div>
+                <div class="flip-card"><div class="front"><em>queror, querī,<br>questus sum</em></div><div class="hint">click</div><div class="back">to <strong>complain, lament</strong><br><span style="color:#666;">What Catiline's followers do about their debts.</span></div></div>
+                <div class="flip-card"><div class="front"><em>ūtor, ūtī,<br>ūsus sum</em></div><div class="hint">click</div><div class="back">to <strong>use, employ</strong> &mdash; <span style="color:#AA1E2D;">takes the ABLATIVE</span>, not the accusative<br><span style="color:#666;"><em>gladiō ūtitur</em> = he uses a sword.</span></div></div>
+                <div class="flip-card"><div class="front"><em>nāscor, nāscī,<br>nātus sum</em></div><div class="hint">click</div><div class="back">to <strong>be born, arise</strong><br><span style="color:#666;"><em>nātus est</em> = "he was born" — English happens to use a passive here, but the Latin is active.</span></div></div>
+                <div class="flip-card"><div class="front"><em>proficīscor, proficīscī,<br>profectus sum</em></div><div class="hint">click</div><div class="back">to <strong>set out, depart</strong><br><span style="color:#666;"><em>profectus</em> = "having set out."</span></div></div>
+            </div>
+            <div class="widget-kicker" style="color:#c7922c; margin-top:8px;">&#128269; 3RD CONJUGATION IO-STEM</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>patior, patī,<br>passus sum</em></div><div class="hint">click</div><div class="back">to <strong>suffer, endure</strong>; also to <strong>allow, permit</strong></div></div>
+                <div class="flip-card"><div class="front"><em>morior, morī,<br>mortuus sum</em></div><div class="hint">click</div><div class="back">to <strong>die</strong><br><span style="color:#666;"><em>mortuus est</em> = "he died." Catiline's ending, in Module 12.</span></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128218; <strong>Recognition only, for now.</strong> These deponents will appear glossed when they come up, and some get taught properly later: <em>oblīvīscor, oblīvīscī, oblītus sum</em> (to forget, + genitive) &middot; <em>fruor, fruī</em> (to enjoy, + abl.) &middot; <em>fungor, fungī, fūnctus sum</em> (to perform, + abl.) &middot; <em>potior, potīrī, potītus sum</em> (to gain possession of) &middot; <em>orior, orīrī, ortus sum</em> (to rise, arise) &middot; <em>vereor, verērī, veritus sum</em> (to fear, respect &mdash; Module 12). And <em>abūtor, abūtī, abūsus sum</em> (to misuse, + abl.) &mdash; the verb in Cicero's opening line.</div>
+    </div>
+
+    <!-- DERIVATIVE -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128220; DERIVATIVE MINUTE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 8px 0;">Deponents are unusually generous with English words &mdash; which is a gift, because the derivative reminds you of the meaning:</p>
+        <table class="para" style="margin:6px 0;">
+            <tr><th style="width:26%">Latin</th><th>English descendants</th></tr>
+            <tr><td class="lab"><em>sequor</em> &mdash; follow</td><td><strong>sequence, sequel, consequence, prosecute</strong> (<em>prō</em> + <em>sequor</em>, "follow through")</td></tr>
+            <tr><td class="lab"><em>patior</em> &mdash; suffer, endure</td><td><strong>patient, patience, passion, passive</strong> &mdash; all about what is <em>undergone</em></td></tr>
+            <tr><td class="lab"><em>morior</em> &mdash; die</td><td><strong>mortal, immortal, mortuary, mortality</strong></td></tr>
+            <tr><td class="lab"><em>nāscor</em> &mdash; be born</td><td><strong>natal, native, innate, nation, nature</strong></td></tr>
+            <tr><td class="lab"><em>ūtor</em> &mdash; use</td><td><strong>use, utility, utensil, usual</strong></td></tr>
+        </table>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:8px 0 0 0;"><strong>Notice <em>passion</em>.</strong> It reaches English through <em>patior</em>, "to suffer" &mdash; which is why the sufferings of a martyr are called a "passion" and why a "passive" verb is one that has something done to it. The word did not originally mean strong feeling at all.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; CHECK THE PERFECT</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Every verb here is a deponent. Get the voice right.</div>
+            <div class="widget-row" data-correct="b" data-hint="Deponent perfect. Active or passive meaning?">
+                <div class="widget-row-prompt"><em>Coniūrātī ducem suum <strong>secūtī sunt</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A deponent has no passive meaning. And 'they were followed' would leave ducem, an accusative, with no job.">"They were followed by their leader"</button>
+                    <button data-choice="b" data-fb="Right — perfect, 3rd plural, active meaning: 'The conspirators followed their leader.' Secūtī is nominative plural masculine, agreeing with coniūrātī.">"The conspirators followed their leader"</button>
+                    <button data-choice="c" data-fb="Sunt is present, so the tense is perfect, not pluperfect. 'Had followed' would be secūtī erant.">"The conspirators had followed their leader"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="What gender and number is the participle?">
+                <div class="widget-row-prompt">A woman named Fulvia is speaking about herself. Which is correct?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Locūtus is masculine. A woman speaking about herself needs the feminine form.">locūtus sum</button>
+                    <button data-choice="b" data-fb="Locūtae is plural. One woman, so singular.">locūtae sumus</button>
+                    <button data-choice="c" data-fb="Right — locūta sum: feminine singular participle, because the participle agrees with the subject like any adjective.">locūta sum</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Erat is which tense of esse?">
+                <div class="widget-row-prompt"><em>Catilīna ex urbe iam <strong>profectus erat</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — pluperfect: 'Catiline had already set out from the city.' Participle plus erat gives pluperfect.">Pluperfect — "had already set out"</button>
+                    <button data-choice="b" data-fb="Perfect would be profectus est. Erat is imperfect, which pushes the whole form back to pluperfect.">Perfect — "set out"</button>
+                    <button data-choice="c" data-fb="Nothing passive about it. Proficīscor is deponent — 'he was set out' is not English or Latin.">Pluperfect passive — "had been set out"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Which case does ūtor govern?">
+                <div class="widget-row-prompt">"The soldier used a sword" &mdash; which is correct Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Gladium is accusative. Ūtor does not take an accusative object — this is the single most common error with this verb.">Mīles gladium ūsus est.</button>
+                    <button data-choice="b" data-fb="Right — ūtor governs the ABLATIVE: gladiō. 'The soldier used a sword.'">Mīles gladiō ūsus est.</button>
+                    <button data-choice="c" data-fb="Ūsus est is the deponent perfect and is correct — but gladiī is genitive, and ūtor wants the ablative.">Mīles gladiī ūsus est.</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Translate it literally first, then ask whether that is English.">
+                <div class="widget-row-prompt"><em>Catilīna in proeliō <strong>mortuus est</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="'He was died' is not English — which is exactly the clue that you are holding a deponent.">"He was died in battle"</button>
+                    <button data-choice="b" data-fb="'He was killed' would be interfectus est or occīsus est — a real passive of a different verb. Morior does not say who did it.">"He was killed in battle"</button>
+                    <button data-choice="c" data-fb="Right — 'Catiline died in battle.' Morior, mortuus sum: deponent, active in meaning. This is how Module 12 ends.">"He died in battle"</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 2.04 &mdash; Deponent Participles</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The one place deponents give you something no other Latin verb can: an active participle for a completed action &mdash; plus the deponent ablative absolute.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A deponent perfect is <strong>participle + <em>esse</em></strong>, exactly like a perfect passive &mdash; and it means the <strong>opposite</strong>. The participle still agrees with the subject. <em>Locūta sum</em> = "I spoke," said by a woman. <em>Mortuus est</em> = "he died," never "he was died."</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.03 &middot; The Perfect System &amp; Vocabulary</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

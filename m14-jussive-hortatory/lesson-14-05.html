@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 14.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 14</div>
+        <div style="font-size: 12px; color: #666;">Main-Clause Subjunctives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 14.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Consul Pleads</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 25 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 14.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><em>Prō Murēnā</em>: The Consul Pleads</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Module Review</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Cicero wrote the law. Then he stood up and defended the man charged under it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Late in 63 BC, with Catiline still in the field in Etruria and his own consulship nearly over, Cicero went into court to defend <strong>Lucius Licinius Murena</strong> &mdash; elected to be consul the following year, and now accused of buying the election. This is not the Cicero of the Catilinarian speeches, thundering at an enemy. This is Cicero <em>asking</em>: for a favour, for a verdict, for the survival of the state as he sees it. Which is exactly why the module's grammar lives here. When a speaker stops reporting and starts pleading, Latin reaches for the main-clause subjunctive.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted passage from a Roman law court and name the job of every subjunctive in it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what <em>ambitus</em> was, and why the charge against Murena put Cicero in an awkward position.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the whole module in one table and begin the quiz without re-reading the week.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; BEFORE YOU READ</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Four things the passage assumes and does not explain.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>1. Consuls took office on 1 January.</strong> Two of them, always two, elected the previous summer. Between the election and 1 January a man was <em>cōnsul dēsignātus</em> &mdash; consul-elect: chosen, but not yet holding the office. Murena was consul-elect for 62 BC when he was put on trial.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>2. <em>Ambitus</em> was the crime of buying an election.</strong> Not campaigning &mdash; campaigning was expected, and the word literally means &ldquo;a going-around,&rdquo; because that is what a candidate did. What the law forbade was paying for votes, hiring crowds, and the rest of it. A conviction ended a political career.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>3. Cicero had carried a bribery law himself, that year, as consul.</strong> Then a man was charged under the new law, and Cicero appeared for the defence. He does not hide this in the speech &mdash; he raises it himself, which is what a good advocate does with a fact the other side is going to use.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>4. Catiline was still alive.</strong> He had left Rome in November and was in Etruria with an army. The battle of Pistoria &mdash; Module 12's reading &mdash; had not happened yet. So when Cicero says the republic cannot afford to lose a consul, he is not being dramatic; he is describing the calendar.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Watch the grammar do the arguing.</strong> There are <strong>nine</strong> main-clause subjunctives in thirteen lines &mdash; one hortatory, three jussives, three wishes and two deliberative questions &mdash; and <strong>three</strong> subordinate subjunctives mixed in among them, one of which is there deliberately to catch you out. Every one of the main-clause ones is a move in an argument: <em>let us look at this</em>, <em>if only it had not happened</em>, <em>what am I to do?</em> This is what the construction is <em>for</em>.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; THE READING</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>Adapted from Cicero,</strong> <em>Prō Murēnā</em>. The Latin below is <strong>not Cicero's own Latin</strong>. It is an adaptation written for this course, using only grammar you have been taught, so that the argument of the speech can be read in December of your first year of Advanced Latin. The <strong>substance</strong> is drawn from the speech and from what is securely known about the trial: Murena was a consul-elect prosecuted for <em>ambitus</em>; Servius Sulpicius, a defeated candidate, and Marcus Cato were among the prosecutors; Cicero had carried a bribery law as consul that same year; and part of his argument was the danger of leaving the state a consul short while Catiline was in the field. <strong>Do not quote any line of this passage as Cicero's words.</strong></div>
+        <div class="rd">
+            <p><span class="ln">1</span>Iūdicēs, Lūcius Licinius Murēna, cōnsul dēsignātus, hodiē reus ambitūs est.</p>
+            <p><span class="ln">2</span>Accūsat eum Servius Sulpicius, quī ipse cōnsulātum petīverat; accūsat etiam Mārcus Catō, cuius sevēritātem omnēs timēmus.</p>
+            <p><span class="ln">3</span>Ipse hōc annō lēgem dē ambitū cōnstituī, nec eam lēgem dēfendere dēsinō.</p>
+            <p><span class="ln">4</span>Sed <b>videāmus</b> tandem quid rēs pūblica hōc tempore postulet.</p>
+            <p><span class="ln">5</span>Catilīna cum exercitū in Etrūriā adhūc est; bellum reī pūblicae imminet.</p>
+            <p><span class="ln">6</span><b>Utinam</b> nē ista coniūrātiō umquam <b>facta esset!</b></p>
+            <p><span class="ln">7</span>Sed facta est; itaque nunc dē salūte omnium cōgitandum est.</p>
+            <p><span class="ln">8</span>Kalendīs Iānuāriīs duo cōnsulēs rem pūblicam <b>accipiant.</b></p>
+            <p><span class="ln">9</span>Nam ūnus cōnsul tantum perīculum sōlus sustinēre nōn potest.</p>
+            <p><span class="ln">10</span><b>Utinam</b> nē tantum perīculum reī pūblicae iam <b>imminēret!</b> Sed imminet.</p>
+            <p><span class="ln">11</span>Quid igitur <b>faciam</b>, iūdicēs? Quid ā vōbīs <b>petam?</b></p>
+            <p><span class="ln">12</span>Vōs igitur ōrō atque obsecrō ut hunc virum reī pūblicae cōnservētis, nē initiō annī alterum cōnsulem āmittāmus.</p>
+            <p><span class="ln">13</span><b>Utinam</b> vōbīs haec ōrātiō <b>persuādeat!</b> Salvus <b>sit</b> Murēna; salva <b>sit</b> rēs pūblica.</p>
+        </div>
+
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin:14px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS &mdash; EVERY WORD NOT ON YOUR RUNNING LIST, IN THE FORM IT APPEARS</div>
+            <ul class="gl">
+                <li><strong>1</strong> &middot; <em>iūdicēs</em> &mdash; gentlemen of the jury (vocative plural of <em>iūdex, iūdicis</em> m., juror) &middot; <em>Lūcius Licinius Murēna</em> &mdash; L. Licinius Murena, elected consul for 62 BC &middot; <em>cōnsul dēsignātus</em> &mdash; consul-elect: chosen but not yet in office (<em>dēsignātus, -a, -um</em>) &middot; <em>reus, reī</em> m. &mdash; defendant &middot; <em>ambitūs</em> &mdash; of electoral bribery (genitive of <em>ambitus, ambitūs</em> m.; <em>reus ambitūs</em> = &ldquo;a defendant on a charge of bribery&rdquo;) &middot; <em>hodiē</em> &mdash; today</li>
+                <li><strong>2</strong> &middot; <em>Servius Sulpicius</em> &mdash; Servius Sulpicius Rufus, a candidate who had lost the election &middot; <em>cōnsulātum</em> &mdash; the consulship (accusative of <em>cōnsulātus, cōnsulātūs</em> m.) &middot; <em>petīverat</em> &mdash; had sought, had stood for (pluperfect indicative of <em>petō, petere, petīvī</em>) &middot; <em>Mārcus Catō</em> &mdash; M. Porcius Cato, the senator from Module 9's debate &middot; <em>cuius</em> &mdash; whose (genitive of <em>quī</em>) &middot; <em>sevēritātem</em> &mdash; strictness, severity (accusative of <em>sevēritās, sevēritātis</em> f.)</li>
+                <li><strong>3</strong> &middot; <em>hōc annō</em> &mdash; in this year &middot; <em>lēgem dē ambitū</em> &mdash; a law about electoral bribery &middot; <em>cōnstituī</em> &mdash; I established, I set in place (1st singular perfect indicative of <em>cōnstituō, cōnstituere, cōnstituī</em>) &middot; <em>nec</em> &mdash; and&hellip; not &middot; <em>dēsinō, dēsinere</em> &mdash; to cease, to stop</li>
+                <li><strong>4</strong> &middot; <em>videāmus</em> &mdash; let us see (hortatory subjunctive) &middot; <em>tandem</em> &mdash; at last, finally &middot; <em>postulet</em> &mdash; demands, requires (present subjunctive of <em>postulō, postulāre</em>, in an indirect question)</li>
+                <li><strong>5</strong> &middot; <em>exercitū</em> &mdash; with an army (ablative of <em>exercitus, exercitūs</em> m.) &middot; <em>Etrūria, Etrūriae</em> f. &mdash; Etruria, the region north of Rome &middot; <em>adhūc</em> &mdash; still &middot; <em>imminet</em> (+ dative) &mdash; hangs over, threatens (<em>immineō, imminēre</em>)</li>
+                <li><strong>6</strong> &middot; <em>utinam</em> &mdash; if only, would that &middot; <em>ista</em> &mdash; that (of yours), that one there (<em>iste, ista, istud</em>) &middot; <em>umquam</em> &mdash; ever &middot; <em>facta esset</em> &mdash; had been made (pluperfect subjunctive passive of <em>faciō</em>: participle + <em>esset</em>)</li>
+                <li><strong>7</strong> &middot; <em>itaque</em> &mdash; and so, therefore &middot; <em>dē salūte omnium</em> &mdash; about the safety of everyone &middot; <em>cōgitandum est</em> &mdash; there must be thinking, we must think about (impersonal gerundive of obligation, Module 5)</li>
+                <li><strong>8</strong> &middot; <em>Kalendīs Iānuāriīs</em> &mdash; on the Kalends of January, the first of the month, the day the new consuls entered office (ablative of time) &middot; <em>accipiant</em> &mdash; let them receive, let them take over (jussive subjunctive of <em>accipiō, accipere, accēpī</em>)</li>
+                <li><strong>9</strong> &middot; <em>nam</em> &mdash; for, because &middot; <em>sōlus, -a, -um</em> &mdash; alone, by himself &middot; <em>sustinēre</em> &mdash; to hold up, to withstand (<em>sustineō, sustinēre, sustinuī</em>)</li>
+                <li><strong>10</strong> &middot; <em>iam</em> &mdash; now, already &middot; <em>imminēret</em> &mdash; imperfect subjunctive of <em>immineō</em></li>
+                <li><strong>11</strong> &middot; <em>igitur</em> &mdash; therefore, then &middot; <em>faciam</em>, <em>petam</em> &mdash; deliberative subjunctives, &ldquo;am I to do&hellip; am I to ask&hellip;&rdquo; &middot; <em>ā vōbīs</em> &mdash; from you (plural)</li>
+                <li><strong>12</strong> &middot; <em>ōrō atque obsecrō</em> &mdash; I beg and implore (<em>ōrō, ōrāre</em>; <em>obsecrō, obsecrāre</em>) &middot; <em>hunc virum</em> &mdash; this man (accusative) &middot; <em>cōnservētis</em> &mdash; that you preserve (present subjunctive of <em>cōnservō, cōnservāre</em>, in an indirect command after <em>ut</em>) &middot; <em>initiō annī</em> &mdash; at the beginning of the year (ablative of <em>initium, initiī</em> n.) &middot; <em>alterum cōnsulem</em> &mdash; one of the two consuls (<em>alter, altera, alterum</em> &mdash; one of two) &middot; <em>āmittāmus</em> &mdash; we may lose (present subjunctive of <em>āmittō, āmittere, āmīsī</em>)</li>
+                <li><strong>13</strong> &middot; <em>persuādeat</em> (+ dative) &mdash; may persuade (present subjunctive of <em>persuādeō, persuādēre</em>) &middot; <em>ōrātiō, ōrātiōnis</em> f. &mdash; speech &middot; <em>salvus, -a, -um</em> &mdash; safe, unharmed</li>
+            </ul>
+        </div>
+
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Two honest notes on the passage.</strong> <strong>(1)</strong> Cicero's actual speech is far longer, wittier and more devious than this, and much of its most famous material &mdash; his teasing of Cato's philosophy, his comparison of a lawyer's career with a soldier's &mdash; has been left out because it needs grammar you do not own yet. What is here is the backbone of the argument, not the speech. <strong>(2)</strong> Line 12 contains a <strong>trap</strong>, and it is deliberate: <em>āmittāmus</em> is a first person plural subjunctive, which is what a hortatory looks like &mdash; but it is <strong>not</strong> one. Look at what is in front of it.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; NAME EVERY SUBJUNCTIVE IN THE PASSAGE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six items, in the order they appear. Run the four steps from 14.04 on each: count the verbs, look for an indicative main verb, then decide.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What is this subjunctive doing, and what does the line mean?</div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two subjunctives in the line and no indicative. Which one has a word in front of it?">
+                <div class="widget-row-prompt">Line 4 &mdash; <em>Sed videāmus tandem quid rēs pūblica hōc tempore postulet.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Videāmus is first person plural, so it is hortatory, not jussive — the speaker has put himself inside the invitation. A jussive would be videant, &quot;let them see.&quot;">A jussive, then an indirect question</button>
+                    <button data-choice="b" data-fb="Both are subjunctive, but they are not both main-clause uses. Postulet has the interrogative quid in front of it and videāmus governing it above: that makes its clause a reported question.">Two main-clause subjunctives</button>
+                    <button data-choice="c" data-fb="Right. Videāmus: first plural, nothing in front of it, no indicative in the sentence → hortatory MAIN verb. Postulet: quid in front, videāmus above → SUBORDINATE indirect question (m11). &quot;But let us see at last what the republic demands at this moment.&quot;">A hortatory main verb, then an indirect question</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Utinam is the signpost. Now find the tense of facta esset and ask what it claims about the past.">
+                <div class="widget-row-prompt">Line 6 &mdash; <em>Utinam nē ista coniūrātiō umquam facta esset!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A present subjunctive after utinam would leave the door open — &quot;may it not be done.&quot; But facta esset is pluperfect, and the next line says outright: sed facta est, &quot;but it was done.&quot;">A wish that may still come true</button>
+                    <button data-choice="b" data-fb="Right — an optative wish in the PLUPERFECT, so a wish about the past that did not go the speaker's way. &quot;If only that conspiracy had never been made!&quot; And line 7 confirms it in four words: sed facta est. Note the two-word passive form, participle facta + esset, from Lesson 13.03.">A wish about the past &mdash; and it did happen</button>
+                    <button data-choice="c" data-fb="A fear clause needs a verb of fearing (timeō, vereor, metuō) above the nē. There is no verb of fearing here, and utinam is not a verb at all — it is the signpost of a wish.">A fear clause &mdash; &ldquo;I am afraid it was made&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="One verb, third person plural, no signal word, no question mark.">
+                <div class="widget-row-prompt">Line 8 &mdash; <em>Kalendīs Iānuāriīs duo cōnsulēs rem pūblicam accipiant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a jussive. Third person plural present subjunctive as the only verb in the sentence: &quot;On the first of January let two consuls take over the republic.&quot; It sounds like a constitutional rule because that is exactly the tone a jussive has in a speech.">A jussive &mdash; &ldquo;let two consuls take over the republic&rdquo;</button>
+                    <button data-choice="b" data-fb="A wish would want utinam in front of it, or at least a context of hoping. This line is not hoping; it is stating what ought to happen on a particular date. And accipiant is third person, which is jussive territory.">A wish &mdash; &ldquo;if only two consuls would take over&rdquo;</button>
+                    <button data-choice="c" data-fb="Accipiant is subjunctive, not indicative — the indicative would be accipient (future) or accipiunt (present). Nothing here is being reported as fact; something is being called for.">Future indicative &mdash; &ldquo;two consuls will take over&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Utinam again, but a different tense. And the two words after the exclamation mark settle it.">
+                <div class="widget-row-prompt">Line 10 &mdash; <em>Utinam nē tantum perīculum reī pūblicae iam imminēret! Sed imminet.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A pluperfect wish would be about the past — imminuisset-type forms. Imminēret is imperfect, and the word iam (&quot;now, already&quot;) plants the wish firmly in the present.">A wish about the past that did not happen</button>
+                    <button data-choice="b" data-fb="Tantum here is simply the adjective &quot;so great,&quot; agreeing with perīculum. A result clause would need ut and a second verb, and there is neither.">A result clause introduced by <em>tantum</em></button>
+                    <button data-choice="c" data-fb="Right — an optative wish in the IMPERFECT, so a wish about the present that is not the case. &quot;If only so great a danger were not now hanging over the republic!&quot; And then Cicero says it out loud himself: Sed imminet — &quot;but it is.&quot; That two-word sentence is the imperfect wish being cashed in.">A wish about now &mdash; and the danger is real</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="A question word, a question mark, and no verb of asking anywhere.">
+                <div class="widget-row-prompt">Line 11 &mdash; <em>Quid igitur faciam, iūdicēs? Quid ā vōbīs petam?</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An indirect question is reported, and needs a verb of asking or knowing above it — rogō quid faciam. Here nothing governs the question; it is asked out loud, to the jury, with a question mark.">Two indirect questions after an understood <em>rogō</em></button>
+                    <button data-choice="b" data-fb="Right — two deliberative questions. &quot;What then am I to do, gentlemen of the jury? What am I to ask of you?&quot; Neither expects an answer from the jury; both are showing them the speaker's difficulty. Remember: this is the one main-clause use whose negative is nōn, not nē.">Two deliberative questions &mdash; &ldquo;what am I to do?&rdquo;</button>
+                    <button data-choice="c" data-fb="A hortatory is first person PLURAL — faciāmus. Faciam is first person singular. And a hortatory is not a question; these two lines end in question marks.">Two hortatory subjunctives &mdash; &ldquo;let us do it&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="This is the trap. Āmittāmus is first person plural — but what word sits in front of it, and what indicative verb is above it?">
+                <div class="widget-row-prompt">Line 12 &mdash; <em>Vōs igitur ōrō atque obsecrō ut hunc virum reī pūblicae cōnservētis, nē initiō annī alterum cōnsulem āmittāmus.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right, and both halves are subordinate. Ōrō atque obsecrō are INDICATIVE main verbs. Ut...cōnservētis is a negative-free indirect command after verbs of begging (m08): &quot;I beg and implore you to preserve this man for the republic.&quot; Nē...āmittāmus is a negative PURPOSE clause: &quot;so that we may not lose one of the two consuls at the start of the year.&quot; Neither subjunctive is a main-clause use.">An indirect command, then a negative purpose clause &mdash; both subordinate</button>
+                    <button data-choice="b" data-fb="Āmittāmus looks exactly like a hortatory, and that is why the line is here. But a hortatory has nothing in front of it; this one has nē in front of it and the indicative ōrō atque obsecrō above it. First person plural is not enough on its own — step 2 comes first.">A hortatory &mdash; &ldquo;let us not lose one of the two consuls&rdquo;</button>
+                    <button data-choice="c" data-fb="A fear clause needs a verb of fearing. Ōrō and obsecrō are verbs of begging, not of fearing, so nē cannot be doing its m12 job here.">An indirect command, then a fear clause</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; THE ROMAN WORLD &middot; A TRIAL IN THE OPEN AIR</div>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;">A Roman criminal trial happened outdoors, in or beside the Forum, in front of a large panel of jurors and whoever else felt like stopping to listen. A magistrate presided, but nobody in the space had the job of explaining the law to the jury or ruling out an unfair argument. The advocates spoke in turn, at length, and the speech <em>was</em> the case: there was no cross-examination as we would recognise it, and the crowd standing round the edges was part of the event. Cicero was not alone on Murena's side &mdash; Quintus Hortensius and Marcus Crassus, two of the most formidable speakers in Rome, spoke before he did. Then the jurors voted with ballots, and there was no appeal.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0;">What makes this particular trial uncomfortable is the law. Rome passed anti-bribery laws over and over across the late Republic, which is the surest possible sign that they were not working; Cicero had carried one himself, as consul, that same year. Weeks later he stood up to defend a man charged under it, arguing that the republic could not be left a consul short on 1 January with Catiline's army in the field. Murena was acquitted. Whether that verdict was justice or convenience is a fair question, and we cannot settle it, because we have only Cicero's side: the prosecution speeches are lost. Cato's, in particular, we would very much like to have.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE WHOLE MODULE IN ONE TABLE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Seven rows. If you can rebuild this from memory, you are ready for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:22%">What you see</th><th style="width:18%">Which use</th><th style="width:26%">How to translate it</th><th style="width:12%">Negative</th><th>From the reading</th></tr>
+            <tr><td class="lab">subjunctive alone, <strong>3rd person</strong>, no signpost<br><span style="font-size:14px;color:#666;"><em>accipiant</em>, <em>sit</em></span></td><td>jussive</td><td class="end">&ldquo;let him / let them&hellip;&rdquo;<br>&ldquo;he is to&hellip;&rdquo; &middot; &ldquo;may he&hellip;&rdquo;</td><td><em>nē</em></td><td>lines 8, 13</td></tr>
+            <tr><td class="lab">subjunctive alone, <strong>1st person plural</strong><br><span style="font-size:14px;color:#666;"><em>videāmus</em></span></td><td>hortatory</td><td class="end">&ldquo;let us&hellip;&rdquo;</td><td><em>nē</em></td><td>line 4</td></tr>
+            <tr><td class="lab"><strong><em>utinam</em></strong> + <strong>present</strong><br><span style="font-size:14px;color:#666;"><em>persuādeat</em></span></td><td>optative &mdash; still open</td><td class="end">&ldquo;if only he may&hellip;!&rdquo;<br>&ldquo;may it&hellip;!&rdquo;</td><td><em>utinam nē</em></td><td>line 13</td></tr>
+            <tr><td class="lab"><strong><em>utinam</em></strong> + <strong>imperfect</strong><br><span style="font-size:14px;color:#666;"><em>imminēret</em></span></td><td>optative &mdash; not so now</td><td class="end">&ldquo;if only it <em>were</em>&hellip;!&rdquo;<br><span style="font-size:14px;">(and it is not)</span></td><td><em>utinam nē</em></td><td>line 10</td></tr>
+            <tr><td class="lab"><strong><em>utinam</em></strong> + <strong>pluperfect</strong><br><span style="font-size:14px;color:#666;"><em>facta esset</em></span></td><td>optative &mdash; did not happen</td><td class="end">&ldquo;if only it had&hellip;!&rdquo;<br><span style="font-size:14px;">(and it did not)</span></td><td><em>utinam nē</em></td><td>line 6</td></tr>
+            <tr><td class="lab">subjunctive alone in a <strong>question</strong>, present<br><span style="font-size:14px;color:#666;"><em>faciam</em>, <em>petam</em></span></td><td>deliberative &mdash; now</td><td class="end">&ldquo;am I to&hellip;?&rdquo;<br>&ldquo;what should we&hellip;?&rdquo;</td><td class="end"><strong><em>nōn</em></strong></td><td>line 11</td></tr>
+            <tr><td class="lab">subjunctive alone in a <strong>question</strong>, imperfect<br><span style="font-size:14px;color:#666;"><em>dīcerem</em>, <em>facerem</em></span></td><td>deliberative &mdash; the past</td><td class="end">&ldquo;was I to&hellip;?&rdquo;<br>&ldquo;what should I have&hellip;?&rdquo;</td><td class="end"><strong><em>nōn</em></strong></td><td>&mdash; (Lesson 14.03)</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>And the two rules that apply to every row.</strong> <strong>(1) Sequence of tenses does not apply</strong> &mdash; there is no main verb above a main-clause subjunctive, so nothing governs its tense. The tense is chosen by <em>meaning</em>: which is why the three <em>utinam</em> rows exist at all. <strong>(2) The negative is <em>nē</em> for the first five rows and <em>nōn</em> for the last two.</strong> Jussive, hortatory and optative are willing something; a deliberative question is only asking, so it takes the ordinary negative of statements.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; MIXED SELF-CHECK &middot; EVERYTHING FROM M10 TO M14</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five sentences, five different modules, no labels. The quiz mixes them, so mix them here first.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is this, and which module does it come from?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two verbs. What kind of verb is nesciēbat, and what word opens the second clause?">
+                <div class="widget-row-prompt"><em>Nesciēbat quid cōnsul illā nocte fēcisset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A deliberative question is asked out loud and has no verb governing it. Here nesciēbat (&quot;he did not know&quot;) sits above the clause, so the question has been reported rather than asked.">A deliberative question &mdash; m14</button>
+                    <button data-choice="b" data-fb="Right — an indirect question (m11) with a PLUPERFECT subjunctive (m13). Nesciēbat is imperfect, so secondary sequence; fēcisset is the &quot;already finished&quot; cell: &quot;He did not know what the consul had done that night.&quot; Two modules working together in one clause.">An indirect question with a pluperfect subjunctive &mdash; m11 and m13</button>
+                    <button data-choice="c" data-fb="A wish needs utinam or at least no governing verb, and it does not take a question word. Quid here is the interrogative &quot;what,&quot; opening a reported question.">An optative wish about the past &mdash; m14</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="There is no verb of fearing in this sentence. But is there a NOUN of fearing?">
+                <div class="widget-row-prompt"><em>Metus erat nē coniūrātī urbem incenderent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A negative purpose clause would answer &quot;why?&quot; — and &quot;there was fear in order that the conspirators should not burn the city&quot; is nonsense. The nē here is doing its fear-clause job.">A negative purpose clause &mdash; m08</button>
+                    <button data-choice="b" data-fb="A main-clause negative would mean incenderent was the only verb and nē just meant &quot;not.&quot; But erat is an indicative verb, and it is running the sentence.">A main-clause negative &mdash; m14</button>
+                    <button data-choice="c" data-fb="Right — a fear clause (m12), and the metus trap. English uses a verb (&quot;people feared that...&quot;); Latin uses the NOUN metus with esse: metus erat nē, &quot;there was a fear that.&quot; So nē still means &quot;that... would&quot;: &quot;There was a fear that the conspirators would set fire to the city.&quot; Gloss: incendō, incendere, incendī — to set on fire.">A fear clause after the noun <em>metus</em> &mdash; m12</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="First person plural — but check what is in front of it and what is above it before you decide.">
+                <div class="widget-row-prompt"><em>Hunc virum cōnservēmus, nē alterum cōnsulem āmittāmus.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right, and this is the sort that separates the class. Cōnservēmus has nothing in front of it and no indicative above it → hortatory MAIN verb, &quot;let us preserve this man.&quot; Āmittāmus has nē in front of it and cōnservēmus above it → negative PURPOSE clause, &quot;so that we may not lose one of the two consuls.&quot; Two first-person-plural subjunctives, two different jobs.">A hortatory, then a negative purpose clause</button>
+                    <button data-choice="b" data-fb="They cannot both be hortatory. Only one verb in a sentence can be the main verb, and nē in front of āmittāmus marks its clause as subordinate to the other one.">Two hortatory subjunctives</button>
+                    <button data-choice="c" data-fb="A fear clause needs a verb or noun of fearing. Cōnservō means &quot;to preserve&quot; — nobody in this sentence is afraid of anything.">A hortatory, then a fear clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Utinam plus a pluperfect. What does that combination always commit the speaker to?">
+                <div class="widget-row-prompt"><em>Utinam nē Lentulus patriam suam prōdidisset!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An indirect command needs a verb of ordering or asking above it, and it comes out in English as an infinitive: &quot;he begged him not to betray.&quot; There is no such verb here, and utinam is not one.">A negative indirect command &mdash; m08</button>
+                    <button data-choice="b" data-fb="A wish in the imperfect (prōderet) would be about the present. Prōdidisset is pluperfect: perfect stem prōdid- plus -isset. That points back to a finished past.">An optative wish about the present</button>
+                    <button data-choice="c" data-fb="Right — an optative wish in the pluperfect: &quot;If only Lentulus had not betrayed his own country!&quot; And the tense carries the admission that he did. Lentulus was strangled in the Tullianum on 5 December 63 BC, which is Module 10's reading — so the wish is being made about something the reader has already watched happen.">An optative wish about the past &mdash; and he did betray it</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Read the first word of the sentence. Which module owns that word?">
+                <div class="widget-row-prompt"><em>Cum Cicerō cōnsul esset, hunc reum in iūdiciō dēfendit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Cum is not a preposition here: esset is a verb sitting inside the cum group, and prepositions never have verbs of their own. Cōnsul is also nominative, agreeing with Cicerō, not ablative.">The preposition <em>cum</em> &mdash; &ldquo;with the consul Cicero&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — a cum clause with the imperfect subjunctive (m10), and the sense is causal: being consul is what gave him the standing to appear. &quot;Since Cicero was consul, he defended this defendant at the trial.&quot; A temporal reading (&quot;when Cicero was consul&quot;) is also defensible, as 10.04 warned.">A <em>cum</em> clause with the subjunctive &mdash; m10</button>
+                    <button data-choice="c" data-fb="Esset is subjunctive, but it is not a main-clause use: cum sits in front of it and the indicative dēfendit runs the sentence. A jussive has nothing in front of it and nothing above it.">A jussive &mdash; &ldquo;let Cicero be consul&rdquo;</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- HANDOFF -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#128203; YOUR GRADED WORK FOR MODULE 14</div>
+        <div class="task">
+            <div class="th"><strong>1. <em>Ludus XIV &mdash; Fīat!</em></strong> &middot; Interactive Practice &amp; Games</div>
+            <div class="td">Seventy-five seconds, and your <strong>best of unlimited attempts</strong> counts. The name is the most famous jussive subjunctive in the world &mdash; <em>fīat</em>, &ldquo;let it be done,&rdquo; which English borrowed whole as the noun <em>fiat</em>, a decree. (The verb it comes from, <em>fīō</em>, is <strong>Module 15</strong>; here it is only a name, and the game never asks you to build a form of it.) Play it before the quiz: it drills main clause against subordinate, the three wishes, and the four jobs of <em>nē</em>, which is exactly what the quiz asks for.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>2. Module 14 Quiz</strong> &middot; 40 points &middot; auto-graded, unlimited attempts, highest score kept</div>
+            <div class="td">Twenty items: what a main-clause subjunctive is, jussive against hortatory, the tense of the wish, the negatives, four form-production items, the look-alike sort, vocabulary and two best-translation questions. Everything on this page and the four lessons before it. A gloss is given for the translation section.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>3. Module 14 Translation</strong> &middot; 30 points &middot; teacher-reviewed, in Microsoft Word</div>
+            <div class="td">Five sentences English into Latin and three Latin into English, all vocabulary supplied. One of the English sentences deliberately needs a <em>subordinate</em> construction rather than a main-clause one, and you have to notice. Save to OneDrive as <em>Lastname_Firstname_LatinAdv_M14_Translation.docx</em> and submit through Canvas.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>4. Module 14 Reflection</strong> &middot; ungraded survey</div>
+            <div class="td">Five questions, no points. It tells your teacher what to help you with before Module 15 &mdash; which brings conditions (&ldquo;if&hellip; then&hellip;&rdquo;) and the six irregular verbs, including the <em>eō</em> you have been promised all week. Answer it honestly; it costs you nothing and it is the fastest way to get help.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">15</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 15 &mdash; Conditions and Irregular Verbs</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">&ldquo;If the Senate had not acted, Rome would have burned.&rdquo; Latin has a whole system for saying what <em>would</em> be and what <em>would have been</em> &mdash; and the imperfect and pluperfect subjunctive do it, in exactly the way they did in this week's wishes. Then the six irregular verbs arrive at last, <em>eō</em> among them, and <em>eāmus</em> becomes yours.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Line 10 of the reading is a wish and an admission in the same breath: <em>Utinam nē tantum perīculum imminēret! Sed imminet.</em> Cicero chose the imperfect, and then said out loud what the imperfect had already told the jury. That is what this module buys you &mdash; a grammar in which hoping for something and knowing better can be said at once.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 14.05 &middot; <em>Prō Murēnā</em>: The Consul Pleads</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

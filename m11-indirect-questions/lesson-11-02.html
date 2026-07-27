@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 11.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 11</div>
+        <div style="font-size: 12px; color: #666;">Indirect Questions</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 11.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Who, Why, Where, How Many</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 11.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Question Words</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core &amp; Vocabulary</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The construction is one rule. The vocabulary is the actual work.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You learned the whole grammar of the indirect question yesterday in four steps. What you do not have yet is the <strong>list of question words</strong>, and without it you will not recognize an indirect question when it walks past you. Today you learn the kit &mdash; nine interrogatives, one of which declines &mdash; and the ten words this module's reading needs.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> give the meaning of <em>cūr, ubi, quō, quandō, quōmodo, quantus, quot,</em> and <em>uter</em> on sight.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> decline the interrogative <em>quis, quid</em> and keep it apart from the adjective <em>quī, quae, quod</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose the right interrogative for a given English question.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE KIT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every example below is a complete indirect question. Read the Latin, then check the English &mdash; and note that every subjunctive here is either <strong>present</strong> or <strong>imperfect</strong>, exactly the two you own.</p>
+        <table class="para">
+            <tr><th style="width:17%">Interrogative</th><th style="width:19%">Asks</th><th>Example</th></tr>
+            <tr><td class="lab"><em>cūr</em></td><td class="end">why</td><td><em>Cicerō rogāvit cūr coniūrātī tacērent.</em><br><span style="font-size:14px; color:#666;">"Cicero asked why the conspirators were silent."</span></td></tr>
+            <tr><td class="lab"><em>ubi</em></td><td class="end">where</td><td><em>Nesciō ubi Catilīna sit.</em><br><span style="font-size:14px; color:#666;">"I do not know where Catiline is."</span></td></tr>
+            <tr><td class="lab"><em>quō</em></td><td class="end">to where, whither</td><td><em>Nesciēbant quō Catilīna proficīscerētur.</em><br><span style="font-size:14px; color:#666;">"They did not know where Catiline was setting out for."</span></td></tr>
+            <tr><td class="lab"><em>quandō</em></td><td class="end">when</td><td><em>Rogat quandō senātus conveniat.</em><br><span style="font-size:14px; color:#666;">"He asks when the Senate is meeting."</span></td></tr>
+            <tr><td class="lab"><em>quōmodo</em></td><td class="end">how, in what way</td><td><em>Cicerō nesciēbat quōmodo coniūrātī litterās mitterent.</em><br><span style="font-size:14px; color:#666;">"Cicero did not know how the conspirators were sending letters."</span></td></tr>
+            <tr><td class="lab"><em>quantus, -a, -um</em></td><td class="end">how great, how large</td><td><em>Intellegimus quantum perīculum sit.</em><br><span style="font-size:14px; color:#666;">"We understand how great the danger is."</span></td></tr>
+            <tr><td class="lab"><em>quot</em> <span style="font-size:13px; color:#666;">(indeclinable)</span></td><td class="end">how many</td><td><em>Rogāvit quot coniūrātī in urbe manērent.</em><br><span style="font-size:14px; color:#666;">"He asked how many conspirators were remaining in the city."</span></td></tr>
+            <tr><td class="lab"><em>uter, utra, utrum</em></td><td class="end">which of two</td><td><em>Rogāvit uter cōnsul vigilāret.</em><br><span style="font-size:14px; color:#666;">"He asked which of the two consuls was keeping watch."</span></td></tr>
+            <tr><td class="lab"><em>quam</em> + adj./adv.</td><td class="end">how (great, serious, quickly&hellip;)</td><td><em>Nōn ignōrō quam gravis sit haec rēs.</em><br><span style="font-size:14px; color:#666;">"I am well aware how serious this matter is."</span></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Three of these agree, and three do not.</strong> <em>Quantus</em> and <em>uter</em> are <strong>adjectives</strong>: they take the gender, number, and case of the noun they belong to (<em>quantum perīculum</em>, neuter; <em>uter cōnsul</em>, masculine). <em>Quot</em> never changes at all &mdash; it is indeclinable, like <em>tot</em> from Module 9. And <em>cūr, ubi, quō, quandō, quōmodo</em> are plain adverbs with no endings to worry about. That is most of the work already done for you.</div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:14px 18px; margin: 12px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS FOR THE EXAMPLES ABOVE</div>
+            <ul style="list-style:none; padding:0; margin:0;">
+                <li style="font-size:15px; color:#1a2340; line-height:1.6; padding:3px 0; border-bottom:1px dotted #E6DFC9;"><em>tacērent</em> &mdash; imperfect subjunctive of <em>taceō, tacēre, tacuī</em>, "to be silent, say nothing"</li>
+                <li style="font-size:15px; color:#1a2340; line-height:1.6; padding:3px 0; border-bottom:1px dotted #E6DFC9;"><em>proficīscerētur</em> &mdash; imperfect subjunctive of the deponent <em>proficīscor</em> (Module 2), "to set out"</li>
+                <li style="font-size:15px; color:#1a2340; line-height:1.6; padding:3px 0; border-bottom:1px dotted #E6DFC9;"><em>conveniat</em> &mdash; present subjunctive of <em>conveniō, convenīre</em>, "to come together, assemble, meet"</li>
+                <li style="font-size:15px; color:#1a2340; line-height:1.6; padding:3px 0; border-bottom:1px dotted #E6DFC9;"><em>vigilāret</em> &mdash; imperfect subjunctive of <em>vigilō, vigilāre</em>, "to keep watch, stay awake" (Module 7)</li>
+                <li style="font-size:15px; color:#1a2340; line-height:1.6; padding:3px 0; border-bottom:1px dotted #E6DFC9;"><em>nōn ignōrō</em> &mdash; literally "I am not ignorant of," i.e. "I know full well." Latin likes this double negative; keep it in your English as "I am well aware."</li>
+                <li style="font-size:15px; color:#1a2340; line-height:1.6; padding:3px 0;"><em>coniūrātī, coniūrātōrum</em> m. pl. &mdash; the conspirators</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE ONE THAT DECLINES: <em>QUIS, QUID</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">"Who" and "what" are not adverbs. They are a <strong>pronoun</strong>, and a pronoun has to take the case its job in the clause requires. Learn the singular; the plural simply borrows the relative pronoun's forms, which you already know from 0706010.</p>
+        <table class="para">
+            <tr><th style="width:20%">Case</th><th style="width:26%">Masculine / feminine</th><th style="width:20%">Neuter</th><th>Job in the clause</th></tr>
+            <tr><td class="lab">Nominative</td><td class="end"><em>quis</em></td><td class="end"><em>quid</em></td><td>subject &mdash; who? what?</td></tr>
+            <tr><td class="lab">Genitive</td><td><em>cuius</em></td><td><em>cuius</em></td><td>whose? of what?</td></tr>
+            <tr><td class="lab">Dative</td><td><em>cui</em></td><td><em>cui</em></td><td>to whom? for what?</td></tr>
+            <tr><td class="lab">Accusative</td><td class="end"><em>quem</em></td><td class="end"><em>quid</em></td><td>direct object &mdash; whom? what?</td></tr>
+            <tr><td class="lab">Ablative</td><td><em>quō</em></td><td><em>quō</em></td><td>with / from whom or what?</td></tr>
+        </table>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin:12px 0;">
+            <p style="font-size:18px; color:#1a2340; line-height:1.8; margin:0 0 10px 0;"><em>Rogō <strong>quis</strong> in cūriā adsit.</em><br><span style="font-size:16px; color:#666;">"I ask who is present in the Senate House." &mdash; <em>quis</em> is nominative: it is the subject of <em>adsit</em>.</span></p>
+            <p style="font-size:18px; color:#1a2340; line-height:1.8; margin:0 0 10px 0;"><em>Sciō <strong>quid</strong> Catilīna faciat.</em><br><span style="font-size:16px; color:#666;">"I know what Catiline is doing." &mdash; <em>quid</em> is accusative: it is the object of <em>faciat</em>.</span></p>
+            <p style="font-size:18px; color:#1a2340; line-height:1.8; margin:0;"><em>Rogāvit <strong>quem</strong> senātus audīret.</em><br><span style="font-size:16px; color:#666;">"He asked whom the Senate was listening to." &mdash; <em>quem</em> is accusative masculine: the object of <em>audīret</em>, with <em>senātus</em> as subject.</span></p>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong><em>quis</em> is not <em>quī</em>.</strong> Two different words that look related and behave differently:
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin:10px 0 6px 0;">
+                <div style="flex:1; min-width:220px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:19px; color:#0e1c42;"><em>quis, quid</em></div><div style="font-size:15px; color:#1a2340;"><strong>pronoun</strong> &mdash; stands alone. <em>Rogō quis veniat.</em> "I ask <strong>who</strong> is coming."</div></div>
+                <div style="flex:1; min-width:220px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:19px; color:#0e1c42;"><em>quī, quae, quod</em></div><div style="font-size:15px; color:#1a2340;"><strong>adjective</strong> &mdash; sits next to a noun. <em>Rogō quī senātor veniat.</em> "I ask <strong>which senator</strong> is coming."</div></div>
+            </div>
+            Same test both times: is there a noun for it to modify? If yes, use the <em>quī, quae, quod</em> forms; if it is standing on its own, use <em>quis</em> or <em>quid</em>. And do not confuse either one with the <strong>relative</strong> pronoun <em>quī, quae, quod</em> from 0706010 &mdash; identical forms, completely different job. The relative points back at a noun already named (<em>senātor <strong>quī</strong> venit</em>, "the senator <strong>who</strong> is coming"); the interrogative asks for information nobody has given yet.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; PART 3 &middot; VOCABULARY FOR THIS MODULE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The interrogatives above, plus these. They are the words Cicero needs on 5 December 63 BC, and every one of them turns up in Thursday's and Friday's work.</p>
+        <table class="para">
+            <tr><th style="width:40%">Entry</th><th>Meaning &amp; note</th></tr>
+            <tr><td class="lab"><em>ignōrō, ignōrāre, ignōrāvī, ignōrātum</em></td><td>not to know, be ignorant of &mdash; <em>nōn ignōrō</em> = "I know full well"</td></tr>
+            <tr><td class="lab"><em>quaerō, quaerere, quaesīvī, quaesītum</em></td><td>to seek, look for, inquire, ask</td></tr>
+            <tr><td class="lab"><em>cognōscō, cognōscere, cognōvī, cognitum</em></td><td>to learn, find out, come to know &mdash; note the long ō in <em>cognōvit</em></td></tr>
+            <tr><td class="lab"><em>dubitō, dubitāre, dubitāvī, dubitātum</em></td><td>to doubt, hesitate, be in two minds</td></tr>
+            <tr><td class="lab"><em>cōnstituō, cōnstituere, cōnstituī, cōnstitūtum</em></td><td>to decide, determine, settle</td></tr>
+            <tr><td class="lab"><em>cēlō, cēlāre, cēlāvī, cēlātum</em></td><td>to conceal, hide, keep back</td></tr>
+            <tr><td class="lab"><em>taceō, tacēre, tacuī, tacitum</em></td><td>to be silent, say nothing</td></tr>
+            <tr><td class="lab"><em>cōgitō, cōgitāre, cōgitāvī, cōgitātum</em></td><td>to think, turn over in the mind</td></tr>
+            <tr><td class="lab"><em>probō, probāre, probāvī, probātum</em></td><td>to approve, endorse, think well of</td></tr>
+            <tr><td class="lab"><em>dēprehendō, dēprehendere, dēprehendī, dēprehēnsum</em></td><td>to catch, seize, arrest &mdash; often "catch in the act"</td></tr>
+            <tr><td class="lab"><em>sententia, sententiae</em> f.</td><td>opinion; in the Senate, a <strong>motion</strong> or a <strong>vote</strong></td></tr>
+            <tr><td class="lab"><em>supplicium, suppliciī</em> n.</td><td>punishment &mdash; and specifically the death penalty</td></tr>
+            <tr><td class="lab"><em>cūria, cūriae</em> f.</td><td>the Senate House</td></tr>
+            <tr><td class="lab"><em>temperantia, temperantiae</em> f.</td><td>self-restraint, moderation, the right measure</td></tr>
+            <tr><td class="lab"><em>certus, -a, -um</em></td><td>certain, sure, settled &mdash; <em>certē</em> (adv.) certainly</td></tr>
+            <tr><td class="lab"><em>obscūrus, -a, -um</em></td><td>dark, unclear, obscure</td></tr>
+            <tr><td class="lab"><em>manifestus, -a, -um</em></td><td>plain, evident, caught in the act</td></tr>
+            <tr><td class="lab"><em>ūtilis, ūtile</em></td><td>useful, in one's interest</td></tr>
+            <tr><td class="lab"><em>dēnique</em> (adv.)</td><td>finally, at last, in short</td></tr>
+            <tr><td class="lab"><em>postrīdiē</em> (adv.)</td><td>on the next day</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128220; <strong>Etymology moment.</strong> <em>Ignōrō</em> is <em>in-</em> ("not") + the root of <em>nōscō</em> ("know") &mdash; and it gives English <em>ignorant, ignore, ignorance</em>. <em>Dubitō</em> comes from <em>duo</em>, "two": to doubt is to be pulled two ways, which is exactly what <em>dubious</em> and <em>indubitable</em> still mean. <em>Manifestus</em> is <em>manus</em> ("hand") + a root meaning "struck" or "seized" &mdash; what is <em>manifest</em> has been caught red-handed, and a <em>manifesto</em> is a claim held up in plain view. And <em>sententia</em> gives you <em>sentence</em> and <em>sentiment</em>: for a Roman senator, your <em>sententia</em> was both your opinion and the motion you moved.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; SAY IT, THEN CHECK IT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Cover the answer, say the meaning out loud, then click.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY THE MEANING FIRST &middot; THEN CLICK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>quandō</em></div><div class="hint">adverb &middot; click</div><div class="back"><strong>when</strong> &mdash; <em>Rogat quandō senātus conveniat.</em></div></div>
+                <div class="flip-card"><div class="front"><em>quōmodo</em></div><div class="hint">adverb &middot; click</div><div class="back"><strong>how, in what way</strong> &mdash; literally "in what manner" (<em>quō modō</em>)</div></div>
+                <div class="flip-card"><div class="front"><em>quot</em></div><div class="hint">never changes &middot; click</div><div class="back"><strong>how many</strong> &mdash; indeclinable, like <em>tot</em> ("so many") from Module 9</div></div>
+                <div class="flip-card"><div class="front"><em>quantus, -a, -um</em></div><div class="hint">adjective &middot; click</div><div class="back"><strong>how great, how large</strong> &mdash; agrees with its noun: <em>quantum perīculum</em></div></div>
+                <div class="flip-card"><div class="front"><em>uter, utra, utrum</em></div><div class="hint">adjective &middot; click</div><div class="back"><strong>which of two</strong> &mdash; not "which of many." Rome had exactly two consuls, so this word gets used a lot.</div></div>
+                <div class="flip-card"><div class="front"><em>cuius</em></div><div class="hint">from <em>quis</em> &middot; click</div><div class="back"><strong>whose? of whom?</strong> &mdash; genitive singular of the interrogative pronoun, all genders</div></div>
+                <div class="flip-card"><div class="front"><em>quem</em></div><div class="hint">from <em>quis</em> &middot; click</div><div class="back"><strong>whom?</strong> &mdash; accusative singular masculine/feminine; the object form</div></div>
+                <div class="flip-card"><div class="front"><em>quō</em></div><div class="hint">two jobs &middot; click</div><div class="back"><strong>(1) to where, whither</strong> as an adverb; <strong>(2) with/from whom or what</strong> as the ablative of <em>quis</em>. Context decides.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; PICK THE RIGHT WORD</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which interrogative does each English question need?</div>
+            <div class="widget-row" data-correct="c" data-hint="Number, not size. Which word never changes its ending?">
+                <div class="widget-row-prompt">"He asked how many senators were present." &mdash; <em>Rogāvit ____ senātōrēs adessent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Quantī would ask 'how great' or 'how large,' not 'how many.' Size is not number.">quantī</button>
+                    <button data-choice="b" data-fb="Utrī asks 'which of two.' You are not choosing between two senators here.">utrī</button>
+                    <button data-choice="c" data-fb="Right &mdash; quot, 'how many,' and it never changes: Rogāvit quot senātōrēs adessent.">quot</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Rome had exactly two consuls at a time.">
+                <div class="widget-row-prompt">"I do not know which of the two consuls is speaking." &mdash; <em>Nesciō ____ cōnsul loquātur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; uter, 'which of two,' agreeing with cōnsul as a masculine nominative singular adjective.">uter</button>
+                    <button data-choice="b" data-fb="Quis is the pronoun 'who' and stands alone. Here you have the noun cōnsul, and you are choosing between two of them &mdash; that is uter's exact job.">quis</button>
+                    <button data-choice="c" data-fb="Quot asks 'how many.' The English does not ask for a count.">quot</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="This word is an adjective and must agree with <em>perīculum</em>.">
+                <div class="widget-row-prompt">"We understood how great the danger was." &mdash; <em>Intellegēbāmus ____ perīculum esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Quantus is masculine nominative singular. Perīculum is neuter, so the adjective has to be neuter too.">quantus</button>
+                    <button data-choice="b" data-fb="Right &mdash; quantum, neuter to match perīculum: Intellegēbāmus quantum perīculum esset.">quantum</button>
+                    <button data-choice="c" data-fb="Quantī is genitive singular or nominative plural masculine. Neither agrees with a neuter singular noun.">quantī</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Is there a noun for this word to modify, or is it standing alone?">
+                <div class="widget-row-prompt">"I ask who is present." &mdash; <em>Rogō ____ adsit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; quis, the pronoun, standing on its own as the subject of adsit.">quis</button>
+                    <button data-choice="b" data-fb="Quī is the adjective form; it needs a noun beside it, as in quī senātor adsit, 'which senator is present.' There is no noun here.">quī</button>
+                    <button data-choice="c" data-fb="Quem is accusative &mdash; the object form. This word is the subject of adsit, so it must be nominative.">quem</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Two clues: what case does the verb <em>audīret</em> want, and what gender is a Roman consul?">
+                <div class="widget-row-prompt">"He asked whom the Senate was listening to." &mdash; <em>Rogāvit ____ senātus audīret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Quis is nominative. But senātus is already the subject of audīret, so this word has to be the object &mdash; accusative.">quis</button>
+                    <button data-choice="b" data-fb="Quid is the neuter form, 'what.' The English asks 'whom' &mdash; a person, so masculine or feminine.">quid</button>
+                    <button data-choice="c" data-fb="Right &mdash; quem, accusative masculine singular, the object of audīret: Rogāvit quem senātus audīret.">quem</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 11.03 &mdash; Whether: Yes-or-No Questions Reported</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">What happens when the question has no question word at all &mdash; the enclitic <em>-ne</em>, the word <em>num</em>, and <em>utrum&hellip;an</em> for "whether&hellip;or." Plus the one place where <em>num</em> quietly changes meaning.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Most interrogatives are adverbs with nothing to learn but the meaning. Three need care: <em>quantus</em> and <em>uter</em> are <strong>adjectives</strong> and must agree with their noun, and <em>quis, quid</em> is a <strong>pronoun</strong> that must take the case its job in the clause requires &mdash; <em>quis</em> for a subject, <em>quem</em> for an object.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 11.02 &middot; The Question Words</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

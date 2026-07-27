@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 8.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 8</div>
+        <div style="font-size: 12px; color: #666;">Purpose Clauses &amp; Indirect Command</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 8.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Seals at the Senate</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 8.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Seals at the Senate</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Cicero, <em>In Catilīnam</em> III (adapted)</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A dozen purpose clauses and indirect commands in four short paragraphs. That is not an accident.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">December 3rd, 63 BC, is the day the Catilinarian conspiracy stopped being a rumour and became <strong>evidence</strong> &mdash; sealed letters, in the conspirators' own hands, opened in front of witnesses. Cicero told the story that afternoon in the Forum. Nearly every action in it comes attached to a clause explaining what it was <em>for</em>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> parse every purpose clause and indirect command in an adapted passage from Cicero's third <em>Catilīnarian</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognize a <strong>relative purpose clause</strong> (<em>quī</em> + subjunctive) when I meet one in real prose.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why written, sealed evidence changed what Cicero could say to the Roman people.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Cicero, <em>In Catilīnam</em> III.</strong> A simplified Latin retelling of the events of December 3, 63 BC &mdash; <strong>not Cicero's own sentences.</strong> The narrative frame is ours; the events are the ones Cicero reports. Every <span style="color:#AA1E2D;"><strong>purpose clause</strong></span> and <span style="color:#AA1E2D;"><strong>indirect command</strong></span> is marked in red. Read it once straight through for sense before you parse anything.</p>
+        <div class="rd">
+            <p>Catilīna ex urbe discesserat; Cicerō enim eum ex urbe discēdere iusserat. Lentulus autem et Cethēgus in urbe manēbant, et coniūrātī nova cōnsilia capiēbant. Illī ad Allobrogēs, gentem Gallicam, lēgātōs mīsērunt <b>ut auxilium peterent</b>.</p>
+            <p>Sed Allobrogēs rem Cicerōnī nūntiāvērunt. Tum cōnsul lēgātīs persuāsit <b>ut tabellās ā coniūrātīs acciperent</b>. Deinde duōbus praetōribus imperāvit <b>ut ad Pontem Mulvium prōgrederentur</b>. Illī noctū ad pontem vēnērunt <b>nē lēgātī cum tabellīs effugerent</b>. Ibi et lēgātōs et Volturcium comprehendērunt, et tabellās signātās ad cōnsulem portāvērunt.</p>
+            <p>Prīmā lūce Cicerō senātum convocāvit. Ibi singulīs coniūrātīs imperāvit <b>ut signa sua agnōscerent</b>. Lentulus signum suum agnōvit; deinde omnia cōnfessus est. Testēs aderant <b>nē quis posteā dubitāret</b>. Cōnsul tamen tabellās dīligenter custōdīvit, <b>nē quid ad Catilīnae exercitum mānāret</b>.</p>
+            <p>Post haec Cicerō ad Forum prōcessit <b>ut populus omnia audīret</b>. Cīvēs monuit <b>nē timērent</b>. "Ōrō vōs, Quirītēs," inquit, "<b>ut huius diēī memoriam semper teneātis</b>. Ego enim, <b>nē quid vōbīs nocēret</b>, haec omnia fēcī." Nam cōnsul, <b>ut rem pūblicam servāret</b>, magna perīcula suscēperat. Nōn armīs sed tabellīs signātīs et testibus rem pūblicam servāvit.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list, in the form it appears</div>
+            <ul class="gl">
+                <li><em>discēdere iusserat</em> &mdash; "had ordered [him] to leave" &mdash; <em>iubeō</em> + accusative + infinitive, the exception from Lesson 8.03</li>
+                <li><em>Lentulus, Lentulī</em> m. &mdash; Lentulus, a praetor in 63 BC and the senior conspirator left in the city</li>
+                <li><em>Cethēgus, Cethēgī</em> m. &mdash; Cethegus, another of the conspirators in Rome</li>
+                <li><em>coniūrātī, coniūrātōrum</em> m. pl. &mdash; the conspirators</li>
+                <li><em>Allobrogēs, Allobrogum</em> m. pl. &mdash; the Allobroges, a Gallic people whose envoys were in Rome with grievances</li>
+                <li><em>gentem Gallicam</em> &mdash; "a Gallic people" (accusative of <em>gēns Gallica</em>)</li>
+                <li><em>lēgātus, lēgātī</em> m. &mdash; envoy, ambassador</li>
+                <li><em>auxilium, auxiliī</em> n. &mdash; help, military support</li>
+                <li><em>petō, petere, petīvī</em> &mdash; to seek, request</li>
+                <li><em>nūntiāvērunt</em> &mdash; "they reported" (perfect of <em>nūntiō, nūntiāre</em>)</li>
+                <li><em>tabella, tabellae</em> f. &mdash; writing tablet; in the plural, the sealed letters</li>
+                <li><em>signātus, -a, -um</em> &mdash; sealed (from <em>signō, signāre</em>)</li>
+                <li><em>signum, signī</em> n. &mdash; sign; here the <strong>seal</strong>, the mark a man's ring pressed into the wax</li>
+                <li><em>praetor, praetōris</em> m. &mdash; praetor, a Roman magistrate ranking just below consul</li>
+                <li><em>duōbus</em> &mdash; dative plural of <em>duo</em>, "two"</li>
+                <li><em>prōgredior, prōgredī, prōgressus sum</em> &mdash; to advance, go forward (deponent, Module 2)</li>
+                <li><em>Pontem Mulvium</em> &mdash; the Mulvian Bridge, on the road running north out of Rome (accusative after <em>ad</em>)</li>
+                <li><em>noctū</em> (adv.) &mdash; by night</li>
+                <li><em>Volturcius, Volturciī</em> m. &mdash; Titus Volturcius, the courier travelling with the envoys</li>
+                <li><em>comprehendērunt</em> &mdash; "they arrested, seized" (perfect of <em>comprehendō</em>)</li>
+                <li><em>portāvērunt</em> &mdash; "they carried" (perfect of <em>portō, portāre</em>)</li>
+                <li><em>prīmā lūce</em> &mdash; "at first light, at dawn" (ablative of time)</li>
+                <li><em>convocāvit</em> &mdash; "he called together, summoned" (perfect of <em>convocō</em>)</li>
+                <li><em>singulīs</em> &mdash; dative plural of <em>singulī</em>, "one at a time, each man individually"</li>
+                <li><em>agnōscō, agnōscere, agnōvī</em> &mdash; to recognize, identify</li>
+                <li><em>cōnfessus est</em> &mdash; "he confessed" (perfect of the deponent <em>cōnfiteor</em>)</li>
+                <li><em>testis, testis</em> m./f. &mdash; witness; <em>testēs aderant</em> &mdash; "witnesses were present"</li>
+                <li><em>nē quis</em> &mdash; "so that no one" (after <em>nē</em>, <em>quis</em> means "anyone")</li>
+                <li><em>posteā</em> (adv.) &mdash; afterwards</li>
+                <li><em>dubitō, dubitāre</em> &mdash; to doubt, hesitate</li>
+                <li><em>dīligenter</em> (adv.) &mdash; carefully</li>
+                <li><em>custōdiō, custōdīre, custōdīvī</em> &mdash; to guard</li>
+                <li><em>nē quid</em> &mdash; "so that nothing" (after <em>nē</em>, <em>quid</em> means "anything")</li>
+                <li><em>exercitum</em> &mdash; accusative of <em>exercitus, exercitūs</em> m., "army"</li>
+                <li><em>mānō, mānāre, mānāvī</em> &mdash; to flow, trickle, <strong>leak</strong>; used of news getting out</li>
+                <li><em>prōcēdō, prōcēdere, prōcessī</em> &mdash; to go forward, advance</li>
+                <li><em>Quirītēs</em> &mdash; "Citizens!" the formal address to the Roman people in a public speech</li>
+                <li><em>inquit</em> &mdash; "he says / he said," inserted inside a quotation</li>
+                <li><em>huius diēī</em> &mdash; "of this day" (genitive of <em>hic diēs</em>)</li>
+                <li><em>memoriam tenēre</em> &mdash; "to hold the memory of," to remember</li>
+                <li><em>noceō, nocēre, nocuī</em> (+ dat.) &mdash; to harm, hurt</li>
+                <li><em>suscēperat</em> &mdash; "he had taken on, undertaken" (pluperfect of <em>suscipiō</em>)</li>
+                <li><em>rem pūblicam</em> &mdash; accusative of <em>rēs pūblica, reī pūblicae</em> f., the republic, the state &mdash; <strong>always two words</strong></li>
+                <li><em>armīs</em> &mdash; ablative plural of <em>arma, armōrum</em> n. pl., "arms, weapons"</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Watch the first sentence.</strong> <em>Cicerō eum ex urbe discēdere iusserat</em> reports an order &mdash; but there is no <em>ut</em> and no subjunctive, because the verb is <em>iubeō</em>. Two sentences later, <em>lēgātīs persuāsit ut&hellip;acciperent</em> reports another order with a dative and a full clause. Same kind of event, two different constructions, chosen by the verb. That contrast is on the quiz.</div>
+    </div>
+
+    <!-- PART 2 - INVENTORY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 2 &middot; CLAUSE INVENTORY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Work through the passage and account for each red clause yourself first &mdash; marker word, verb, main verb, sequence, type. Then check against this table. It is also your revision sheet for tomorrow's quiz.</p>
+        <table class="para">
+            <tr><th style="width:23%">Clause</th><th style="width:19%">Subjunctive verb</th><th style="width:18%">Main verb</th><th style="width:13%">Sequence</th><th>Type &amp; translation</th></tr>
+            <tr><td class="lab"><em>ut auxilium peterent</em></td><td>impf. <em>petō</em></td><td><em>mīsērunt</em> (perf.)</td><td>secondary</td><td><strong>Purpose</strong> &mdash; "so that they might seek help"</td></tr>
+            <tr><td class="lab"><em>ut tabellās acciperent</em></td><td>impf. <em>accipiō</em></td><td><em>persuāsit</em> (perf.)</td><td>secondary</td><td><strong>Indirect command</strong> after <em>persuādeō</em> + <strong>dat.</strong> <em>lēgātīs</em> &mdash; "persuaded the envoys to accept the letters"</td></tr>
+            <tr><td class="lab"><em>ut&hellip;prōgrederentur</em></td><td>impf. <em>prōgredior</em> (dep.)</td><td><em>imperāvit</em> (perf.)</td><td>secondary</td><td><strong>Indirect command</strong> after <em>imperō</em> + <strong>dat.</strong> <em>praetōribus</em> &mdash; "ordered the two praetors to advance"</td></tr>
+            <tr><td class="lab"><em>nē lēgātī effugerent</em></td><td>impf. <em>effugiō</em></td><td><em>vēnērunt</em> (perf.)</td><td>secondary</td><td><strong>Negative purpose</strong> &mdash; "so that the envoys would not escape"</td></tr>
+            <tr><td class="lab"><em>ut signa sua agnōscerent</em></td><td>impf. <em>agnōscō</em></td><td><em>imperāvit</em> (perf.)</td><td>secondary</td><td><strong>Indirect command</strong> after <em>imperō</em> + <strong>dat.</strong> <em>singulīs coniūrātīs</em> &mdash; "ordered each man to identify his own seal"</td></tr>
+            <tr><td class="lab"><em>nē quis posteā dubitāret</em></td><td>impf. <em>dubitō</em></td><td><em>aderant</em> (impf.)</td><td>secondary</td><td><strong>Negative purpose</strong> &mdash; "so that no one would doubt afterwards"</td></tr>
+            <tr><td class="lab"><em>nē quid&hellip;mānāret</em></td><td>impf. <em>mānō</em></td><td><em>custōdīvit</em> (perf.)</td><td>secondary</td><td><strong>Negative purpose</strong> &mdash; "so that nothing might leak out to Catiline's army"</td></tr>
+            <tr><td class="lab"><em>ut populus omnia audīret</em></td><td>impf. <em>audiō</em></td><td><em>prōcessit</em> (perf.)</td><td>secondary</td><td><strong>Purpose</strong> &mdash; "so that the people might hear everything"</td></tr>
+            <tr><td class="lab"><em>nē timērent</em></td><td>impf. <em>timeō</em></td><td><em>monuit</em> (perf.)</td><td>secondary</td><td><strong>Indirect command</strong> after <em>moneō</em> + <strong>acc.</strong> <em>cīvēs</em> &mdash; "warned the citizens not to fear"</td></tr>
+            <tr><td class="lab"><em>ut&hellip;memoriam teneātis</em></td><td><strong>pres.</strong> <em>teneō</em></td><td><em>ōrō</em> (pres.)</td><td><strong>primary</strong></td><td><strong>Indirect command</strong> after <em>ōrō</em> + <strong>acc.</strong> <em>vōs</em> &mdash; "I beg you to hold the memory of this day"</td></tr>
+            <tr><td class="lab"><em>nē quid vōbīs nocēret</em></td><td>impf. <em>noceō</em></td><td><em>fēcī</em> (perf.)</td><td>secondary</td><td><strong>Negative purpose</strong> &mdash; "so that nothing might harm you"</td></tr>
+            <tr><td class="lab"><em>ut rem pūblicam servāret</em></td><td>impf. <em>servō</em></td><td><em>suscēperat</em> (plupf.)</td><td>secondary</td><td><strong>Purpose</strong> &mdash; "in order to save the republic"</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Eleven secondary, one primary &mdash; and the exception proves the rule.</strong> The narration is all in the past, so every clause in it takes the imperfect subjunctive. Then Cicero opens his mouth: <em>Ōrō vōs&hellip;ut&hellip;teneātis</em>. He is speaking <em>now</em>, in the present, so the sequence flips to primary and the subjunctive is present. Sequence is not about the clause &mdash; it is about the verb that governs it.</div>
+    </div>
+
+    <!-- PART 3 - RELATIVE PURPOSE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; ONE MORE SHAPE TO <em>RECOGNIZE</em>: RELATIVE PURPOSE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Cicero and Sallust both do this, so you should be able to spot it: instead of <em>ut</em>, a purpose clause can be introduced by a <strong>relative pronoun</strong> &mdash; <em>quī, quae, quod</em> &mdash; when the purpose attaches to a noun in the main clause. The relative pronoun stands in for "so that he / so that they."</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:4px;">ORDINARY RELATIVE CLAUSE &mdash; INDICATIVE</div>
+                <div style="font-size:18px; color:#0e1c42;"><em>Cicerō custōdēs mīsit quī pontem custōdiēbant.</em></div>
+                <div style="font-size:15px; color:#1a2340; margin-top:6px;">"Cicero sent guards <strong>who were guarding</strong> the bridge." A fact about the guards.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:4px;">RELATIVE PURPOSE &mdash; SUBJUNCTIVE</div>
+                <div style="font-size:18px; color:#0e1c42;"><em>Cicerō custōdēs mīsit quī pontem custōdīrent.</em></div>
+                <div style="font-size:15px; color:#1a2340; margin-top:6px;">"Cicero sent guards <strong>to guard</strong> the bridge." Why he sent them.</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">One letter of difference in the verb; a completely different job in the sentence. The tell is always the <strong>mood</strong>: a relative clause in the subjunctive, after a verb of sending, choosing, or looking for, is expressing purpose.</p>
+        <div style="background:#EEF1F8; border-left:5px solid #0E1C42; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128271; <strong>Recognition only, and we mean it.</strong> You need to be able to <em>identify</em> a relative purpose clause and translate it. You are <strong>not</strong> asked to write one &mdash; on the quiz, on the translation, or on the ARTHUR project, an <em>ut</em> clause is always accepted where a relative purpose clause would also work. <em>Cicerō custōdēs mīsit ut pontem custōdīrent</em> says the same thing and is entirely correct Latin.</div>
+    </div>
+
+    <!-- PART 4 - TRANSLATE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 4 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Four sentences from the passage. Write your English out before flipping &mdash; these are the closest thing to a preview of tomorrow's quiz that you will get.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Illī ad Allobrogēs lēgātōs mīsērunt ut auxilium peterent.</em></div><div class="hint">click to compare</div><div class="back">"They sent envoys to the Allobroges <strong>so that they might seek help</strong>" &mdash; or, more naturally, "&hellip;<strong>to ask for help</strong>." A plain positive purpose clause: <em>mīsērunt</em> is perfect, so secondary sequence, so <em>peterent</em> (imperfect subjunctive of <em>petō</em>).</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Deinde duōbus praetōribus imperāvit ut ad Pontem Mulvium prōgrederentur.</em></div><div class="hint">click to compare</div><div class="back">"Then he ordered the two praetors <strong>to advance to the Mulvian Bridge</strong>." Indirect command: <em>imperāvit</em> + <strong>dative</strong> <em>duōbus praetōribus</em> + <em>ut</em> + subjunctive. <em>Prōgrederentur</em> is the imperfect subjunctive of a <strong>deponent</strong> &mdash; passive-shaped endings, active meaning, exactly as in Module 2.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Ibi singulīs coniūrātīs imperāvit ut signa sua agnōscerent.</em></div><div class="hint">click to compare</div><div class="back">"There he ordered <strong>each of the conspirators</strong> to identify <strong>his own seal</strong>." Again <em>imperō</em> + dative (<em>singulīs coniūrātīs</em>). <em>Sua</em> is reflexive &mdash; each man's <em>own</em> seal, which is the whole force of the moment: no one could claim the letter was somebody else's.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>"Ōrō vōs, Quirītēs, ut huius diēī memoriam semper teneātis."</em></div><div class="hint">click to compare</div><div class="back">"I beg you, citizens, <strong>always to hold the memory of this day</strong>." The one primary-sequence clause in the passage: <em>ōrō</em> is present, so <em>teneātis</em> is present subjunctive. <em>Ōrō</em> takes the <strong>accusative</strong> of the person begged &mdash; <em>vōs</em>. Note how English prefers the infinitive ("to hold") where Latin has a subjunctive clause.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; THE DAY THE EVIDENCE ARRIVED</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Until December 3rd, Cicero had informants, rumours, and Catiline's own behaviour. What he did not have was proof a Roman jury &mdash; or a Roman crowd &mdash; could see. That changed with a piece of wax.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Envoys of the Allobroges, a Gallic people, were in Rome with complaints about Roman administration. The conspirators approached them for military help; the Allobroges reported it. Cicero arranged for the envoys to leave the city carrying <em>tabellae</em> &mdash; letters, folded and sealed &mdash; and sent two praetors ahead to the <strong>Pons Mulvius</strong> to intercept them by night, along with a courier named Titus Volturcius. At dawn Cicero convened the Senate and had the letters produced. A Roman <em>signum</em> was a personal thing: the ring you wore pressed your mark into the wax, and everyone who dealt with you knew it. Asked to look at his own seal, Lentulus &mdash; a sitting praetor &mdash; acknowledged it, in front of <em>testēs</em>.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>Why the grammar of this lesson fits the day.</strong> Cicero's account of December 3rd is almost entirely a chain of purposes: he did <em>this</em> so that <em>that</em> would follow, and <em>this</em> so that something else would not. It is a consul arguing that everything he did was deliberate and for the <em>rēs pūblica</em> &mdash; that it was <em>virtūs</em> and not <em>audācia</em>. Whether you believe him is the reader's decision, and Romans themselves argued about it for the rest of his life. But notice how much of the argument is carried by clause structure rather than by adjectives. A man who can say <em>why</em> about every single action is making a case.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 8.05 &mdash; Purpose, or Not?</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Review, a full self-check, and a plain word about the Module 8 gate &mdash; what it asks, why it is here, and how the retakes work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">In real prose, purpose clauses and indirect commands are not decoration &mdash; they are how a narrator explains a plan. Twelve of them in four paragraphs is Cicero insisting that nothing he did on December 3rd was accidental. Read the <em>ut</em> and <em>nē</em> clauses and you have read his argument.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 8.04 &middot; The Seals at the Senate</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

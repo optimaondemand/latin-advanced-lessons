@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 11.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step-n { min-width: 34px; height: 34px; border-radius: 8px; background: #0E1C42; color: #fff; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-b { font-size: 17px; color: #1a2340; line-height: 1.6; }
+    .step-b strong { color: #0e1c42; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 11</div>
+        <div style="font-size: 12px; color: #666;">Indirect Questions</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 11.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Question, Statement, or Relative?</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 11.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Question, Statement, or Relative?</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You now own five ways to hang a clause off a main verb. On the page, three of them start with the letters <em>qu</em>.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Indirect statement came from 0706010. Purpose arrived in Module 8, result in Module 9, <em>cum</em> in Module 10, and the indirect question this week. Individually each one is clear. Together they are the single biggest source of wrong translations at this level &mdash; because the clue is never the general shape of the sentence, it is always <strong>one small word plus one verb ending</strong>. Today: the <em>quis</em>/<em>quī</em> trap, the statement-versus-question distinction, and a procedure that runs on any of the five.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell an indirect question from an indirect statement by looking at two things: the linking word and the verb form.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell interrogative <em>quis</em> from relative <em>quī</em> in a sentence, using the antecedent and the mood.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name which of five constructions a subordinate clause belongs to, on sight.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE FIVE, IN ONE PLACE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every one of these is something you have been taught. Read the middle column first &mdash; that is the identifier, and it is always short.</p>
+        <table class="para">
+            <tr><th style="width:19%">Construction</th><th style="width:27%">Identified by</th><th>Example</th></tr>
+            <tr><td class="lab"><strong>Indirect statement</strong><br><span style="font-size:13px; color:#666;">0706010</span></td><td class="end">accusative subject + <strong>infinitive</strong><br><span style="font-size:14px; color:#1a2340; font-weight:normal;">and NO subjunctive at all</span></td><td><em>Cicerō dīxit Catilīnam in urbe esse.</em><br><span style="font-size:15px;">&ldquo;Cicero said <strong>that</strong> Catiline was in the city.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>Purpose</strong><br><span style="font-size:13px; color:#666;">m08</span></td><td class="end"><em>ut</em> / <em>nē</em> + subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">no signpost in the main clause</span></td><td><em>Cicerō vēnit ut Catilīnam accūsāret.</em><br><span style="font-size:15px;">&ldquo;Cicero came <strong>in order to</strong> accuse Catiline.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>Result</strong><br><span style="font-size:13px; color:#666;">m09</span></td><td class="end"><em>ut</em> / <em>ut nōn</em> + subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">signpost: <em>tam, tantus, tālis, tot, adeō</em></span></td><td><em>Tanta erat dissēnsiō ut nēmō tacēret.</em><br><span style="font-size:15px;">&ldquo;The disagreement was so great <strong>that</strong> no one was silent.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong><em>Cum</em> clause</strong><br><span style="font-size:13px; color:#666;">m10</span></td><td class="end"><em>cum</em> + subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;"><em>tamen</em> &rarr; concessive</span></td><td><em>Cum nēmō respondēret, iterum rogāvit.</em><br><span style="font-size:15px;">&ldquo;<strong>Since</strong> no one was answering, he asked again.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>Indirect question</strong><br><span style="font-size:13px; color:#666;">m11 &mdash; this week</span></td><td class="end">question word (or <em>num</em> / <em>-ne</em> / <em>utrum</em>) + subjunctive<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">main verb of asking or knowing</span></td><td><em>Cicerō rogāvit ubi Catilīna esset.</em><br><span style="font-size:15px;">&ldquo;Cicero asked <strong>where</strong> Catiline was.&rdquo;</span></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Notice what is <em>not</em> in the middle column: meaning.</strong> Not one of these five is identified by what the sentence is about. Every one is identified by a linking word and a verb form &mdash; things you can see without understanding the sentence. That is the whole reason a procedure works.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE <em>QUIS</em> / <em>QUĪ</em> TRAP</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Latin has two <em>qu-</em> words that both come out in English as &ldquo;who,&rdquo; and they belong to two completely different constructions. Lesson 11.02 named the problem; here is how to settle it.</p>
+        <table class="para">
+            <tr><th style="width:22%">Word</th><th style="width:26%">What it is</th><th>How to spot it</th></tr>
+            <tr><td class="lab"><em>quis, quid</em></td><td class="end">the <strong>interrogative</strong> pronoun<br>&ldquo;who? what?&rdquo;</td><td>It <strong>asks</strong>. It has <strong>no antecedent</strong> &mdash; nothing earlier in the sentence for it to point back to. In an indirect question its verb is <strong>subjunctive</strong>.</td></tr>
+            <tr><td class="lab"><em>quī, quae, quod</em></td><td class="end">the <strong>relative</strong> pronoun<br>&ldquo;who, which, that&rdquo;</td><td>It <strong>points back</strong>. It has an <strong>antecedent</strong> &mdash; a noun just before it that it agrees with in gender and number. Its verb is normally <strong>indicative</strong>.</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.9;">
+            <strong>Indirect question:</strong> <em>Cicerō rogāvit <strong>quis</strong> haec <strong>faceret</strong>.</em><br>
+            &ldquo;Cicero asked <strong>who</strong> was doing these things.&rdquo; &mdash; no antecedent, subjunctive verb, main verb of asking.<br><br>
+            <strong>Relative clause:</strong> <em>Vir <strong>quī</strong> haec <strong>faciēbat</strong> erat Lentulus.</em><br>
+            &ldquo;The man <strong>who</strong> was doing these things was Lentulus.&rdquo; &mdash; antecedent <em>vir</em>, indicative verb, no asking involved.</div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The one-question test.</strong> Look immediately <em>before</em> the <em>qu-</em> word. Is there a noun it could be pointing back to? If yes, you are almost certainly in a relative clause. If there is nothing there &mdash; if the <em>qu-</em> word is hanging off a verb of asking or knowing &mdash; it is an indirect question. Then confirm with the mood: relative usually indicative, indirect question always subjunctive.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:10px;">&#9888;&#65039; <strong>One honest complication.</strong> <em>Quī</em> can also be an <em>interrogative adjective</em>: <em>quī cōnsul vigilābat?</em> means &ldquo;<em>which</em> consul was keeping watch?&rdquo; So <em>quī</em> is not a guarantee of a relative clause. The rule that holds is the one above &mdash; look for an antecedent, then check the mood &mdash; and not &ldquo;<em>quis</em> means question, <em>quī</em> means relative.&rdquo; Latin is rarely that tidy, and a rule you have to break is worse than a test you can apply.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; STATEMENT OR QUESTION? THE REAL CONFUSION</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This is the pair that trips up students who have understood everything. Both constructions <strong>report</strong> something someone said or knew. In English they look like cousins. In Latin they share nothing at all:</p>
+        <table class="para">
+            <tr><th style="width:26%"></th><th style="width:37%">Indirect statement</th><th>Indirect question</th></tr>
+            <tr><td class="lab">The linking word</td><td>none &mdash; English supplies &ldquo;that,&rdquo; Latin supplies nothing</td><td class="end">a question word, or <em>num</em> / <em>-ne</em> / <em>utrum</em></td></tr>
+            <tr><td class="lab">The subject</td><td><strong>accusative</strong> &mdash; <em>Catilīnam</em></td><td class="end"><strong>nominative</strong> &mdash; <em>Catilīna</em></td></tr>
+            <tr><td class="lab">The verb</td><td><strong>infinitive</strong> &mdash; <em>esse</em>, <em>fuisse</em>, <em>futūrum esse</em></td><td class="end"><strong>subjunctive</strong> &mdash; <em>sit</em>, <em>esset</em></td></tr>
+            <tr><td class="lab">Sequence of tenses</td><td>does not apply &mdash; the infinitive's tense shows time relative to the main verb</td><td class="end">applies fully &mdash; primary or secondary, Module 7</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.9;">
+            <em>Cicerō dīxit Catilīn<strong>am</strong> in urbe <strong>esse</strong>.</em> &mdash; &ldquo;Cicero said that Catiline was in the city.&rdquo; <span style="color:#8a6416;">Accusative + infinitive. A statement.</span><br>
+            <em>Cicerō rogāvit num Catilīn<strong>a</strong> in urbe <strong>esset</strong>.</em> &mdash; &ldquo;Cicero asked whether Catiline was in the city.&rdquo; <span style="color:#8a6416;">Nominative + subjunctive. A question.</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">The two sentences describe the same moment. One is Cicero telling the Senate something; the other is Cicero asking. Latin does not leave that ambiguous for a second &mdash; it is written into the case of the subject and the form of the verb.</p>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>And <em>dīcō</em> can do both.</strong> <em>Dīxit Catilīnam vēnisse</em> &mdash; &ldquo;he said that Catiline had come.&rdquo; <em>Dīxit cūr Catilīna venīret</em> &mdash; &ldquo;he told them why Catiline was coming.&rdquo; The main verb does not decide it. The linking word and the verb form do, which is why the middle column of Part 1's table never mentions the main verb except as a hint.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; THE PROCEDURE, AND THE PILE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Three questions, in order, and they identify all five constructions.</p>
+
+        <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-b"><strong>Is the subordinate verb an infinitive with an accusative subject?</strong><br>
+            <span style="color:#1A6B3D;">Yes &rarr; <strong>indirect statement</strong>. <em>Stop.</em></span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-b"><strong>If it is a subjunctive: what word opens the clause?</strong><br>
+            <span style="color:#1A6B3D;"><em>cum</em> &rarr; a <strong><em>cum</em> clause</strong> (m10 &mdash; then run the four steps from 10.04).</span><br>
+            <span style="color:#1A6B3D;">a question word, or <em>num</em> / <em>-ne</em> / <em>utrum</em> &rarr; an <strong>indirect question</strong>.</span><br>
+            <span style="color:#666;"><em>ut</em> or <em>nē</em> &rarr; purpose or result. Go to step 3.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-b"><strong>Is there a signpost word in the main clause &mdash; <em>tam, tantus, tālis, tot, adeō</em>?</strong><br>
+            <span style="color:#1A6B3D;">Yes &rarr; <strong>result</strong>. No &rarr; <strong>purpose</strong> (and the negative confirms it: <em>nē</em> is purpose, <em>ut nōn</em> is result).</span></div>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 6px 0 6px 0;">Six sentences, unlabelled. Run the three steps.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is the subordinate clause?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Step 1: look at the subordinate verb. Infinitive, or subjunctive?">
+                <div class="widget-row-prompt"><em>Cicerō nesciēbat quot coniūrātī in urbe manērent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An indirect statement would need an accusative subject and an infinitive. Coniūrātī is nominative plural and manērent is a subjunctive.">Indirect statement</button>
+                    <button data-choice="b" data-fb="Right. Step 2: the clause opens with quot (&quot;how many&quot;), the verb manērent is imperfect subjunctive, and the main verb nesciēbat is a verb of not-knowing. &quot;Cicero did not know how many conspirators were remaining in the city.&quot;">Indirect question</button>
+                    <button data-choice="c" data-fb="A result clause opens with ut and needs a signpost word (tam, tantus, tot…) in the main clause. Careful: quot means &quot;how many&quot; and tot means &quot;so many&quot; — they look alike and do opposite jobs.">Result clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="What case is Catilīnam, and what form is fugere?">
+                <div class="widget-row-prompt"><em>Cicerō sentiēbat Catilīnam ex urbe fugere.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. Step 1 stops you at once: Catilīnam is accusative and fugere is an infinitive. &quot;Cicero perceived that Catiline was fleeing from the city.&quot; No subjunctive anywhere, so no sequence rule to apply.">Indirect statement</button>
+                    <button data-choice="b" data-fb="An indirect question needs a question word and a subjunctive. There is no question word here, and fugere is an infinitive, not a subjunctive.">Indirect question</button>
+                    <button data-choice="c" data-fb="Sentiēbat is a verb of perceiving, and there is no ut and no subjunctive. Purpose would answer &quot;why did he perceive?&quot; — which is not what this clause does.">Purpose clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Look before the qu- word. Is there a noun for it to point back to?">
+                <div class="widget-row-prompt"><em>Coniūrātī quōs Cicerō dēprehendit in carcere erant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="For an indirect question you would need a verb of asking or knowing and a subjunctive. Dēprehendit is perfect indicative, and erant is the main verb.">Indirect question</button>
+                    <button data-choice="b" data-fb="There is no cum in this sentence at all.">A <em>cum</em> clause</button>
+                    <button data-choice="c" data-fb="Right — a relative clause. Quōs has an antecedent immediately before it (coniūrātī, masculine plural, and quōs agrees) and its verb dēprehendit is indicative. &quot;The conspirators whom Cicero arrested were in the prison.&quot;">A relative clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 2 gives you ut. Now step 3: is there a signpost in the main clause?">
+                <div class="widget-row-prompt"><em>Tanta erat dissēnsiō ut senātōrēs diū tacērent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — result. Step 2 gives ut + subjunctive; step 3 finds the signpost tanta agreeing with dissēnsiō. &quot;The disagreement was so great that the senators were silent for a long time.&quot;">Result clause</button>
+                    <button data-choice="b" data-fb="Purpose would have no signpost in the main clause — and would make the disagreement into something with intentions. Tanta is doing the deciding here.">Purpose clause</button>
+                    <button data-choice="c" data-fb="Indirect questions open with a question word or num/-ne/utrum. This clause opens with ut, and erat is not a verb of asking.">Indirect question</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two subordinate clauses in this one. The question asks about the second.">
+                <div class="widget-row-prompt"><em>Cum senātus convenīret, Cicerō rogāvit utrum supplicium an custōdia ūtilis esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Look again at the second clause: it opens with utrum…an, not with ut, and there is no signpost word in the main clause. The first clause is the cum clause.">Result clause</button>
+                    <button data-choice="b" data-fb="Right. Utrum…an + the subjunctive esset, hanging off rogāvit: an indirect double question. &quot;When the Senate was assembling, Cicero asked whether punishment or custody was useful.&quot; (The first clause is a temporal cum clause from m10, with the imperfect subjunctive convenīret.)">Indirect question, double (<em>utrum&hellip;an</em>)</button>
+                    <button data-choice="c" data-fb="An indirect statement needs an accusative subject and an infinitive. Supplicium and custōdia are both nominative, and esset is a subjunctive.">Indirect statement</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Nē, no signpost. And ask what Cicero was trying to bring about.">
+                <div class="widget-row-prompt"><em>Cicerō haec cēlāvit nē coniūrātī fugerent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A negative result would be ut nōn, not nē — that is the m09 distinction — and it would need a signpost word in the main clause.">Negative result clause</button>
+                    <button data-choice="b" data-fb="There is no question word, no num, no -ne, no utrum. Nē is not an interrogative; it is the negative of purpose.">Indirect question</button>
+                    <button data-choice="c" data-fb="Right — negative purpose. Nē + subjunctive with no signpost: &quot;Cicero concealed these things so that the conspirators would not flee.&quot; Cēlō, cēlāre is Module 11 vocabulary.">Negative purpose clause</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 5 &middot; ONE WORD, ONE CONSTRUCTION &middot; CLICK EACH CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Each card is a linking word. Name the construction it belongs to before you flip.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; NAME THE CONSTRUCTION</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front">accusative + infinitive</div><div class="hint">which construction?</div><div class="back"><strong>Indirect statement</strong> (0706010). No subjunctive, no sequence rule &mdash; the infinitive's tense carries the time.</div></div>
+                <div class="flip-card"><div class="front"><em>nē</em> + subjunctive</div><div class="hint">which construction?</div><div class="back"><strong>Negative purpose</strong> (m08) &mdash; or an indirect command after <em>imperō</em>, <em>rogō</em>. Never a result: negative result is <em>ut nōn</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>tantus&hellip;ut</em> + subjunctive</div><div class="hint">which construction?</div><div class="back"><strong>Result</strong> (m09). The signpost in the main clause is the giveaway.</div></div>
+                <div class="flip-card"><div class="front"><em>cum</em> + subjunctive</div><div class="hint">which construction?</div><div class="back"><strong><em>Cum</em> clause</strong> (m10) &mdash; temporal, causal, or concessive. Run the four steps from 10.04; <em>tamen</em> settles the third.</div></div>
+                <div class="flip-card"><div class="front"><em>cūr</em> + subjunctive</div><div class="hint">which construction?</div><div class="back"><strong>Indirect question</strong> (m11). A question word plus a subjunctive, hanging off a verb of asking or knowing.</div></div>
+                <div class="flip-card"><div class="front"><em>utrum&hellip;an</em> + subjunctive</div><div class="hint">which construction?</div><div class="back"><strong>Indirect double question</strong> (m11, from 11.03). &ldquo;Whether&hellip;or&hellip;&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>quī</em> + <strong>indicative</strong>, with an antecedent</div><div class="hint">which construction?</div><div class="back"><strong>Relative clause</strong> (0706010). Points back to a noun; not a question at all.</div></div>
+                <div class="flip-card"><div class="front"><em>quis</em> + <strong>subjunctive</strong>, no antecedent</div><div class="hint">which construction?</div><div class="back"><strong>Indirect question</strong> (m11). Asks; points back at nothing.</div></div>
+                <div class="flip-card"><div class="front"><em>quot</em> vs <em>tot</em></div><div class="hint">which is which?</div><div class="back"><em>Quot</em> = &ldquo;<strong>how many</strong>&rdquo; &rarr; indirect question. <em>Tot</em> = &ldquo;<strong>so many</strong>&rdquo; &rarr; result signpost. Both indeclinable, and easy to swap by accident.</div></div>
+                <div class="flip-card"><div class="front"><em>an</em> vs <em>aut</em></div><div class="hint">which is which?</div><div class="back"><em>An</em> = the &ldquo;or&rdquo; inside a question. <em>Aut</em> = the ordinary &ldquo;or.&rdquo; <em>An</em> tells you a question is present.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 11.05 &mdash; Cicero Asks the Senate</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The reading: Cicero's fourth speech against Catiline, adapted &mdash; the same meeting Sallust described in Module 9, this time in the voice of the man who was chairing it. Then the module review and the handoff to your graded work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Five constructions, and not one of them is identified by what the sentence means. <strong>Infinitive with an accusative subject?</strong> Statement. <strong>Subjunctive?</strong> Then read the word that opens the clause. Everything else follows from those two looks.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 11.04 &middot; Question, Statement, or Relative?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

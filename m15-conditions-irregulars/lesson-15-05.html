@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 15.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 15</div>
+        <div style="font-size: 12px; color: #666;">Conditions &amp; Irregular Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 15.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">If the Senate Had Not Acted</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 25 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 15.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">If the Senate Had Not Acted</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Module Review</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Cicero spent the last twenty years of his life defending one night, and he did it in the grammar you learned this week.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today's passage is Cicero looking back: the argument he made about his consulship for the rest of his career, and the counter-argument his enemies made against him. Both sides are built out of contrary-to-fact conditions, because that is the only grammar available for arguing about a past that did not happen. Six of the ten lines contain a condition; four contain an irregular verb from Lesson 15.04. Then you review the module, sort the four types one last time, run a self-check reaching back to Module 12, and pick up your graded work.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted passage of argument and name the type of every condition in it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what happened to Cicero five years after the executions, and why both sides of that quarrel needed the same grammar.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the whole module &mdash; four condition types, two negatives, six irregular verbs &mdash; in one table, and begin the quiz without re-reading the week.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; BEFORE YOU READ</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Three things the passage assumes. You know all three from earlier modules, but they matter more here than they did then.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>1. The Senate passed an emergency decree, and it was deliberately vague.</strong> In late October 63 BC the Senate instructed the consuls to see to it that the republic should suffer no <em>dētrīmentum</em> &mdash; no harm. It did not say what they were allowed to do. Later Romans called this kind of decree the <em>senātūs cōnsultum ultimum</em>, the last decree. Cicero's whole case rests on it, and so does the case against him: an instruction that names no limits protects a consul who acts, and gives him nothing to point at when asked why he went that far.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>2. There was real evidence, and Cicero mentions it every time.</strong> The conspirators in Rome were caught with letters they had written to the Gallic envoys of the Allobroges, the letters were read out in the Senate, and the men confessed in front of it. You read that scene in Module 8. It is the strongest thing in Cicero's argument, because it is the one part that is not a supposition.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>3. He was driven out of Italy for it.</strong> Five years later, in 58 BC, the tribune Clodius carried a law against anyone who had put a Roman citizen to death without trial. Cicero left Italy rather than face it and was recalled the following year. He never withdrew the claim that he had saved the city &mdash; and a man who keeps making an argument after it has cost him everything is either very honest or very stubborn. Probably both.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Watch for the grammar doing the arguing.</strong> Count the conditions as you read: there are six, and they are not all the same type. One of them is the <em>mixed</em> condition Lesson 15.03 warned you about &mdash; a past protasis with a present apodosis &mdash; and it belongs to Cicero's <em>opponents</em>, which is not an accident. Their case is precisely that the consequences are still going on.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; THE READING</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>An adaptation, not a quotation.</strong> The Latin below was <strong>written for this course</strong>. It is a composite in Cicero's voice, looking back at his consulship, and every position in it is one Cicero genuinely argued in public: that the conspirators confessed and their letters were read out in the Senate; that the Senate's decree and his own speed saved the city; and that he never withdrew that claim, even after the law of 58 BC drove him out of Italy. <strong>No sentence below is a translation of anything Cicero wrote.</strong> Where a real quotation would have been better, we could not verify one that fits the grammar you have been taught, so the passage is flagged as an <strong>adaptation</strong> rather than attributed to him.</div>
+        <div class="rd">
+            <p><span class="ln">1</span>Saepe amīcī mē rogāvērunt quid accidisset, <b>nisi</b> senātus tum dē salūte reī pūblicae <b>dēcrēvisset</b>.</p>
+            <p><span class="ln">2</span>Respondeō semper eōdem modō: <b>nisi</b> cōnsilium <b>cēpissēmus</b>, rēs pūblica <b>ēversa esset</b>.</p>
+            <p><span class="ln">3</span>Nam coniūrātī, <b>sī</b> impūnītī <b>fuissent</b>, et urbem <b>incendissent</b> et cīvēs <b>occīdissent</b>.</p>
+            <p><span class="ln">4</span>Hoc nōn ex mē fingō: ipsī cōnfessī sunt, et litterae eōrum in senātū lēctae sunt.</p>
+            <p><span class="ln">5</span>Sed inimīcī meī aliter loquuntur: &ldquo;<b>Nisi</b> cōnsul tam celeriter <b>ēgisset</b>, quīnque cīvēs adhūc <b>vīverent</b>.&rdquo;</p>
+            <p><span class="ln">6</span>Fateor: <b>sī</b> quis mē <b>rogat</b> num umquam dubitāverim, <b>respondeō</b> mē dubitāvisse.</p>
+            <p><span class="ln">7</span>Nam <b>sī</b> quis hodiē mē cōnsulem iterum <b>faceret</b>, idem <b>facerem</b> &mdash; nōn quia hoc mālō, sed quia aliter <b>fierī</b> nōn posset.</p>
+            <p><span class="ln">8</span><b>Sī</b> enim cōnsul <b>dubitat</b>, nihil <b>fit</b>; hostis autem nōn dubitat, et in urbem <b>it</b>.</p>
+            <p><span class="ln">9</span>Haec omnia mihi magnum dētrīmentum <b>tulērunt</b>: nam post quīnque annōs ex Italiā <b>abiī</b>.</p>
+            <p><span class="ln">10</span><b>Sī</b> igitur mē <b>rogās</b> utrum rēctē ēgerim, <b>respondeō</b>: rem pūblicam cōnservāvī, sed hoc onus semper <b>feram</b>.</p>
+        </div>
+
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin:14px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS &mdash; EVERY WORD NOT ON YOUR RUNNING LIST, IN THE FORM IT APPEARS</div>
+            <ul class="gl">
+                <li><strong>1</strong> &middot; <em>saepe</em> (adv.) &mdash; often &middot; <em>accidisset</em> &mdash; pluperfect subjunctive of <em>accidō, accidere, accidī</em>: to happen &middot; <em>nisi</em> &mdash; unless, if&hellip;not <span style="color:#8a6416;">(15.03)</span> &middot; <em>dē salūte</em> &mdash; about the safety (ablative of <em>salūs, salūtis</em> f.) &middot; <em>dēcrēvisset</em> &mdash; pluperfect subjunctive of <em>dēcernō, dēcernere, dēcrēvī</em>: to decree, vote <span style="color:#8a6416;">(15.03 vocabulary)</span></li>
+                <li><strong>2</strong> &middot; <em>eōdem modō</em> &mdash; in the same way &middot; <em>cōnsilium capere</em> &mdash; to form a plan, take a decision; here <em>cēpissēmus</em>, pluperfect subjunctive, 1st plural &middot; <em>ēversa esset</em> &mdash; pluperfect subjunctive <strong>passive</strong> of <em>ēvertō, ēvertere, ēvertī, ēversum</em>: to overturn, destroy &mdash; PPP + <em>essem</em>, agreeing with <em>rēs pūblica</em> <span style="color:#8a6416;">(15.03 vocabulary)</span></li>
+                <li><strong>3</strong> &middot; <em>impūnītī</em> &mdash; unpunished (nominative plural of <em>impūnītus, -a, -um</em>) &middot; <em>et&hellip;et</em> &mdash; both&hellip;and &middot; <em>incendissent</em> &mdash; pluperfect subjunctive of <em>incendō, incendere, incendī</em>: to set on fire <span style="color:#8a6416;">(15.03 vocabulary)</span> &middot; <em>occīdissent</em> &mdash; pluperfect subjunctive of <em>occīdō, occīdere, occīdī, occīsum</em>: to kill</li>
+                <li><strong>4</strong> &middot; <em>ex mē fingō</em> &mdash; I invent out of my own head (<em>fingō, fingere, fīnxī, fictum</em> &mdash; to shape, invent) &middot; <em>ipsī</em> &mdash; they themselves &middot; <em>cōnfessī sunt</em> &mdash; they confessed (perfect of the deponent <em>cōnfiteor, cōnfitērī, cōnfessus sum</em>) &middot; <em>litterae, litterārum</em> f. pl. &mdash; a letter, dispatch &middot; <em>lēctae sunt</em> &mdash; were read out (perfect passive of <em>legō, legere, lēgī, lēctum</em>)</li>
+                <li><strong>5</strong> &middot; <em>inimīcus, inimīcī</em> m. &mdash; personal enemy (not <em>hostis</em>, the enemy of the state) &middot; <em>aliter</em> (adv.) &mdash; otherwise, differently <span style="color:#8a6416;">(15.03 vocabulary)</span> &middot; <em>celeriter</em> (adv.) &mdash; quickly &middot; <em>ēgisset</em> &mdash; pluperfect subjunctive of <em>agō, agere, ēgī, āctum</em>: to act, do, drive &middot; <em>quīnque</em> &mdash; five &middot; <em>adhūc</em> (adv.) &mdash; still &middot; <em>vīverent</em> &mdash; imperfect subjunctive of <em>vīvō, vīvere, vīxī</em>: to live</li>
+                <li><strong>6</strong> &middot; <em>fateor</em> &mdash; I admit (deponent <em>fateor, fatērī, fassus sum</em>) &middot; <em>sī quis</em> &mdash; if anyone &middot; <em>num</em> &mdash; whether <span style="color:#8a6416;">(m11)</span> &middot; <em>umquam</em> (adv.) &mdash; ever &middot; <em>dubitāverim</em> &mdash; <strong>perfect</strong> subjunctive of <em>dubitō, dubitāre</em>: to hesitate, doubt &mdash; primary sequence after the present <em>rogat</em> <span style="color:#8a6416;">(m13)</span> &middot; <em>mē dubitāvisse</em> &mdash; indirect statement: &ldquo;that I did hesitate&rdquo;</li>
+                <li><strong>7</strong> &middot; <em>hodiē</em> (adv.) &mdash; today &middot; <em>iterum</em> (adv.) &mdash; again, a second time &middot; <em>idem</em> &mdash; the same thing &middot; <em>quia</em> &mdash; because <span style="color:#8a6416;">(m10)</span> &middot; <em>mālō, mālle, māluī</em> &mdash; to prefer, want more <span style="color:#8a6416;">(15.04)</span> &middot; <em>fierī</em> &mdash; present infinitive of <em>fīō</em>: to happen, be done &mdash; passive in form <span style="color:#8a6416;">(15.04)</span></li>
+                <li><strong>8</strong> &middot; <em>enim</em> &mdash; for, indeed (never first in its clause) &middot; <em>fit</em> &mdash; 3rd singular of <em>fīō</em>: &ldquo;it happens, it is done&rdquo; &mdash; active in form, passive in meaning <span style="color:#8a6416;">(15.04)</span> &middot; <em>autem</em> &mdash; however, moreover (never first in its clause) &middot; <em>it</em> &mdash; 3rd singular present of <em>eō, īre</em>: &ldquo;he goes&rdquo; <span style="color:#8a6416;">(15.04)</span></li>
+                <li><strong>9</strong> &middot; <em>dētrīmentum, dētrīmentī</em> n. &mdash; harm, loss <span style="color:#8a6416;">(15.03 vocabulary)</span> &middot; <em>tulērunt</em> &mdash; perfect of <em>ferō, ferre, tulī, lātum</em>: &ldquo;brought&rdquo; <span style="color:#8a6416;">(15.04)</span> &middot; <em>post quīnque annōs</em> &mdash; five years later &middot; <em>abiī</em> &mdash; perfect of <em>abeō, abīre, abiī</em>: &ldquo;I went away, I left&rdquo; <span style="color:#8a6416;">(15.04)</span> &middot; <em>Italia, Italiae</em> f. &mdash; Italy</li>
+                <li><strong>10</strong> &middot; <em>igitur</em> &mdash; therefore &middot; <em>utrum&hellip;</em> &mdash; whether <span style="color:#8a6416;">(m11)</span> &middot; <em>rēctē</em> (adv.) &mdash; rightly &middot; <em>ēgerim</em> &mdash; perfect subjunctive of <em>agō</em>, primary sequence after <em>rogās</em> &middot; <em>cōnservāvī</em> &mdash; perfect of <em>cōnservō, cōnservāre</em>: to preserve, keep safe <span style="color:#8a6416;">(15.03 vocabulary)</span> &middot; <em>onus, oneris</em> n. &mdash; burden, load &middot; <em>feram</em> &mdash; <strong>future indicative</strong> of <em>ferō</em> here: &ldquo;I shall bear&rdquo; &mdash; the main verb of its own clause, so not the subjunctive <span style="color:#8a6416;">(15.04)</span></li>
+            </ul>
+        </div>
+
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Two honest notes on the Latin.</strong> First, line 5 is a <strong>mixed</strong> condition: <em>ēgisset</em> is pluperfect subjunctive (the past) but <em>vīverent</em> is imperfect subjunctive (now). That is correct Latin and it is what the speakers mean &mdash; the men are dead <em>today</em>. You are not asked to produce one. Second, line 10's <em>feram</em> is the form Lesson 15.04 warned you about: future indicative and present subjunctive are spelled alike. Here it is the main verb of its own clause with nothing subordinating it, so it is the <strong>future indicative</strong>. Read the clause, not the word.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; NAME EVERY CONDITION IN THE PASSAGE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five items, in the order they appear. For each one: find the two halves, read the mood and tense of each, then name the type.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which type of condition is this, and what is it claiming?</div>
+
+            <div class="widget-row" data-correct="c" data-hint="Both verbs end in -isset or are PPP + esset. Which tense is that?">
+                <div class="widget-row-prompt">Lines 1&ndash;2 &mdash; <em>Nisi cōnsilium cēpissēmus, rēs pūblica ēversa esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Future less vivid needs the present subjunctive: nisi cōnsilium capiāmus, rēs pūblica ēvertātur. Cēpissēmus and ēversa esset are pluperfect subjunctive.">Future less vivid &mdash; &ldquo;should we not decide&hellip;would be overturned&rdquo;</button>
+                    <button data-choice="b" data-fb="Present contrary to fact takes the imperfect subjunctive: nisi caperēmus… ēverterētur. This sentence is about a decision taken in 63 BC, and both verbs are pluperfect.">Present contrary to fact &mdash; &ldquo;were we not deciding&hellip;would be overturned&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — past contrary to fact. 'If we had not taken a decision, the republic would have been overturned' — and understood: we did take one, and it was not overturned. Note ēversa esset is the PASSIVE, PPP plus essem, as Lesson 13.03 built it.">Past contrary to fact &mdash; and the republic was <em>not</em> overturned</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Read the two tenses separately. Is each half about 63 BC, or about now?">
+                <div class="widget-row-prompt">Line 5 &mdash; <em>Nisi cōnsul tam celeriter ēgisset, quīnque cīvēs adhūc vīverent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a mixed condition: a past protasis (ēgisset, pluperfect subjunctive) with a present apodosis (vīverent, imperfect subjunctive), and adhūc, 'still', to make the timing unmistakable. 'If the consul had not acted so quickly, five citizens would still be alive.' The mix is the whole force of the accusation.">Mixed &mdash; past protasis, <em>present</em> apodosis</button>
+                    <button data-choice="b" data-fb="A plain past contrary to fact would have vīxissent — 'would have lived'. The speakers deliberately use vīverent, 'would still be alive', because they want the dead men in the present tense.">A plain past contrary to fact, like lines 1&ndash;2</button>
+                    <button data-choice="c" data-fb="Both verbs are subjunctive: ēgisset is not the indicative ēgerat, and vīverent is not vīvēbant. There is no indicative anywhere in this sentence.">Simple / factual, because <em>adhūc</em> means it is true</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Faceret and facerem. Which tense of the subjunctive, and which type owns it?">
+                <div class="widget-row-prompt">Line 7 &mdash; <em>Sī quis hodiē mē cōnsulem iterum faceret, idem facerem.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Past contrary to fact would be sī quis mē fēcisset, idem fēcissem — 'if anyone had made me consul, I would have done the same.' These verbs are imperfect, not pluperfect, and hodiē ('today') fixes the time as the present.">Past contrary to fact &mdash; &ldquo;had made&hellip;would have done&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — present contrary to fact. Imperfect subjunctive in both halves: 'If anyone were to make me consul again today, I would do the same.' Understood: nobody is going to, and he is not consul. Notice how much the sentence claims about his character while claiming to be only a supposition.">Present contrary to fact &mdash; and nobody is making him consul</button>
+                    <button data-choice="c" data-fb="Future less vivid needs the present subjunctive: sī quis mē faciat, idem faciam. Faceret and facerem are imperfect subjunctive — one step further, into denial.">Future less vivid &mdash; &ldquo;should make&hellip;would do&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Dubitat and fit — indicative or subjunctive? Then which type?">
+                <div class="widget-row-prompt">Line 8 &mdash; <em>Sī enim cōnsul dubitat, nihil fit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Present contrary to fact would be sī dubitāret, nihil fieret — 'if a consul were hesitating, nothing would be getting done.' Dubitat and fit are indicative, and the sentence denies nothing.">Present contrary to fact &mdash; and no consul hesitates</button>
+                    <button data-choice="b" data-fb="Nothing here is subjunctive. Dubitat is present indicative and fit is the present indicative of fīō. A future less vivid would need dubitet and fīat.">Future less vivid &mdash; &ldquo;should hesitate&hellip;would happen&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — simple / factual, both halves indicative: 'For if a consul hesitates, nothing gets done.' It is a general rule offered as fact, and it is the only condition in the passage that makes no claim about what did or did not happen. Note fit is passive in meaning although active in form.">Simple / factual &mdash; a general rule, stated as fact</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="This line has a sī clause AND a num clause. Are they the same construction?">
+                <div class="widget-row-prompt">Line 6 &mdash; <em>Sī quis mē rogat num umquam dubitāverim, respondeō mē dubitāvisse.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dubitāverim is subjunctive, but it is not in the protasis at all — it belongs to the num clause, which is an indirect question. The condition itself is sī quis rogat… respondeō, and both of those verbs are indicative.">A future less vivid, because <em>dubitāverim</em> is subjunctive</button>
+                    <button data-choice="b" data-fb="Right, and this is the item to slow down on. The CONDITION is simple / factual: sī quis rogat (present indicative) … respondeō (present indicative). Inside the protasis sits an indirect question from Module 11 — num umquam dubitāverim, perfect subjunctive in primary sequence — and inside the apodosis sits an indirect statement, mē dubitāvisse. Three constructions, one line.">A simple / factual condition, with an indirect question inside it</button>
+                    <button data-choice="c" data-fb="A past contrary to fact would need a pluperfect subjunctive in the protasis and nothing in this line is pluperfect subjunctive. Dubitāverim is PERFECT subjunctive — the -erim ending, not -issem.">A past contrary to fact, because <em>dubitāvisse</em> is perfect</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; THE ROMAN WORLD &middot; THE DECREE THAT NAMED NO LIMITS</div>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;">Rome had no written constitution and no supreme court. When the Senate believed the state was in danger it passed a decree telling the consuls, in words close to these, to see to it that the republic <em>suffer no harm</em> &mdash; <em>nē quid rēs pūblica dētrīmentī caperet</em>. That is all it said. It named no powers, set no limits, and specified no procedure, and Romans argued for the rest of the republic's life about what it actually authorised. Cicero received such a decree in late October 63 BC. Six weeks later five citizens were dead in the <em>Tulliānum</em> without a trial, and the Senate that had passed the decree hailed him as the father of the fatherland, <em>pater patriae</em>.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0;">Five years later the tribune Clodius carried a law against anyone who had executed a Roman citizen without trial. Nobody had to name Cicero; everybody knew. He left Italy, his house on the Palatine was pulled down, and he came back the next year to a career that never fully recovered. What is striking is what he did with the rest of it: he kept making the argument. He wrote to the historian Lucceius asking him to write the conspiracy up as a book, and admitted in the letter that he badly wanted to be praised for it. He was still defending that December in the last year of his life. Both halves of the quarrel had to be argued in contrary-to-fact conditions, because the only evidence either side could offer was a world that had not happened.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE WHOLE MODULE IN TWO TABLES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">If you can rebuild both of these from memory, you are ready for the quiz. First, the conditions &mdash; four types, one verb, and the two negatives:</p>
+        <table class="para">
+            <tr><th style="width:20%">Type</th><th style="width:24%">Mood and tense</th><th style="width:26%">Latin</th><th>English &mdash; and the hidden claim</th></tr>
+            <tr><td class="lab"><strong>1. simple / factual</strong></td><td><strong>indicative</strong> in both halves <span style="font-size:14px; color:#666;">(any tense, incl. future)</span></td><td><em>Sī cōnsul dubitat, nihil fit.</em></td><td class="end">&ldquo;If a consul hesitates, nothing gets done.&rdquo;<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">No claim either way about whether he does.</span></td></tr>
+            <tr><td class="lab"><strong>2. future less vivid</strong></td><td><span class="end">present subjunctive</span> in both halves</td><td><em>Sī cōnsul dubitet, nihil fīat.</em></td><td class="end">&ldquo;Should a consul hesitate, nothing would get done.&rdquo;<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">A possibility held at a distance; not denied.</span></td></tr>
+            <tr><td class="lab"><strong>3. contrary to fact, present</strong></td><td><span class="end">imperfect subjunctive</span> in both halves</td><td><em>Sī cōnsul dubitāret, nihil fieret.</em></td><td class="end">&ldquo;If a consul were hesitating, nothing would be getting done.&rdquo;<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">He is not hesitating.</span></td></tr>
+            <tr><td class="lab"><strong>4. contrary to fact, past</strong></td><td><span class="end">pluperfect subjunctive</span> in both halves</td><td><em>Sī cōnsul dubitāvisset, nihil factum esset.</em></td><td class="end">&ldquo;If the consul had hesitated, nothing would have been done.&rdquo;<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">He did not hesitate.</span></td></tr>
+            <tr><td class="lab">the two halves</td><td colspan="3"><strong>protasis</strong> = the <em>sī</em> clause, which supposes &middot; <strong>apodosis</strong> = the main clause, which states the consequence. Word order does not decide which is which.</td></tr>
+            <tr><td class="lab">the negatives</td><td colspan="3"><strong><em>nisi</em></strong> in the protasis (&ldquo;unless, if&hellip;not&rdquo;) &middot; <strong><em>nōn</em></strong> in the apodosis &middot; <strong>never <em>nē</em></strong> in either. <em>Sī nōn</em> is for denying one particular word, usually with <em>sed</em> supplying the replacement.</td></tr>
+            <tr><td class="lab">the rule that is not sequence</td><td colspan="3">In types 2, 3 and 4 <strong>both halves take the same tense</strong>, because there is no indicative main verb for sequence to measure from. Real authors <strong>mix</strong> the types when the two halves are about different times (line 5 of the reading).</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 10px 0;">Second, the six irregular verbs. Learn the row, not the paradigm: principal parts, the 3rd singular of the present, the two subjunctives, one derivative.</p>
+        <table class="para">
+            <tr><th style="width:24%">Principal parts</th><th style="width:16%">Meaning</th><th style="width:14%">Pres. 3 sg.</th><th style="width:16%">Pres. subj. 1 sg.</th><th style="width:15%">Impf. subj. 1 sg.</th><th>Derivative</th></tr>
+            <tr><td class="lab"><em>ferō, ferre, tulī, lātum</em></td><td>carry, bear, endure</td><td class="end"><em>fert</em></td><td><em>feram</em></td><td><em>ferrem</em></td><td>transfer, translate</td></tr>
+            <tr><td class="lab"><em>eō, īre, iī, itum</em></td><td>go</td><td class="end"><em>it</em></td><td><em>eam</em></td><td><em>īrem</em></td><td>exit, perish</td></tr>
+            <tr><td class="lab"><em>volō, velle, voluī</em></td><td>want, be willing</td><td class="end"><em>vult</em></td><td><em>velim</em></td><td><em>vellem</em></td><td>voluntary</td></tr>
+            <tr><td class="lab"><em>nōlō, nōlle, nōluī</em></td><td>not want, refuse</td><td class="end"><em>nōn vult</em></td><td><em>nōlim</em></td><td><em>nōllem</em></td><td><em>nolo contendere</em></td></tr>
+            <tr><td class="lab"><em>mālō, mālle, māluī</em></td><td>prefer</td><td class="end"><em>māvult</em></td><td><em>mālim</em></td><td><em>māllem</em></td><td>none &mdash; honestly</td></tr>
+            <tr><td class="lab"><em>fīō, fierī, factus sum</em></td><td>become, be made, happen</td><td class="end"><em>fit</em></td><td><em>fīam</em></td><td><em>fierem</em></td><td>fiat, fact</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>And the four traps, in one line each.</strong> <em>Volō, velle</em> (want) is not <em>volō, volāre</em> (fly) &mdash; <em>vult</em> against <em>volat</em>. <em>Adeō</em> the verb (&ldquo;I approach&rdquo;) is not <em>adeō</em> the adverb (&ldquo;so much,&rdquo; the m09 result signpost). <em>Eō</em> the verb (&ldquo;I go&rdquo;) is not <em>eō</em> the ablative of <em>is, ea, id</em>. And <em>feram</em>, <em>fīam</em>, <em>nōlam</em>, <em>mālam</em>, <em>volam</em> are all future indicative <strong>and</strong> present subjunctive at once &mdash; read the clause, never the word.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; THE CONDITION-TYPE SORTER</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four sentences, the same words every time, one tense changed. This is the quickest possible test of whether the frame has landed &mdash; and it is exactly what Section 2 of the quiz asks. <span style="color:#8a6416;">Gloss: <em>mīror, mīrārī, mīrātus sum</em> (deponent) &mdash; to be astonished.</span></p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; SPEED SORT &middot; NAME THE TYPE</div>
+            <div class="widget-question">Which of the four types is in front of you?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Dīcās and mīrentur. Present subjunctive, or imperfect?">
+                <div class="widget-row-prompt"><em>Sī hoc dīcās, omnēs mīrentur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Simple / factual needs the indicative: sī hoc dīcis, omnēs mīrantur. Dīcās and mīrentur are present subjunctive.">Type 1 &mdash; simple / factual</button>
+                    <button data-choice="b" data-fb="Right — type 2, future less vivid. Present subjunctive in both halves: 'If you should say this, everyone would be astonished.'">Type 2 &mdash; future less vivid</button>
+                    <button data-choice="c" data-fb="Present contrary to fact takes the imperfect subjunctive: dīcerēs and mīrārentur. Present subjunctive does not deny the supposing.">Type 3 &mdash; contrary to fact, present</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Dīcerēs and mīrārentur. Which tense are those, and what does it deny?">
+                <div class="widget-row-prompt"><em>Sī hoc dīcerēs, omnēs mīrārentur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — type 3, present contrary to fact. Imperfect subjunctive in both halves: 'If you were saying this, everyone would be astonished' — and you are not saying it. Mīrārentur is the deponent, imperfect subjunctive.">Type 3 &mdash; contrary to fact, present</button>
+                    <button data-choice="b" data-fb="Future less vivid takes the present subjunctive: dīcās, mīrentur. The imperfect subjunctive goes one step further and denies the supposing.">Type 2 &mdash; future less vivid</button>
+                    <button data-choice="c" data-fb="Past contrary to fact takes the pluperfect subjunctive: dīxissēs and mīrātī essent. Nothing here ends in -issēs.">Type 4 &mdash; contrary to fact, past</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="One verb ends -issēs; the other is PPP + essent. Same tense?">
+                <div class="widget-row-prompt"><em>Sī hoc dīxissēs, omnēs mīrātī essent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Type 1 would be indicative throughout: sī hoc dīxistī, omnēs mīrātī sunt. These are subjunctives.">Type 1 &mdash; simple / factual, in the past</button>
+                    <button data-choice="b" data-fb="Present contrary to fact would be dīcerēs and mīrārentur, about now. Dīxissēs is pluperfect subjunctive, about the past.">Type 3 &mdash; contrary to fact, present</button>
+                    <button data-choice="c" data-fb="Right — type 4, past contrary to fact. Dīxissēs is pluperfect subjunctive, and mīrātī essent is the same tense in a deponent: PPP plus essem. Matched. 'If you had said this, everyone would have been astonished' — and you did not say it.">Type 4 &mdash; contrary to fact, past</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Dīcis and mīrantur. Any subjunctive endings at all?">
+                <div class="widget-row-prompt"><em>Sī hoc dīcis, omnēs mīrantur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — type 1, simple / factual, both halves present indicative: 'If you say this, everyone is astonished.' Nothing is supposed and nothing is denied; the two facts are simply tied together. Mīrantur is the deponent's ordinary present indicative.">Type 1 &mdash; simple / factual</button>
+                    <button data-choice="b" data-fb="Future less vivid needs the present subjunctive dīcās and mīrentur. The -is and -antur here are indicative endings.">Type 2 &mdash; future less vivid</button>
+                    <button data-choice="c" data-fb="Contrary to fact of any kind requires a subjunctive, and there is none in this sentence. Do not be misled by mīrantur looking passive — mīror is a deponent, so passive in form is its normal shape.">Type 3 &mdash; contrary to fact, present</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 6 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 6 &middot; MIXED SELF-CHECK &middot; EVERYTHING FROM M12 TO M15</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four modules now put subjunctives in four different places. The quiz will mix them, and Module 16 will mix all eight, so mix them here first.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is this &mdash; and which module does it belong to?</div>
+
+            <div class="widget-row" data-correct="a" data-hint="What is the main verb, and what does nē mean after that particular kind of verb?">
+                <div class="widget-row-prompt"><em>Timeō nē hostis in urbem veniat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a fear clause (m12), and the reversal that module exists for: after a verb of fearing, nē means 'that', not 'that…not'. 'I am afraid that the enemy will come into the city.'">A fear clause &mdash; &ldquo;I am afraid <em>that</em> the enemy will come&rdquo;</button>
+                    <button data-choice="b" data-fb="Negative purpose would be 'I fear in order that the enemy may NOT come', which is not a thought anybody has. After timeō, vereor and metuō, nē reverses its meaning — that is the whole of Module 12.">A negative purpose clause &mdash; &ldquo;so that the enemy may not come&rdquo;</button>
+                    <button data-choice="c" data-fb="A conditional protasis never uses nē, and there is no sī anywhere. Conditions and fear clauses have no forms in common.">A conditional protasis with a negative</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Fēcerit: -erit or -isset? And what does quid after nesciō open?">
+                <div class="widget-row-prompt"><em>Nesciō quid Catilīna in Etrūriā fēcerit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A conditional needs sī or nisi, and there is neither. Quid here is the interrogative 'what', opening a reported question.">A past contrary-to-fact condition</button>
+                    <button data-choice="b" data-fb="Fēcerit is not pluperfect subjunctive — that would be fēcisset, with -isse- in the middle. The -erit ending is the perfect subjunctive.">An indirect question with a <em>pluperfect</em> subjunctive</button>
+                    <button data-choice="c" data-fb="Right — an indirect question (m11) with a PERFECT subjunctive (m13): nesciō is present, so primary sequence, and the doing is already over. 'I do not know what Catiline did in Etruria.' Remember that fēcerit is also the future perfect indicative — the clause decides, and quid after nesciō is decisive.">An indirect question with a <em>perfect</em> subjunctive</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Is there any subordinating word in this sentence at all?">
+                <div class="widget-row-prompt"><em>Eāmus in Cūriam et sententiam dīcāmus.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A purpose clause needs ut or nē and something for it to depend on. There is no subordinating word here and no main clause elsewhere — these subjunctives are standing on their own.">Two purpose clauses without <em>ut</em></button>
+                    <button data-choice="b" data-fb="Right — hortatory subjunctives in main clauses (m14): 'Let us go into the Senate House and give our opinion.' And note eāmus: this is the present subjunctive of eō from Lesson 15.04, doing m14's job.">Hortatory subjunctives &mdash; &ldquo;let us go&hellip;let us speak&rdquo;</button>
+                    <button data-choice="c" data-fb="A future less vivid needs a sī clause for the apodosis to answer. There is no protasis here, so there is no condition.">The apodosis of a future less vivid</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Look for sī. Is there one? Then what is utinam doing?">
+                <div class="widget-row-prompt"><em>Utinam Cicerō adesset!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — an optative wish (m14): utinam plus the imperfect subjunctive is a wish for something that is not so now. 'If only Cicero were here!' The tense choice is the same logic as a present contrary-to-fact condition, which is why the two feel related — but there is no sī, so it is not a condition.">An optative wish &mdash; &ldquo;If only Cicero were here!&rdquo;</button>
+                    <button data-choice="b" data-fb="It looks like the apodosis of a present contrary-to-fact, and the tense is chosen for a similar reason — but a condition needs a protasis with sī or nisi, and utinam is not a conditional word. It means 'if only', which is a wish, not a supposition.">The apodosis of a present contrary-to-fact condition</button>
+                    <button data-choice="c" data-fb="A fear clause needs a verb of fearing and nē. There is neither; utinam introduces wishes.">A fear clause with <em>utinam</em> for <em>nē</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Read the first word, and check the mood of the second verb.">
+                <div class="widget-row-prompt"><em>Cum cōnsul dubitāret, hostis in urbem iit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is no sī or nisi in the sentence, and iit is perfect INDICATIVE ('he went'), not a subjunctive apodosis. Conditions do not open with cum.">A past contrary-to-fact condition without <em>sī</em></button>
+                    <button data-choice="b" data-fb="A result clause needs ut and usually a signpost (tam, tantus, adeō). This sentence opens with cum and has no ut.">A result clause</button>
+                    <button data-choice="c" data-fb="Right — a cum clause (m10) with the imperfect subjunctive dubitāret, temporal or causal: 'While the consul was hesitating, the enemy went into the city.' And iit is the perfect of eō from Lesson 15.04, sitting in the main clause as a plain indicative.">A <em>cum</em> clause with an indicative main verb</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- HANDOFF -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#128203; YOUR GRADED WORK FOR MODULE 15</div>
+        <div class="task">
+            <div class="th"><strong>1. <em>Ludus XV &mdash; Sī Fuisset</em></strong> &middot; Interactive Practice &amp; Games</div>
+            <div class="td">Seventy-five seconds, and your <strong>best of unlimited attempts</strong> counts. Half the items are the four-type sort, half are the irregular verbs &mdash; which makes it the cheapest way to make Lesson 15.04 automatic. Play it before the quiz, more than once.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>2. Module 15 Quiz</strong> &middot; 40 points &middot; auto-graded, unlimited attempts, highest score kept</div>
+            <div class="td">Twenty items: what a condition is and what the two halves are called, the four-type sort, <em>nisi</em> against <em>nōn</em>, form production on the irregular verbs, the look-alike sort, derivatives, and two best-translation items. Everything on this page and the four lessons before it. A gloss is given for the translation section.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>3. Module 15 Translation</strong> &middot; 30 points &middot; teacher-reviewed, in Microsoft Word</div>
+            <div class="td">Five sentences English into Latin and three Latin into English, all vocabulary supplied. Two of the English sentences require you to <em>choose</em> a condition type from the English tense pattern, one uses an irregular verb, and <strong>one is not a condition at all</strong> &mdash; read each sentence before you write. Save to OneDrive as <em>Lastname_Firstname_LatinAdv_M15_Translation.docx</em> and submit through Canvas.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>4. Module 15 Reflection</strong> &middot; ungraded survey</div>
+            <div class="td">Five questions, no points. Answer it honestly, and answer it <em>this week</em> &mdash; Module 16 is a <strong>gate</strong> at 80%, and this survey is how your teacher finds out what to help you with before you get there.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">16</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 16 &mdash; Semester 1 Comprehensive Review &middot; GATE</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">No new grammar. Everything from Module 0 to here, in one place: the noun and verb systems, deponents and gerundives, and the whole subjunctive &mdash; four tenses across eight constructions, sorted in one great discrimination lesson. The quiz is a <strong>mastery gate at 80%</strong>, and the graded <strong>ARTHUR Project</strong> takes you back to Pistoria, where you will label the field in Latin and write a reflection using a contrary-to-fact condition from this module. Reading: Sallust and Cicero on the same events, side by side.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Line 10 ends <em>hoc onus semper feram</em> &mdash; &ldquo;I shall bear this burden always.&rdquo; It is the last thing the passage says, and it is the most honest thing in it: Cicero never claims the night was costless, only that the alternative was worse. That is what a contrary-to-fact condition is <em>for</em>. It is not a way of proving you were right; it is a way of saying out loud what you think you prevented, and then living with the fact that nobody can check you. <em>Gravitās</em> is the willingness to say it anyway, in a form clear enough to be argued with.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 15.05 &middot; If the Senate Had Not Acted</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

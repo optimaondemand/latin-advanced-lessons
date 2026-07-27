@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 3.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd u { color: #1B6A94; text-decoration: none; border-bottom: 1px dotted #1B6A94; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 3</div>
+        <div style="font-size: 12px; color: #666;">Semi-Deponent Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 3.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">How Cicero Found Out</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 3.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">How Cicero Found Out</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Review &amp; Self-Check</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A conspiracy met behind a closed door. Within days the consul knew what had been said.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Module 2 ended in that room, with Catiline talking to men who had followed him. Today you find out how the words got out &mdash; and the Latin that carries the story is built almost entirely on the verbs you have spent two weeks learning. Watch the two <em>solēbat</em>s in particular: they are Sallust telling you what kind of man each of these people was.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> parse every semi-deponent and deponent form in an adapted passage of Sallust.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> distinguish a real passive from a deponent form inside continuous prose.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how a Roman consul with no police force learned a secret.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Sallust, <em>Bellum Catilīnae</em> 23 and 26, with one detail from Cicero, <em>In Catilīnam</em> I.8.</strong> A simplified Latin retelling &mdash; not Sallust's own sentences, and not Cicero's. Every <span style="color:#AA1E2D;"><strong>deponent or semi-deponent</strong></span> form is marked in red; every <span style="color:#1B6A94;"><u>real passive</u></span> is underlined in blue, so you can see both kinds in one paragraph. Read it once straight through for sense before you parse anything.</p>
+        <div class="rd">
+            <p>Cicerō cōnsul erat, sed exercitum in urbe nōn habēbat. Coniūrātī in locīs occultīs convēnerant et dē caede cōnsulis <b>locūtī erant</b>. Cicerō tamen dē cōnsiliīs eōrum cognōscere <b>solēbat</b>. Quōmodo? Amīcōs bonōs habēbat, et amīcī eius indicēs invenīre <b>audēbant</b>.</p>
+            <p>Erat Quīntus Curius, homō audāx, quī inter coniūrātōs <u>numerābātur</u>. Hic Fulviae, mulierī nōbilī, multa dē coniūrātiōne nārrāre <b>solēbat</b>; nam sē magnum <u>vidērī</u> cupiēbat. Fulvia autem tantum perīculum reī pūblicae cēlāre nōn <b>ausa est</b>. Per Fulviam igitur cōnsul cōnsilia coniūrātōrum cognōvit.</p>
+            <p>Nocte quādam coniūrātī in domum Mārcī Laecae convēnērunt. Ibi Catilīna sociōs suōs <b>hortātus est</b> et dē caede iterum <b>locūtus est</b>. Sed Cicerō, ab indicibus <u>monitus</u>, omnia iam cognōverat. Deinde in senātū surrēxit et Catilīnae dīxit: "Nihil agis quod ego nōn audiō."</p>
+            <p>Cicerō, omnibus nūntiīs <u>acceptīs</u>, vēritāte <b>gāvīsus est</b>. Indicibus enim <b>fīsus erat</b>, et indicēs quoque cōnsulī <b>fīsī erant</b>. Sīc cōnsul, quī nūllum exercitum in urbe habēbat, coniūrātiōnem cognōvit &mdash; nōn armīs, sed verbīs eōrum quī vērum dīcere <b>ausī erant</b>.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list</div>
+            <ul class="gl">
+                <li><em>exercitus, exercitūs</em> m. &mdash; army</li>
+                <li><em>occultus, -a, -um</em> &mdash; hidden, secret; <em>in locīs occultīs</em> &mdash; "in hidden places"</li>
+                <li><em>conveniō, convenīre, convēnī</em> &mdash; to come together, meet; <em>convēnerant</em> "had met," <em>convēnērunt</em> "they met"</li>
+                <li><em>caedēs, caedis</em> f. &mdash; murder, killing; <em>dē caede</em> &mdash; "about the murder"</li>
+                <li><em>tamen</em> (adv.) &mdash; nevertheless, all the same</li>
+                <li><em>cognōscō, cognōscere, cognōvī</em> &mdash; to learn, find out; <em>cognōverat</em> "had learned," <em>cognōvit</em> "learned"</li>
+                <li><em>quōmodo</em> &mdash; "how?" (a question word on its own here)</li>
+                <li><em>eius</em> &middot; <em>eōrum</em> &mdash; "his" &middot; "their" (genitive of <em>is, ea, id</em>)</li>
+                <li><em>index, indicis</em> m./f. &mdash; informer</li>
+                <li><em>inveniō, invenīre, invēnī</em> &mdash; to find</li>
+                <li><em>Quīntus Curius</em> &mdash; Quintus Curius, a Roman who had been expelled from the Senate and joined the conspiracy</li>
+                <li><em>audāx, audācis</em> &mdash; bold, reckless &mdash; the adjective built on <em>audeō</em></li>
+                <li><em>inter</em> + acc. &mdash; among</li>
+                <li><em>numerō, numerāre</em> &mdash; to count, number; <em>numerābātur</em> &mdash; "he was counted" &mdash; a <strong>real</strong> passive, for contrast</li>
+                <li><em>hic</em> &mdash; "this man, he" (nom. sg. m. of <em>hic, haec, hoc</em>)</li>
+                <li><em>Fulvia, Fulviae</em> f. &mdash; Fulvia, a Roman noblewoman</li>
+                <li><em>mulier, mulieris</em> f. &mdash; woman; <em>mulierī nōbilī</em> &mdash; dative, "to a noblewoman"</li>
+                <li><em>nōbilis, -e</em> &mdash; noble, high-born</li>
+                <li><em>nārrō, nārrāre</em> &mdash; to tell, relate</li>
+                <li><em>nam</em> &mdash; for, because</li>
+                <li><em>sē magnum vidērī cupiēbat</em> &mdash; "he wanted to seem important" &mdash; indirect statement: <em>sē</em> + the present <strong>passive</strong> infinitive <em>vidērī</em>, "to seem / to be seen." <em>Cupiō, cupere</em> &mdash; to want</li>
+                <li><em>autem</em> &mdash; however, but (never first in its clause)</li>
+                <li><em>tantus, -a, -um</em> &mdash; so great; <em>tantum perīculum</em> &mdash; "so great a danger"</li>
+                <li><em>rēs pūblica, reī pūblicae</em> f. &mdash; the republic, the state (two words); <em>reī pūblicae</em> here genitive, "to the republic"</li>
+                <li><em>cēlō, cēlāre</em> &mdash; to hide, conceal</li>
+                <li><em>igitur</em> &mdash; therefore</li>
+                <li><em>nocte quādam</em> &mdash; "on a certain night" (ablative of time; <em>quīdam, quaedam, quoddam</em> &mdash; a certain)</li>
+                <li><em>domus, domūs</em> f. &mdash; house; <em>in domum</em> + acc. &mdash; "into the house of"</li>
+                <li><em>Mārcus Laeca</em> &mdash; Marcus Porcius Laeca, a senator; Cicero says the conspirators met at his house</li>
+                <li><em>socius, sociī</em> m. &mdash; ally, companion, partner</li>
+                <li><em>iterum</em> (adv.) &mdash; again, a second time</li>
+                <li><em>moneō, monēre, monuī, monitum</em> &mdash; to warn; <em>monitus</em> &mdash; "having been warned," a <strong>real</strong> perfect passive participle, with its agent <em>ab indicibus</em></li>
+                <li><em>omnia</em> &mdash; everything, all things (neuter plural)</li>
+                <li><em>iam</em> (adv.) &mdash; already</li>
+                <li><em>deinde</em> (adv.) &mdash; then, next</li>
+                <li><em>surgō, surgere, surrēxī</em> &mdash; to rise, stand up; <em>surrēxit</em> &mdash; "he rose"</li>
+                <li><em>nihil agis</em> &mdash; "you do nothing" (<em>agō, agere, ēgī, āctum</em> &mdash; to do, act)</li>
+                <li><em>accipiō, accipere, accēpī, acceptum</em> &mdash; to receive; <em>omnibus nūntiīs acceptīs</em> &mdash; ablative absolute, "with all the reports received"</li>
+                <li><em>nūntius, nūntiī</em> m. &mdash; report, message; messenger</li>
+                <li><em>vēritās, vēritātis</em> f. &mdash; truth; <em>vēritāte</em> &mdash; ablative of cause with <em>gaudeō</em></li>
+                <li><em>enim</em> &mdash; for, indeed (never first in its clause)</li>
+                <li><em>quoque</em> &mdash; also, too</li>
+                <li><em>sīc</em> (adv.) &mdash; thus, in this way</li>
+                <li><em>nūllus, -a, -um</em> &mdash; no, not any</li>
+                <li><em>arma, armōrum</em> n. pl. &mdash; arms, weapons</li>
+                <li><em>vērum, vērī</em> n. &mdash; the truth, what is true</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two notes about the adaptation.</strong> <span style="display:block; margin-top:6px;"><strong>1.</strong> Cicero's real sentence &mdash; the one this passage borrows &mdash; puts its relative clause in the <em>subjunctive</em>: <em>nihil agis&hellip;quod nōn ego&hellip;audiam</em>. That construction arrives in <strong>Module 6</strong>. The adapter used the indicative <em>audiō</em> so the line stays inside the grammar you already have. When you meet the real version, you will know what it replaced.</span> <span style="display:block; margin-top:6px;"><strong>2.</strong> <em>Hortātus est</em> here simply takes an accusative object, <em>sociōs suōs</em>. Full classical Latin would normally add <em>ut</em> plus a subjunctive verb to say <em>what</em> he urged them to do &mdash; also <strong>Module 8</strong>. Same reason: the adaptation stays inside your grammar.</span></div>
+    </div>
+
+    <!-- PART 2 - INVENTORY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 2 &middot; FORM INVENTORY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Parse each marked form yourself before you look. Then check against this table &mdash; it is also your revision sheet for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:20%">Form</th><th style="width:16%">From</th><th style="width:18%">Type</th><th style="width:24%">Tense &middot; person &middot; number</th><th>Meaning</th></tr>
+            <tr><td class="lab"><em>locūtī erant</em></td><td><em>loquor</em></td><td>deponent</td><td>pluperfect &middot; 3rd pl. m.</td><td>they had spoken</td></tr>
+            <tr><td class="lab"><em>solēbat</em></td><td><em>soleō</em></td><td><strong>semi-deponent</strong></td><td>imperfect &middot; 3rd sg.</td><td>he used to, he was accustomed to</td></tr>
+            <tr><td class="lab"><em>audēbant</em></td><td><em>audeō</em></td><td><strong>semi-deponent</strong></td><td>imperfect &middot; 3rd pl.</td><td>they were daring, they dared</td></tr>
+            <tr><td class="lab"><em>ausa est</em></td><td><em>audeō</em></td><td><strong>semi-deponent</strong></td><td>perfect &middot; 3rd sg. <strong>f.</strong></td><td>she dared &mdash; feminine, because Fulvia is the subject</td></tr>
+            <tr><td class="lab"><em>hortātus est</em></td><td><em>hortor</em></td><td>deponent</td><td>perfect &middot; 3rd sg. m.</td><td>he urged, he encouraged</td></tr>
+            <tr><td class="lab"><em>locūtus est</em></td><td><em>loquor</em></td><td>deponent</td><td>perfect &middot; 3rd sg. m.</td><td>he spoke</td></tr>
+            <tr><td class="lab"><em>gāvīsus est</em></td><td><em>gaudeō</em></td><td><strong>semi-deponent</strong></td><td>perfect &middot; 3rd sg. m.</td><td>he rejoiced</td></tr>
+            <tr><td class="lab"><em>fīsus erat</em></td><td><em>fīdō</em></td><td><strong>semi-deponent</strong></td><td>pluperfect &middot; 3rd sg. m.</td><td>he had trusted (+ dative <em>indicibus</em>)</td></tr>
+            <tr><td class="lab"><em>fīsī erant</em></td><td><em>fīdō</em></td><td><strong>semi-deponent</strong></td><td>pluperfect &middot; 3rd pl. m.</td><td>they had trusted (+ dative <em>cōnsulī</em>)</td></tr>
+            <tr><td class="lab"><em>ausī erant</em></td><td><em>audeō</em></td><td><strong>semi-deponent</strong></td><td>pluperfect &middot; 3rd pl. m.</td><td>they had dared</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 4px 0;">And the four blue forms, which are genuinely passive:</p>
+        <table class="para">
+            <tr><th style="width:20%">Form</th><th style="width:16%">From</th><th style="width:24%">What it is</th><th>Meaning</th></tr>
+            <tr><td class="lab"><em>numerābātur</em></td><td><em>numerō</em></td><td>imperfect passive &middot; 3rd sg.</td><td>he was counted &mdash; someone else did the counting</td></tr>
+            <tr><td class="lab"><em>vidērī</em></td><td><em>videō</em></td><td>present passive infinitive</td><td>to be seen, to seem</td></tr>
+            <tr><td class="lab"><em>monitus</em></td><td><em>moneō</em></td><td>PPP, nom. sg. m., with agent <em>ab indicibus</em></td><td>having been warned by the informers</td></tr>
+            <tr><td class="lab"><em>acceptīs</em></td><td><em>accipiō</em></td><td>PPP, abl. pl., in an ablative absolute</td><td>with the reports having been received</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Read the last paragraph again slowly.</strong> <em>Acceptīs</em> and <em>gāvīsus est</em> sit five words apart and have the same shape. One is a real passive: the reports <em>were</em> received. The other is a semi-deponent perfect: Cicero <em>rejoiced</em>. Nothing on the page tells you which is which except knowing the two verbs. That is why Modules 2 and 3 come with vocabulary lists attached.</div>
+    </div>
+
+    <!-- PART 3 - TRANSLATE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 3 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out before flipping. These four are good practice for this week's translation assignment.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cicerō tamen dē cōnsiliīs eōrum cognōscere solēbat.</em></div><div class="hint">click to compare</div><div class="back">"Cicero, however, <strong>used to find out</strong> about their plans." <em>Solēbat</em> is imperfect &mdash; above the seam, so ordinary active endings &mdash; plus the infinitive <em>cognōscere</em>. The sentence is not reporting one discovery; it is reporting a working method.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Fulvia autem tantum perīculum reī pūblicae cēlāre nōn ausa est.</em></div><div class="hint">click to compare</div><div class="back">"Fulvia, however, <strong>did not dare</strong> to conceal so great a danger to the republic." <em>Ausa est</em> is below the seam: participle + <em>est</em>, and <em>ausa</em> is <strong>feminine</strong> because Fulvia is. Note what the sentence actually says &mdash; not that she wanted glory, but that she could not bring herself to stay quiet.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Sed Cicerō, ab indicibus monitus, omnia iam cognōverat.</em></div><div class="hint">click to compare</div><div class="back">"But Cicero, <strong>having been warned</strong> by the informers, had already learned everything." <em>Monitus</em> is a real PPP &mdash; nominative, agreeing with <em>Cicerō</em>, and <strong>passive</strong>: the warning was done <em>to</em> him. The agent <em>ab indicibus</em> proves it; a deponent participle could never take an <em>ab</em> phrase like this.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Indicibus enim fīsus erat, et indicēs quoque cōnsulī fīsī erant.</em></div><div class="hint">click to compare</div><div class="back">"For he <strong>had trusted</strong> the informers, and the informers <strong>had trusted</strong> the consul too." Two pluperfects of <em>fīdō</em>, one singular and one plural &mdash; watch <em>fīsus</em> against <em>fīsī</em>. Both objects are <strong>dative</strong>: <em>indicibus</em>, <em>cōnsulī</em>. The trust runs in both directions, which is the point of the sentence.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; A CONSUL WITH NO POLICE FORCE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Rome in 63 BC had no detectives, no intelligence service, and no police. A consul could not order a search. So when Cicero stood up and announced that he knew what the conspirators had said in a private house, the obvious question is the one this lesson is named for: <em>how?</em></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Sallust's answer is that the information walked in. Among the conspirators was <strong>Quintus Curius</strong>, a man who had already been thrown out of the Senate by the censors. Curius was involved with a well-born woman named <strong>Fulvia</strong>, and &mdash; Sallust says &mdash; he talked. He hinted at great things coming, apparently to make himself sound important to her. Fulvia did not keep it to herself, and through Fulvia the plot reached the consul. Sallust does not turn her into a heroine; he simply records that she did not conceal a danger that size. That restraint is very much his style.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">It is worth sitting with how ordinary the mechanism is. Roman politics ran on households, dinners, patrons, clients, and relationships &mdash; and so did Roman information. Cicero's advantage was not a spy network in the modern sense but a very large number of people who owed him something and would talk to him. Later in the story he gets luckier still, when written evidence falls into his hands; that is <strong>Module 8</strong>, and it is what finally makes the case unanswerable in public.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>The Roman word for it: <em>vēritās</em>.</strong> Notice which grammar Sallust hands these people. Cicero <em>solēbat</em> &mdash; he made a habit of finding things out. The informers <em>audēbant</em> &mdash; they dared. Fulvia <em>nōn ausa est</em> to hide it. The conspiracy was undone not by an army but by a small number of people who were willing to say what they knew, in a city where saying it was dangerous. <em>Vēritās</em>, for a Roman, was not a feeling about honesty; it was a thing you did out loud, usually at some cost.</p>
+    </div>
+
+    <!-- MODULE REVIEW -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; MODULE 3 IN FIVE LINES</div>
+        <table class="para">
+            <tr><th style="width:22%">Lesson</th><th>The one thing to keep</th></tr>
+            <tr><td class="lab">3.01</td><td>A semi-deponent is <strong>active in the present system, deponent in the perfect system</strong>. Part 1 in <em>-ō</em>, part 3 a participle &mdash; that mismatch is the signature.</td></tr>
+            <tr><td class="lab">3.02</td><td>Above the seam <em>audeō</em> is <em>videō</em> (<em>audet, audēbat, audēbit</em>); below it, <em>audeō</em> is <em>loquor</em> (<em>ausus est, ausus erat</em>). No <em>*auduī</em>, no <em>*audētur</em>.</td></tr>
+            <tr><td class="lab">3.03</td><td><em>Audeō</em> and <em>soleō</em> take an <strong>infinitive</strong>; <em>gaudeō</em> takes an <strong>ablative</strong> of cause; <em>fīdō</em> takes a <strong>dative</strong> &mdash; never an accusative.</td></tr>
+            <tr><td class="lab">3.04</td><td><strong>Case first, then verb.</strong> Case gives the construction; the verb type gives the voice. <em>Ausus</em> and <em>fīsus</em> are <strong>active</strong>: "having dared," "having trusted."</td></tr>
+            <tr><td class="lab">3.05</td><td>In real prose the two kinds sit side by side, and only knowing the verb tells them apart. An author's tenses are also a portrait: <em>solēbat</em> describes a character, not an event.</td></tr>
+        </table>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; FINAL SELF-CHECK BEFORE THE QUIZ</div>
+            <div class="widget-question">Five questions across the whole module.</div>
+            <div class="widget-row" data-correct="b" data-hint="Compare part 1 with part 3.">
+                <div class="widget-row-prompt">How do you spot a semi-deponent in a dictionary?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Three parts with part 1 in -or is a full deponent, like loquor. A semi-deponent's part 1 ends in -ō.">Three parts, part 1 ending in <em>-or</em></button>
+                    <button data-choice="b" data-fb="Right — three parts, part 1 in -ō (active), part 3 a participle plus sum (deponent): audeō, audēre, ausus sum. The mismatch between part 1 and part 3 is the whole signal.">Three parts, part 1 in <em>-ō</em> but part 3 a participle + <em>sum</em></button>
+                    <button data-choice="c" data-fb="Four parts with a one-word perfect is an ordinary verb, like laudō, laudāre, laudāvī, laudātum.">Four parts, part 3 a one-word perfect</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Several women, and a perfect tense.">
+                <div class="widget-row-prompt">Several women dared to come to the consul. Which is correct?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ausī sunt is masculine plural. The participle has to match the subject's gender, exactly as it did with deponents.">ausī sunt</button>
+                    <button data-choice="b" data-fb="Ausa est is feminine SINGULAR — one woman, not several.">ausa est</button>
+                    <button data-choice="c" data-fb="Right — ausae sunt: feminine plural participle plus sunt.">ausae sunt</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which case does this verb govern?">
+                <div class="widget-row-prompt">Complete correctly: "the consul trusted Fulvia" &mdash; <em>cōnsul ____ fīsus est.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — Fulviae, dative. Fīdō, cōnfīdō and diffīdō all take the dative for a person.">Fulviae</button>
+                    <button data-choice="b" data-fb="Fulviam is accusative, and fīdō never takes an accusative object. This is the standard error with this verb.">Fulviam</button>
+                    <button data-choice="c" data-fb="Fulviā is ablative. Fīdō does use the ablative — but for things, not people; for a person Latin prefers the dative.">Fulviā</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Check the case of the participle and whether its noun is the subject.">
+                <div class="widget-row-prompt">Which phrase is an <strong>ablative absolute</strong>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Here fīsus is nominative and agrees with Cicerō, the subject. That is a participial phrase describing the subject, not an ablative absolute.">Cicerō, indicibus fīsus</button>
+                    <button data-choice="b" data-fb="Right — both words ablative, and index has no other job in the sentence: 'when the informer had spoken.'">indice locūtō</button>
+                    <button data-choice="c" data-fb="Loquentem is accusative, agreeing with Cicerōnem as the object of a verb. Not ablative at all.">Cicerōnem loquentem</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Two of these are real passives; one only looks like one.">
+                <div class="widget-row-prompt">In the reading, which form has an <strong>active</strong> meaning?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Numerābātur is a real passive: 'he was counted' among the conspirators. Numerō is an ordinary verb with all four parts.">numerābātur</button>
+                    <button data-choice="b" data-fb="Monitus is a real PPP, passive — and the agent phrase ab indicibus makes it certain: 'warned by the informers.'">monitus</button>
+                    <button data-choice="c" data-fb="Right — gāvīsus est is the perfect of the semi-deponent gaudeō, so it is active: 'he rejoiced.' Same shape as the other two, opposite voice.">gāvīsus est</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- THIS WEEK'S WORK -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; YOUR GRADED WORK FOR MODULE 3</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Lūdus III &mdash; <em>Verba Sēmidēpōnentia</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">75 seconds of seam-spotting: which half of the verb are you in, which type of verb is it, and which case does it govern? <strong>Best of unlimited attempts.</strong></div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 3 Quiz</strong> &middot; auto-graded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Identification and parsing, form production, participles and ablative absolutes, vocabulary and derivatives, and short translation from this passage.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 3 Translation</strong> &middot; read by your teacher</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five sentences into Latin, three out of Latin, every one involving a semi-deponent or a deponent participle. Full vocabulary provided &mdash; you are being assessed on <em>forms and syntax</em>, not on memory.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 3 Reflection</strong> &middot; ungraded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Tell your teacher what clicked and what did not.</div>
+            </div>
+        </div>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; margin-top:14px; font-size:16px; color:#1a2340; line-height:1.6;">&#128196; <strong>M365 step for the translation.</strong> Write it in <strong>Microsoft Word</strong>. This week, use <strong>Insert &rarr; Table</strong> to make a two-column table &mdash; Latin on the left, English on the right &mdash; so your work can be read across at a glance. Keep the Latin in <em>italics</em> (Ctrl+I) and the English in plain text. Save to <strong>OneDrive</strong> as <code>Lastname_Firstname_LatinAdv_M03_Translation.docx</code> and submit through Canvas.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT'S COMING</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 4 &mdash; Gerunds</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Two weeks on verbs and voice are done. Next you turn a verb into a <em>noun</em>: <em>ars scrībendī</em>, "the art of writing." And the reading moves from Sallust the historian to Cicero the orator, getting ready to speak &mdash; <em>In Catilīnam</em> I, adapted.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A semi-deponent is exactly what it is on each side of the seam, with no false form anywhere &mdash; and reading it right just means refusing to guess. The people in today's passage did the same thing at much higher stakes. <em>Vēritās</em> is not a feeling; in Rome it was a thing you said out loud, and someone had to <em>dare</em> to say it: <em>ausī erant</em>.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 3.05 &middot; How Cicero Found Out</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

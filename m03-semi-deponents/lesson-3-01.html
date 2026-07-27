@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 3.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .para tr.seam td { border-top: 3px solid #AA1E2D; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 3</div>
+        <div style="font-size: 12px; color: #666;">Semi-Deponent Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 3.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Half In, Half Out</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 3.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Half In, Half Out</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Some verbs change sides halfway through.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><em>Audeō</em> means "I dare," and it looks exactly like any ordinary active verb: <em>audeō, audēs, audet</em>. Then you reach the perfect tense and it turns into <em>ausus sum</em> &mdash; participle plus <em>esse</em>, the deponent pattern from last week. Not two verbs. One verb, with a seam in the middle.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> define a semi-deponent verb and say exactly where its seam falls.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell a semi-deponent from a full deponent by reading its principal parts.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the four semi-deponents of Latin and give the meaning of each.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; FIRST, RETRIEVE LAST WEEK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A <strong>deponent</strong> verb is passive in form and active in meaning, <em>all the way through</em>. There is no active version of it anywhere: no <em>*loquō</em>, no <em>*hortāvit</em>. Three principal parts, part 1 in <em>-or</em>.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0; text-align:center;">
+            <div style="font-size:21px; color:#0e1c42;"><em>loquor, loquī, locūtus sum</em> &mdash; I speak &middot; I spoke</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Passive-looking in the present. Passive-looking in the perfect. Active in both.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0 0;">Now hold that picture and look at this one:</p>
+        <div style="background:#FDF3E3; border-radius:7px; padding:14px 18px; margin:8px 0; text-align:center;">
+            <div style="font-size:21px; color:#0e1c42;"><em>audeō, audēre, ausus sum</em> &mdash; I dare &middot; I dared</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><strong>Active</strong>-looking in the present. <strong>Passive</strong>-looking in the perfect. Active in both.</div>
+        </div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Before you read on: <em>audeō</em> looks completely normal in the present but goes deponent in the perfect. What is your first guess about why a language would do that?</div>
+            <div class="widget-options">
+                <button data-response="Good instinct, and close to what historians of Latin think. These verbs describe a state you come to be in rather than something you do to an object — 'to be daring,' 'to be in the habit.' The perfect of a state naturally sounds like 'I have been put into this condition,' which is what a participle-plus-esse form says. Latin kept that older feel in the perfect and rebuilt the present as an ordinary active.">Maybe the meaning is more about a state than an action</button>
+                <button data-response="Reasonable, but no — this is not damage. The pattern is completely regular in all four of these verbs, and it is stable across centuries of Latin. When something is this consistent it is a rule, not a scar.">Maybe the active perfect forms just got lost over time</button>
+                <button data-response="Fair guess, and there are only four of them, so it does feel like a list. But they are four very common verbs, and the split is so orderly that Roman grammarians gave it its own name. Treat it as a pattern with four members, not four oddities.">Probably just four random exceptions to memorize</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE DEFINITION, AND THE SEAM</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;">A <strong>semi-deponent</strong> verb is <strong>active in the present system</strong> and <strong>deponent in the perfect system</strong>.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">You already know both halves. The present system is present, imperfect, and future &mdash; ordinary active endings, nothing new. The perfect system is perfect, pluperfect, and future perfect &mdash; participle plus a form of <em>esse</em>, exactly the recipe you learned for deponents in Lesson 2.03. The whole lesson is <strong>knowing where the border is</strong>, and the border never moves: it falls between the future and the perfect.</p>
+        <table class="para">
+            <tr><th style="width:26%">Tense</th><th style="width:26%">Form of <em>audeō</em></th><th style="width:20%">Behaves like</th><th>Meaning</th></tr>
+            <tr><td class="lab">Present</td><td><em>aude<span class="end">t</span></em></td><td>ordinary active</td><td>he dares</td></tr>
+            <tr><td class="lab">Imperfect</td><td><em>audē<span class="end">bat</span></em></td><td>ordinary active</td><td>he was daring</td></tr>
+            <tr><td class="lab">Future</td><td><em>audē<span class="end">bit</span></em></td><td>ordinary active</td><td>he will dare</td></tr>
+            <tr class="seam"><td class="lab">Perfect</td><td><em>ausus <span class="end">est</span></em></td><td><strong>deponent</strong></td><td>he dared</td></tr>
+            <tr><td class="lab">Pluperfect</td><td><em>ausus <span class="end">erat</span></em></td><td><strong>deponent</strong></td><td>he had dared</td></tr>
+            <tr><td class="lab">Future perfect</td><td><em>ausus <span class="end">erit</span></em></td><td><strong>deponent</strong></td><td>he will have dared</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The red line in that table is the whole module.</strong> Above it, treat the verb as an ordinary 2nd-conjugation active. Below it, treat it as a deponent. Nothing in between, and no exceptions inside a tense &mdash; a tense is either fully above the line or fully below it.</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">Read the principal parts and the seam shows itself</h3>
+        <table class="para">
+            <tr><th style="width:22%">Kind of verb</th><th style="width:38%">Principal parts</th><th>What the parts are telling you</th></tr>
+            <tr><td class="lab">Ordinary</td><td><em>laudō, laudāre, laudāvī, laudātum</em></td><td><strong>Four</strong> parts. Part 1 in <em>-ō</em>, part 3 a one-word active perfect. Active throughout.</td></tr>
+            <tr><td class="lab">Deponent</td><td><em>loquor, loquī, locūtus sum</em></td><td><strong>Three</strong> parts. Part 1 in <em>-or</em>, part 3 a participle + <em>sum</em>. Passive-looking throughout.</td></tr>
+            <tr><td class="lab"><strong>Semi-deponent</strong></td><td><em>audeō, audēre, ausus sum</em></td><td><strong>Three</strong> parts. Part 1 in <em>-ō</em> &mdash; but part 3 is a participle + <em>sum</em>. The parts themselves show you the seam.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>The two-second test.</strong> Look at part 1 and part 3 together. <em>-ō</em> and a one-word perfect &rarr; ordinary. <em>-or</em> and a participle &rarr; deponent. <em>-ō</em> and a participle &rarr; <strong>semi-deponent</strong>. That mismatch is the signature, and it is the only signature you need.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; ALL FOUR OF THEM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Latin has essentially <strong>four</strong> semi-deponent verbs in common use, plus a few compounds of the last one. Four is a small enough number to simply know. Three of them are 2nd conjugation; one is 3rd.</p>
+        <table class="para">
+            <tr><th style="width:34%">Principal parts</th><th style="width:12%">Conj.</th><th style="width:26%">Meaning</th><th>Perfect &mdash; "I&hellip;"</th></tr>
+            <tr><td class="lab"><em>audeō, audēre, ausus sum</em></td><td>2nd</td><td>to dare, to venture <span style="font-size:13px; color:#666;">(+ infinitive)</span></td><td><em>ausus sum</em> &mdash; I dared</td></tr>
+            <tr><td class="lab"><em>soleō, solēre, solitus sum</em></td><td>2nd</td><td>to be accustomed, to be in the habit of <span style="font-size:13px; color:#666;">(+ infinitive)</span></td><td><em>solitus sum</em> &mdash; I was accustomed</td></tr>
+            <tr><td class="lab"><em>gaudeō, gaudēre, gāvīsus sum</em></td><td>2nd</td><td>to rejoice, to be glad <span style="font-size:13px; color:#666;">(+ ablative of cause)</span></td><td><em>gāvīsus sum</em> &mdash; I rejoiced</td></tr>
+            <tr><td class="lab"><em>fīdō, fīdere, fīsus sum</em></td><td>3rd</td><td>to trust, to rely on <span style="font-size:13px; color:#666;">(+ <strong>dative</strong> or ablative &mdash; never accusative)</span></td><td><em>fīsus sum</em> &mdash; I trusted</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two of these you have already used without noticing.</strong> <em>Soleō</em> is one of the most common verbs in Latin prose &mdash; every time a historian says someone "used to" do something, that is <em>solēbat</em>. And <em>fīdō</em> is the verb behind <em>fidēs</em>, "trust, good faith," one of the words Romans used most often to describe themselves. Watch the vowel, though: <em>fīdō</em> has a long <em>ī</em>, while the noun <em>fidēs</em> has a short one.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">Four sentences, one for each verb. Read the Latin, then the note underneath.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Nēmō in senātū loquī <strong>audēbat</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"No one <strong>dared</strong> to speak in the Senate."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Imperfect, 3rd singular &mdash; above the seam, so ordinary active endings. <em>Audeō</em> takes an infinitive: <em>loquī</em>, the deponent infinitive from Module 2. <span style="color:#8a6416;">Gloss: <em>nēmō</em> &mdash; "no one."</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Fulvia vērum dīcere <strong>ausa est</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Fulvia <strong>dared</strong> to tell the truth."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Perfect &mdash; below the seam, so participle + <em>esse</em>, and the participle <strong>agrees with the subject</strong>. Fulvia is a woman, so <em>ausa</em>, not <em>ausus</em>. <span style="color:#8a6416;">Gloss: <em>vērum, vērī</em> n. &mdash; the truth.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Catilīna nocte venīre <strong>solēbat</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Catiline <strong>was accustomed</strong> to come at night." &mdash; or, more naturally, "Catiline used to come at night."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Imperfect of <em>soleō</em> plus an infinitive. This is the single most useful semi-deponent form in Latin prose; learn it as a unit.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cōnsul indicibus <strong>fīsus est</strong> et vēritāte <strong>gāvīsus est</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"The consul <strong>trusted</strong> the informers and <strong>rejoiced</strong> at the truth."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Two perfects, both below the seam. <em>Fīdō</em> puts what it trusts in the <strong>dative</strong> (<em>indicibus</em>); <em>gaudeō</em> puts the cause of the joy in the <strong>ablative</strong> (<em>vēritāte</em>). <span style="color:#8a6416;">Gloss: <em>index, indicis</em> m./f. &mdash; informer; <em>vēritās, vēritātis</em> f. &mdash; truth.</span></div>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; SORT THE PARTS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Every question below can be answered from the principal parts alone. Use the two-second test.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Ordinary, deponent, or semi-deponent &mdash; and what follows from that?</div>
+            <div class="widget-row" data-correct="c" data-hint="Look at part 1 and part 3 together. Do they agree with each other?">
+                <div class="widget-row-prompt"><em>gaudeō, gaudēre, gāvīsus sum</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not ordinary. An ordinary verb's part 3 is a single active word, like laudāvī. This one is a participle plus sum.">Ordinary verb &mdash; four parts implied</button>
+                    <button data-choice="b" data-fb="Not a full deponent. A full deponent's part 1 ends in -or (loquor). This one ends in -ō, so its present system is straightforwardly active.">Full deponent &mdash; passive-looking throughout</button>
+                    <button data-choice="c" data-fb="Right &mdash; semi-deponent. Part 1 in -ō means an active present system; part 3 as a participle plus sum means a deponent perfect system. Mismatch = semi-deponent.">Semi-deponent &mdash; the seam is at the perfect</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which tense does the participle belong to?">
+                <div class="widget-row-prompt">Which form of <em>audeō</em> sits <strong>below</strong> the seam?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; ausī sunt is the perfect, so it is in the perfect system: participle plus esse, deponent pattern, 'they dared.'">ausī sunt</button>
+                    <button data-choice="b" data-fb="Audēbunt is the future, which belongs to the present system &mdash; ordinary active endings, above the seam.">audēbunt</button>
+                    <button data-choice="c" data-fb="Audēbant is the imperfect, also in the present system. The -bā- marker is a present-system marker.">audēbant</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="A semi-deponent's present system is ordinary and active. What does an ordinary active 3rd singular present look like?">
+                <div class="widget-row-prompt">Which form does <strong>not exist</strong> in Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This exists &mdash; audet, present 3rd singular, 'he dares.' Perfectly ordinary 2nd-conjugation active.">audet</button>
+                    <button data-choice="b" data-fb="Right &mdash; audētur would be a passive present, and a semi-deponent's present system is active in form. There is no passive of audeō at all. The present is audet.">audētur</button>
+                    <button data-choice="c" data-fb="This exists &mdash; ausus est, the perfect, 'he dared.' Below the seam, so participle plus est.">ausus est</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="A woman is speaking about herself. What must the participle do?">
+                <div class="widget-row-prompt">Fulvia says "I dared." Which is correct?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Auduī applies active perfect endings to a verb that has no active perfect. This is the single most common error in this module &mdash; the perfect of audeō is never one word.">auduī</button>
+                    <button data-choice="b" data-fb="Ausus sum is right in structure but wrong in gender: ausus is masculine. The participle is an adjective and must agree with the speaker.">ausus sum</button>
+                    <button data-choice="c" data-fb="Right &mdash; ausa sum. Feminine singular participle, because the participle agrees with its subject exactly as it did for deponents in Module 2.">ausa sum</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Which case does this verb govern?">
+                <div class="widget-row-prompt">"The consul trusted the informers" &mdash; which is correct Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Indicēs is accusative. Fīdō does not take an accusative object &mdash; it takes the dative (or, for things, the ablative).">Cōnsul indicēs fīsus est.</button>
+                    <button data-choice="b" data-fb="Right &mdash; indicibus, dative. Fīdō trusts TO someone. Compare English 'give credit to,' which also uses a dative-like preposition.">Cōnsul indicibus fīsus est.</button>
+                    <button data-choice="c" data-fb="Fīdit is the present, 'he trusts' &mdash; and indicum is genitive plural. Neither the tense nor the case matches what was asked.">Cōnsul indicum fīdit.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the <em>Cūria</em> &mdash; the Senate House &mdash; or a consul's working room, the kind of place where a report gets read and a decision gets made. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things or people in the scene. At least <strong>two</strong> labels must use a participle &mdash; for example <em>cōnsul audiēns</em> ("the consul listening"), <em>index loquēns</em> ("the informer speaking"), <em>senātōrēs audentēs</em> ("the senators daring"), <em>tabula</em> ("writing tablet"), <em>sella</em> ("chair"), <em>signum</em> ("seal, signal").</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write one Latin sentence</strong> using a semi-deponent verb, saying something the consul <em>dared</em> or <em>was accustomed</em> to do. Example: <em>Cōnsul indicēs audīre solēbat.</em> &mdash; "The consul was accustomed to listen to informers." Formative and ungraded; the graded ARTHUR project comes at Module 8. <span style="color:#666;">[ARTHUR: capture / submission steps]</span></p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; VĒRITĀS &middot; HONESTY</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><em>Vēritās</em> is the Roman word for truth &mdash; not truth as a theory, but truth as something a person tells when it costs them. Semi-deponents make an odd little emblem of it. In each half of their life they are <strong>exactly what they are</strong>: active where they are active, deponent where they are deponent, no false form anywhere. They do not pretend to be regular in the perfect, and they do not pretend to be deponent in the present. What confuses students is not the verb's dishonesty; it is our own hope that things will stay simple. And this week's reading is about the same thing at human scale: a conspiracy came apart because a handful of people told the truth about what they had heard, when silence was safer.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 3.02 &mdash; <em>Audeō</em> from Top to Bottom</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">All six tenses of <em>audeō</em> in one place, a chant for each side of the seam, and the two wrong forms students invent most often.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A semi-deponent is <strong>active in the present system, deponent in the perfect system</strong>, and its principal parts say so out loud: part 1 in <em>-ō</em>, part 3 a participle plus <em>sum</em>. Four verbs &mdash; <em>audeō, soleō, gaudeō, fīdō</em>. One seam, and it never moves.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 3.01 &middot; Half In, Half Out</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

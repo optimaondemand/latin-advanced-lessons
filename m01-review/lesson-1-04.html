@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 1.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Review in Context</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Cast of the Conspiracy</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Cast of the Conspiracy</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Relative Clauses &amp; Indirect Statement</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Who actually shows up to a conspiracy?</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Not monsters. Bankrupt noblemen, old soldiers with nothing to go home to, and men buried in debt &mdash; and Sallust names all three groups precisely, because the list <em>is</em> his argument about Rome. This passage carries <strong>three indirect statements with three different infinitive tenses</strong> and a participial trap. Everything you need is already yours.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read a nine-line adapted Sallust passage and say who joined Catiline and why.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use an infinitive's tense to fix <em>when</em> a reported statement happened relative to the reporting.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what <em>novae rēs</em> meant to a Roman and why Sallust chose it.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Sallust, <em>Bellum Catilīnae</em> 17, 20 and 21.</strong> A simplified Latin retelling of the first gathering of Catiline's inner circle &mdash; not Sallust's own sentences. Participial phrases and indirect statements are marked in <span style="color:#AA1E2D;"><strong>red</strong></span>. Read it once straight through before you analyze a single word.</p>
+        <div class="rd">
+            <p>Catilīna, <b>omnibus rēbus parātīs</b>, coniūrātiōnem suam aperīre statuit. Itaque <b>virōs dēlēctōs</b> in ūnum locum convocāvit.</p>
+            <p>Eō convēnērunt hominēs variī. Aderant nōbilēs perditī, <b>quī omnem pecūniam cōnsūmpserant</b>; aderant mīlitēs veterānī, <b>quī sub Sullā pugnāverant</b>; aderant <b>aliī magnīs dēbitīs pressī</b>. Omnēs ūnam spem habēbant: novās rēs cupiēbant.</p>
+            <p>Catilīna eīs prōmīsit <b>sē omnia dēbita dēlētūrum esse</b>. <b>Verbīs Catilīnae audītīs</b>, coniūrātī laetī erant, et <b>sē esse parātōs ad bellum</b> dīxērunt.</p>
+            <p>Sallustius autem scrīpsit <b>hōs hominēs nōn virtūtem sed pecūniam petīvisse</b>. Ita nōn sōlum Catilīnam sed etiam tōtam cīvitātem accūsāvit.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list</div>
+            <ul class="gl">
+                <li><em>statuit</em> &mdash; "decided, determined" (perfect of <em>statuō, statuere, statuī, statūtum</em>; takes an infinitive)</li>
+                <li><em>aperiō, aperīre, aperuī, apertum</em> &mdash; to open; to reveal, disclose</li>
+                <li><em>dēlēctōs</em> &mdash; PPP of <em>dēligō, dēligere, dēlēgī, dēlēctum</em> (to choose, pick out) &mdash; "chosen, hand-picked"</li>
+                <li><em>eō</em> (adv.) &mdash; to that place, there</li>
+                <li><em>convēnērunt</em> &mdash; "came together, gathered" (perfect of <em>conveniō, convenīre, convēnī, conventum</em>)</li>
+                <li><em>varius, -a, -um</em> &mdash; various, of several different kinds</li>
+                <li><em>aderant</em> &mdash; "were present, were there" (imperfect of <em>adsum, adesse, adfuī</em>)</li>
+                <li><em>perditus, -a, -um</em> &mdash; ruined, bankrupt, desperate (PPP of <em>perdō</em>, used as an adjective)</li>
+                <li><em>cōnsūmpserant</em> &mdash; "had used up, had squandered" (pluperfect of <em>cōnsūmō, cōnsūmere, cōnsūmpsī, cōnsūmptum</em>)</li>
+                <li><em>veterānus, -a, -um</em> &mdash; veteran, long-serving</li>
+                <li><em>Sulla, Sullae</em> m. &mdash; Lucius Cornelius Sulla, Roman general and dictator, died 78 BC; <em>sub Sullā</em> &mdash; "under Sulla"</li>
+                <li><em>dēbitum, dēbitī</em> n. &mdash; a debt (literally "what is owed," from <em>dēbeō</em>)</li>
+                <li><em>pressī</em> &mdash; PPP of <em>premō, premere, pressī, pressum</em> (to press, weigh down) &mdash; "weighed down"</li>
+                <li><em>spēs, speī</em> f. &mdash; hope (acc. sg. <em>spem</em>)</li>
+                <li><em>novae rēs, novārum rērum</em> f. pl. &mdash; literally "new things," but as a Roman political term: <strong>revolution</strong>, the overturning of the established order</li>
+                <li><em>eīs</em> &mdash; dat. pl. of <em>is, ea, id</em> &mdash; "to them"</li>
+                <li><em>prōmīsit</em> &mdash; "promised" (perfect of <em>prōmittō, prōmittere, prōmīsī, prōmissum</em>)</li>
+                <li><em>dēlētūrum esse</em> &mdash; future active infinitive of <em>dēleō, dēlēre, dēlēvī, dēlētum</em> (to wipe out, cancel) &mdash; "to be going to wipe out"</li>
+                <li><em>laetus, -a, -um</em> &mdash; glad, delighted</li>
+                <li><em>parātus, -a, -um</em> &mdash; ready, prepared (PPP of <em>parō</em>, used as an adjective)</li>
+                <li><em>hōs</em> &mdash; acc. pl. m. of <em>hic, haec, hoc</em> &mdash; "these"</li>
+                <li><em>petīvisse</em> &mdash; perfect active infinitive of <em>petō, petere, petīvī, petītum</em> &mdash; "to have sought, to have gone after"</li>
+                <li><em>nōn sōlum&hellip;sed etiam</em> &mdash; not only&hellip;but also</li>
+                <li><em>cīvitās, cīvitātis</em> f. &mdash; the citizen body; the state, the community</li>
+                <li><em>accūsāvit</em> &mdash; "he accused, he indicted" (perfect of <em>accūsō, accūsāre, accūsāvī, accūsātum</em>)</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>One note about the adaptation.</strong> Sallust reports Catiline's promises in a long stretch of indirect speech, and full classical Latin puts most of the verbs in that stretch into the <strong>subjunctive</strong> &mdash; which you meet in Modules 6 and 7. The adaptation here uses the accusative-and-infinitive construction you already own instead. The promise itself is historical: cancellation of debts (<em>tabulae novae</em>, "new account books") was one of the things Catiline was said to have offered, and it is why men in debt came.</div>
+    </div>
+
+    <!-- PART 2 - PARTICIPIAL PHRASES -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 2 &middot; FOUR PARTICIPIAL PHRASES &mdash; ONE OF THEM IS NOT WHAT IT LOOKS LIKE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Find all four yourself first, and decide for each one whether it is an ablative absolute. Then check. Yesterday's test is the only tool you need: <strong>what case is the participle?</strong></p>
+        <table class="para">
+            <tr><th style="width:26%">Phrase</th><th style="width:20%">Participle's case</th><th style="width:22%">Verdict</th><th>English</th></tr>
+            <tr><td class="lab"><em>omnibus rēbus parātīs</em></td><td>abl. pl. f.</td><td><strong>Ablative absolute</strong></td><td>"once everything had been prepared" &mdash; PPP, so earlier than <em>statuit</em></td></tr>
+            <tr><td class="lab"><em>virōs dēlēctōs</em></td><td>acc. pl. m.</td><td>PPP with the object</td><td>"hand-picked men" &mdash; agrees with <em>virōs</em>, the object of <em>convocāvit</em></td></tr>
+            <tr><td class="lab"><em>aliī magnīs dēbitīs pressī</em></td><td class="end">nom. pl. m.</td><td><strong>Not an absolute</strong></td><td>"others, weighed down by great debts" &mdash; <em>pressī</em> agrees with <em>aliī</em>, the subject; <em>magnīs dēbitīs</em> is ablative of <strong>means</strong></td></tr>
+            <tr><td class="lab"><em>verbīs Catilīnae audītīs</em></td><td>abl. pl. n.</td><td><strong>Ablative absolute</strong></td><td>"when Catiline's words had been heard" &mdash; <em>Catilīnae</em> is genitive, sitting inside the absolute</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128269; <strong>Row three is the whole point of yesterday.</strong> <em>Magnīs dēbitīs pressī</em> has an ablative phrase and a participle sitting right beside each other, and it is not an ablative absolute, because <em>pressī</em> is nominative. If you read it as an absolute you get "with great debts having been pressed," which means nothing &mdash; and, worse, you lose the men the sentence is actually about.</div>
+    </div>
+
+    <!-- PART 3 - INDIRECT STATEMENT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THREE REPORTS, THREE TIMES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This passage does something you should notice: it uses <strong>all three infinitive tenses</strong> in three consecutive indirect statements. An infinitive's tense in Latin does not tell you when something happened in absolute time. It tells you <strong>when it happened relative to the main verb</strong>.</p>
+        <table class="para">
+            <tr><th style="width:30%">Indirect statement</th><th style="width:20%">Infinitive</th><th style="width:22%">Time vs. main verb</th><th>English</th></tr>
+            <tr><td class="lab"><em>sē omnia dēbita dēlētūrum esse</em><br><span style="font-size:13px; color:#666;">after <em>prōmīsit</em></span></td><td><strong>future</strong> active</td><td class="end">later</td><td>"that he <strong>would</strong> wipe out all debts"</td></tr>
+            <tr><td class="lab"><em>sē esse parātōs ad bellum</em><br><span style="font-size:13px; color:#666;">after <em>dīxērunt</em></span></td><td><strong>present</strong></td><td class="end">same time</td><td>"that they <strong>were</strong> ready for war"</td></tr>
+            <tr><td class="lab"><em>hōs hominēs&hellip;pecūniam petīvisse</em><br><span style="font-size:13px; color:#666;">after <em>scrīpsit</em></span></td><td><strong>perfect</strong> active</td><td class="end">earlier</td><td>"that these men <strong>had</strong> gone after money"</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>And notice <em>sē</em>.</strong> Twice the accusative subject is the reflexive <em>sē</em>, and each time it points back to the subject of the main verb: after <em>Catilīna&hellip;prōmīsit</em>, <em>sē</em> is Catiline; after <em>coniūrātī&hellip;dīxērunt</em>, <em>sē</em> is the conspirators. Latin uses <em>sē</em> precisely so you can tell "he promised that <em>he himself</em> would" from "he promised that <em>somebody else</em> would." English has to lean on context; Latin marks it.</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Five questions on the passage.</div>
+            <div class="widget-row" data-correct="b" data-hint="A reflexive points back to the subject of the verb that introduced it.">
+                <div class="widget-row-prompt">In <em>Catilīna eīs prōmīsit sē omnia dēbita dēlētūrum esse</em>, who does <em>sē</em> refer to?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="The men are eīs, dative plural &mdash; the people he promised. Sē is accusative and is the subject of the infinitive.">The men he was speaking to</button>
+                    <button data-choice="b" data-fb="Right &mdash; sē points back to the subject of prōmīsit, which is Catiline: 'Catiline promised them that he himself would wipe out all debts.'">Catiline himself</button>
+                    <button data-choice="c" data-fb="The debts are omnia dēbita, accusative neuter plural &mdash; the object of the infinitive, not its subject. Debts also cannot be described by a masculine participle.">The debts</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="A future active infinitive is built from the FAP plus esse. What does a participle have to agree with?">
+                <div class="widget-row-prompt">Why is <em>dēlētūrum</em> accusative singular masculine?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dēbita is neuter plural. If the participle agreed with it, the form would be dēlētūra.">Because it agrees with <em>dēbita</em></button>
+                    <button data-choice="b" data-fb="Catilīna is nominative. Inside an indirect statement the subject goes into the accusative, and the participle follows the accusative subject, not the nominative one.">Because it agrees with <em>Catilīna</em>, nominative</button>
+                    <button data-choice="c" data-fb="Right &mdash; a future active infinitive is the FAP plus esse, and the FAP agrees with the subject of the infinitive. That subject is sē, accusative singular masculine, so the participle is dēlētūrum.">Because it agrees with <em>sē</em>, the accusative subject</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Gender and number come from the antecedent; case comes from the job inside the relative clause.">
+                <div class="widget-row-prompt">In <em>mīlitēs veterānī, quī sub Sullā pugnāverant</em>, why is <em>quī</em> nominative?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; quī is the subject of pugnāverant inside its own clause, so it is nominative. Its masculine plural form comes from mīlitēs.">Because it is the subject of <em>pugnāverant</em></button>
+                    <button data-choice="b" data-fb="Half right and half wrong. Mīlitēs does give quī its gender and number &mdash; but never its case. Case always comes from the relative pronoun's own job.">Because <em>mīlitēs</em> is nominative, so <em>quī</em> copies it</button>
+                    <button data-choice="c" data-fb="Sub takes the ablative, and the word it governs here is Sullā. Quī is not governed by any preposition.">Because <em>sub</em> takes the nominative</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Look at the ending of pressī, then at the ending of aliī.">
+                <div class="widget-row-prompt">In <em>aderant aliī magnīs dēbitīs pressī</em>, what is happening?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An ablative absolute needs its participle in the ablative. Pressī is nominative plural &mdash; the ablative plural would be pressīs.">An ablative absolute: "with great debts having been pressed"</button>
+                    <button data-choice="b" data-fb="Dēbitīs is not the agent. An agent needs ā or ab and is normally a person; debts are a thing, so this is means, not agent.">Ablative of agent: the debts are doing the pressing as a person would</button>
+                    <button data-choice="c" data-fb="Right &mdash; pressī is nominative plural masculine, agreeing with aliī, and magnīs dēbitīs is ablative of means: 'others were there, weighed down by great debts.'">A nominative PPP agreeing with <em>aliī</em>, plus ablative of means</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="It is two ordinary words used as one loaded political term.">
+                <div class="widget-row-prompt">All of them wanted <em>novās rēs</em>. What does that phrase actually accuse them of wanting?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Literally that is what the words say &mdash; but no Roman reader would have taken it literally in a political sentence, any more than an English reader takes 'regime change' as being about furniture.">Newer possessions &mdash; better property and money</button>
+                    <button data-choice="b" data-fb="Right &mdash; novae rēs is the standard Roman term for revolution: overturning the existing order of the state. Using it is already a charge, not a description.">Revolution &mdash; the overturning of the Roman order</button>
+                    <button data-choice="c" data-fb="New magistrates would be novī magistrātūs. Novae rēs is not about who holds office; it is about replacing the whole arrangement.">New officials elected for the year</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 - TRANSLATE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 4 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write out your English before flipping. These three are the closest thing on this page to tomorrow's translation assignment.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Catilīna, omnibus rēbus parātīs, coniūrātiōnem suam aperīre statuit.</em></div><div class="hint">click to compare</div><div class="back">"Catiline, <strong>once everything had been prepared</strong>, decided to reveal his conspiracy." The ablative absolute is a PPP, so it is earlier than <em>statuit</em> &mdash; "once / after," not "while." <em>Statuit</em> takes the infinitive <em>aperīre</em> directly.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Aderant nōbilēs perditī, quī omnem pecūniam cōnsūmpserant.</em></div><div class="hint">click to compare</div><div class="back">"There were <strong>ruined noblemen present, who had used up all their money</strong>." <em>Aderant</em> is imperfect &mdash; the scene is being described, not narrated as a single event. The pluperfect <em>cōnsūmpserant</em> puts the squandering before the meeting: they were already bankrupt when they walked in.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Sallustius autem scrīpsit hōs hominēs nōn virtūtem sed pecūniam petīvisse.</em></div><div class="hint">click to compare</div><div class="back">"Sallust, however, wrote <strong>that these men had gone after money, not virtue</strong>." Perfect infinitive <em>petīvisse</em>, so earlier than <em>scrīpsit</em>. Notice how much work <em>autem</em> ("however") is doing: it turns the whole preceding scene into something Sallust is about to judge.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; <em>NOVAE RĒS</em>, THE ROMAN WORD FOR REVOLUTION</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">"New things." Two of the most ordinary words in Latin, and together they are one of the heaviest charges a Roman could bring. <em>Novae rēs</em> meant the overturning of the established order: the constitution, the authority of the Senate, the way things were done. To say that a man wanted <em>novae rēs</em> was to put him outside the community, and everyone in the room knew it.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Notice what that lets Sallust do. He could have written that Catiline's followers were poor, or in debt, or shut out of office &mdash; all of which was true and checkable. Instead he tells you they wanted <em>novae rēs</em>, and their real grievances vanish behind the label. This is worth watching because you will see the same move made about people in your own century, in whatever language you read.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;">Cicero, prosecuting the same men in the same year, chooses differently. His emphasis is legal and constitutional: these men are <em>hostēs</em>, enemies of the state, and there are laws for that. Sallust's emphasis is moral: Rome had lost its <em>virtūs</em> and got the conspirators it deserved. Same conspiracy, two accusations, two very different reasons to be angry. You will spend the year with both.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 1.05 &mdash; Everything, Without Prompting</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The module on one page, a mixed self-check with no hints about what each item is testing, and your handoff to the Lūdus, the quiz, and the <strong>first written translation of the course</strong>.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">An infinitive's tense in indirect statement is <strong>relative</strong>: future = after the reporting verb, present = alongside it, perfect = before it. Get the infinitive's tense and the whole reported sentence lands in the right place in time &mdash; and English needs "would," "was," or "had" to say what Latin says with one ending.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.04 &middot; The Cast of the Conspiracy</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

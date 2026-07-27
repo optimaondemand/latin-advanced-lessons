@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 15.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 15</div>
+        <div style="font-size: 12px; color: #666;">Conditions &amp; Irregular Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 15.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Six Verbs That Refuse to Behave</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 30 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 15.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Six Verbs That Refuse to Behave</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; <em>ferō &middot; eō &middot; volō &middot; nōlō &middot; mālō &middot; fīō</em></div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A change of subject for one day. No conditions in this lesson at all &mdash; today is six verbs, and they are the six you will meet most often for the rest of your life in Latin.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><em>Ferō</em> (carry, bear), <em>eō</em> (go), <em>volō</em> (want), <em>nōlō</em> (not want), <em>mālō</em> (prefer), <em>fīō</em> (become, be made). None of them fits any of the four conjugations. All six have full paradigms below, in the tenses you need &mdash; and all six are <strong>vocabulary as much as morphology</strong>: they carry meanings, compounds, and English descendants that are worth as much to you as the endings. <strong>This lesson is longer than the others in the module, and that is on purpose.</strong> Take thirty minutes. Come back to it tomorrow before the reading; come back to it again before the quiz.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognise and produce the present, imperfect and future indicative, and the present and imperfect subjunctive, of all six verbs.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what <em>fīō</em> means and explain the odd thing about it &mdash; passive in meaning, active in form, except in the perfect system where it borrows from <em>faciō</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> avoid the four traps: <em>volō</em> against <em>volō</em>, <em>adeō</em> against <em>adeō</em>, <em>eō</em> against <em>eō</em>, and the forms that are future indicative and present subjunctive at once.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; WHY THESE SIX ARE THE STRANGE ONES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Irregular verbs are not scattered at random through a language. They cluster at the top of the frequency list, and the reason is worth knowing: <strong>words that are used constantly get worn down</strong>. A speaker who says a word ten thousand times a year files the edges off it. A word used twice a year keeps its full shape, because every speaker has to build it from the rule.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">English does exactly this. <em>Go / went / gone</em> is a mess; <em>walk / walked / walked</em> is tidy. Nobody planned either. The messy verb is the one everybody uses. Latin's list of irregulars is the same list of everyday actions: <strong>be, be able, carry, go, want, become</strong>. You already own <em>sum</em> and <em>possum</em>. Here are the rest.</p>
+        <table class="para">
+            <tr><th style="width:30%">Principal parts</th><th style="width:26%">Meaning</th><th>What is irregular about it</th></tr>
+            <tr><td class="lab"><em>ferō, ferre, tulī, lātum</em></td><td>to carry, bring, bear; to endure; to report</td><td>Three unrelated stems (<em>fer-</em>, <em>tul-</em>, <em>lāt-</em>) and some forms with no connecting vowel.</td></tr>
+            <tr><td class="lab"><em>eō, īre, iī</em> (or <em>īvī</em>), <em>itum</em></td><td>to go</td><td>The stem shrinks to a single letter in places, and swells to <em>eu-</em> in others.</td></tr>
+            <tr><td class="lab"><em>volō, velle, voluī</em></td><td>to want, wish, be willing</td><td>Three different stems in the present system alone: <em>vol-</em>, <em>vel-</em>, <em>vul-</em>.</td></tr>
+            <tr><td class="lab"><em>nōlō, nōlle, nōluī</em></td><td>to not want, be unwilling, refuse</td><td><em>nōn</em> + <em>volō</em>, squashed together &mdash; and three forms never finished squashing.</td></tr>
+            <tr><td class="lab"><em>mālō, mālle, māluī</em></td><td>to prefer, want more</td><td><em>magis</em> + <em>volō</em>, &ldquo;want more,&rdquo; squashed the same way.</td></tr>
+            <tr><td class="lab"><em>fīō, fierī, factus sum</em></td><td>to become, be made, happen</td><td>Active in form, passive in meaning, and it borrows its whole perfect system from <em>faciō</em>.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>How to study this page.</strong> Do not try to memorise thirty rows of table. For each verb, learn <strong>three things</strong>: (1) the <em>principal parts</em>, said aloud as one phrase; (2) the <strong>3rd singular</strong> of each tense, because that is the form you will actually meet on a page; (3) the <strong>meaning and one derivative</strong>. Everything else follows from patterns you already know, and the tables are here so you can check yourself, not so you can recite them.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; <em>FERŌ</em> &mdash; TO CARRY, TO BEAR, TO ENDURE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><em>Ferō</em> behaves like a third-conjugation verb (<em>regō</em>) almost everywhere. The exceptions are three present-tense forms and the imperfect subjunctive, where the connecting vowel simply is not there: <strong><em>fers</em>, <em>fert</em>, <em>fertis</em></strong> instead of the expected <em>feris, ferit, feritis</em>, and <strong><em>ferrem</em></strong> instead of <em>fererem</em>.</p>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:17%">Present indic.</th><th style="width:18%">Imperfect indic.</th><th style="width:17%">Future indic.</th><th style="width:17%">Present subj.</th><th>Imperfect subj.</th></tr>
+            <tr><td class="lab">1 sg.</td><td><em>ferō</em></td><td><em>ferēbam</em></td><td><em>feram</em></td><td class="end"><em>feram</em></td><td><em>ferrem</em></td></tr>
+            <tr><td class="lab">2 sg.</td><td class="end"><em>fers</em></td><td><em>ferēbās</em></td><td><em>ferēs</em></td><td><em>ferās</em></td><td><em>ferrēs</em></td></tr>
+            <tr><td class="lab">3 sg.</td><td class="end"><em>fert</em></td><td><em>ferēbat</em></td><td><em>feret</em></td><td><em>ferat</em></td><td><em>ferret</em></td></tr>
+            <tr><td class="lab">1 pl.</td><td><em>ferimus</em></td><td><em>ferēbāmus</em></td><td><em>ferēmus</em></td><td><em>ferāmus</em></td><td><em>ferrēmus</em></td></tr>
+            <tr><td class="lab">2 pl.</td><td class="end"><em>fertis</em></td><td><em>ferēbātis</em></td><td><em>ferētis</em></td><td><em>ferātis</em></td><td><em>ferrētis</em></td></tr>
+            <tr><td class="lab">3 pl.</td><td><em>ferunt</em></td><td><em>ferēbant</em></td><td><em>ferent</em></td><td><em>ferant</em></td><td><em>ferrent</em></td></tr>
+        </table>
+        <table class="para">
+            <tr><th style="width:34%">Also worth having</th><th>Forms</th></tr>
+            <tr><td class="lab">infinitive &middot; imperative</td><td><em>ferre</em> &middot; <em>fer</em> (sg.), <em>ferte</em> (pl.) &mdash; short imperatives, like <em>dīc</em>, <em>dūc</em>, <em>fac</em></td></tr>
+            <tr><td class="lab">present participle</td><td><em>ferēns, ferentis</em> &mdash; &ldquo;carrying&rdquo;</td></tr>
+            <tr><td class="lab">present passive</td><td><em>feror, ferris, fertur, ferimur, feriminī, feruntur</em> &mdash; and <em>fertur</em> commonly means &ldquo;it is said, the story goes&rdquo;</td></tr>
+            <tr><td class="lab">perfect system (from <em>tulī</em>)</td><td><em>tulī</em> &middot; perf. subj. <em>tulerim</em> &middot; pluperf. subj. <em>tulissem</em> &middot; PPP <em>lātus, -a, -um</em></td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The collision to know about now:</strong> <em>feram</em> is <strong>both</strong> the future indicative (&ldquo;I shall carry&rdquo;) <strong>and</strong> the present subjunctive (&ldquo;let me carry / that I may carry&rdquo;). This is not special to <em>ferō</em> &mdash; every third and fourth conjugation verb does it (<em>regam</em>, <em>audiam</em>), and you have lived with it since Module 6. The cure is the one from Lesson 13.02: <strong>read the clause, not the word.</strong> A <em>sī</em> clause, an <em>ut</em> clause, an indirect question &rarr; subjunctive. A main clause with nothing subordinating it &rarr; future indicative.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 6px 0;">The compounds of <em>ferō</em> are everywhere in Latin prose, and they have the strangest principal parts in the language, because <em>tulī</em> and <em>lātum</em> get compressed:</p>
+        <table class="para">
+            <tr><th style="width:34%">Compound</th><th style="width:22%">Meaning</th><th>English descendant</th></tr>
+            <tr><td class="lab"><em>afferō, afferre, attulī, allātum</em></td><td>to bring to, report</td><td class="end">afferent</td></tr>
+            <tr><td class="lab"><em>offerō, offerre, obtulī, oblātum</em></td><td>to offer, present</td><td class="end">offer, oblation</td></tr>
+            <tr><td class="lab"><em>referō, referre, retulī, relātum</em></td><td>to bring back, report, refer</td><td class="end">refer, relate, relation</td></tr>
+            <tr><td class="lab"><em>cōnferō, cōnferre, contulī, collātum</em></td><td>to bring together, compare</td><td class="end">confer, collate</td></tr>
+            <tr><td class="lab"><em>differō, differre, distulī, dīlātum</em></td><td>to carry apart, postpone, differ</td><td class="end">differ, dilatory</td></tr>
+            <tr><td class="lab"><em>trānsferō, trānsferre, trānstulī, trānslātum</em></td><td>to carry across</td><td class="end">transfer, translate</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Look at that last column.</strong> <em>Refer</em> and <em>relate</em> are the same Latin verb: one came from <em>referre</em>, the other from <em>relātum</em>. So are <em>transfer</em> and <em>translate</em>. A translator is someone who <em>carries a text across</em>. Nothing in English tells you that; the Latin does.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; <em>EŌ</em> &mdash; TO GO</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The whole verb is built on a stem that is sometimes <em>ī-</em>, sometimes <em>e-</em>, and once <em>eu-</em>. Learn the present across, out loud, because that row is where all the surprises live: <strong><em>eō, īs, it, īmus, ītis, eunt</em></strong>.</p>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:17%">Present indic.</th><th style="width:18%">Imperfect indic.</th><th style="width:17%">Future indic.</th><th style="width:17%">Present subj.</th><th>Imperfect subj.</th></tr>
+            <tr><td class="lab">1 sg.</td><td><em>eō</em></td><td><em>ībam</em></td><td><em>ībō</em></td><td class="end"><em>eam</em></td><td><em>īrem</em></td></tr>
+            <tr><td class="lab">2 sg.</td><td><em>īs</em></td><td><em>ībās</em></td><td><em>ībis</em></td><td><em>eās</em></td><td><em>īrēs</em></td></tr>
+            <tr><td class="lab">3 sg.</td><td class="end"><em>it</em></td><td><em>ībat</em></td><td><em>ībit</em></td><td><em>eat</em></td><td><em>īret</em></td></tr>
+            <tr><td class="lab">1 pl.</td><td><em>īmus</em></td><td><em>ībāmus</em></td><td><em>ībimus</em></td><td><em>eāmus</em></td><td><em>īrēmus</em></td></tr>
+            <tr><td class="lab">2 pl.</td><td><em>ītis</em></td><td><em>ībātis</em></td><td><em>ībitis</em></td><td><em>eātis</em></td><td><em>īrētis</em></td></tr>
+            <tr><td class="lab">3 pl.</td><td class="end"><em>eunt</em></td><td><em>ībant</em></td><td><em>ībunt</em></td><td><em>eant</em></td><td><em>īrent</em></td></tr>
+        </table>
+        <table class="para">
+            <tr><th style="width:34%">Also worth having</th><th>Forms</th></tr>
+            <tr><td class="lab">infinitive &middot; imperative</td><td><em>īre</em> &middot; <em>ī</em> (sg.), <em>īte</em> (pl.) &mdash; <em>ī</em> is the shortest imperative in Latin: one letter</td></tr>
+            <tr><td class="lab">present participle &middot; gerund</td><td><em>iēns</em>, genitive <em>euntis</em> &middot; gerund <em>eundum</em> (Module 4)</td></tr>
+            <tr><td class="lab">perfect system</td><td><em>iī</em> or <em>īvī</em> &middot; perf. subj. <em>ierim</em> &middot; pluperf. subj. <em>īssem</em> (also written <em>iissem</em>)</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">Almost all the useful work this verb does is in its compounds, and they all conjugate exactly like <em>eō</em>:</p>
+        <table class="para">
+            <tr><th style="width:26%">Compound</th><th style="width:28%">Meaning</th><th>English descendant</th></tr>
+            <tr><td class="lab"><em>adeō, adīre, adiī</em></td><td>to approach, go to</td><td class="end">&mdash;</td></tr>
+            <tr><td class="lab"><em>abeō, abīre, abiī</em></td><td>to go away, depart</td><td class="end">&mdash;</td></tr>
+            <tr><td class="lab"><em>exeō, exīre, exiī</em></td><td>to go out</td><td class="end">exit</td></tr>
+            <tr><td class="lab"><em>ineō, inīre, iniī</em></td><td>to go in, enter upon, begin</td><td class="end">initial, initiative <span style="font-size:14px; color:#666;">(via <em>initium</em>)</span></td></tr>
+            <tr><td class="lab"><em>redeō, redīre, rediī</em></td><td>to go back, return</td><td class="end">&mdash;</td></tr>
+            <tr><td class="lab"><em>pereō, perīre, periī</em></td><td>to perish, be destroyed</td><td class="end">perish</td></tr>
+            <tr><td class="lab"><em>trānseō, trānsīre, trānsiī</em></td><td>to cross, go over</td><td class="end">transit, transient</td></tr>
+            <tr><td class="lab"><em>obeō, obīre, obiī</em></td><td>to go to meet; to die</td><td class="end">obituary</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Two traps, and they are the sort that ruins a translation quietly.</strong><br>
+        <strong>1. <em>eō</em> the verb against <em>eō</em> the pronoun.</strong> <em>Eō</em> is also the ablative singular of <em>is, ea, id</em> &mdash; &ldquo;by that, with that, in that place, therefore.&rdquo; <em>Eō diē</em> is &ldquo;on that day,&rdquo; not &ldquo;I go day.&rdquo; Ask whether the sentence already has a verb.<br>
+        <strong>2. <em>adeō</em> the verb against <em>adeō</em> the adverb.</strong> <em>Adeō</em> can be &ldquo;I approach&rdquo; &mdash; or the adverb &ldquo;so much, to such a degree,&rdquo; which you learned in Module 9 as a <strong>result-clause signpost</strong>. <em>Adeō timēbant ut fugerent</em> is &ldquo;they were <em>so</em> afraid that they fled,&rdquo; not &ldquo;I approach they were afraid.&rdquo; The clue is the same one as always: is there an <em>ut</em> further along, and does the sentence already have a main verb?</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; <em>VOLŌ &middot; NŌLŌ &middot; MĀLŌ</em> &mdash; ONE FAMILY OF THREE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Treat these three as one verb with three moods of feeling. <em>Volō</em> is &ldquo;I want.&rdquo; <em>Nōlō</em> is <em>nōn</em> + <em>volō</em>: &ldquo;I do not want, I refuse.&rdquo; <em>Mālō</em> is <em>magis</em> + <em>volō</em>: &ldquo;I want more, I prefer.&rdquo; Learn one paradigm properly and the other two are variations on it.</p>
+        <div style="font-size:15px; color:#8a6416; margin:10px 0 2px 0;"><strong><em>volō, velle, voluī</em></strong> &mdash; to want, wish, be willing</div>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:17%">Present indic.</th><th style="width:18%">Imperfect indic.</th><th style="width:17%">Future indic.</th><th style="width:17%">Present subj.</th><th>Imperfect subj.</th></tr>
+            <tr><td class="lab">1 sg.</td><td><em>volō</em></td><td><em>volēbam</em></td><td><em>volam</em></td><td class="end"><em>velim</em></td><td class="end"><em>vellem</em></td></tr>
+            <tr><td class="lab">2 sg.</td><td class="end"><em>vīs</em></td><td><em>volēbās</em></td><td><em>volēs</em></td><td><em>velīs</em></td><td><em>vellēs</em></td></tr>
+            <tr><td class="lab">3 sg.</td><td class="end"><em>vult</em></td><td><em>volēbat</em></td><td><em>volet</em></td><td><em>velit</em></td><td><em>vellet</em></td></tr>
+            <tr><td class="lab">1 pl.</td><td><em>volumus</em></td><td><em>volēbāmus</em></td><td><em>volēmus</em></td><td><em>velīmus</em></td><td><em>vellēmus</em></td></tr>
+            <tr><td class="lab">2 pl.</td><td class="end"><em>vultis</em></td><td><em>volēbātis</em></td><td><em>volētis</em></td><td><em>velītis</em></td><td><em>vellētis</em></td></tr>
+            <tr><td class="lab">3 pl.</td><td><em>volunt</em></td><td><em>volēbant</em></td><td><em>volent</em></td><td><em>velint</em></td><td><em>vellent</em></td></tr>
+        </table>
+        <div style="font-size:15px; color:#8a6416; margin:14px 0 2px 0;"><strong><em>nōlō, nōlle, nōluī</em></strong> &mdash; to not want, be unwilling, refuse</div>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:17%">Present indic.</th><th style="width:18%">Imperfect indic.</th><th style="width:17%">Future indic.</th><th style="width:17%">Present subj.</th><th>Imperfect subj.</th></tr>
+            <tr><td class="lab">1 sg.</td><td><em>nōlō</em></td><td><em>nōlēbam</em></td><td><em>nōlam</em></td><td class="end"><em>nōlim</em></td><td class="end"><em>nōllem</em></td></tr>
+            <tr><td class="lab">2 sg.</td><td class="end"><em>nōn vīs</em></td><td><em>nōlēbās</em></td><td><em>nōlēs</em></td><td><em>nōlīs</em></td><td><em>nōllēs</em></td></tr>
+            <tr><td class="lab">3 sg.</td><td class="end"><em>nōn vult</em></td><td><em>nōlēbat</em></td><td><em>nōlet</em></td><td><em>nōlit</em></td><td><em>nōllet</em></td></tr>
+            <tr><td class="lab">1 pl.</td><td><em>nōlumus</em></td><td><em>nōlēbāmus</em></td><td><em>nōlēmus</em></td><td><em>nōlīmus</em></td><td><em>nōllēmus</em></td></tr>
+            <tr><td class="lab">2 pl.</td><td class="end"><em>nōn vultis</em></td><td><em>nōlēbātis</em></td><td><em>nōlētis</em></td><td><em>nōlītis</em></td><td><em>nōllētis</em></td></tr>
+            <tr><td class="lab">3 pl.</td><td><em>nōlunt</em></td><td><em>nōlēbant</em></td><td><em>nōlent</em></td><td><em>nōlint</em></td><td><em>nōllent</em></td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>Three forms of <em>nōlō</em> are two words.</strong> The 2nd singular, 3rd singular and 2nd plural never finished fusing: <em>nōn vīs</em>, <em>nōn vult</em>, <em>nōn vultis</em>. Everything else is one word beginning <em>nōl-</em>. If you meet <em>nōn vult</em> and translate it &ldquo;he does not want,&rdquo; you have handled <em>nōlō</em> correctly without needing to know that is what you did.</div>
+        </div>
+        <div style="font-size:15px; color:#8a6416; margin:14px 0 2px 0;"><strong><em>mālō, mālle, māluī</em></strong> &mdash; to prefer, want more</div>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:17%">Present indic.</th><th style="width:18%">Imperfect indic.</th><th style="width:17%">Future indic.</th><th style="width:17%">Present subj.</th><th>Imperfect subj.</th></tr>
+            <tr><td class="lab">1 sg.</td><td><em>mālō</em></td><td><em>mālēbam</em></td><td><em>mālam</em></td><td class="end"><em>mālim</em></td><td class="end"><em>māllem</em></td></tr>
+            <tr><td class="lab">2 sg.</td><td class="end"><em>māvīs</em></td><td><em>mālēbās</em></td><td><em>mālēs</em></td><td><em>mālīs</em></td><td><em>māllēs</em></td></tr>
+            <tr><td class="lab">3 sg.</td><td class="end"><em>māvult</em></td><td><em>mālēbat</em></td><td><em>mālet</em></td><td><em>mālit</em></td><td><em>māllet</em></td></tr>
+            <tr><td class="lab">1 pl.</td><td><em>mālumus</em></td><td><em>mālēbāmus</em></td><td><em>mālēmus</em></td><td><em>mālīmus</em></td><td><em>māllēmus</em></td></tr>
+            <tr><td class="lab">2 pl.</td><td class="end"><em>māvultis</em></td><td><em>mālēbātis</em></td><td><em>mālētis</em></td><td><em>mālītis</em></td><td><em>māllētis</em></td></tr>
+            <tr><td class="lab">3 pl.</td><td><em>mālunt</em></td><td><em>mālēbant</em></td><td><em>mālent</em></td><td><em>mālint</em></td><td><em>māllent</em></td></tr>
+        </table>
+        <table class="para">
+            <tr><th style="width:26%">Item</th><th>All three</th></tr>
+            <tr><td class="lab">infinitives</td><td><em>velle</em> &middot; <em>nōlle</em> &middot; <em>mālle</em> &mdash; all three end in <em>-lle</em>, which is the quickest way to recognise the family</td></tr>
+            <tr><td class="lab">imperative</td><td><strong><em>nōlī</em></strong> (sg.), <strong><em>nōlīte</em></strong> (pl.) &mdash; <em>nōlō</em> is the only one of the three with an imperative. <em>Volō</em> and <em>mālō</em> have none: you cannot order somebody to want something.</td></tr>
+            <tr><td class="lab">perfect system</td><td><em>voluī, voluerim, voluissem</em> &middot; <em>nōluī, nōluerim, nōluissem</em> &middot; <em>māluī, māluerim, māluissem</em> &mdash; all three completely regular</td></tr>
+            <tr><td class="lab">what follows them</td><td>an <strong>infinitive</strong>, usually: <em>Īre volō</em> &mdash; &ldquo;I want to go.&rdquo; <em>Manēre māvult</em> &mdash; &ldquo;he prefers to stay.&rdquo;</td></tr>
+        </table>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#127881; <strong>The most useful thing on this page: <em>nōlī</em> + infinitive is how Latin says &ldquo;don't.&rdquo;</strong> <em>Nōlī timēre!</em> &mdash; &ldquo;Do not be afraid!&rdquo; Literally: &ldquo;be unwilling to fear.&rdquo; <em>Nōlīte discēdere!</em> &mdash; &ldquo;Do not leave!&rdquo; This is the ordinary polite prohibition in classical Latin. (Module 14 gave you the other way, the negative jussive: <em>nē timeās</em>. Both are correct; <em>nōlī</em> + infinitive is the commoner one in prose addressed to a person in front of you.)</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9888;&#65039; <strong>The trap that catches everybody once: there are two verbs spelled <em>volō</em>.</strong> This one is <em>volō, velle, voluī</em>, &ldquo;to want&rdquo; &mdash; irregular. The other is <em>volō, volāre, volāvī</em>, &ldquo;to fly&rdquo; &mdash; a perfectly ordinary first-conjugation verb, and the source of English <em>volatile</em>. The 1st singular is identical; nothing else is. <em>Vult</em> is &ldquo;he wants&rdquo;; <em>volat</em> is &ldquo;he flies.&rdquo; If a form looks like a tidy first-conjugation ending, you are dealing with the bird.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 5 &middot; <em>FĪŌ</em> &mdash; TO BECOME, TO BE MADE, TO HAPPEN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Take this one slowly, because it is the strangest verb in Latin and the honest description of it is worth more than any memory trick.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.6;"><em>Fīō</em> is <strong>passive in meaning</strong> but <strong>active in form</strong> &mdash; except in the perfect system, where it borrows the perfect passive of <em>faciō</em> outright: <strong><em>factus sum</em></strong>. And its infinitive, <em>fierī</em>, is passive in form. So it is inconsistent in both directions, and you simply learn it.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">Here is what that means in practice. <em>Faciō</em> means &ldquo;I make, I do.&rdquo; Its passive ought to be <em>*facior</em>, &ldquo;I am made&rdquo; &mdash; but in the present system that form does not exist. Latin uses <em>fīō</em> instead. So:</p>
+        <table class="para">
+            <tr><th style="width:32%">Latin</th><th style="width:30%">Form is&hellip;</th><th>Meaning is&hellip;</th></tr>
+            <tr><td class="lab"><em>facit</em></td><td>active</td><td>&ldquo;he makes, he does&rdquo; &mdash; active</td></tr>
+            <tr><td class="lab"><em>fit</em></td><td class="end">active in shape</td><td class="end">&ldquo;it is made, it becomes, it happens&rdquo; &mdash; <strong>passive</strong></td></tr>
+            <tr><td class="lab"><em>factum est</em></td><td>perfect passive of <em>faciō</em>, borrowed</td><td>&ldquo;it was made, it happened&rdquo;</td></tr>
+        </table>
+        <table class="para">
+            <tr><th style="width:14%"></th><th style="width:17%">Present indic.</th><th style="width:18%">Imperfect indic.</th><th style="width:17%">Future indic.</th><th style="width:17%">Present subj.</th><th>Imperfect subj.</th></tr>
+            <tr><td class="lab">1 sg.</td><td><em>fīō</em></td><td><em>fīēbam</em></td><td><em>fīam</em></td><td class="end"><em>fīam</em></td><td><em>fierem</em></td></tr>
+            <tr><td class="lab">2 sg.</td><td><em>fīs</em></td><td><em>fīēbās</em></td><td><em>fīēs</em></td><td><em>fīās</em></td><td><em>fierēs</em></td></tr>
+            <tr><td class="lab">3 sg.</td><td class="end"><em>fit</em></td><td><em>fīēbat</em></td><td><em>fīet</em></td><td class="end"><em>fīat</em></td><td><em>fieret</em></td></tr>
+            <tr><td class="lab">1 pl.</td><td><em>fīmus</em></td><td><em>fīēbāmus</em></td><td><em>fīēmus</em></td><td><em>fīāmus</em></td><td><em>fierēmus</em></td></tr>
+            <tr><td class="lab">2 pl.</td><td><em>fītis</em></td><td><em>fīēbātis</em></td><td><em>fīētis</em></td><td><em>fīātis</em></td><td><em>fierētis</em></td></tr>
+            <tr><td class="lab">3 pl.</td><td><em>fīunt</em></td><td><em>fīēbant</em></td><td><em>fīent</em></td><td><em>fīant</em></td><td><em>fierent</em></td></tr>
+        </table>
+        <table class="para">
+            <tr><th style="width:34%">Also worth having</th><th>Forms</th></tr>
+            <tr><td class="lab">infinitive</td><td><em>fierī</em> &mdash; passive in form, and the one place the <em>i</em> goes short</td></tr>
+            <tr><td class="lab">perfect system, borrowed from <em>faciō</em></td><td><em>factus sum</em> (perfect) &middot; <em>factus eram</em> (pluperfect) &middot; <em>factus sim</em> (perf. subj.) &middot; <em>factus essem</em> (pluperf. subj.) &mdash; the participle agrees with its subject, as every compound passive does</td></tr>
+            <tr><td class="lab">the two collisions</td><td><em>fīam</em> is future indicative <strong>and</strong> present subjunctive, exactly like <em>feram</em>. Read the clause.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two forms you have already met in English.</strong> <em>Fīat</em> is the present subjunctive, 3rd singular: &ldquo;let it be made, let it happen.&rdquo; It is the jussive from Module 14, and English borrowed it whole &mdash; a <em>fiat</em> is an order that something be done, and <em>fiat lux</em> is &ldquo;let there be light.&rdquo; The perfect gives us <em>fact</em>, from <em>factum</em>: a fact is a thing that <em>has been done</em>. The same verb, from both ends.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#128161; <strong>A short list of things <em>fīō</em> says that nothing else says well.</strong> <em>Quid fit?</em> &mdash; &ldquo;What is happening?&rdquo; <em>Cōnsul fit</em> &mdash; &ldquo;He becomes consul&rdquo; (or &ldquo;is made consul&rdquo;; Latin does not distinguish, and neither did Roman politics). <em>Fierī nōn potest</em> &mdash; &ldquo;It cannot happen; it is impossible.&rdquo; That last phrase is worth memorising as a unit.</div>
+    </div>
+
+    <!-- PART 6 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 6 &middot; SIX VERBS, AND THE FOUR TRAPS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six items. Every one of them is a form or a trap from this page, and every one of them turns up in the Ludus.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which verb, which form, and what does it mean?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two verbs are spelled volō in the 1st singular. Which endings belong to which?">
+                <div class="widget-row-prompt"><em>Aquila volat, sed cōnsul in Cūriā manēre vult.</em> <span style="font-style:normal; color:#8a6416;">(<em>aquila</em> &mdash; eagle)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="They are two different verbs. Volat has a tidy first-conjugation ending (-at after the stem volā-), which the irregular volō, velle never produces; the irregular verb's 3rd singular is vult.">Both verbs come from <em>volō, velle</em> &mdash; &ldquo;to want&rdquo;</button>
+                    <button data-choice="b" data-fb="Right. Volat is volō, volāre, 'to fly' — regular first conjugation, and the source of English 'volatile'. Vult is volō, velle, 'to want' — irregular. 'The eagle is flying, but the consul wants to stay in the Senate House.'"><em>volat</em> = &ldquo;flies&rdquo;; <em>vult</em> = &ldquo;wants&rdquo; &mdash; two different verbs</button>
+                    <button data-choice="c" data-fb="Reversed. Vult is the irregular 'wants'; volat is the regular 'flies'. Remember the rule of thumb: a tidy first-conjugation ending means you are dealing with the bird."><em>volat</em> = &ldquo;wants&rdquo;; <em>vult</em> = &ldquo;flies&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two letters. Which verb has a 3rd singular that short?">
+                <div class="widget-row-prompt"><em>Cicerō in Cūriam it.</em> &mdash; what is <em>it</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="It is not the English word 'it' — this is a Latin sentence. Watch for English words that happen to be spelled like Latin ones; 'it', 'is', 'in' and 'sum' all exist in both languages and mean different things.">The English pronoun, left in by mistake</button>
+                    <button data-choice="b" data-fb="The 3rd singular of sum is est. There is no form of sum spelled it.">3rd singular of <em>sum</em> &mdash; &ldquo;he is&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — 3rd singular present of eō: 'Cicero goes into the Senate House.' The whole present tense is eō, īs, it, īmus, ītis, eunt, and the 3rd singular really is just two letters.">3rd singular present of <em>eō</em> &mdash; &ldquo;he goes&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="One of these two sentences already has a main verb elsewhere. Which one?">
+                <div class="widget-row-prompt">Two sentences: <em>Adeō timēbant ut ex urbe abīrent.</em> &nbsp;&middot;&nbsp; <em>Cōnsul ad senātum adiit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. In the first, adeō is the ADVERB 'so much' and timēbant is the main verb: 'They were so afraid that they left the city' — a result clause, Module 9, with ut further along to confirm it. In the second, adiit is the perfect of adeō, 'approached': 'The consul went to the Senate.'">First = the adverb &ldquo;so much&rdquo;; second = the verb &ldquo;approach&rdquo;</button>
+                    <button data-choice="b" data-fb="If adeō were the verb in the first sentence, the sentence would have two main verbs (adeō and timēbant) and no way to connect them. And the ut clause with a subjunctive is the m09 signature of a result clause announced by adeō.">Both are the verb <em>adeō</em>, &ldquo;I approach&rdquo;</button>
+                    <button data-choice="c" data-fb="Adiit cannot be the adverb: adverbs do not take personal endings. The -it is a perfect indicative ending, so this is the verb.">Both are the adverb <em>adeō</em>, &ldquo;so much&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Fit is active in form. Is it active in meaning?">
+                <div class="widget-row-prompt"><em>Quid fit?</em> &mdash; what does this mean?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="That would be Quid facit? — 'What is he doing?' Fit looks active but is not: fīō is passive in meaning throughout.">&ldquo;What is he doing?&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — 'What is happening?' or 'What is being done?' Fit is the 3rd singular of fīō: active in form, passive in meaning. It is the ordinary Latin way to ask what is going on.">&ldquo;What is happening? / What is being done?&rdquo;</button>
+                    <button data-choice="c" data-fb="Future would be Quid fīet? — 'What will happen?' Fit is present.">&ldquo;What will be made?&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="How many tenses of ferō produce the spelling feram? Count them in the Part 2 table.">
+                <div class="widget-row-prompt">You meet the form <em>feram</em>. What do you know from the word alone?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not necessarily. Feram is the future indicative 1st singular — but it is also the present subjunctive 1st singular, and the two are spelled identically.">It must be future indicative &mdash; &ldquo;I shall carry&rdquo;</button>
+                    <button data-choice="b" data-fb="Not necessarily. It can be the present subjunctive, but the future indicative is spelled the same way. Neither reading can be ruled out by looking at the word.">It must be present subjunctive</button>
+                    <button data-choice="c" data-fb="Right — it is either, and the word alone cannot tell you. This is the same lesson as amāverit in Module 13: read the CLAUSE. Inside a sī clause, an ut clause, or an indirect question it is subjunctive; standing as the main verb of its own sentence it is future indicative.">Either &mdash; and only the clause can decide</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Which of these uses nōlī, and which uses a form that does not exist?">
+                <div class="widget-row-prompt">How does Latin most commonly say &ldquo;Do not be afraid!&rdquo; to one person?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — Nōlī timēre! Literally 'be unwilling to fear.' Nōlī plus an infinitive is the ordinary classical prohibition. (Nē timeās, the negative jussive from Module 14, is also correct; both are good Latin.)"><em>Nōlī timēre!</em></button>
+                    <button data-choice="b" data-fb="Latin does not negate an imperative with nōn. There is no *nōn timē in classical prose — the language uses nōlī plus the infinitive, or nē plus the subjunctive."><em>Nōn timē!</em></button>
+                    <button data-choice="c" data-fb="Nē does introduce negative commands, but with a SUBJUNCTIVE, not an infinitive: nē timeās. Nē plus a bare infinitive is not classical prose."><em>Nē timēre!</em></button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 6px 0;">Finally, the derivative minute. These six verbs left more English behind them than any other six verbs in Latin.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY THE ENGLISH FIRST &middot; THEN CLICK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>ferō, ferre, tulī, lātum</em></div><div class="hint">how many English words? &middot; click</div><div class="back"><strong>offer, refer, confer, transfer, prefer, differ, suffer, infer, circumference, fertile</strong> &mdash; and from <em>lātum</em>: <strong>translate, relate, collate, superlative, dilatory</strong>. One verb, two stems, dozens of descendants.</div></div>
+                <div class="flip-card"><div class="front"><em>eō, īre, iī, itum</em></div><div class="hint">going words &middot; click</div><div class="back"><strong>exit</strong> (<em>exit</em> = &ldquo;he goes out&rdquo;, a real Latin verb form), <strong>transit</strong>, <strong>initial</strong>, <strong>initiative</strong>, <strong>perish</strong>, <strong>obituary</strong>, <strong>sedition</strong>, <strong>ambition</strong>. Every one of them is somebody going somewhere.</div></div>
+                <div class="flip-card"><div class="front"><em>volō, velle, voluī</em></div><div class="hint">wanting words &middot; click</div><div class="back"><strong>voluntary, volition, volunteer, benevolent</strong> (&ldquo;well-wishing&rdquo;), <strong>malevolent</strong> (&ldquo;ill-wishing&rdquo;). Note that <em>volatile</em> is <strong>not</strong> here &mdash; that belongs to the other <em>volō</em>, the one that flies.</div></div>
+                <div class="flip-card"><div class="front"><em>nōlō, nōlle, nōluī</em></div><div class="hint">two Latin phrases &middot; click</div><div class="back">English kept the Latin whole rather than making new words: <em><strong>nolo contendere</strong></em>, a legal plea meaning &ldquo;I do not wish to contest,&rdquo; and <em><strong>nolens volens</strong></em>, &ldquo;unwilling or willing&rdquo; &mdash; whether you like it or not.</div></div>
+                <div class="flip-card"><div class="front"><em>mālō, mālle, māluī</em></div><div class="hint">be honest &middot; click</div><div class="back"><strong>None.</strong> <em>Mālō</em> left no English descendant at all. And be careful: <em>malice</em>, <em>malevolent</em> and <em>malcontent</em> come from <em>malus</em>, &ldquo;bad,&rdquo; which is a different word. Not every Latin verb has children.</div></div>
+                <div class="flip-card"><div class="front"><em>fīō, fierī, factus sum</em></div><div class="hint">from both ends &middot; click</div><div class="back">From the subjunctive: <em><strong>fiat</strong></em> &mdash; an order that something be done, and <em>fiat lux</em>, &ldquo;let there be light.&rdquo; From the borrowed participle <em>factum</em>: <strong>fact</strong> &mdash; a thing that has been done.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 15.05 &mdash; If the Senate Had Not Acted</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Cicero looking back at his own consulship &mdash; the reading where the conditions and the irregular verbs arrive in the same ten lines. Then the whole module in one table, a condition-type sorter, a mixed self-check running back to Module 12, and your graded work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Say the six principal parts out loud, as six phrases, until they are one long noise you can produce without thinking: <em>ferō ferre tulī lātum &middot; eō īre iī itum &middot; volō velle voluī &middot; nōlō nōlle nōluī &middot; mālō mālle māluī &middot; fīō fierī factus sum</em>. That is ten minutes of work and it makes the tables above unnecessary. These verbs are not a chapter you pass; they are furniture you will use every day you read Latin.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 15.04 &middot; Six Verbs That Refuse to Behave</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 10.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 10</div>
+        <div style="font-size: 12px; color: #666;"><em>Cum</em> Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 10.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Circumstance</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 10.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Circumstance</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">The commonest <em>cum</em> in Latin narrative &mdash; and no new endings to learn.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Temporal <em>cum</em> is the one you will meet most often, because it is how historians hold a scene still. It uses the subjunctive you built in Module 6, in the tense Module 7's sequence rule already tells you to use. Nothing new is being manufactured today. What is new is a <em>use</em>, not a form.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build a temporal <em>cum</em> clause in any conjugation, active, passive, or deponent, using the sequence rule to choose the tense.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say what <em>cum</em> + <strong>indicative</strong> does that <em>cum</em> + subjunctive does not.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state honestly which two tenses of this construction are not mine yet, and what they are for.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; RETRIEVE, DO NOT RELEARN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You need two things from earlier modules before anything else makes sense today. Say each one out loud before you click.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY IT FIRST &middot; THEN CLICK TO CHECK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front">Imperfect subjunctive &mdash; how?</div><div class="hint">Module 6 &middot; click</div><div class="back"><strong>Present infinitive + -m, -s, -t, -mus, -tis, -nt.</strong> <em>pugnāre &rarr; pugnārem</em> &middot; <em>tacēre &rarr; tacērem</em> &middot; <em>dīcere &rarr; dīcerem</em> &middot; <em>capere &rarr; caperem</em> &middot; <em>audīre &rarr; audīrem</em>. And <em>esse &rarr; essem</em>.</div></div>
+                <div class="flip-card"><div class="front">Present subjunctive &mdash; how?</div><div class="hint">Module 6 &middot; click</div><div class="back">1st conjugation takes <strong>-e-</strong>: <em>amem, amēs, amet</em>. Everything else takes <strong>-a-</strong>: <em>moneam, regam, capiam, audiam</em>. And <em>esse &rarr; sim, sīs, sit</em>.</div></div>
+                <div class="flip-card"><div class="front">The sequence rule</div><div class="hint">Module 7 &middot; click</div><div class="back"><strong>Main verb present or future &rarr; present subjunctive. Main verb imperfect, perfect, or pluperfect &rarr; imperfect subjunctive.</strong> Two rows, and they cover everything you have been given so far.</div></div>
+                <div class="flip-card"><div class="front">Passive and deponent</div><div class="hint">Modules 2 and 6 &middot; click</div><div class="back">Passive imperfect subj.: <em>dūcerētur</em> (&ldquo;he was being led&rdquo;), <em>audīrētur</em>. Deponent imperfect subj.: <em>loquerētur</em> (&ldquo;he was speaking&rdquo;), <em>sequerētur</em>. Same endings, and a deponent still means something active.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; TEMPORAL <em>CUM</em>: HOLDING A SCENE STILL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Temporal <em>cum</em> + subjunctive translates as <strong>&ldquo;when&rdquo;</strong> &mdash; and sometimes, where the sense fits, &ldquo;while&rdquo; or &ldquo;after.&rdquo; But it does more than name a time. It describes the <strong>circumstances</strong> the main action happened inside. Older grammar books call it the <em>cum</em> <strong>circumstantial</strong>, and that name is worth keeping in your head because it explains what the subjunctive is doing there.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;">The subjunctive here is not doubt and not a wish. It marks the clause as <strong>background</strong> &mdash; scenery rather than news. The indicative would report a fact; the subjunctive sets a stage.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">Here it is across the conjugations. Every main verb below is past, so every subjunctive is <strong>imperfect</strong> &mdash; that is Module 7's second row doing its job.</p>
+        <table class="para">
+            <tr><th style="width:16%">Conjugation</th><th style="width:42%">Latin</th><th>English</th></tr>
+            <tr><td class="lab"><strong>1st</strong></td><td><em>Cum cīvēs in viīs <span class="end">stārent</span>, Cicerō tacēbat.</em></td><td>When the citizens were standing in the streets, Cicero was silent.</td></tr>
+            <tr><td class="lab"><strong>2nd</strong></td><td><em>Cum omnēs <span class="end">tacērent</span>, cōnsul surrēxit.</em></td><td>When everyone was silent, the consul stood up.</td></tr>
+            <tr><td class="lab"><strong>3rd</strong></td><td><em>Cum Cicerō haec <span class="end">dīceret</span>, senātōrēs eum audiēbant.</em></td><td>When Cicero was saying these things, the senators were listening to him.</td></tr>
+            <tr><td class="lab"><strong>3rd io-stem</strong></td><td><em>Cum praetōrēs Lentulum <span class="end">caperent</span>, populus clāmāvit.</em></td><td>When the praetors were seizing Lentulus, the people shouted.</td></tr>
+            <tr><td class="lab"><strong>4th</strong></td><td><em>Cum vesper <span class="end">venīret</span>, turba in forō convēnit.</em></td><td>When evening was coming on, the crowd gathered in the Forum.</td></tr>
+            <tr><td class="lab"><strong><em>esse</em></strong></td><td><em>Cum Cicerō cōnsul <span class="end">esset</span>, coniūrātiōnem superāvit.</em></td><td>When Cicero was consul, he defeated the conspiracy.</td></tr>
+            <tr><td class="lab"><strong>passive</strong></td><td><em>Cum Lentulus in carcerem <span class="end">dūcerētur</span>, nēmō clāmāvit.</em></td><td>When Lentulus was being led into the prison, nobody shouted.</td></tr>
+            <tr><td class="lab"><strong>deponent</strong></td><td><em>Cum cōnsul ad populum <span class="end">loquerētur</span>, omnēs tacēbant.</em></td><td>When the consul was speaking to the people, everyone was silent.</td></tr>
+        </table>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:14px 18px; margin: 12px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:6px;">&#128214; GLOSS FOR THE TABLE</div>
+            <ul class="gl">
+                <li><em>stō, stāre, stetī</em> &mdash; to stand <span style="color:#666;">(imperf. subj. <em>stārem, stārēs, stāret&hellip;</em>)</span></li>
+                <li><em>taceō, tacēre, tacuī</em> &mdash; to be silent, say nothing</li>
+                <li><em>praetor, praetōris</em> m. &mdash; praetor <span style="color:#666;">(the magistrate ranked just below consul; the praetors carried out the Senate's order)</span></li>
+                <li><em>vesper, vesperī</em> m. &mdash; evening</li>
+                <li><em>turba, turbae</em> f. &mdash; crowd</li>
+                <li><em>conveniō, convenīre, convēnī, conventum</em> &mdash; to come together, assemble</li>
+                <li><em>superō, superāre, superāvī, superātum</em> &mdash; to overcome, defeat</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Where does the <em>cum</em> clause sit?</strong> Overwhelmingly <strong>first</strong>, before the main clause. That is not a rule you have to obey, but it is a habit worth copying: a Roman reader expected the circumstances to be laid out before the news arrived. If you put your <em>cum</em> clause first when you write Latin this week, your sentences will read like Latin instead of like translated English.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; AND WHEN <em>CUM</em> TAKES THE INDICATIVE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Sometimes an author does not want to paint a circumstance. He just wants to say <em>when</em>. Then <em>cum</em> takes the <strong>indicative</strong>, and the meaning shrinks to pure time.</p>
+        <table class="para">
+            <tr><th style="width:26%">Use</th><th style="width:38%">Latin</th><th>English</th></tr>
+            <tr><td class="lab"><strong>Dating a single event</strong><br><span style="font-size:14px; color:#666;">perfect indicative</span></td><td><em>Cum vesper <span class="end">vēnit</span>, praetōrēs coniūrātōs dūxērunt.</em></td><td>When evening came, the praetors led the conspirators away.</td></tr>
+            <tr><td class="lab"><strong>&ldquo;Whenever&rdquo; &mdash; a repeated or general truth</strong><br><span style="font-size:14px; color:#666;">present indicative</span></td><td><em>Cum Cicerō <span class="end">loquitur</span>, omnēs audiunt.</em></td><td>Whenever Cicero speaks, everyone listens.</td></tr>
+            <tr><td class="lab"><strong>Present or future time</strong><br><span style="font-size:14px; color:#666;">present or future indicative</span></td><td><em>Cum in Tullīānum <span class="end">dēscendis</span>, tenebrae undique sunt.</em></td><td>When you go down into the Tullianum, there is darkness on every side.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The working rule, stated as honestly as it can be.</strong> <em>Cum</em> + <strong>indicative</strong> is almost always plain &ldquo;when&rdquo; &mdash; you are safe translating it that way and moving on. <em>Cum</em> + <strong>subjunctive</strong> is one of the three, and you have to decide. That single split does most of the work of this module, and it costs you nothing but a glance at the verb's mood.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9888;&#65039; <strong>Do not flip this round.</strong> Students who half-remember this rule end up thinking &ldquo;subjunctive means <em>when</em>, indicative means <em>although</em>,&rdquo; which is backwards and produces nonsense. The subjunctive is the <em>rich</em> one &mdash; three possible jobs. The indicative is the <em>thin</em> one &mdash; one job, done plainly.</div>
+    </div>
+
+    <!-- PART 4 - HONEST SCOPE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; WHAT THIS CONSTRUCTION HAS THAT YOU DO NOT YET</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You met the four-cell sequence table in Lesson 7.01, and you were told that half of it belongs to Module 13. That half matters here more than anywhere else so far, so here is the straight version.</p>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:16px; color:#1a2340; line-height:1.65;">&#9888;&#65039; <strong>A <em>cum</em> clause has four subjunctive tenses available. You own two of them.</strong> The two you have &mdash; present and imperfect &mdash; describe something going on <strong>at the same time</strong> as the main verb. The two you do not have yet &mdash; <strong>perfect and pluperfect subjunctive</strong> &mdash; describe something <strong>already finished</strong> before the main verb happened. In real Sallust, &ldquo;when Cicero <em>had</em> spoken&rdquo; would use a pluperfect subjunctive, and that form is built in <strong>Module 13</strong>. This module works entirely with same-time <em>cum</em> clauses, and where a reading genuinely needs a completed prior action, it uses <em>cum</em> + <strong>indicative</strong> instead, which is fully in your grammar. Nothing in this module's quiz or translation will ask you for a perfect or pluperfect subjunctive, and you should not offer one.</div>
+        <table class="para">
+            <tr><th style="width:30%">Main verb</th><th style="width:35%">Same time as the main verb</th><th>Already finished before it</th></tr>
+            <tr><td class="lab">present / future <span style="font-size:14px; color:#666;">(primary)</span></td><td class="end">present subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#10004; yours now</span></td><td style="background:#F6F6F6; color:#777;">perfect subjunctive<br><span style="font-size:13px;">&#128274; Module 13</span></td></tr>
+            <tr><td class="lab">imperfect / perfect / pluperfect <span style="font-size:14px; color:#666;">(secondary)</span></td><td class="end">imperfect subjunctive<br><span style="font-size:13px; color:#1a2340; font-weight:normal;">&#10004; yours now &mdash; and this is the one you will meet constantly</span></td><td style="background:#F6F6F6; color:#777;">pluperfect subjunctive<br><span style="font-size:13px;">&#128274; Module 13</span></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0 0;">One practical consequence: if you meet a verb ending in <em>-isset</em> or <em>-issent</em> in Latin you read outside this course, you have found the Module 13 half of a <em>cum</em> clause. Gloss it as &ldquo;had &hellip;ed,&rdquo; note it, and keep reading. It is not a mistake and it is not out of reach &mdash; it is three modules away.</p>
+    </div>
+
+    <!-- PART 5 - VOCABULARY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128214; MODULE 10 VOCABULARY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">The signal words this module lives on, plus the words the reading on Friday will need. Add all of these to your running list.</p>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 10px 0;">
+            <ul class="gl">
+                <li><em>cum</em> (conj.) &mdash; <strong>+ subjunctive:</strong> when, since, although &nbsp;&middot;&nbsp; <strong>+ indicative:</strong> when, whenever <span style="color:#666;">(and still the preposition &ldquo;with&rdquo; + ablative)</span></li>
+                <li><em>tamen</em> (adv.) &mdash; nevertheless, all the same, still <span style="color:#666;">(the concessive signal &mdash; learn this one cold)</span></li>
+                <li><em>quamquam</em> (conj.) &mdash; although <span style="color:#666;">(+ <strong>indicative</strong> &mdash; the plain-statement alternative to concessive <em>cum</em>)</span></li>
+                <li><em>quia</em> (conj.) &mdash; because <span style="color:#666;">(+ <strong>indicative</strong> &mdash; the plain-statement alternative to causal <em>cum</em>)</span></li>
+                <li><em>iam</em> (adv.) &mdash; already, by now, now</li>
+                <li><em>vix</em> (adv.) &mdash; scarcely, barely, hardly</li>
+                <li><em>nōndum</em> (adv.) &mdash; not yet</li>
+                <li><em>apertē</em> (adv.) &mdash; openly, plainly</li>
+                <li><em>cēnseō, cēnsēre, cēnsuī, cēnsum</em> &mdash; to judge, be of the opinion; in the Senate, to move or propose</li>
+                <li><em>plaudō, plaudere, plausī, plausum</em> &mdash; to applaud, clap</li>
+                <li><em>taceō, tacēre, tacuī</em> &mdash; to be silent, say nothing</li>
+                <li><em>stō, stāre, stetī, statum</em> &mdash; to stand <span style="color:#666;">(review)</span></li>
+                <li><em>ēgredior, ēgredī, ēgressus sum</em> &mdash; to go out, step out <span style="color:#666;">(deponent, like <em>prōgredior</em>)</span></li>
+                <li><em>incipiō, incipere, incēpī, inceptum</em> &mdash; to begin <span style="color:#666;">(<em>in-</em> + <em>capiō</em>)</span></li>
+                <li><em>turba, turbae</em> f. &mdash; crowd, throng</li>
+                <li><em>vesper, vesperī</em> m. &mdash; evening</li>
+                <li><em>tenebrae, tenebrārum</em> f. pl. &mdash; darkness <span style="color:#666;">(plural in form, singular in sense)</span></li>
+                <li><em>mōs, mōris</em> m. &mdash; custom, practice; in the plural, <em>mōrēs</em> &mdash; character, way of life</li>
+                <li><em>carcer, carceris</em> m. &mdash; prison <span style="color:#666;">(review from Module 9)</span></li>
+            </ul>
+        </div>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128220; DERIVATIVE MINUTE &middot; CLICK EACH CARD</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>cēnseō</em></div><div class="hint">what English words?</div><div class="back"><strong>census, censor, censure.</strong> The Roman <em>cēnsor</em> ran the <em>cēnsus</em> and could give his opinion &mdash; <em>cēnsēre</em> &mdash; on who stayed on the citizen rolls. To censure someone is still to pass judgment on them.</div></div>
+                <div class="flip-card"><div class="front"><em>plaudō</em></div><div class="hint">what English words?</div><div class="back"><strong>applaud, applause, plaudit</strong> &mdash; and <strong>explode</strong>. <em>Ex-plaudere</em> was to clap a bad actor <em>off</em> the stage; the sense of bursting outward came later.</div></div>
+                <div class="flip-card"><div class="front"><em>carcer</em></div><div class="hint">what English word?</div><div class="back"><strong>incarcerate.</strong> Literally &ldquo;to put into the <em>carcer</em>.&rdquo; The building itself still stands beside the Forum.</div></div>
+                <div class="flip-card"><div class="front"><em>mōs, mōris</em></div><div class="hint">what English words?</div><div class="back"><strong>moral, morale, mores.</strong> Roman <em>mōrēs</em> were not rules written down but the customs a people actually lived by &mdash; which is why <em>mōs maiōrum</em>, &ldquo;the custom of the ancestors,&rdquo; could be used as an argument in the Senate.</div></div>
+                <div class="flip-card"><div class="front"><em>tenebrae</em></div><div class="hint">what English word?</div><div class="back"><strong>tenebrous</strong> &mdash; dark, shadowy, gloomy. A rare word in English, but you now know exactly what it means, and where Sallust used it.</div></div>
+                <div class="flip-card"><div class="front"><em>incipiō</em></div><div class="hint">what English words?</div><div class="back"><strong>inception, incipient.</strong> An <em>incipient</em> problem is one that has just begun. The <em>inception</em> of something is its taking-hold.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 6 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 6 &middot; PICK THE FORM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five rows. Look at the main verb first, decide the sequence, then choose. Row 4 is about mood, not tense.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which form does the <em>cum</em> clause need?</div>
+            <div class="widget-row" data-correct="c" data-hint="Tacēbat is imperfect. Which sequence is that, and which subjunctive does it call for?">
+                <div class="widget-row-prompt"><em>Cum cīvēs in viīs ____, Cicerō tacēbat.</em> (&ldquo;were standing&rdquo; &mdash; from <em>stō, stāre</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Stābant is imperfect INDICATIVE. That would make this a cum + indicative clause — possible Latin, but it stops describing the circumstance and just dates the action. The question asked for the circumstantial construction.">stābant</button>
+                    <button data-choice="b" data-fb="Stent is present subjunctive, which belongs to primary sequence. The main verb tacēbat is imperfect, so you are in secondary sequence.">stent</button>
+                    <button data-choice="c" data-fb="Right — stārent, imperfect subjunctive (stāre + -nt). Imperfect main verb, secondary sequence, imperfect subjunctive.">stārent</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Audit is present. What does primary sequence take?">
+                <div class="widget-row-prompt"><em>Cum Cicerō ____, populus audit.</em> (&ldquo;speaks&rdquo; &mdash; from the deponent <em>loquor, loquī</em>; make it circumstantial)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — loquātur, present subjunctive of the deponent. Present main verb, primary sequence, present subjunctive. Note the -a- marker: loquar, loquāris, loquātur.">loquātur</button>
+                    <button data-choice="b" data-fb="Loquerētur is imperfect subjunctive, which secondary sequence calls for. The main verb here is present.">loquerētur</button>
+                    <button data-choice="c" data-fb="Loquēbātur is imperfect INDICATIVE, and it is also the wrong time. Two errors in one form.">loquēbātur</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Perfect main verb. Which camp is the perfect in?">
+                <div class="widget-row-prompt"><em>Cum Lentulus in carcerem ____, nēmō clāmāvit.</em> (&ldquo;was being led&rdquo; &mdash; passive of <em>dūcō</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Dūcātur is present subjunctive passive. Clāmāvit is perfect, which is secondary sequence.">dūcātur</button>
+                    <button data-choice="b" data-fb="Right — dūcerētur, imperfect subjunctive passive. Perfect main verb, secondary sequence, imperfect subjunctive. And the passive is the point: he is being led, not leading.">dūcerētur</button>
+                    <button data-choice="c" data-fb="Dūcēbātur is imperfect indicative passive, not subjunctive. The -ba- gives it away.">dūcēbātur</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="What is the difference in meaning between the two moods after cum?">
+                <div class="widget-row-prompt">Both of these are correct Latin. What changes? <em>Cum Cicerō haec <strong>dīxit</strong>&hellip;</em> versus <em>Cum Cicerō haec <strong>dīceret</strong>&hellip;</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="No — dīceret is not more polite or less certain. The subjunctive after cum is not doing its 'doubt' job here at all.">The subjunctive version is less certain that it happened</button>
+                    <button data-choice="b" data-fb="Both are past. Dīxit is perfect indicative, dīceret is imperfect subjunctive; neither is present or future.">One is past and the other is present</button>
+                    <button data-choice="c" data-fb="Right — dīxit simply dates the main action ('when Cicero said these things'); dīceret paints the circumstance the main action sat inside ('when Cicero was saying these things'). Same event, different job for the clause.">The indicative dates the action; the subjunctive describes the circumstance</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Read the English carefully. Is this one occasion, or a habit?">
+                <div class="widget-row-prompt">&ldquo;Whenever the consul speaks, the crowd is silent.&rdquo; Which Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — cum cōnsul loquitur, turba tacet. 'Whenever' is a general truth, and cum + present INDICATIVE is how Latin says it.">Cum cōnsul <em>loquitur</em>, turba tacet.</button>
+                    <button data-choice="b" data-fb="Cum cōnsul loquātur would be the circumstantial subjunctive, which paints one particular occasion. 'Whenever' is not one occasion.">Cum cōnsul <em>loquātur</em>, turba tacet.</button>
+                    <button data-choice="c" data-fb="Loquerētur is imperfect subjunctive, and the English sentence is in the present. Wrong tense as well as wrong mood.">Cum cōnsul <em>loquerētur</em>, turba tacet.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 10.03 &mdash; <em>Since</em> and <em>Although</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The other two jobs of the same construction: causal and concessive. The <em>tamen</em> tell, how to negate a <em>cum</em> clause, and the two indicative cousins &mdash; <em>quia</em> and <em>quamquam</em> &mdash; that do the same work without a subjunctive.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Temporal <em>cum</em> + subjunctive does not just say <em>when</em> &mdash; it paints the circumstances the main action happened inside, which is why it takes the subjunctive at all. No new endings: <strong>past main verb &rarr; imperfect subjunctive</strong>, every time, in every conjugation. And <em>cum</em> + indicative is the thin version: plain &ldquo;when,&rdquo; nothing more.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 10.02 &middot; The Circumstance</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

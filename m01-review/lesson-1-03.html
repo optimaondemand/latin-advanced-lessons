@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 1.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 1</div>
+        <div style="font-size: 12px; color: #666;">Review in Context</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 1.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Participle Question</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 1.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Participle Question</div>
+        <div style="font-size: 16px; color: #666;">Retrieval Practice</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Ask one question six times until you stop having to ask it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">More advanced readers lose sentences to this one confusion than to anything else: a participle sitting next to an ablative noun. Is it an <strong>ablative absolute</strong>, or a participle <strong>agreeing with the subject</strong> with an ablative of means beside it? Today you drill the test until it is automatic &mdash; and then learn the four ways to put an ablative absolute into decent English.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> apply one fixed test to decide whether a phrase is an ablative absolute.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell an ablative of means apart from an ablative absolute in the same sentence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> render one ablative absolute four different ways and choose the one the context wants.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE TEST, IN ONE LINE</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;">An ablative absolute is <strong>a noun and a participle, both ablative</strong>, and its noun has <strong>no other job</strong> in the sentence.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;"><em>Absolūtus</em> means "loosened, set free" &mdash; the phrase is loosened from the grammar of the main clause. It stands off to one side and sets the circumstances. So the test has two halves, and <strong>both</strong> must be true:</p>
+        <table class="para">
+            <tr><th style="width:8%">&nbsp;</th><th style="width:38%">Check</th><th>If it fails</th></tr>
+            <tr><td class="lab"><strong>1</strong></td><td>Is the <strong>participle itself</strong> ablative?</td><td>If the participle is nominative, it agrees with the subject &mdash; ordinary participial phrase. If accusative, it agrees with an object.</td></tr>
+            <tr><td class="lab"><strong>2</strong></td><td>Does the ablative noun have <strong>no other role</strong> &mdash; not the subject, not an object, not governed by a preposition?</td><td>If it is answering "by what means?" for the main verb, it is an <strong>ablative of means</strong> and there is no absolute here at all.</td></tr>
+        </table>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:14px 0;">
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:14px; color:#1A6B3D; margin-bottom:4px;">ABLATIVE ABSOLUTE</div>
+                <div style="font-size:18px; color:#0e1c42;"><em>Coniūrātiōne patefactā, Cicerō senātum convocāvit.</em></div>
+                <div style="font-size:15px; color:#1a2340; margin-top:6px;">Both words ablative. <em>Coniūrātiō</em> is not the subject (Cicero is) and not the object (the Senate is). Nothing else needs it. &rarr; "When the conspiracy had been uncovered, Cicero called the Senate together."</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:14px; color:#8A1F16; margin-bottom:4px;">NOT AN ABLATIVE ABSOLUTE</div>
+                <div style="font-size:18px; color:#0e1c42;"><em>Multī hominēs magnīs dēbitīs pressī novās rēs cupiēbant.</em></div>
+                <div style="font-size:15px; color:#1a2340; margin-top:6px;">There is an ablative (<em>magnīs dēbitīs</em>) &mdash; but <em>pressī</em> is <strong>nominative plural</strong>, agreeing with <em>hominēs</em>. So the debts are an ablative of <strong>means</strong>. &rarr; "Many men, weighed down by great debts, wanted revolution."</div>
+            </div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Why the second one is the dangerous one.</strong> It has all the surface features of an ablative absolute &mdash; an ablative phrase, a participle, a comma-ish pause &mdash; and it means something completely different. Translating it as an absolute produces "with great debts having been pressed," which is nonsense, and students usually push past the nonsense rather than going back. Check the participle's case <em>first</em> and this cannot happen to you.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 2 &middot; SIX SENTENCES, ONE QUESTION</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">These sentences are built on the Sallust narrative you are reading this week &mdash; they are not Sallust's own words. Look at the <strong>bold</strong> phrase in each and decide what it is.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; ABLATIVE ABSOLUTE, OR SOMETHING ELSE?</div>
+            <div class="widget-question">Check the participle's case before you answer.</div>
+            <div class="widget-row" data-correct="b" data-hint="What case is accūsātus, and who does it describe?">
+                <div class="widget-row-prompt"><em>Catilīna, <strong>ā Cicerōne accūsātus</strong>, ex urbe discessit.</em> (<em>discēdō</em> &mdash; to depart)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is an ablative here &mdash; Cicerōne &mdash; but it is governed by ā, 'by,' and accūsātus is nominative. Both halves of the test fail.">Ablative absolute</button>
+                    <button data-choice="b" data-fb="Right &mdash; accūsātus is nominative singular masculine, agreeing with Catilīna, the subject. Ā Cicerōne is the ablative of personal agent: 'Catiline, having been denounced by Cicero, left the city.'">PPP agreeing with the subject, plus ablative of agent</button>
+                    <button data-choice="c" data-fb="Ablative of means is a bare ablative with no preposition &mdash; a thing, not a person. Ā plus ablative of a person is agent, not means.">Ablative of means</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Two ablatives, and neither is the subject or object of the main verb.">
+                <div class="widget-row-prompt"><em><strong>Litterīs ā coniūrātīs scrīptīs</strong>, Cicerō omnia cognōvit.</em> (<em>litterae, litterārum</em> f. pl. &mdash; a letter)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Cicerō is nominative and is the subject; litterīs cannot also be the subject. And scrīptīs is ablative, not nominative.">A participle agreeing with the subject</button>
+                    <button data-choice="b" data-fb="Not means. The letters are not the instrument Cicero used to find out &mdash; the phrase sets the circumstance in which he found out. And a participle agreeing with the ablative noun is the signature of an absolute.">Ablative of means with <em>cognōvit</em></button>
+                    <button data-choice="c" data-fb="Right &mdash; litterīs and scrīptīs are both ablative, and the letters have no other job in the main clause: 'once the letters had been written by the conspirators, Cicero found out everything.' The agent ā coniūrātīs sits inside the absolute.">Ablative absolute, with its own agent inside it</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Find the case of habitūrus. Also: which participle ends in -ūrus?">
+                <div class="widget-row-prompt"><em>Cicerō, <strong>ōrātiōnem habitūrus</strong>, in templum intrāvit.</em> (<em>habēre ōrātiōnem</em> &mdash; to deliver a speech)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; habitūrus is a FAP, nominative singular masculine, agreeing with Cicerō: 'Cicero, about to deliver a speech, entered the temple.' No ablative in sight.">FAP agreeing with the subject</button>
+                    <button data-choice="b" data-fb="An ablative absolute needs at least one ablative. Ōrātiōnem is accusative and habitūrus is nominative &mdash; there is no ablative anywhere in this phrase.">Ablative absolute</button>
+                    <button data-choice="c" data-fb="A PPP of habeō would be habitus, 'having been held.' The -ūrus ending marks the future participle: 'about to hold.'">PPP agreeing with the subject</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Both words ablative, and the participle ends in -nte. Which participle is that?">
+                <div class="widget-row-prompt"><em><strong>Cicerōne dīcente</strong>, senātōrēs tacēbant.</em> (<em>taceō</em> &mdash; to be silent)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ablative of agent needs ā or ab, and it goes with a passive verb. Tacēbant is active, and there is no preposition here.">Ablative of agent with <em>tacēbant</em></button>
+                    <button data-choice="b" data-fb="An indirect statement needs an accusative subject and an infinitive. Cicerōne is ablative and dīcente is a participle.">Indirect statement</button>
+                    <button data-choice="c" data-fb="Right &mdash; an ablative absolute built on a PAP: 'while Cicero was speaking, the senators kept silent.' A PAP absolute is simultaneous with the main verb, so 'while' is almost always the best English.">Ablative absolute with a present participle</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="One of these words is doing a second job in the main clause. Which one?">
+                <div class="widget-row-prompt"><em>Coniūrātī, <strong>verbīs Catilīnae excitātī</strong>, arma parāvērunt.</em> (<em>excitō</em> &mdash; to stir up, rouse)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Verbīs is ablative, yes &mdash; but excitātī is nominative plural, not ablative, so the phrase cannot be an absolute.">Ablative absolute</button>
+                    <button data-choice="b" data-fb="Right &mdash; excitātī is nominative plural masculine, agreeing with coniūrātī, the subject; verbīs is ablative of means: 'the conspirators, stirred up by Catiline's words, got weapons ready.'">Participle with the subject, plus ablative of means</button>
+                    <button data-choice="c" data-fb="Catilīnae is genitive here, 'of Catiline,' attached to verbīs. Genitive of description describes what kind of thing something is, which is not what is happening.">Genitive of description</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Careful: only ONE of the two participial phrases in this sentence is an absolute.">
+                <div class="widget-row-prompt"><em><strong>Catilīnā ex urbe expulsō</strong>, coniūrātī in urbe manentēs perīculōsī erant.</em> (<em>expellō</em> &mdash; to drive out; <em>maneō</em> &mdash; to remain)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; Catilīnā and expulsō are both ablative, and Catiline has no other job in the main clause (the conspirators are the subject): 'although Catiline had been driven out of the city, the conspirators who remained in the city were dangerous.' Note that manentēs, by contrast, is nominative and agrees with coniūrātī.">The bold phrase is an ablative absolute; <em>manentēs</em> is not</button>
+                    <button data-choice="b" data-fb="Reversed. Manentēs is nominative plural, agreeing with the subject coniūrātī &mdash; it cannot be an absolute. The bold phrase has both words in the ablative.">The bold phrase agrees with the subject; <em>manentēs</em> is the absolute</button>
+                    <button data-choice="c" data-fb="Only one is. Manentēs is nominative and belongs to coniūrātī; an ablative absolute must have its participle in the ablative.">Both phrases are ablative absolutes</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 3 &middot; FOUR WAYS INTO ENGLISH</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Latin does not tell you <em>which</em> circumstance an ablative absolute is giving you. It hands you the fact and lets the context decide whether it means <em>when</em>, <em>because</em>, or <em>although</em>. That is your job as translator, and it is a judgment, not a rule.</p>
+        <table class="para">
+            <tr><th style="width:20%">Rendering</th><th style="width:40%">English shape</th><th>Use it when</th></tr>
+            <tr><td class="lab"><strong>Literal</strong></td><td>"with the conspiracy having been uncovered&hellip;"</td><td>You are checking your own work. Almost always correct, almost always ugly. Never leave it in a finished translation.</td></tr>
+            <tr><td class="lab"><strong>Temporal</strong></td><td>"<strong>when</strong> / <strong>after</strong> the conspiracy had been uncovered&hellip;"</td><td>The default for a PPP absolute, because a PPP is earlier than the main verb. Use <em>while</em> instead for a PAP absolute.</td></tr>
+            <tr><td class="lab"><strong>Causal</strong></td><td>"<strong>since</strong> / <strong>because</strong> the conspiracy had been uncovered&hellip;"</td><td>The circumstance is clearly the <em>reason</em> the main verb happened.</td></tr>
+            <tr><td class="lab"><strong>Concessive</strong></td><td>"<strong>although</strong> the conspiracy had been uncovered&hellip;"</td><td>The main clause is surprising given the circumstance. Rarer, and you have to earn it from the context.</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">Try choosing before you flip. Each card gives you a sentence and asks which rendering the sense actually wants.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; DECIDE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Coniūrātiōne patefactā, Cicerō senātum convocāvit.</em></div><div class="hint">which rendering? &middot; click</div><div class="back"><strong>Temporal.</strong> "After the conspiracy had been uncovered, Cicero called the Senate together." Causal would also work &mdash; "since it had been uncovered" &mdash; and a good translator might prefer it. What does not work is "although," because there is nothing surprising about a consul summoning the Senate once he knows.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Catilīnā ex urbe expulsō, perīculum tamen manēbat.</em></div><div class="hint">which rendering? &middot; click</div><div class="back"><strong>Concessive</strong> &mdash; and <em>tamen</em> ("nevertheless") is the word that tells you so. "Although Catiline had been driven out of the city, the danger nevertheless remained." Watch for <em>tamen</em> in the main clause; it is Latin's way of pointing at a concession.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Cicerōne dīcente, senātōrēs tacēbant.</em></div><div class="hint">which rendering? &middot; click</div><div class="back"><strong>Temporal, with "while."</strong> "While Cicero was speaking, the senators kept silent." A present participle absolute is happening <em>at the same time</em> as the main verb, so "after" would be flatly wrong here. The participle's type chose your English for you.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Magnō perīculō cognitō, cīvēs Cicerōnī crēdidērunt.</em></div><div class="hint">which rendering? &middot; click</div><div class="back"><strong>Causal.</strong> "Because the great danger had been recognized, the citizens believed Cicero." The recognition is plainly the reason for the belief, so "since / because" reads better than a bare "when." Note <em>Cicerōnī</em> &mdash; <em>crēdō</em> takes the dative.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>What this is training you for.</strong> Starting in Module 10, Latin gets a construction that does mark the difference explicitly &mdash; <em>cum</em> plus the subjunctive, which can be temporal, causal, or concessive and which you will have to sort out the same way. The judgment you are practicing on ablative absolutes right now is exactly the judgment you will need there.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128173; PART 4 &middot; BEFORE YOU GO</div>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Which of the six sentences in Part 2 gave you the most trouble?</div>
+            <div class="widget-options">
+                <button data-response="The agent one. Remember: ā or ab plus a person is the agent of a passive idea, and it can sit inside an absolute or inside a main clause. The deciding factor is never the agent — it is the participle's case.">The one with <em>ā Cicerōne</em></button>
+                <button data-response="The ablative-of-means traps are the ones that matter most, and they are the ones the quiz will press on. The fix is mechanical: find the participle, name its case, and only then decide what the ablative noun is doing.">One of the <em>means</em> ones</button>
+                <button data-response="The two-participle sentence is genuinely hard, and it is what real Sallust looks like — he stacks participles in different cases in the same sentence constantly. Take those slowly and name each case separately before you translate anything.">The last one, with two participles</button>
+                <button data-response="Then push yourself in tomorrow's reading: it has four participial phrases in nine lines, and one of them is a trap of exactly this kind. See whether you catch it without being told where it is.">None of them, honestly</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 1.04 &mdash; The Cast of the Conspiracy</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The longest reading of the module: who actually showed up to Catiline's meeting, what he promised them, and the two loaded words Sallust uses to condemn all of them at once. Relative clauses and indirect statement, retrieved out of running prose.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">An ablative noun near a participle proves nothing. <strong>The participle's case decides everything.</strong> Ablative participle with an ablative noun that has no other job &rarr; ablative absolute, and you choose <em>when</em>, <em>because</em>, or <em>although</em>. Nominative participle &rarr; it belongs to the subject, and that ablative is doing something else entirely.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 1.03 &middot; The Participle Question</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

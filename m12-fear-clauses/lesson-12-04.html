@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 12.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step-n { min-width: 34px; height: 34px; border-radius: 8px; background: #0E1C42; color: #fff; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-b { font-size: 17px; color: #1a2340; line-height: 1.6; }
+    .step-b strong { color: #0e1c42; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 12</div>
+        <div style="font-size: 12px; color: #666;">Fear Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 12.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Three Jobs Each</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 12.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Three Jobs Each</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two tiny words, six jobs between them &mdash; and the evidence that decides is never in the words themselves.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><em>Nē</em> now does <strong>three</strong> different jobs: negative purpose, negative indirect command, and this module's fear clause. <em>Ut</em> does three of its own: purpose, result, and the rare fear-clause <em>ut</em> that comes out in English as &ldquo;that&hellip;not.&rdquo; Six constructions, two marker words, and identical shapes on the page. Today you get the two tables side by side, a <strong>five-step procedure</strong> that reads the <em>main clause</em> first, an unlabelled pile mixing Modules 8 through 12, and an honest account of the two places where the categories overlap.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name <em>nē</em>'s three jobs and <em>ut</em>'s three jobs and give a Latin example of each.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> run the five-step procedure in order on a sentence nobody has labelled for me.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why the <strong>main clause</strong>, not the marker word, decides which construction I am reading.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; <em>NĒ</em>'S THREE JOBS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;">All three of these are <em>nē</em> + subjunctive. On the page they are indistinguishable. What separates them sits in the <strong>main clause</strong>, every time.</p>
+        <table class="para">
+            <tr><th style="width:22%">Job</th><th style="width:26%">What the main clause has</th><th style="width:18%">English for <em>nē</em></th><th>Example</th></tr>
+            <tr><td class="lab"><strong>Negative purpose</strong><br><span style="font-size:14px;color:#666;">Module 8</span></td><td>an ordinary verb of doing &mdash; and <strong>no</strong> signpost</td><td class="end">&ldquo;so that&hellip;not&rdquo;<br>&ldquo;in order not to&rdquo;</td><td><em>Cōnsul portās clausit <strong>nē</strong> coniūrātī effugerent.</em><br><span style="font-size:14px;color:#666;">&ldquo;The consul shut the gates so that the conspirators would not escape.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>Negative indirect command</strong><br><span style="font-size:14px;color:#666;">Module 8</span></td><td>a verb of <strong>ordering, asking, urging, warning, persuading</strong> &mdash; <em>imperō, rogō, moneō, hortor, persuādeō, cēnseō</em></td><td class="end">&ldquo;&hellip;not to&hellip;&rdquo;</td><td><em>Petrēius mīlitēs monuit <strong>nē</strong> ōrdinēs relinquerent.</em><br><span style="font-size:14px;color:#666;">&ldquo;Petreius warned the soldiers not to leave the ranks.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>Fear clause</strong><br><span style="font-size:14px;color:#666;">Module 12 &mdash; this week</span></td><td>a <strong>fear word</strong>: the verbs <em>timeō, metuō, vereor</em> or the nouns <em>timor, metus</em></td><td class="end">a flat &ldquo;<strong>that</strong>&rdquo;<br><span style="font-size:14px;">no &ldquo;not&rdquo; anywhere</span></td><td><em>Catilīna verēbātur <strong>nē</strong> mīlitēs dīlāberentur.</em><br><span style="font-size:14px;color:#666;">&ldquo;Catiline was afraid that his soldiers would slip away.&rdquo;</span></td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:17px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Look at the middle column and then at the right-hand one.</strong> In two of the three jobs, <em>nē</em> puts a &ldquo;not&rdquo; into your English. In the third it puts nothing. So the honest description of <em>nē</em> is not &ldquo;<em>nē</em> means not.&rdquo; It is: <strong><em>nē</em> pushes an outcome away, and whether your English needs the word &ldquo;not&rdquo; depends on what the main clause is doing.</strong> A purpose clause says somebody acted to keep the outcome off; a fear clause says somebody is afraid the outcome is coming anyway.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>And the negatives divide the same way.</strong> A purpose clause is already negative when it uses <em>nē</em>, so <em>nē nōn</em> is forbidden there. A fear clause has spent nothing, so <em>nē nōn</em> is the ordinary way to write the negative fear. Same two words, opposite verdicts &mdash; and Lesson 12.02 explained why.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; <em>UT</em>'S THREE JOBS</div>
+        <table class="para">
+            <tr><th style="width:22%">Job</th><th style="width:26%">What the main clause has</th><th style="width:18%">English for <em>ut</em></th><th>Example</th></tr>
+            <tr><td class="lab"><strong>Purpose</strong><br><span style="font-size:14px;color:#666;">Module 8</span></td><td>an ordinary verb; no signpost</td><td class="end">&ldquo;so that&rdquo;<br>&ldquo;in order to&rdquo;</td><td><em>Catilīna aciem īnstrūxit <strong>ut</strong> in valle pugnāret.</em><br><span style="font-size:14px;color:#666;">&ldquo;Catiline drew up his line in order to fight in the valley.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>Result</strong><br><span style="font-size:14px;color:#666;">Module 9</span></td><td>a <strong>signpost</strong>: <em>tam, tantus, tālis, tot, adeō, ita, sīc</em></td><td class="end">&ldquo;that&rdquo;<br><span style="font-size:14px;">negative: <em>ut nōn</em></span></td><td><em><strong>Tanta</strong> erat vallis angustia <strong>ut</strong> nēmō ōrdinēs mūtāre posset.</em><br><span style="font-size:14px;color:#666;">&ldquo;So great was the narrowness of the valley that nobody could shift the ranks.&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>Fear clause</strong><br><span style="font-size:14px;color:#666;">Module 12 &mdash; rare</span></td><td>a <strong>fear word</strong></td><td class="end">&ldquo;that&hellip;<strong>not</strong>&rdquo;</td><td><em>Mīlitēs timēbant <strong>ut</strong> dux viam salūtis invenīret.</em><br><span style="font-size:14px;color:#666;">&ldquo;The soldiers were afraid that the leader would not find a way to safety.&rdquo;</span></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>&ldquo;What about <em>rogāvit ut&hellip;</em>?&rdquo;</strong> Good question, and the answer is that the positive indirect command &mdash; <em>Petrēius mīlitēs rogāvit ut fortiter pugnārent</em>, &ldquo;Petreius asked the soldiers to fight bravely&rdquo; &mdash; is the purpose <em>ut</em> wearing a different hat. Same word, same subjunctive, and the English &ldquo;to&rdquo; covers both. We file it with purpose and count three jobs rather than four, because for the purpose of <em>reading</em> Latin the pair behave identically. The one place the difference matters is when you are choosing a <strong>negative</strong>, and both take <em>nē</em>. So nothing is lost.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 4px 0;">Now put the negatives of all six in one place. This small table is the single most useful thing on the page, and it is worth copying out by hand.</p>
+        <table class="para">
+            <tr><th style="width:34%">Construction</th><th style="width:20%">Positive marker</th><th style="width:22%">Negative marker</th><th>Never</th></tr>
+            <tr><td class="lab">Purpose (m08)</td><td><em>ut</em></td><td class="end"><em>nē</em></td><td><em>ut nōn</em> &middot; <em>nē nōn</em></td></tr>
+            <tr><td class="lab">Indirect command (m08)</td><td><em>ut</em></td><td class="end"><em>nē</em></td><td><em>ut nōn</em> &middot; <em>nē nōn</em></td></tr>
+            <tr><td class="lab">Result (m09)</td><td><em>ut</em></td><td class="end"><em>ut nōn</em></td><td><em>nē</em></td></tr>
+            <tr><td class="lab"><strong>Fear (m12)</strong></td><td><em>nē</em> &mdash; &ldquo;that&hellip;will&rdquo;</td><td class="end"><em>nē nōn</em> (normal) &middot; <em>ut</em> (rare)</td><td><em>ut nōn</em></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Read the &ldquo;Never&rdquo; column across.</strong> <em>Ut nōn</em> belongs to result and to nothing else. <em>Nē nōn</em> belongs to fear and to nothing else. If you see either of them, you have been handed a free answer &mdash; two of the six constructions are eliminated before you have looked at the main clause at all.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; THE FIVE-STEP PROCEDURE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Run these in order, and notice what they have in common: <strong>not one of them asks what the sentence means.</strong> Every step is a look-up &mdash; read a word, check a short list. Meaning enters only after the construction is already named, which is the reverse of what most students do and the reason most students guess.</p>
+
+        <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-b"><strong>Read the first word of the subordinate clause.</strong><br>
+            <span style="color:#666;"><em>Cum</em> &rarr; Module 10, and you already have a four-step procedure for that one. A question word (<em>quis, quid, cūr, ubi, quandō, quot, quantus, num, utrum</em>) &rarr; Module 11, indirect question. <em>Quī, quae, quod</em> with an antecedent in front of it &rarr; relative clause, from 0706010.</span><br>
+            <span style="color:#1A6B3D;"><strong><em>Ut</em> or <em>nē</em></strong> &rarr; you are in the m08/m09/m12 family. Go to step 2.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-b"><strong>Is there a fear word in the main clause?</strong> The list is five items long: <em>timeō, metuō, vereor, timor, metus</em>.<br>
+            <span style="color:#1A6B3D;"><strong>Yes</strong> &rarr; <strong>FEAR CLAUSE.</strong> <em>Nē</em> = &ldquo;that.&rdquo; <em>Nē nōn</em> or <em>ut</em> = &ldquo;that&hellip;not.&rdquo; <em>Stop.</em></span><br>
+            <span style="color:#666;">No &rarr; step 3.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-b"><strong>Is the main verb a verb of ordering, asking, urging, warning or persuading?</strong> <em>Imperō, rogō, moneō, hortor, persuādeō, cēnseō, ōrō.</em><br>
+            <span style="color:#1A6B3D;"><strong>Yes</strong> &rarr; <strong>INDIRECT COMMAND.</strong> <em>Ut</em> = &ldquo;to&rdquo;; <em>nē</em> = &ldquo;not to.&rdquo; <em>Stop.</em></span><br>
+            <span style="color:#666;">No &rarr; step 4.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">4</div>
+            <div class="step-b"><strong>Is there a signpost word in the main clause?</strong> <em>Tam, tantus, tālis, tot, adeō, ita, sīc.</em><br>
+            <span style="color:#1A6B3D;"><strong>Yes</strong> &rarr; <strong>RESULT.</strong> <em>Ut</em> = &ldquo;that&rdquo;; <em>ut nōn</em> = &ldquo;that&hellip;not.&rdquo; <em>Stop.</em></span><br>
+            <span style="color:#666;">No &rarr; step 5.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">5</div>
+            <div class="step-b"><strong>Nothing fired.</strong><br>
+            <span style="color:#1A6B3D;">&rarr; <strong>PURPOSE.</strong> <em>Ut</em> = &ldquo;so that / in order to&rdquo;; <em>nē</em> = &ldquo;so that&hellip;not.&rdquo; Purpose is the default because it is the plainest of the six: somebody did something in order that something else should happen.</span></div>
+        </div>
+
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Why fear goes at step 2 and not step 5.</strong> Because it is the construction that <em>reverses</em> your instinct, and instincts fire fast. If you leave the fear check until late, you will already have translated <em>nē</em> as &ldquo;not&rdquo; in your head and you will have to unpick it. Ask the cheap question early &mdash; five words to check, and the answer is either yes or no.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; THE UNLABELLED PILE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six sentences drawn from Modules 8, 9, 10, 11 and 12, in no helpful order and with nothing marked. Run the five steps on each one before you look at the options. All the vocabulary you need is glossed beside the sentence.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is this &mdash; and what does the marker word mean here?</div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 1: the clause opens with nē. Step 2: is there a fear word in the main clause?">
+                <div class="widget-row-prompt"><em>Verēbantur nē hostēs subitō impetum facerent.</em> <span style="font-style:normal; color:#8a6416;">(<em>subitō</em> &mdash; suddenly; <em>impetum facere</em> &mdash; to make an attack)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — fear clause. Step 2 fires on verēbantur, the deponent 'they were afraid.' Nē is a flat 'that': 'They were afraid that the enemy would suddenly attack.' No 'not' anywhere in the English.">Fear clause &mdash; &ldquo;that the enemy <em>would</em> attack&rdquo;</button>
+                    <button data-choice="b" data-fb="Purpose would need an ordinary verb of doing in the main clause. Verēbantur is a verb of fearing, so step 2 stops you before step 5 ever runs — and 'they were afraid so that the enemy would not attack' is not a thing anyone says.">Negative purpose &mdash; &ldquo;so that the enemy would not attack&rdquo;</button>
+                    <button data-choice="c" data-fb="Indirect command needs a verb of ordering or asking. Being afraid is not asking anybody to do anything.">Negative indirect command &mdash; &ldquo;told them not to attack&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Same marker word as the row above. Now check the main clause: is <em>clausit</em> on any of the lists?">
+                <div class="widget-row-prompt"><em>Cōnsul portās clausit nē coniūrātī effugerent.</em> <span style="font-style:normal; color:#8a6416;">(<em>porta, portae</em> f. &mdash; gate; <em>claudō, claudere, clausī</em> &mdash; to shut)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Clausit is not a fear word — it means 'he shut.' Step 2 does not fire, so nē keeps the job it has in purpose clauses and does carry a 'not' into your English.">Fear clause &mdash; &ldquo;he feared that they would escape&rdquo;</button>
+                    <button data-choice="b" data-fb="Result needs a signpost — tam, tantus, tālis, tot, adeō — and there is none. Result clauses also use ut, not nē.">Result clause &mdash; &ldquo;so that as a result they did not escape&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — negative purpose. Steps 2, 3 and 4 all come up empty, so step 5 gives you purpose: 'The consul shut the gates so that the conspirators would not escape.' Here nē does mean 'not.'">Negative purpose &mdash; &ldquo;so that they would not escape&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Read the main clause first. Is there a word in it that points forward to a consequence?">
+                <div class="widget-row-prompt"><em>Tanta erat vallis angustia ut cōpiae ōrdinēs mūtāre nōn possent.</em> <span style="font-style:normal; color:#8a6416;">(<em>angustia, angustiae</em> f. &mdash; narrowness; <em>ōrdō, ōrdinis</em> m. &mdash; rank, line; <em>mūtō, mūtāre</em> &mdash; to change)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Purpose would have no signpost, and a valley cannot have an aim. Tanta in the main clause is doing real work: it announces a consequence.">Purpose clause</button>
+                    <button data-choice="b" data-fb="Right — negative result. Step 4 fires on tanta, and the negative of a result clause is ut nōn, which is exactly what is here. 'So great was the narrowness of the valley that the troops could not change their ranks.'">Result clause, negative &mdash; <em>ut&hellip;nōn</em></button>
+                    <button data-choice="c" data-fb="Fear clauses never use ut nōn — that combination is result and nothing else. And there is no fear word in the main clause anyway.">Fear clause &mdash; &ldquo;they were afraid they could not&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Step 3's list: ordering, asking, urging, warning, persuading. Is <em>monuit</em> on it?">
+                <div class="widget-row-prompt"><em>Petrēius mīlitēs monuit nē ōrdinēs relinquerent.</em> <span style="font-style:normal; color:#8a6416;">(<em>moneō, monēre, monuī</em> &mdash; to warn; <em>relinquō, relinquere, relīquī</em> &mdash; to leave, abandon)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A warning has fear in the neighbourhood, but moneō is not on the five-word fear list — it is on step 3's list. Filed as a fear clause you would get 'Petreius warned that they would leave the ranks,' which loses the instruction entirely.">Fear clause &mdash; &ldquo;feared that they would leave the ranks&rdquo;</button>
+                    <button data-choice="b" data-fb="Close, and the shape is identical — but step 3 runs before step 5. When the main verb is a verb of warning, the clause is what he warned them TO DO, not why he warned them.">Negative purpose &mdash; &ldquo;warned them so that they would not leave&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — negative indirect command. Step 3 fires on monuit: 'Petreius warned the soldiers not to leave the ranks.' Nē = 'not to.'">Negative indirect command &mdash; &ldquo;warned them <em>not to</em> leave&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 1 only. What is the first word of the subordinate clause?">
+                <div class="widget-row-prompt"><em>Cum Antōnius aeger esset, Petrēius exercituī praeerat.</em> <span style="font-style:normal; color:#8a6416;">(<em>aeger, aegra, aegrum</em> &mdash; ill; <em>praesum, praeesse</em> + dative &mdash; to be in command of)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — this never entered the ut/nē family at all. Step 1 sends it to Module 10: cum + subjunctive, no tamen, and the clause gives the reason, so causal. 'Since Antonius was ill, Petreius was in command of the army.'">A causal <em>cum</em> clause &mdash; Module 10</button>
+                    <button data-choice="b" data-fb="There is no ut and no nē in this sentence, so purpose was never available. Step 1 exists precisely to catch this before you start hunting for a construction that is not there.">A purpose clause</button>
+                    <button data-choice="c" data-fb="No fear word, no nē, no ut. The only marker in the sentence is cum, and esset is the subjunctive it governs.">A fear clause with the marker suppressed</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Step 1 again. <em>Utrum</em> and <em>an</em> should ring a bell from last week.">
+                <div class="widget-row-prompt"><em>Nēmō sciēbat utrum Catilīna in montibus manēret an in Galliam contenderet.</em> <span style="font-style:normal; color:#8a6416;">(<em>contendō, contendere, contendī</em> &mdash; to hurry, march)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Two subjunctives do not make two clauses of the same type, and neither of them is a fear. A double question uses ONE subjunctive frame with two halves joined by an.">Two fear clauses joined by <em>an</em></button>
+                    <button data-choice="b" data-fb="Right — an indirect double question, Module 11. Step 1 catches it: utrum is a question word, so the sentence never belonged to the ut/nē family. 'Nobody knew whether Catiline was staying in the mountains or marching into Gaul.'">An indirect double question &mdash; Module 11</button>
+                    <button data-choice="c" data-fb="A result clause needs a signpost and the word ut. Utrum is not ut with an ending — it is the interrogative 'whether,' and an is the 'or' inside a question.">A result clause with <em>utrum</em> as the signpost</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 5 &middot; SPEED SORT &middot; CLICK EACH CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">No full sentences here &mdash; just the fragment that decides. Name the construction and the English before you flip. The goal is to get each one down to about a second.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; NAME THE JOB BEFORE YOU FLIP</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>timeō nē&hellip;</em></div><div class="hint">which job?</div><div class="back"><strong>Fear clause.</strong> &ldquo;I am afraid <strong>that</strong>&hellip;<em>will</em>&hellip;&rdquo; No &ldquo;not&rdquo; in the English.</div></div>
+                <div class="flip-card"><div class="front"><em>fūgit nē&hellip;</em></div><div class="hint">which job?</div><div class="back"><strong>Negative purpose.</strong> &ldquo;He fled <strong>so that&hellip;not</strong>&hellip;&rdquo; <em>Fugiō</em> is a verb of fleeing, not of fearing &mdash; and that one letter of difference is the whole module.</div></div>
+                <div class="flip-card"><div class="front"><em>imperāvit nē&hellip;</em></div><div class="hint">which job?</div><div class="back"><strong>Negative indirect command.</strong> &ldquo;He ordered them <strong>not to</strong>&hellip;&rdquo; Step 3.</div></div>
+                <div class="flip-card"><div class="front"><em>timeō ut&hellip;</em></div><div class="hint">which job?</div><div class="back"><strong>Fear clause, the rare pattern.</strong> &ldquo;I am afraid <strong>that&hellip;not</strong>&hellip;&rdquo; The speaker <em>wants</em> the thing and fears it will fail.</div></div>
+                <div class="flip-card"><div class="front"><em>tam&hellip; ut&hellip;</em></div><div class="hint">which job?</div><div class="back"><strong>Result.</strong> &ldquo;So &hellip; <strong>that</strong>&hellip;&rdquo; The signpost in the main clause is doing the announcing. Step 4.</div></div>
+                <div class="flip-card"><div class="front"><em>metus erat nē&hellip;</em></div><div class="hint">careful</div><div class="back"><strong>Fear clause off a noun.</strong> &ldquo;There was a fear <strong>that</strong>&hellip;&rdquo; The verb in front of <em>nē</em> is only <em>erat</em>; the fear word is <em>metus</em>. This is the trap from 12.03.</div></div>
+                <div class="flip-card"><div class="front"><em>tantus&hellip; ut nōn&hellip;</em></div><div class="hint">which job?</div><div class="back"><strong>Negative result.</strong> &ldquo;So great &hellip; <strong>that&hellip;not</strong>&hellip;&rdquo; <em>Ut nōn</em> lives here and nowhere else.</div></div>
+                <div class="flip-card"><div class="front"><em>timeō ut nōn&hellip;</em></div><div class="hint">think</div><div class="back"><strong>Does not exist.</strong> After a verb of fearing, <em>ut</em> already delivers the &ldquo;not,&rdquo; so <em>ut nōn</em> would negate twice. Do not write it and do not choose it. The negative fear is <em>nē nōn</em>.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 6 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 6 &middot; TWO PLACES WHERE THE BOXES OVERLAP</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The five steps are mechanical, and mostly that is the truth about Latin. But two of the boundaries are drawn by grammarians rather than by the language, and you should know which two, because being told a boundary is sharp when it is not is how students learn to distrust the whole system.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:18px; color:#0e1c42; margin-bottom:6px;">1. Purpose and indirect command are the same shape.</div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><em>Petrēius mīlitēs rogāvit ut fortiter pugnārent.</em> Call it an indirect command and you get &ldquo;he asked the soldiers <strong>to</strong> fight bravely.&rdquo; Call it purpose and you get &ldquo;he asked the soldiers <strong>so that</strong> they would fight bravely.&rdquo; The first is better English; both are defensible readings of the Latin, and Roman writers did not experience them as two things. Step 3 exists to get you to the better English, not to police a real border.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:18px; color:#0e1c42; margin-bottom:6px;">2. Some verbs have fear inside them.</div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><em>Caveō</em> means &ldquo;I am on my guard&rdquo; &mdash; a word with both a warning and a fear in it. <em>Cavē nē cadās</em> comes out as &ldquo;take care you don't fall,&rdquo; which is a command; but you can hear the fear underneath, and grammars file <em>caveō nē</em> in more than one place. The same goes for <em>videō nē</em>, &ldquo;see that&hellip;not.&rdquo; The practical point is that with these verbs <strong>both readings produce nearly the same English</strong>, so you have not made an error by choosing either. Save your worry for the cases where the two readings say different things.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>What this does not license.</strong> Two blurred boundaries out of six is not a general permission to guess. Steps 1, 2 and 4 are hard evidence: an opening <em>cum</em> is an opening <em>cum</em>, <em>timeō</em> is a verb of fearing, and <em>tanta</em> is a signpost. Reading <em>Verēbantur nē hostēs venīrent</em> as a purpose clause is not a judgment call &mdash; it is simply wrong, and it makes the sentence say the opposite of what it says. The overlaps live in two named places. Everywhere else, the procedure decides.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 12.05 &mdash; The Ground He Chose</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The reading: Sallust on the battle near Pistoria and the death of Catiline, adapted &mdash; eleven lines carrying all three fear patterns, a purpose clause, an indirect command and a <em>cum</em> clause, so that the five steps get their first real workout. Then the module review and the handoff to your graded work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>The marker word is the last thing you should look at.</strong> <em>Nē</em> has three jobs and <em>ut</em> has three, and in every single case the deciding evidence is somewhere else in the sentence: a fear word, a verb of ordering, a signpost, or none of the three. Read the main clause. Then read the marker.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 12.04 &middot; Three Jobs Each</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

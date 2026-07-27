@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 12.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 12</div>
+        <div style="font-size: 12px; color: #666;">Fear Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 12.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Word That Turns Around</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 12.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Word That Turns Around</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Four modules ago you learned that <em>nē</em> means "not." Today it stops.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><em>Timeō nē veniat</em> does <strong>not</strong> mean "I am afraid so that he may not come." It means <strong>"I am afraid that he <em>will</em> come."</strong> After a verb of fearing, <em>nē</em> stops carrying a negative into your English altogether &mdash; it marks the outcome you do not want, and you translate it with a plain <strong>"that."</strong> This is the most counter-intuitive construction in the semester. We are going to meet it head-on rather than hope you absorb it.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the three parts of a fear clause and identify one in a Latin sentence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> translate <em>timeō nē&hellip;</em> as "I am afraid <strong>that</strong>&hellip;" and explain why <em>nē</em> behaves this way after a verb of fearing.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognize the four ways Latin says "fear" &mdash; <em>timeō</em>, <em>metuō</em>, the deponent <em>vereor</em>, and the noun-based <em>timor est</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE SENTENCE THAT LOOKS WRONG</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is a three-word Latin sentence. Everything you learned in Module 8 tells you one thing about it. Latin means the other thing.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0; text-align:center;">
+            <div style="font-size:26px; color:#0e1c42;"><em>Timeō <strong>nē</strong> veniat.</em></div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8A1F16; margin-bottom:4px;">WHAT MODULE 8 TRAINED YOU TO SAY</div>
+                <div style="font-size:17px; color:#1a2340; margin-top:6px;">"I am afraid <strong>so that he may not come</strong>."</div>
+                <div style="font-size:15px; color:#8A1F16; margin-top:8px;">Which is not English, and not what Latin means.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:4px;">WHAT IT ACTUALLY MEANS</div>
+                <div style="font-size:17px; color:#1a2340; margin-top:6px;">"I am afraid <strong>that he will come</strong>."</div>
+                <div style="font-size:15px; color:#1A6B3D; margin-top:8px;">The <em>nē</em> disappears from the English entirely.</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">You have spent Modules 8, 9, 10 and 11 building an instinct: <em>see <strong>nē</strong>, write "not."</em> That instinct was correct for purpose clauses and it is about to cost you marks. Today's job is to install a second setting next to it, and a switch that tells you which one to use.</p>
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Latin uses one tiny word, <em>nē</em>, for two jobs that pull in opposite directions. What is your first guess about how a language ends up doing that?</div>
+            <div class="widget-options">
+                <button data-response="That is essentially what happened, and it is the explanation you will get in Part 3. The nē clause began life as a separate wish — 'may it not happen!' — and when the two sentences fused, nē kept its old job of pushing an outcome away. It never meant 'not' inside the fear at all.">Two different old constructions collided</button>
+                <button data-response="Reasonable, but no — Latin authors are completely consistent about it. Cicero and Sallust never confuse the two, and neither will you once you learn to look at the main verb instead of the little word.">Latin authors were probably sloppy about it</button>
+                <button data-response="Understandable feeling, but it is genuinely learnable, and the trick is small: stop reading nē on its own. Read the verb in front of it first. That one habit does all the work in this module.">It sounds like something you just have to memorize blindly</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; WHAT A FEAR CLAUSE IS</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;">A <strong>fear clause</strong> names <strong>the thing somebody is afraid of</strong>. It has three parts: a <strong>verb of fearing</strong>, then <strong><em>nē</em></strong>, then a verb in the <strong>subjunctive</strong>.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Nothing about the shape is new to you. You already build present and imperfect subjunctives (Module 6) and you already let the main verb pick the tense (Module 7). The only new thing in this module is <strong>what the marker word means when you turn it into English</strong>.</p>
+        <table class="para">
+            <tr><th style="width:44%">Latin</th><th>English</th></tr>
+            <tr><td><em>Cicerō <strong>timet nē</strong> Catilīna reveniat.</em></td><td>Cicero is afraid <strong>that</strong> Catiline <strong>will</strong> come back.</td></tr>
+            <tr><td><em>Senātōrēs <strong>timēbant nē</strong> urbs dēlērētur.</em></td><td>The senators were afraid <strong>that</strong> the city <strong>would</strong> be destroyed.</td></tr>
+            <tr><td><em>Coniūrātī <strong>metuēbant nē</strong> cōnsul omnia cognōsceret.</em></td><td>The conspirators dreaded <strong>that</strong> the consul <strong>would</strong> learn everything.</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:18px; color:#1a2340; line-height:1.6; margin:12px 0;"><strong>The rule, as short as it goes: after a verb of fearing, <em>nē</em> marks what you are afraid <em>will</em> happen.</strong> Do not put the word "not" anywhere in your English.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">Notice what the English does with the tense, too. Latin has a present subjunctive (<em>reveniat</em>) or an imperfect subjunctive (<em>dēlērētur</em>), but English reaches for <strong>"will"</strong> and <strong>"would"</strong>. That is because a fear looks forward &mdash; you are afraid of something not settled yet. Keep "will / would" in your pocket for this whole module; they are almost always the natural English.</p>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; WHY LATIN DOES THIS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A rule you understand is a rule you keep. Here is where the construction came from.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Long before Cicero, this was not one sentence. It was <strong>two</strong>:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0; align-items:stretch;">
+            <div style="flex:1; min-width:200px; background:#EEF1F8; border:1px solid #D0D9E8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:12px; color:#6b7a99; margin-bottom:4px;">SENTENCE ONE &mdash; THE FEELING</div>
+                <div style="font-size:21px; color:#0e1c42;"><em>Timeō.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"I am afraid."</div>
+            </div>
+            <div style="flex:1; min-width:200px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:12px; color:#8a6416; margin-bottom:4px;">SENTENCE TWO &mdash; THE WISH</div>
+                <div style="font-size:21px; color:#0e1c42;"><em>Nē veniat!</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"May he not come!"</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Read those two together and you can hear the modern sentence forming: <em>I'm afraid. Don't let him come!</em> Over time the wish stopped standing on its own and got swallowed into the sentence in front of it &mdash; but <em>nē</em> kept doing the job it had always done: <strong>pushing away an outcome the speaker does not want.</strong></p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">So the negative in <em>nē</em> was never negating the fear. It was negating a wish that has since vanished from the sentence. When you translate, that vanished wish is why "not" has nothing left to attach to &mdash; and why <em>nē</em> comes out in English as a plain, flat <strong>"that."</strong></p>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:14px 18px; font-size:17px; color:#1a2340; line-height:1.6;">&#128161; <strong>Your mental handle for the whole module.</strong> Say it once and keep it: <strong>after a verb of fearing, <em>nē</em> marks what you are afraid <em>will</em> happen.</strong> The unwanted thing. The outcome you would wish away if wishing worked.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>English used to do this too.</strong> "I fear <em>lest</em> he come." That is exactly the old <em>nē</em> feeling &mdash; and notice that even in that archaic English, <em>lest</em> does not add a "not" to the fear. Nobody talks that way now, which is precisely why the Latin looks so strange to you.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE FOUR WAYS LATIN SAYS "FEAR"</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">All four take <em>nē</em> and a subjunctive. They differ in flavour, not in grammar.</p>
+        <table class="para">
+            <tr><th style="width:30%">Entry</th><th style="width:18%">Kind</th><th>What it feels like</th></tr>
+            <tr><td class="lab"><em>timeō, timēre, timuī</em></td><td>2nd conj., ordinary</td><td>The everyday word. Plain fear, from a real danger. Sallust's soldiers <em>timent</em>.</td></tr>
+            <tr><td class="lab"><em>metuō, metuere, metuī</em></td><td>3rd conj., ordinary</td><td>Heavier and colder &mdash; <strong>dread</strong>. The fear that sits in the stomach and waits.</td></tr>
+            <tr><td class="lab"><em>vereor, verērī, veritus sum</em></td><td class="end">2nd conj., <strong>deponent</strong></td><td>Fear with <strong>respect</strong> mixed into it. You <em>vereor</em> a god, a father, the Senate &mdash; or a genuinely formidable enemy.</td></tr>
+            <tr><td class="lab"><em>timor est&hellip;</em> / <em>magnus metus erat&hellip;</em></td><td>a noun, not a verb</td><td>"There is a fear that&hellip;" Latin can hang a fear clause off the <em>noun</em>: <em>Timor erat nē urbs caperētur</em> &mdash; "There was a fear that the city would be captured."</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 6px 0;">Click each card to check the meaning and the shape.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY IT FIRST &middot; THEN CLICK TO CHECK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>timeō, timēre,<br>timuī</em></div><div class="hint">click</div><div class="back">to <strong>fear, be afraid</strong><br><span style="color:#666;">2nd conjugation, perfectly ordinary. Present subjunctive <em>timeam</em>; imperfect subjunctive <em>timērem</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>metuō, metuere,<br>metuī</em></div><div class="hint">click</div><div class="back">to <strong>dread, fear</strong><br><span style="color:#666;">3rd conjugation. Watch the stem: present <em>metuit</em>, perfect <em>metuit</em> &mdash; identical spelling, and only context separates them.</span></div></div>
+                <div class="flip-card"><div class="front"><em>vereor, verērī,<br>veritus sum</em></div><div class="hint">click</div><div class="back">to <strong>fear, revere</strong><br><span style="color:#666;">A <strong>deponent</strong> &mdash; three principal parts, passive in form, active in meaning. Promised to you back in Lesson 2.01; here it is. Full paradigm in 12.03.</span></div></div>
+                <div class="flip-card"><div class="front"><em>timor, timōris</em> m.<br><em>metus, metūs</em> m.</div><div class="hint">click</div><div class="back"><strong>fear</strong> &middot; <strong>dread</strong><br><span style="color:#666;"><em>Timor</em> is 3rd declension. <em>Metus</em> is <strong>4th</strong> &mdash; ablative <em>metū</em>, not <em>metō</em>. Both can carry a <em>nē</em> clause.</span></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Retrieve, do not relearn.</strong> <em>Vereor</em> is a deponent, which means Module 2's rule applies unchanged: passive endings, active meaning, and no fourth principal part because the perfect is already built from a participle. <em>Veritus sum</em> means "I feared," never "I was feared."</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9989; PART 5 &middot; CHECK YOUR UNDERSTANDING</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; FOUR ROWS &middot; ONE NEW IDEA IN EACH</div>
+            <div class="widget-question">Read the whole sentence before you answer. The verb in front of <em>nē</em> is doing all the work.</div>
+            <div class="widget-row" data-correct="b" data-hint="What kind of verb is <em>timeō</em>, and what does <em>nē</em> mark after it?">
+                <div class="widget-row-prompt"><em>Timeō nē Catilīna in Italiam reveniat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This is the Module 8 reflex, and it is the one to unlearn. After a verb of fearing, nē does not put 'not' into your English. It marks the thing feared.">I am afraid so that Catiline may not return to Italy</button>
+                    <button data-choice="b" data-fb="Right — 'I am afraid THAT Catiline will return to Italy.' Timeō is a verb of fearing, so nē marks the unwanted outcome, and English translates it as a plain 'that.'">I am afraid that Catiline will return to Italy</button>
+                    <button data-choice="c" data-fb="That would be the ut version — the other polarity, which you meet tomorrow. With nē, the fear is that he WILL return, not that he will not.">I am afraid that Catiline will not return to Italy</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Count the parts of the construction: what must come after <em>nē</em>?">
+                <div class="widget-row-prompt">A fear clause is made of which three pieces?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A fear clause never takes the indicative. The clause reports something not settled, so Latin uses the subjunctive — exactly as in purpose and result clauses.">verb of fearing + <em>nē</em> + indicative</button>
+                    <button data-choice="b" data-fb="Timeō does take an infinitive, but that is a different construction — timeō pugnāre, 'I am afraid to fight.' A fear CLAUSE has a marker word and a finite subjunctive verb.">verb of fearing + infinitive</button>
+                    <button data-choice="c" data-fb="Right — a verb of fearing, then nē, then a subjunctive whose tense is set by sequence. Every fear clause in this module has exactly that shape.">verb of fearing + <em>nē</em> + subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Which of these is passive in form but active in meaning?">
+                <div class="widget-row-prompt">Which verb of fearing is a <strong>deponent</strong>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — vereor, verērī, veritus sum. Three parts, part 1 in -or, part 3 a participle plus sum. Passive in form, active in meaning.">vereor</button>
+                    <button data-choice="b" data-fb="Timeō is an entirely ordinary 2nd-conjugation verb: timeō, timēre, timuī. Four-part shape, active endings.">timeō</button>
+                    <button data-choice="c" data-fb="Metuō is an ordinary 3rd-conjugation verb: metuō, metuere, metuī. Active in form as well as meaning.">metuō</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Look at the main verb in each sentence, not at the little word.">
+                <div class="widget-row-prompt">In which sentence does <em>nē</em> mean a flat English "that"?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Fūgit is a verb of fleeing, not fearing — so this is a purpose clause: 'He fled so that he would not be captured.' Here nē does mean 'not.'">Catilīna fūgit nē caperētur.</button>
+                    <button data-choice="b" data-fb="Tacuit ('he kept quiet') is not a verb of fearing either. Purpose again: 'He kept quiet so that the conspirators would not learn his plan.'">Cicerō tacuit nē coniūrātī cōnsilium cognōscerent.</button>
+                    <button data-choice="c" data-fb="Right — metuēbat is a verb of fearing, so this is a fear clause: 'He dreaded THAT Catiline would be captured alive.' Same nē, same subjunctive, opposite sense.">Cicerō metuēbat nē Catilīna vīvus caperētur.</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the field near <strong>Pistōria</strong> in the Apennine hills, late January of 62 BC &mdash; hills on one side, a Roman army on the other, and no road out. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things in the scene &mdash; for example <em>montēs</em> ("the mountains"), <em>aciēs</em> ("the battle line"), <em>signum</em> ("the standard"), <em>castra</em> ("the camp"), <em>dux</em> ("the leader"), <em>arma</em> ("the weapons").</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Then write two Latin sentences from the same spot on the field.</strong> One <strong>fear clause</strong> and one <strong>purpose clause</strong>, using the same conjunction <em>nē</em> &mdash; so that you can see the two senses standing next to each other:</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0; padding-left:14px; border-left:3px solid #BFE0C7;"><em>Mīlitēs timēbant nē Catilīna effugeret.</em> &mdash; "The soldiers were afraid <strong>that</strong> Catiline <strong>would</strong> escape." <span style="color:#666;">(fear)</span><br><em>Mīlitēs pugnābant nē Catilīna effugeret.</em> &mdash; "The soldiers were fighting <strong>so that</strong> Catiline <strong>would not</strong> escape." <span style="color:#666;">(purpose)</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><span style="color:#666;">[ARTHUR: submission or capture step]</span> &mdash; <strong>formative and ungraded.</strong> Nothing here goes in the gradebook; the graded ARTHUR project already happened at Module 8. Do it because writing the pair yourself is the fastest way to stop mixing them up.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; VIRTŪS &middot; COURAGE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Virtūs</em> comes from <em>vir</em>, "man," and for Romans it meant courage first and excellence generally. You met it in Module 2 as the nerve to hold two readings of a form at once, and in Module 8 as deliberate intention. Here it is something plainer: <strong>saying out loud what you are afraid of.</strong></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">That is literally what this construction does. A fear clause takes a vague dread and forces it into a sentence with a subject and a verb &mdash; <em>timeō nē exercitus diffugiat</em>, "I am afraid the army will scatter." Named, it can be answered. Unnamed, it just sits there and grows. Romans understood <em>metus</em> as one of the great engines of politics; Sallust says the conspiracy ran on it. By the end of this week you will read about a man who was, on Sallust's own telling, afraid of the wrong thing &mdash; and who went into the line anyway.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 12.02 &mdash; The Other Direction</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">How to say the <em>opposite</em> fear: "I am afraid he will <strong>not</strong> come." Latin has two ways &mdash; <em>nē nōn</em> (the normal one) and <em>ut</em> (the rare one) &mdash; and the <em>nē</em>/<em>ut</em> flip drill that makes the whole system stick.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">After a verb of fearing, <em><strong>nē</strong></em> marks <strong>what you are afraid will happen</strong>, and it comes into English as a plain <strong>"that"</strong> &mdash; no "not" anywhere. <em>Timeō nē veniat</em> = "I'm afraid he <em>will</em> come." The little word did not change meaning on its own; the verb in front of it changed its job.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 12.01 &middot; The Word That Turns Around</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

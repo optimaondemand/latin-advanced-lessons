@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 13.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step-n { min-width: 34px; height: 34px; border-radius: 8px; background: #0E1C42; color: #fff; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-b { font-size: 17px; color: #1a2340; line-height: 1.6; }
+    .step-b strong { color: #0e1c42; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 13</div>
+        <div style="font-size: 12px; color: #666;">Perfect &amp; Pluperfect Subjunctive</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 13.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Four-Tense Grid</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 13.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">All Four Cells, No Labels</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; the sequence grid, and the drill</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">This is the drill lesson. It should feel like a drill.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">All four subjunctive tenses now exist for you, active and passive, one-word and two-word. Nothing new gets built today. Instead you learn to <strong>choose</strong> &mdash; because from now on every subordinate subjunctive in Latin is one of exactly four forms, and picking the right one is <strong>two questions with two answers each</strong>. Four cells, two yes-or-no decisions, done. Today is the grid, the procedure, and then a pile of sentences with the labels taken off.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> draw the four-cell sequence grid from memory and name the tense in every cell.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> pick the row from the main verb and the column from the English, in that order, without guessing.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say which constructions really use all four cells and which ones only ever use two.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE GRID, COMPLETE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">One verb, <em>faciō, facere, fēcī, factum</em>, in all four cells, with a whole sentence in each so you can hear the difference. The main verb is <em>rogō</em> throughout, and the only thing changing is its tense and the English inside the clause.</p>
+        <table class="para">
+            <tr><th style="width:16%"></th><th style="width:42%">SAME TIME as the main verb</th><th>ALREADY FINISHED before it</th></tr>
+            <tr>
+                <td class="lab"><strong>PRIMARY</strong><br><span style="font-size:13px; color:#666;">main verb present or future</span></td>
+                <td><span class="end">present subjunctive</span> &mdash; <em>faciat</em><br><em>Rogat quid Cicerō <strong>faciat</strong>.</em><br><span style="font-size:15px; color:#1a2340;">"He asks what Cicero <strong>is doing</strong>."</span></td>
+                <td><span class="end">perfect subjunctive</span> &mdash; <em>fēcerit</em><br><em>Rogat quid Cicerō <strong>fēcerit</strong>.</em><br><span style="font-size:15px; color:#1a2340;">"He asks what Cicero <strong>has done</strong>."</span></td>
+            </tr>
+            <tr>
+                <td class="lab"><strong>SECONDARY</strong><br><span style="font-size:13px; color:#666;">main verb imperfect, perfect or pluperfect</span></td>
+                <td><span class="end">imperfect subjunctive</span> &mdash; <em>faceret</em><br><em>Rogāvit quid Cicerō <strong>faceret</strong>.</em><br><span style="font-size:15px; color:#1a2340;">"He asked what Cicero <strong>was doing</strong>."</span></td>
+                <td><span class="end">pluperfect subjunctive</span> &mdash; <em>fēcisset</em><br><em>Rogāvit quid Cicerō <strong>fēcisset</strong>.</em><br><span style="font-size:15px; color:#1a2340;">"He asked what Cicero <strong>had done</strong>."</span></td>
+            </tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;">The row is about the <strong>main verb</strong>. The column is about the <strong>subordinate action</strong>. The two questions are independent, which is why there are four answers and not three.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">And the same grid with the <strong>passive and deponent</strong> forms from yesterday dropped in, so that you can see the whole thing at once. Same verb for the passive (<em>faciō</em> &rarr; <em>factum</em>), and <em>loquor</em> for the deponent:</p>
+        <table class="para">
+            <tr><th style="width:16%"></th><th style="width:21%">Active</th><th style="width:21%">Passive</th><th style="width:21%">Deponent</th><th>Word count</th></tr>
+            <tr><td class="lab">primary, same time</td><td><em>faciat</em></td><td><em>fīat</em> &mdash; <span style="font-size:13px; color:#AA1E2D;">Module 15</span></td><td><em>loquātur</em></td><td>one word</td></tr>
+            <tr><td class="lab">primary, finished</td><td class="end"><em>fēcerit</em></td><td class="end"><em>factum sit</em></td><td class="end"><em>locūtus sit</em></td><td>one, then two</td></tr>
+            <tr><td class="lab">secondary, same time</td><td><em>faceret</em></td><td><em>fieret</em> &mdash; <span style="font-size:13px; color:#AA1E2D;">Module 15</span></td><td><em>loquerētur</em></td><td>one word</td></tr>
+            <tr><td class="lab">secondary, finished</td><td class="end"><em>fēcisset</em></td><td class="end"><em>factum esset</em></td><td class="end"><em>locūtus esset</em></td><td>one, then two</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Two things to notice in that second table.</strong> First: the <strong>finished</strong> row is always two words in the passive and always one word in the active. That is a free clue when you are reading. Second: <em>faciō</em> is the one verb whose present-system passive is irregular &mdash; Latin uses <em>fīō</em> for it, which is Module 15, so the two greyed cells are not yours yet. Every other verb in the language behaves normally: <em>capiātur, caperētur, captus sit, captus esset</em>. Use <em>capiō</em> as your model verb until Module 15 fills the gap.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9888;&#65039; <strong>Macrons, one last time, because this is the lesson where you choose forms.</strong> The perfect subjunctive is <em>fēcerim, fēcerīs, fēcerit</em> &mdash; <strong>long ī before <em>-s</em>, <em>-mus</em>, <em>-tis</em></strong>. The future perfect indicative is <em>fēcerō, fēceris, fēcerit</em> &mdash; short <em>i</em> throughout. In 2nd singular, 1st plural and 2nd plural the macron is the <em>only</em> difference between the two tenses: <em>fēcerīs</em> is a subjunctive, <em>fēceris</em> is an indicative. When you write, you are choosing a cell of this grid, so write the macron that says so.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE PROCEDURE &mdash; THREE STEPS, IN THIS ORDER</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Step 1 is free: you read a tense off the page. Step 2 costs a moment's thought about meaning. Step 3 is pure mechanics. Notice that you never have to think about <em>which construction</em> the clause is &mdash; the grid does not care whether it is an indirect question, a <em>cum</em> clause or a fear clause.</p>
+
+        <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-b"><strong>What tense is the MAIN verb? That picks the row.</strong><br>
+            <span style="color:#1A6B3D;">Present or future &rarr; <strong>PRIMARY</strong>, the top row.</span><br>
+            <span style="color:#1A6B3D;">Imperfect, perfect or pluperfect &rarr; <strong>SECONDARY</strong>, the bottom row.</span><br>
+            <span style="color:#666;">Two rows, not three. There has never been a third.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-b"><strong>Was the subordinate action still going on, or already over? That picks the column.</strong><br>
+            <span style="color:#1A6B3D;">Still going on at the moment of the main verb &rarr; <strong>SAME TIME</strong>, the left column.</span><br>
+            <span style="color:#1A6B3D;">Finished before the main verb &rarr; <strong>ALREADY FINISHED</strong>, the right column.</span><br>
+            <span style="color:#666;">The English usually tells you: see Part 3.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-b"><strong>Read the cell, then build the form.</strong><br>
+            <span style="color:#666;">Present &rarr; present stem + the vowel change. Imperfect &rarr; present infinitive + <em>-m, -s, -t</em>. Perfect &rarr; perfect stem + <em>-erim</em>. Pluperfect &rarr; perfect stem + <em>-issem</em>. And if the verb is passive or deponent, the last two cells become PPP + <em>sim</em> and PPP + <em>essem</em>, with the participle agreeing.</span></div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:16px; color:#1a2340; line-height:1.75;"><strong>Worked example.</strong> "The consul did not know whether the letters had been read."<br>
+            <strong>1.</strong> Main verb "did not know" = <em>nesciēbat</em>, imperfect &rarr; <strong>secondary</strong>, bottom row.<br>
+            <strong>2.</strong> "had been read" is over before the not-knowing &rarr; <strong>finished</strong>, right column.<br>
+            <strong>3.</strong> Bottom right = <strong>pluperfect subjunctive</strong>. The verb is passive, so PPP + <em>essem</em>: <em>legō, legere, lēgī, <strong>lēctum</strong></em>, subject <em>epistulae</em> (feminine plural) &rarr; <em>lēctae essent</em>.<br>
+            <em>Cōnsul nesciēbat num epistulae lēctae essent.</em></div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Do the steps in order and step 2 gets easier.</strong> Students who try to decide the tense in one move end up matching Latin tense to English tense, which does not work &mdash; "had been read" is a pluperfect in English and a pluperfect subjunctive in Latin here, but "he asked what he <em>did</em>" is a simple past in English and a <em>pluperfect</em> subjunctive in Latin. The grid is about <strong>relative</strong> time: earlier than the main verb, or alongside it. English tense names are a clue, not the rule.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; WHAT THE ENGLISH IS TELLING YOU</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Step 2 is where the marks are lost, so here is the English side of it laid out flat. Read the clause <em>inside</em> the reported bit &mdash; not the main verb, which you already used for step 1.</p>
+        <table class="para">
+            <tr><th style="width:34%">If the English inside the clause says&hellip;</th><th style="width:22%">the column is&hellip;</th><th>Example</th></tr>
+            <tr><td class="lab">is doing &middot; is being done &middot; does</td><td class="end">same time</td><td><em>Rogat quid faciat.</em> &mdash; "He asks what he is doing."</td></tr>
+            <tr><td class="lab">was doing &middot; was being done</td><td class="end">same time</td><td><em>Rogāvit quid faceret.</em> &mdash; "He asked what he was doing."</td></tr>
+            <tr><td class="lab">has done &middot; has been done</td><td class="end">finished</td><td><em>Rogat quid fēcerit.</em> &mdash; "He asks what he has done."</td></tr>
+            <tr><td class="lab">had done &middot; had been done</td><td class="end">finished</td><td><em>Rogāvit quid fēcisset.</em> &mdash; "He asked what he had done."</td></tr>
+            <tr><td class="lab">did &middot; was done <span style="font-size:13px; color:#AA1E2D;">(the tricky one)</span></td><td class="end">finished</td><td><em>Rogāvit quid fēcisset.</em> &mdash; "He asked what he did." English "did" here means "had done."</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The one English shape the grid cannot handle: "would."</strong> "He asked what Cicero <em>would do</em>" points <strong>forward</strong> from the main verb, and none of these four cells does that. Latin has a way of saying it &mdash; a future participle plus a form of <em>esse</em> &mdash; and <strong>this course does not teach it</strong>. If an English sentence you are translating says "would" or "was going to," rewrite the English into something the grid can say ("what Cicero was doing," "what Cicero had done") and note in the margin what you changed. Never invent a form to fill a cell that is not there.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; THE UNLABELLED PILE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six sentences. Nobody tells you the construction, nobody tells you the cell. You get a main verb, an English meaning, and the principal parts. Run the three steps.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which form does the sentence require?</div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 1: what row does a FUTURE main verb sit in? Step 2: what column does &quot;has done&quot; sit in?">
+                <div class="widget-row-prompt"><em>Cognōscet quid Cicerō ____.</em> &mdash; "He will find out what Cicero <strong>has done</strong>." (<em>faciō, facere, fēcī, factum</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — fēcerit. Cognōscet is future, and future is PRIMARY (top row); &quot;has done&quot; is finished (right column); top right is the perfect subjunctive. This is the cell students forget exists, because a future main verb feels like it should want something other than the present or perfect.">fēcerit</button>
+                    <button data-choice="b" data-fb="Faciat is the top-LEFT cell: primary sequence, same time — &quot;what Cicero is doing.&quot; You got the row right and the column wrong.">faciat</button>
+                    <button data-choice="c" data-fb="Fēcisset is the bottom-right cell, and the bottom row needs a past main verb. Cognōscet is future, which is primary, so you cannot be in the bottom row at all.">fēcisset</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Rogābat is imperfect. And the leaving happened before the asking.">
+                <div class="widget-row-prompt"><em>Nēmō rogābat cūr Catilīna ex urbe ____.</em> &mdash; "No one was asking why Catiline <strong>had left</strong> the city." (<em>discēdō, discēdere, discessī, discessum</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Discēderet is the bottom-LEFT cell — imperfect subjunctive, same time: &quot;why Catiline was leaving the city.&quot; The English says &quot;had left,&quot; which is over and done.">discēderet</button>
+                    <button data-choice="b" data-fb="Discesserit is the perfect subjunctive, which lives in the TOP row and needs a present or future main verb. Rogābat is imperfect, so you are in the bottom row.">discesserit</button>
+                    <button data-choice="c" data-fb="Right — discessisset. Rogābat imperfect → secondary, bottom row; &quot;had left&quot; → finished, right column; bottom right is the pluperfect subjunctive. Perfect stem discess- plus -isset, and remember that -isset can be nothing else in Latin.">discessisset</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Verentur is present. The verb is passive and the subject is masculine plural.">
+                <div class="widget-row-prompt"><em>Verentur nē coniūrātī iam ____.</em> &mdash; "They are afraid that the conspirators <strong>have already been punished</strong>." (<em>pūniō, pūnīre, pūnīvī, pūnītum</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Pūnītī essent is the pluperfect subjunctive passive — bottom row, and the bottom row needs a past main verb. Verentur is present.">pūnītī essent</button>
+                    <button data-choice="b" data-fb="Right — pūnītī sint. Verentur (deponent, present) → primary, top row; &quot;have been punished&quot; → finished, right column; top right is the perfect subjunctive, and in the passive that is PPP + sint. Participle masculine plural to agree with coniūrātī.">pūnītī sint</button>
+                    <button data-choice="c" data-fb="Pūnītī sunt is the perfect passive INDICATIVE. Nē after a verb of fearing opens a fear clause (Module 12), and a fear clause is always subjunctive — so the helper has to be sint, not sunt.">pūnītī sunt</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Read what kind of clause ut opens here. Can a purpose ever be already finished?">
+                <div class="widget-row-prompt"><em>Cōnsul mīlitēs mīsit ut coniūrātōs ____.</em> &mdash; "The consul sent soldiers <strong>to arrest</strong> the conspirators." (<em>capiō, capere, cēpī, captum</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Cēpissent is a pluperfect subjunctive, which says the arrest was already over before the soldiers were sent. That is impossible: the arrest is the point of sending them, so it lies in the future from the main verb.">cēpissent</button>
+                    <button data-choice="b" data-fb="Capiant is a present subjunctive, which is the top row — and mīsit is perfect, so you are in the bottom row. Right column, wrong row.">capiant</button>
+                    <button data-choice="c" data-fb="Right — caperent. This is a purpose clause (Module 8), and a purpose always looks FORWARD from the main verb, so it can never use the finished column. Mīsit is perfect → secondary → imperfect subjunctive. Purpose clauses only ever use two of the four cells.">caperent</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Nesciēbat is imperfect, epistulae is feminine plural, and the reading was over first.">
+                <div class="widget-row-prompt"><em>Cōnsul nesciēbat num epistulae ____.</em> &mdash; "The consul did not know whether the letters <strong>had been read</strong>." (<em>legō, legere, lēgī, lēctum</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — lēctae essent. Bottom row (nesciēbat imperfect), right column (&quot;had been read&quot;), so pluperfect subjunctive; passive, so PPP + essem; feminine plural participle to agree with epistulae.">lēctae essent</button>
+                    <button data-choice="b" data-fb="Lēctus esset has a masculine singular participle. Epistulae is feminine plural, so the participle must be lēctae — and the helper word must be plural too.">lēctus esset</button>
+                    <button data-choice="c" data-fb="Legerentur is the imperfect subjunctive passive — &quot;whether the letters were being read,&quot; the same-time column. The English says &quot;had been read.&quot;">legerentur</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="&quot;While the consul was speaking&quot; — is the speaking over before the silence, or going on during it?">
+                <div class="widget-row-prompt"><em>Cum cōnsul in cūriā ____, senātōrēs tacēbant.</em> &mdash; "<strong>While</strong> the consul <strong>was speaking</strong> in the Senate House, the senators were silent." (<em>loquor, loquī, locūtus sum</em>)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Locūtus esset is the pluperfect subjunctive — &quot;when the consul had finished speaking.&quot; That is a different sentence: the silence would then come after the speech, not during it.">locūtus esset</button>
+                    <button data-choice="b" data-fb="Right — loquerētur. Tacēbant is imperfect → secondary, bottom row; the speaking and the silence overlap, so same time, left column; bottom left is the imperfect subjunctive. Loquor is deponent, so the form is passive in shape and active in meaning: &quot;was speaking.&quot;">loquerētur</button>
+                    <button data-choice="c" data-fb="Loquātur is the present subjunctive, which is the top row, and the main verb tacēbant is imperfect. Also check the shape: loquor is deponent, so there is no active loquēret anywhere.">loquātur</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 5 &middot; NOT EVERY CONSTRUCTION USES ALL FOUR</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Row 4 of the pile hid a real fact about Latin, and it is worth stating plainly. The grid describes what the four tenses <em>can</em> do. What a given construction actually needs depends on whether it looks forward or backward.</p>
+        <table class="para">
+            <tr><th style="width:30%">Construction</th><th style="width:24%">Cells it uses</th><th>Why</th></tr>
+            <tr><td class="lab"><strong>Indirect question</strong> <span style="font-size:13px; color:#666;">m11</span></td><td class="end">all four</td><td>You can report a question about now, or about what has already happened. Both are ordinary.</td></tr>
+            <tr><td class="lab"><strong><em>Cum</em> clause</strong> <span style="font-size:13px; color:#666;">m10</span></td><td class="end">all four</td><td>Narrative <em>cum</em> lives on the finished column: <em>cum haec dīxisset</em>, "when he had said this." This is the commonest pluperfect subjunctive in Latin.</td></tr>
+            <tr><td class="lab"><strong>Fear clause</strong> <span style="font-size:13px; color:#666;">m12</span></td><td class="end">all four</td><td>You can fear that something <em>is</em> happening or that it <em>has already</em> happened &mdash; often the worse fear of the two.</td></tr>
+            <tr><td class="lab"><strong>Purpose clause &middot; indirect command</strong> <span style="font-size:13px; color:#666;">m08</span></td><td>same-time column only <span style="font-size:13px; color:#666;">(present or imperfect)</span></td><td>A purpose has not happened yet when the main action is taken. There is nothing for it to be finished before.</td></tr>
+            <tr><td class="lab"><strong>Result clause</strong> <span style="font-size:13px; color:#666;">m09</span></td><td>usually same-time</td><td>Normally follows sequence like everything else. Roman authors sometimes put a <strong>perfect</strong> subjunctive after a past main verb to stress that the result actually came about &mdash; you may meet it; you are never asked to write it.</td></tr>
+        </table>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#127881; <strong>Why this makes your life easier, not harder.</strong> If you are staring at an <em>ut</em> clause after a verb of intending, you do not have four choices &mdash; you have two, and step 1 decides between them. The four-cell decision only really bites on indirect questions, <em>cum</em> clauses and fear clauses. Those are also exactly the three constructions in Friday's reading.</div>
+
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; SPEED GRID &middot; NAME THE CELL AND THE FORM BEFORE YOU CLICK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>rogat</em> + "is doing"</div><div class="hint">which cell?</div><div class="back"><strong>Primary, same time</strong> &rarr; present subjunctive. <em>Rogat quid faciat.</em></div></div>
+                <div class="flip-card"><div class="front"><em>rogat</em> + "has done"</div><div class="hint">which cell?</div><div class="back"><strong>Primary, finished</strong> &rarr; perfect subjunctive. <em>Rogat quid fēcerit.</em></div></div>
+                <div class="flip-card"><div class="front"><em>rogāvit</em> + "was doing"</div><div class="hint">which cell?</div><div class="back"><strong>Secondary, same time</strong> &rarr; imperfect subjunctive. <em>Rogāvit quid faceret.</em></div></div>
+                <div class="flip-card"><div class="front"><em>rogāvit</em> + "had done"</div><div class="hint">which cell?</div><div class="back"><strong>Secondary, finished</strong> &rarr; pluperfect subjunctive. <em>Rogāvit quid fēcisset.</em></div></div>
+                <div class="flip-card"><div class="front"><em>rogābit</em> + "has done"</div><div class="hint">careful with the row</div><div class="back"><strong>Primary, finished</strong> &rarr; perfect subjunctive. Future is primary. <em>Rogābit quid fēcerit.</em></div></div>
+                <div class="flip-card"><div class="front"><em>rogāverat</em> + "had done"</div><div class="hint">careful with the row</div><div class="back"><strong>Secondary, finished</strong> &rarr; pluperfect subjunctive. A pluperfect main verb is just another past tense. <em>Rogāverat quid fēcisset.</em></div></div>
+                <div class="flip-card"><div class="front"><em>timet</em> + "has been captured"</div><div class="hint">passive &mdash; how many words?</div><div class="back"><strong>Primary, finished, passive</strong> &rarr; perfect subjunctive passive. <em>Timet nē captus sit.</em> Two words.</div></div>
+                <div class="flip-card"><div class="front"><em>timēbat</em> + "had been captured"</div><div class="hint">passive &mdash; how many words?</div><div class="back"><strong>Secondary, finished, passive</strong> &rarr; pluperfect subjunctive passive. <em>Timēbat nē captus esset.</em> Two words.</div></div>
+                <div class="flip-card"><div class="front"><em>vēnit</em> + <em>ut</em> + "to see"</div><div class="hint">how many cells are even available?</div><div class="back"><strong>Purpose &rarr; same-time column only.</strong> Secondary sequence, so imperfect subjunctive: <em>vēnit ut vidēret</em>. There is no finished option here at all.</div></div>
+                <div class="flip-card"><div class="front"><em>rogāvit</em> + "would do"</div><div class="hint">trap</div><div class="back"><strong>No cell.</strong> "Would do" points forward from the main verb, and the grid has no forward column. Recast the English; do not invent a form.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 13.05 &mdash; What Had Been Done</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The reading: Sallust and Cicero looking back at the conspiracy, adapted &mdash; twelve lines built almost entirely out of the right-hand column, because the completed past is what people argue about. Then the whole four-tense system in one table, and the handoff to your graded work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>Main verb picks the row. Subordinate action picks the column. Read the cell.</strong> Present or future is the top row; imperfect, perfect or pluperfect is the bottom row. Still going on is the left column; already over is the right column. Two questions, four answers, and every subordinate subjunctive in Latin is in there somewhere.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 13.04 &middot; All Four Cells, No Labels</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

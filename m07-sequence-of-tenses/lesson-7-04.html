@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 7.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step .n { min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 7</div>
+        <div style="font-size: 12px; color: #666;">Sequence of Tenses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Sequence Checker</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Sequence Checker</div>
+        <div style="font-size: 16px; color: #666;">Practice &middot; Both Halves Together</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two questions, asked in the same order, every single time.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">You now know both halves of the rule. What you need next is a <strong>routine</strong> &mdash; a fixed pair of questions you run without thinking about it, so that sequence stops costing you attention and you can spend that attention on the sentence's meaning instead. Today you drill the routine, meet three cases that trip people up, and unlock <strong>Lūdus VII</strong>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> run the two-step sequence check on any main verb without looking at a table.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find the real main verb even when the subordinate clause comes first, or when one main verb governs two clauses.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say why an indicative subordinate clause is not governed by this rule at all.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE ROUTINE</div>
+        <div class="step">
+            <div class="n">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Find the main verb. Ask: is its tense past, or not?</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Present or future &rarr; <strong>primary</strong>. Imperfect, perfect, or pluperfect &rarr; <strong>secondary</strong>. This is one yes-or-no question, and it decides everything else.</div>
+            </div>
+        </div>
+        <div class="step">
+            <div class="n">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Take the matching subjunctive.</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Primary &rarr; <strong>present</strong> subjunctive. Secondary &rarr; <strong>imperfect</strong> subjunctive. Then make it agree in person and number with <em>its own</em> subject &mdash; which may not be the subject of the main verb.</div>
+            </div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:18px; color:#0e1c42; line-height:1.6;"><strong>Worked example.</strong> <em>Cōnsul custōdiās posuit nē coniūrātī portās aperīrent.</em><br>
+            <span style="font-size:16px;">Step 1: main verb <em>posuit</em> &mdash; perfect &rarr; past &rarr; <strong>secondary</strong>. Step 2: secondary &rarr; <strong>imperfect</strong> subjunctive; subject of the clause is <em>coniūrātī</em>, plural &rarr; <em>aperīrent</em>, not <em>aperīret</em>. "The consul posted guards so that the conspirators might not open the gates."</span></div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Notice the division of labour.</strong> The <strong>sequence rule</strong> decides the <em>tense</em>. The <strong>subject of the clause</strong> decides the <em>person and number</em>. Two separate decisions, made from two separate pieces of evidence. Students who mix them up end up matching the subjunctive to the wrong subject.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9881;&#65039; PART 2 &middot; THE SEQUENCE CHECKER</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Three main verbs, two steps each. Answer the pair in order &mdash; step 1 then step 2 &mdash; the way you will do it in your head.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9881;&#65039; SEQUENCE CHECKER &middot; STEP 1, THEN STEP 2</div>
+            <div class="widget-question">Main verb <strong>1</strong>: <em>dīcit</em> &mdash; "he says" (present).</div>
+            <div class="widget-row" data-correct="b" data-hint="Is the present tense a past tense?">
+                <div class="widget-row-prompt">STEP 1 &mdash; which sequence?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Secondary is only for past main verbs — imperfect, perfect, pluperfect. Dīcit is present.">Secondary</button>
+                    <button data-choice="b" data-fb="Right — present is a non-past tense, so primary sequence.">Primary</button>
+                    <button data-choice="c" data-fb="Every main verb belongs to one camp or the other. There is no third option and no 'neither.'">Neither &mdash; the present is outside the system</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Primary calls for the tense you built first in Module 6.">
+                <div class="widget-row-prompt">STEP 2 &mdash; so which subjunctive tense?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — present subjunctive. Dīcit quid Catilīna agat, 'he says what Catiline is doing.'">Present subjunctive</button>
+                    <button data-choice="b" data-fb="The imperfect subjunctive answers a PAST main verb. This main verb is present.">Imperfect subjunctive</button>
+                    <button data-choice="c" data-fb="The perfect subjunctive is a Module 13 form, and it handles completed action. It is not yours yet and it is not the answer here.">Perfect subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-question" style="margin-top:18px;">Main verb <strong>2</strong>: <em>dīxerat</em> &mdash; "he had said" (pluperfect).</div>
+            <div class="widget-row" data-correct="c" data-hint="Pluperfect describes something before a past point. So it is&hellip;?">
+                <div class="widget-row-prompt">STEP 1 &mdash; which sequence?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Primary is present and future only. Dīxerat is deep in the past.">Primary</button>
+                    <button data-choice="b" data-fb="There is no separate pluperfect sequence. The pluperfect simply joins the imperfect and perfect in the secondary camp.">Its own pluperfect sequence</button>
+                    <button data-choice="c" data-fb="Right — pluperfect is a past tense, so secondary sequence, along with the imperfect and the perfect.">Secondary</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Secondary has exactly one answer available to you right now.">
+                <div class="widget-row-prompt">STEP 2 &mdash; so which subjunctive tense?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="The present subjunctive belongs to primary sequence. A past main verb never takes it under this rule.">Present subjunctive</button>
+                    <button data-choice="b" data-fb="Right — imperfect subjunctive. A pluperfect main verb is treated exactly like any other past main verb.">Imperfect subjunctive</button>
+                    <button data-choice="c" data-fb="Tempting, because 'pluperfect main verb' seems to call for a pluperfect subjunctive. It does not — and the pluperfect subjunctive is a Module 13 form anyway.">Pluperfect subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-question" style="margin-top:18px;">Main verb <strong>3</strong>: <em>dīcet</em> &mdash; "he will say" (future).</div>
+            <div class="widget-row" data-correct="a" data-hint="Past or not past? That is the only question.">
+                <div class="widget-row-prompt">STEP 1 &mdash; which sequence?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — future has not happened yet, so it is not a past tense, so it is primary. This is the single most-missed item in the module.">Primary</button>
+                    <button data-choice="b" data-fb="This is the classic error. English 'he will say what he would do' pushes you toward the imperfect, but Latin puts future in the PRIMARY camp.">Secondary</button>
+                    <button data-choice="c" data-fb="There is no future subjunctive in Latin, and no 'future sequence.' Two camps only.">Future sequence</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Same answer as main verb 1 — because they are in the same camp.">
+                <div class="widget-row-prompt">STEP 2 &mdash; so which subjunctive tense?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Imperfect belongs to secondary. Dīcet is future, which is primary.">Imperfect subjunctive</button>
+                    <button data-choice="b" data-fb="Perfect subjunctive is Module 13 and handles completed action; it is not what a future main verb calls for here.">Perfect subjunctive</button>
+                    <button data-choice="c" data-fb="Right — present subjunctive, exactly as after dīcit. Present and future main verbs behave identically.">Present subjunctive</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THREE CASES THAT TRIP PEOPLE UP</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 4px 0 6px 0;">1. The main verb is not always first</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">Latin puts the subordinate clause first whenever it likes. Find the verb of the <strong>main</strong> clause, not the first verb your eye lands on.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cum Catilīna in senātū <strong>sedēret</strong>, Cicerō <strong>surrēxit</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"When Catiline was sitting in the Senate, Cicero stood up." <span style="color:#666;">(<em>cum</em> + subjunctive &mdash; container glossed, Module 10)</span></div>
+            <div style="font-size:16px; color:#1B6A94; margin-top:6px;">The main verb is <em>surrēxit</em>, at the very end. Perfect &rarr; secondary &rarr; <em>sedēret</em>, imperfect subjunctive.</div>
+        </div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">2. One main verb can govern two clauses</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">When it does, <strong>both</strong> clauses follow the same sequence. The main verb does not get tired.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Populus <strong>rogābat</strong> cūr Catilīna <strong>discēderet</strong> et quid nunc <strong>ageret</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"The people were asking why Catiline was leaving and what he was now doing."</div>
+            <div style="font-size:16px; color:#1B6A94; margin-top:6px;">One main verb, <em>rogābat</em> (imperfect &rarr; secondary), so two imperfect subjunctives.</div>
+        </div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">3. An indicative subordinate clause is simply not in the game</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">Sequence of tenses governs <strong>subjunctives</strong>. A subordinate clause with an indicative verb states a fact on its own authority and picks its tense freely.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Catilīna <strong>discessit</strong>, quia in urbe manēre nōn <strong>poterat</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Catiline left, because he was not able to stay in the city."</div>
+            <div style="font-size:16px; color:#1B6A94; margin-top:6px;"><em>Poterat</em> is imperfect <strong>indicative</strong>. <em>Quia</em> takes the indicative, so no sequence question arises. Check the mood before you check the sequence.</div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:14px;">&#9997;&#65039; <strong>An honest footnote for careful readers.</strong> Roman authors sometimes break sequence on purpose: in the middle of a past narrative they will slip into <em>primary</em> sequence to make a scene feel present and immediate. Latin grammarians call the effect <em>repraesentātiō</em>. If you meet a present subjunctive after a past main verb in real Cicero, that is probably what you are looking at &mdash; and it is a deliberate choice, not sloppiness. You will not be tested on it, and you should not do it in your own Latin this module. Follow the rule; recognize the exception when an author earns it.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; WHOLE SENTENCES</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Now with all three tricky cases in play.</div>
+            <div class="widget-row" data-correct="b" data-hint="Which of the two verbs is the main verb?">
+                <div class="widget-row-prompt"><em>Cum Catilīna in senātū ____, Cicerō surrēxit.</em> &mdash; "When Catiline was sitting in the Senate, Cicero stood up." <span style="color:#666;">(<em>cum</em> clause &mdash; container glossed, Module 10)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Sedeat is present subjunctive. The main verb is surrēxit — perfect — so this is secondary sequence.">sedeat</button>
+                    <button data-choice="b" data-fb="Right — sedēret. The main verb is surrēxit at the end of the sentence: perfect, so secondary, so the imperfect subjunctive.">sedēret</button>
+                    <button data-choice="c" data-fb="Sedēbat is imperfect INDICATIVE. This cum clause takes the subjunctive.">sedēbat</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="The same main verb governs both clauses.">
+                <div class="widget-row-prompt"><em>Populus rogābat cūr Catilīna discēderet et quid nunc ____.</em> &mdash; "&hellip;and what he was now doing." <span style="color:#666;">(indirect questions &mdash; containers glossed, Module 11)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Agat is present subjunctive. The word nunc ('now') tempts you toward it, but the sequence is set by rogābat, not by nunc.">agat</button>
+                    <button data-choice="b" data-fb="Agit is present indicative. A reported question needs the subjunctive.">agit</button>
+                    <button data-choice="c" data-fb="Right — ageret. Rogābat is imperfect, so secondary, and both clauses hanging off it take the imperfect subjunctive.">ageret</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Vigilābit — is that a past tense?">
+                <div class="widget-row-prompt"><em>Cōnsul semper vigilābit ut nēmō rem pūblicam ____.</em> &mdash; "The consul will always keep watch so that no one may destroy the republic." <span style="color:#666;">(purpose clause &mdash; container glossed, Module 8)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — dēleat, present subjunctive of dēleō. Vigilābit is future, and future is primary.">dēleat</button>
+                    <button data-choice="b" data-fb="Dēlēret is the imperfect subjunctive. It needs a past main verb, and vigilābit is future.">dēlēret</button>
+                    <button data-choice="c" data-fb="Dēlet is present indicative. The purpose clause needs the subjunctive.">dēlet</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="What decides whether the rule applies at all?">
+                <div class="widget-row-prompt">In <em>Catilīna discessit, quia in urbe manēre nōn poterat</em>, why is <em>poterat</em> <strong>not</strong> a subjunctive?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="The tense of discessit decides the sequence only for clauses that take the subjunctive in the first place. It has no say over a quia clause.">Because <em>discessit</em> is perfect</button>
+                    <button data-choice="b" data-fb="Right — quia clauses take the indicative, and sequence of tenses is a rule about subjunctives only. No subjunctive, no sequence question.">Because <em>quia</em> clauses take the indicative, and the rule governs only subjunctives</button>
+                    <button data-choice="c" data-fb="Being past does not make a verb indicative — the imperfect subjunctive is past-looking too. What matters is that quia governs the indicative.">Because <em>poterat</em> is already a past tense</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127918; PART 5 &middot; LŪDUS VII &mdash; <em>ŌRDŌ TEMPORUM</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">"The Order of Tenses." Seventy-five seconds, two choices per card, and one job: decide fast. Cards come in four kinds &mdash; <strong>name the sequence</strong> from a main verb, <strong>name the subjunctive tense</strong> the sequence calls for, <strong>pick the correctly sequenced form</strong> in a sentence, and <strong>tell subjunctive from indicative</strong> where a single macron decides it.</p>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#127919; <strong>How it is graded:</strong> <strong>best of unlimited attempts.</strong> Play until the two-step routine happens without you narrating it to yourself &mdash; that automatic feeling is the whole point, and it is what makes Friday's reading readable at speed.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>One rule for the game.</strong> No card in <em>Ōrdō Temporum</em> uses a perfect or pluperfect subjunctive, because you have not built those. If a card asks for "the subjunctive tense," the honest answer is always <em>present</em> or <em>imperfect</em>.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 7.05 &mdash; The Case to the People</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Cicero climbs the <em>Rōstra</em> the morning after Catiline leaves Rome &mdash; a different audience from the Senate, and a different voice. Adapted <em>In Catilīnam</em> II, eight subjunctives, every one of them sequenced.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Two questions, always in this order: <strong>is the main verb past or not-past?</strong> &rarr; <strong>take the imperfect or the present subjunctive.</strong> Then let the clause's own subject fix the person and number. Everything else &mdash; word order, how many clauses, where the main verb sits &mdash; is noise around those two questions.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.04 &middot; The Sequence Checker</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

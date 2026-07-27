@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 12.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 12</div>
+        <div style="font-size: 12px; color: #666;">Fear Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 12.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Ground He Chose</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 25 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 12.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Ground He Chose</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Module Review</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Module 10 left Catiline alive in Etruria with an army. This is how that ends.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Two months after the executions in Rome, in January of 62 BC, Catiline was cornered in the hills near Pistoria with an army he could no longer move and no road out. What Sallust wrote about that valley is the coldest and most careful passage in his book &mdash; and it is built out of fear. You will read it adapted: eleven lines carrying all three fear patterns you have learned, plus a purpose clause, an indirect command and a <em>cum</em> clause, so yesterday's five steps get their first real test. Then the module review, and your graded work.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read an adapted passage of Sallust and name every fear clause in it, with its polarity.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain how a Roman army fought in place, and why Sallust neither praises Catiline nor excuses him.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the whole module in one table and begin the quiz without re-reading the week.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; BEFORE YOU READ</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Four things the passage assumes and does not explain.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>1. Catiline had already left Rome.</strong> He walked out of the city in November of 63 BC, after Cicero's first speech against him, and went north to the forces gathering in Etruria. The Senate then declared him a public enemy &mdash; a <em>hostis</em>. From that point there was no legal way back for him; the only questions left were where he would be caught and whether he would fight.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>2. By January he was boxed in.</strong> Roman forces were closing from more than one direction and the route north into Gaul was blocked. Sallust says Catiline saw himself shut in by the mountains and by the enemy's troops. So he turned and drew up his line in the territory of Pistoria &mdash; the <em>ager Pistōriēnsis</em>, in the Apennines north-west of Florence, near the modern town of Pistoia.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>3. The Roman commander was not the man in charge on paper.</strong> Gaius Antonius had been Cicero's fellow consul in 63 and held the command against Catiline the following year. He was not present at the battle: Sallust says he was ill &mdash; <em>pedibus aeger</em>, ill in the feet, which is usually taken to mean gout. His deputy, Marcus Petreius, fought the battle in his place.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.7;"><strong>4. Neither side expected prisoners.</strong> This was a Roman army against Romans who had been declared enemies of the state. Nobody in that valley had a surrender to offer or to accept, and both commanders knew it. That is the fact which makes the fears in this passage the kind of fears they are.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Watch the grammar doing the work.</strong> There are <strong>three</strong> fear clauses in the passage and they do not all point the same way: one plain <em>nē</em>, one <em>nē nōn</em>, and one of the rare <em>ut</em>s &mdash; in adjacent lines, which puts the whole module in one place. Then a purpose clause and an indirect command arrive using the <em>same two marker words</em>. Run the five steps. They will hold.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 2 &middot; THE READING</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>Adapted from Sallust,</strong> <em>Bellum Catilīnae</em> <strong>57&ndash;61.</strong> This is an <strong>adaptation</strong>, not Sallust's own Latin: the sentences are shortened and rebuilt using only grammar you have been taught. From Sallust come the events and the names, the removal of the horses, Petreius calling on his men one by one, Catiline fighting on foot in the front line, the dead lying on the ground each had held, and the finding of Catiline himself. What is <em>not</em> from Sallust is listed in the red note below the gloss.</div>
+        <div class="rd">
+            <p><span class="ln">1</span>Catilīna, <b>cum</b> montibus et cōpiīs hostium claudērētur, spem fugae iam nōn habēbat.</p>
+            <p><span class="ln">2</span>Itaque in agrō Pistōriēnsī, mēnse Iānuāriō, aciem in valle angustā īnstrūxit.</p>
+            <p><span class="ln">3</span>Verēbātur enim <b>nē</b> mīlitēs suī sine proeliō dīlāberentur.</p>
+            <p><span class="ln">4</span>Multī in castrīs metuēbant <b>nē nōn</b> satis armōrum esset; aliī timēbant <b>ut</b> dux viam salūtis invenīret.</p>
+            <p><span class="ln">5</span>Catilīna equōs omnium remōvit, <b>ut</b>, perīculō aequātō, mīlitum animus maior esset.</p>
+            <p><span class="ln">6</span>Antōnius ipse aberat, quod pedibus aeger erat; itaque Petrēius, lēgātus eius, exercituī praeerat.</p>
+            <p><span class="ln">7</span>Petrēius singulōs mīlitēs nōmine appellābat et rogābat <b>ut</b> fortiter prō patriā pugnārent.</p>
+            <p><span class="ln">8</span>Catilīna, quod equum nōn habēbat, pedibus in prīmā aciē pugnābat, et mīlitis strēnuī et bonī imperātōris officia simul praestābat.</p>
+            <p><span class="ln">9</span>Nam ferē quem quisque locum vīvus pugnandō cēperat, eum, animā āmissā, corpore tegēbat.</p>
+            <p><span class="ln">10</span>Catilīna ipse longē ā suīs inter hostium cadāvera repertus est, paulum etiam spīrāns.</p>
+            <p><span class="ln">11</span>Et in vultū ferōciam animī retinēbat quam vīvus habuerat.</p>
+        </div>
+
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin:14px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS &mdash; EVERY WORD NOT ON YOUR RUNNING LIST, IN THE FORM IT APPEARS</div>
+            <ul class="gl">
+                <li><strong>1</strong> &middot; <em>claudērētur</em> &mdash; was being shut in (imperfect subjunctive <strong>passive</strong> of <em>claudō, claudere, clausī, clausum</em>) &middot; <em>cōpiīs</em> &mdash; by the forces (ablative plural of <em>cōpiae, cōpiārum</em> f. pl. &mdash; troops, forces) &middot; <em>spēs, speī</em> f. &mdash; hope &middot; <em>fugae</em> &mdash; of escape (genitive of <em>fuga, fugae</em> f.)</li>
+                <li><strong>2</strong> &middot; <em>ager Pistōriēnsis</em> &mdash; the territory of Pistoria, in the Apennines north-west of Florence &middot; <em>mēnse Iānuāriō</em> &mdash; in the month of January (ablative of time when) &middot; <em>aciēs, aciēī</em> f. &mdash; battle line &middot; <em>vallis, vallis</em> f. &mdash; valley &middot; <em>angustus, -a, -um</em> &mdash; narrow &middot; <em>īnstrūxit</em> &mdash; drew up (<em>īnstruō, īnstruere, īnstrūxī</em>)</li>
+                <li><strong>3</strong> &middot; <em>verēbātur</em> &mdash; he was afraid (imperfect indicative of the deponent <em>vereor, verērī, veritus sum</em>) &middot; <em>enim</em> &mdash; for, because (never first in its clause) &middot; <em>proelium, proeliī</em> n. &mdash; battle &middot; <em>dīlāberentur</em> &mdash; imperfect subjunctive of the deponent <em>dīlābor, dīlābī, dīlāpsus sum</em>: to slip away, melt away</li>
+                <li><strong>4</strong> &middot; <em>satis armōrum</em> &mdash; enough weapons (partitive genitive of <em>arma, armōrum</em> n. pl.) &middot; <em>aliī</em> &mdash; others &middot; <em>dux, ducis</em> m. &mdash; leader &middot; <em>via salūtis</em> &mdash; a way to safety (<em>salūs, salūtis</em> f.) &middot; <em>invenīret</em> &mdash; imperfect subjunctive of <em>inveniō, invenīre, invēnī</em>: to find</li>
+                <li><strong>5</strong> &middot; <em>equōs omnium</em> &mdash; everyone's horses &middot; <em>remōvit</em> &mdash; sent away, had removed (<em>removeō, removēre, remōvī</em>) &middot; <em>perīculō aequātō</em> &mdash; the danger having been made equal (ablative absolute; <em>aequō, aequāre, aequāvī, aequātum</em> &mdash; to make equal) &middot; <em>maior</em> &mdash; greater (comparative of <em>magnus</em>)</li>
+                <li><strong>6</strong> &middot; <em>Antōnius</em> &mdash; Gaius Antonius, Cicero's colleague as consul in 63 BC, who held the command against Catiline the next year &middot; <em>aberat</em> &mdash; was absent (<em>absum, abesse, āfuī</em>) &middot; <em>pedibus aeger</em> &mdash; ill in the feet (Sallust's own phrase; usually taken as gout) &middot; <em>lēgātus, lēgātī</em> m. &mdash; a commander's deputy &middot; <em>praeerat</em> (+ dative) &mdash; was in command of (<em>praesum, praeesse, praefuī</em>)</li>
+                <li><strong>7</strong> &middot; <em>singulōs</em> &mdash; one by one, each man in turn &middot; <em>nōmine</em> &mdash; by name (ablative of <em>nōmen, nōminis</em> n.) &middot; <em>appellābat</em> &mdash; was calling on, addressing (<em>appellō, appellāre</em>) &middot; <em>fortiter</em> (adv.) &mdash; bravely</li>
+                <li><strong>8</strong> &middot; <em>pedibus</em> &mdash; on foot &middot; <em>prīma aciēs</em> &mdash; the front line &middot; <em>strēnuus, -a, -um</em> &mdash; energetic, hard-driving &middot; <em>imperātor, imperātōris</em> m. &mdash; commander &middot; <em>officium, officiī</em> n. &mdash; duty, the job proper to someone &middot; <em>simul</em> (adv.) &mdash; at the same time &middot; <em>praestābat</em> &mdash; was performing, was carrying out (<em>praestō, praestāre, praestitī</em>) &middot; <em>et&hellip;et</em> &mdash; both&hellip;and</li>
+                <li><strong>9</strong> &middot; <em>ferē</em> (adv.) &mdash; nearly, more or less &middot; <em>quisque</em> &mdash; each man &middot; <em>vīvus, -a, -um</em> &mdash; alive &middot; <em>pugnandō</em> &mdash; by fighting (ablative of the gerund, Module 4) &middot; <em>animā āmissā</em> &mdash; his life having been lost (ablative absolute; <em>anima, animae</em> f. &mdash; breath, life; <em>āmittō, āmittere, āmīsī, āmissum</em> &mdash; to lose) &middot; <em>tegēbat</em> &mdash; was covering (<em>tegō, tegere, tēxī, tectum</em>) &middot; <strong>word order:</strong> the relative clause comes first and <em>eum</em> picks it up afterwards &mdash; &ldquo;the place which each man had taken&hellip;, <em>that</em> he was covering.&rdquo; This is close to Sallust's own arrangement; do not straighten it out until you have understood it.</li>
+                <li><strong>10</strong> &middot; <em>longē ā suīs</em> &mdash; far from his own men &middot; <em>cadāver, cadāveris</em> n. &mdash; corpse &middot; <em>repertus est</em> &mdash; was found (<em>reperiō, reperīre, repperī, repertum</em>) &middot; <em>paulum</em> (adv.) &mdash; a little &middot; <em>spīrāns</em> &mdash; breathing (present participle of <em>spīrō, spīrāre</em>)</li>
+                <li><strong>11</strong> &middot; <em>vultus, vultūs</em> m. &mdash; face, expression &middot; <em>ferōcia, ferōciae</em> f. &mdash; fierceness, defiance &middot; <em>retinēbat</em> &mdash; was keeping, holding on to (<em>retineō, retinēre, retinuī</em>) &middot; <em>habuerat</em> &mdash; pluperfect <strong>indicative</strong>: he had had</li>
+            </ul>
+        </div>
+
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>What is adapted, said plainly.</strong> Sallust's own sentences here use tenses of the subjunctive you will not meet until Module 13, so <strong>no line above is his Latin</strong>. Three things in particular are the adapter's and not his: the <strong>month</strong> in line 2 comes from the ancient chronology of the war rather than from Sallust's text; the <strong>three fears</strong> in lines 3 and 4 are written to put this week's grammar into the narrative &mdash; Sallust does report that most of Catiline's men lacked proper military weapons and that holding an army together without a battle was Catiline's problem, but these particular sentences of fear are not in him; and line 11 is split off from line 10 for readability. Everything else follows what he wrote. In Module 13 you will be able to read his sentences as he built them, and the last one is worth waiting for.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; NAME EVERY MARKER IN THE PASSAGE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five markers, in the order they appear. Run the five steps on each before you choose.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What construction is this, and what does the line mean?</div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 2: is there a fear word in the main clause? Then check which way the fear points.">
+                <div class="widget-row-prompt">Line 3 &mdash; <em>Verēbātur enim nē mīlitēs suī sine proeliō dīlāberentur.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — a fear clause with plain nē. 'For he was afraid that his soldiers would slip away without a battle.' The unwanted outcome is the melting away, so nē marks it and English gives a flat 'that.' Notice what the line tells you about his position: he did not fight because the ground was good, he fought because waiting was worse.">Fear clause &mdash; &ldquo;he was afraid <strong>that</strong> his soldiers <strong>would</strong> slip away&rdquo;</button>
+                    <button data-choice="b" data-fb="This is the Module 8 reading and step 2 blocks it: verēbātur is a verb of fearing, so nē carries no 'not' into your English. 'He was afraid so that they would not slip away' does not mean anything.">Negative purpose &mdash; &ldquo;he was afraid so that they would not slip away&rdquo;</button>
+                    <button data-choice="c" data-fb="Plain nē gives the positive-polarity fear: he fears the thing WILL happen. For 'would not slip away' the Latin would need nē nōn or the rare ut, and neither is here.">Fear clause &mdash; &ldquo;afraid that they <strong>would not</strong> slip away&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two extra letters after <em>nē</em>. What do they do?">
+                <div class="widget-row-prompt">Line 4, first half &mdash; <em>Multī in castrīs metuēbant nē nōn satis armōrum esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Read the nōn. Without it the sentence would say they dreaded that there WOULD be enough weapons, which nobody in a camp dreads.">&ldquo;Many in the camp dreaded that there would be enough weapons&rdquo;</button>
+                    <button data-choice="b" data-fb="Right. Nē nōn is the ordinary way to write the negative fear: 'Many in the camp dreaded that there would not be enough weapons.' Sallust does report that only a minority of Catiline's men carried proper military equipment.">&ldquo;Many in the camp dreaded that there would <strong>not</strong> be enough weapons&rdquo;</button>
+                    <button data-choice="c" data-fb="Nē nōn is legal precisely because this is a fear clause and not a purpose clause — that was Lesson 12.02's whole argument. Module 8 banned nē nōn; Module 12 requires it.">Nothing &mdash; <em>nē nōn</em> is not legal Latin</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Same kind of main verb, different marker word. Which way does <em>ut</em> point after fearing?">
+                <div class="widget-row-prompt">Line 4, second half &mdash; <em>aliī timēbant ut dux viam salūtis invenīret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This is the commonest error in the module: reading ut as if it were nē. It gives the opposite fear — and nobody in that camp was afraid their leader might find a way out.">&ldquo;Others were afraid that the leader would find a way to safety&rdquo;</button>
+                    <button data-choice="b" data-fb="Purpose would need an ordinary verb in the main clause, and timēbant is a verb of fearing. Step 2 fires first.">A purpose clause &mdash; &ldquo;they were afraid in order that he might find a way&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — the rare fear-clause ut, which comes into English as 'that…not.' 'Others were afraid that the leader would NOT find a way to safety.' They wanted him to find one; the fear is that the wish fails.">&ldquo;Others were afraid that the leader would <strong>not</strong> find a way to safety&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 2: is <em>remōvit</em> a fear word? Step 4: is there a signpost? Then what is left?">
+                <div class="widget-row-prompt">Line 5 &mdash; <em>Catilīna equōs omnium remōvit, ut, perīculō aequātō, mīlitum animus maior esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — purpose. Remōvit is not a fear word and there is no signpost, so step 5 gives purpose: 'Catiline had everyone's horses sent away, so that, with the danger made equal, the soldiers' spirit would be greater.' Sallust says his own horse went too — nobody in that line could ride away, the commander included.">A purpose clause &mdash; &ldquo;so that their spirit would be greater&rdquo;</button>
+                    <button data-choice="b" data-fb="A fear clause needs a fear word in the main clause. Remōvit means 'he removed.' And 'afraid their spirit would not be greater' reverses the point of the act.">A fear clause with <em>ut</em> &mdash; &ldquo;afraid their spirit would not be greater&rdquo;</button>
+                    <button data-choice="c" data-fb="Result clauses are announced by a signpost — tam, tantus, tālis, tot, adeō. There is none here. Without one, an ordinary verb plus ut is purpose.">A result clause &mdash; &ldquo;so that as a result their spirit was greater&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Step 3's list: ordering, asking, urging, warning, persuading. Look at <em>rogābat</em>.">
+                <div class="widget-row-prompt">Line 7 &mdash; <em>Petrēius singulōs mīlitēs nōmine appellābat et rogābat ut fortiter prō patriā pugnārent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="No fear word in the main clause: appellābat is 'he was calling on' and rogābat is 'he was asking.' Neither is on the five-word list.">A fear clause &mdash; &ldquo;he feared that they would fight&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — an indirect command. Step 3 fires on rogābat: 'Petreius called on the soldiers one by one by name and asked them to fight bravely for their country.' Ut = 'to.' Sallust says Petreius went along the line naming each man, which is why the detail is here.">An indirect command &mdash; &ldquo;asked them <strong>to</strong> fight bravely&rdquo;</button>
+                    <button data-choice="c" data-fb="You could force a purpose reading — 'he asked them so that they would fight bravely' — and Part 6 of Lesson 12.04 admitted as much. But step 3 runs before step 5, and 'asked them to fight' is the better English. A result clause is out either way: no signpost.">A result clause &mdash; &ldquo;so that as a result they fought bravely&rdquo;</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; THE ROMAN WORLD &middot; DYING IN PLACE, AND TELLING THE TRUTH ABOUT IT</div>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0 0 10px 0;">A Roman battle line was a piece of ground held by men standing in ranks, and the discipline it asked for was mostly the discipline of not moving. That is why Catiline had the horses taken away, his own included: a man on foot cannot leave, and a commander who cannot leave has made a promise to the men beside him. It is also why Sallust's flattest sentence about the aftermath lands hardest. When it was over, he says, you could see where each man had stood, because each lay dead on more or less the ground he had taken while he was alive. No speech says what that says. Sallust also reports that Catiline took his stand beside a legionary eagle which was said to have been carried in the army of Marius fifty years before &mdash; a claim he passes on rather than vouches for, and a reminder that the men in that valley thought of themselves as Romans doing a Roman thing.</p>
+        <p style="font-size:17px; color:#1a2340; line-height:1.7; margin:0;">Then Sallust does something a lesser writer would not. He has spent a whole book showing Catiline as a wrecker, and at the end he neither praises him nor makes excuses for him. He records that the man was found far in front of his own lines, among the enemy dead, still breathing a little, with the fierceness he had had while alive still on his face &mdash; and he does not tell you what to feel about it. This is where the <em>vēritās</em> thread from Module 9 reaches its hardest case: telling the truth about someone you find contemptible means reporting the parts that do him credit as well. Sallust closes the work not with a verdict but with the mood of the winning army, men finding relatives and friends among the enemy corpses, joy and grief moving through the camp together. Courage without any of the other virtues is still courage. It is also still a catastrophe. Both are true at once, and he refuses to simplify either.</p>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE WHOLE MODULE IN ONE TABLE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">If you can reconstruct this table from memory, you are ready for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:30%">What you see</th><th style="width:20%">What it is</th><th style="width:24%">How to translate it</th><th>The test</th></tr>
+            <tr><td class="lab"><em>timeō / metuō / vereor</em> + <strong><em>nē</em></strong> + subj.<br><span style="font-size:14px;color:#666;"><em>verēbātur nē dīlāberentur</em></span></td><td>fear clause</td><td class="end">&ldquo;afraid <strong>that</strong>&hellip;will / would&rdquo;</td><td>Step 2 fires. No &ldquo;not&rdquo; anywhere in the English.</td></tr>
+            <tr><td class="lab">a fear verb + <strong><em>nē nōn</em></strong> + subj.<br><span style="font-size:14px;color:#666;"><em>metuēbant nē nōn satis esset</em></span></td><td>fear clause, negative</td><td class="end">&ldquo;afraid that&hellip;<strong>will not</strong>&rdquo;</td><td>The <em>nōn</em> does the negating, and it may stand next to its own verb rather than next to <em>nē</em>.</td></tr>
+            <tr><td class="lab">a fear verb + <strong><em>ut</em></strong> + subj.<br><span style="font-size:14px;color:#666;"><em>timēbant ut invenīret</em></span></td><td>fear clause, negative &mdash; <strong>rare</strong></td><td class="end">&ldquo;afraid that&hellip;<strong>will not</strong>&rdquo;</td><td>Read it; do not write it. <em>Ut</em> alone carries the &ldquo;not.&rdquo;</td></tr>
+            <tr><td class="lab"><em>timor</em> or <em>metus</em> + <em>est / erat</em> + <strong><em>nē</em></strong><br><span style="font-size:14px;color:#666;"><em>metus erat nē dēficerent</em></span></td><td>fear clause off a <strong>noun</strong></td><td class="end">&ldquo;there is / was a fear <strong>that</strong>&hellip;&rdquo;</td><td>The fear word is a noun and the verb is only <em>esse</em>. This is the trap.</td></tr>
+            <tr><td class="lab">an ordinary verb + <strong><em>nē</em></strong> + subj.<br><span style="font-size:14px;color:#666;"><em>equōs remōvit nē quis effugeret</em></span></td><td>negative purpose &mdash; m08</td><td class="end">&ldquo;so that&hellip;<strong>not</strong>&rdquo;</td><td>Step 2 comes up empty and nothing else fires. Here <em>nē</em> does mean &ldquo;not.&rdquo;</td></tr>
+            <tr><td class="lab">a verb of ordering or asking + <em>ut</em> / <em>nē</em><br><span style="font-size:14px;color:#666;"><em>rogābat ut pugnārent</em></span></td><td>indirect command &mdash; m08</td><td class="end">&ldquo;asked them <strong>to</strong>&hellip;&rdquo; &middot; &ldquo;<strong>not to</strong>&hellip;&rdquo;</td><td>Step 3: <em>imperō, rogō, moneō, hortor, persuādeō</em>.</td></tr>
+            <tr><td class="lab">a signpost + <em>ut</em> / <strong><em>ut nōn</em></strong> + subj.<br><span style="font-size:14px;color:#666;"><em>tanta erat angustia ut&hellip;nōn possent</em></span></td><td>result &mdash; m09</td><td class="end">&ldquo;so &hellip; <strong>that</strong>&hellip;&rdquo;</td><td>Step 4: <em>tam, tantus, tālis, tot, adeō, ita</em>.</td></tr>
+            <tr><td class="lab">a fear verb + <strong><em>ut nōn</em></strong></td><td style="color:#8A1F16;">does not exist</td><td class="end">&mdash;</td><td>Never write it and never choose it. <em>Ut nōn</em> belongs to result alone.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>And the tense, from 12.03:</strong> present or future main verb &rarr; <strong>present</strong> subjunctive; past main verb &rarr; <strong>imperfect</strong> subjunctive. Those are the only two tenses available to you in this module. The perfect and pluperfect subjunctive are Module 13 &mdash; which begins next, and which exists partly because you cannot yet say &ldquo;I am afraid that it <em>has already</em> happened.&rdquo;</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; MIXED SELF-CHECK &middot; EVERYTHING FROM M09 TO M12</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four constructions now share two marker words, and a fifth arrives with a question word instead. The quiz will mix them, so mix them here first.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which construction is this?</div>
+
+            <div class="widget-row" data-correct="c" data-hint="Read the first word of the main clause. Is it on the signpost list?">
+                <div class="widget-row-prompt"><em>Adeō dēspērābant ut multī nocte ex castrīs discēderent.</em> <span style="font-style:normal; color:#8a6416;">(<em>dēspērō, dēspērāre</em> &mdash; to give up hope; <em>discēdō, discēdere, discessī</em> &mdash; to leave)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A fear clause needs a fear word, and dēspērō is about hope rather than fear. It would also need nē or ut carrying the fear, not adeō announcing a consequence.">A fear clause</button>
+                    <button data-choice="b" data-fb="Purpose has no signpost. Adeō in the main clause points forward to a consequence — and nobody gives up hope in order that their men will desert.">A purpose clause</button>
+                    <button data-choice="c" data-fb="Right — result. Step 4 fires on adeō: 'They were giving up hope so completely that many left the camp at night.' Adeō is the signpost that modifies a verb rather than an adjective.">A result clause &mdash; the signpost is <em>adeō</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 3. Is <em>hortātus est</em> a verb of urging?">
+                <div class="widget-row-prompt"><em>Cicerō senātum hortātus est ut Catilīnam hostem iūdicāret.</em> <span style="font-style:normal; color:#8a6416;">(<em>hortor, hortārī, hortātus sum</em> &mdash; to urge; <em>hostis, hostis</em> m. &mdash; public enemy; <em>iūdicō, iūdicāre</em> &mdash; to judge, declare)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — an indirect command. Hortātus est is the perfect of the deponent hortor, and urging is on step 3's list: 'Cicero urged the Senate to declare Catiline a public enemy.' The Senate did.">An indirect command &mdash; &ldquo;urged them <strong>to</strong> declare&rdquo;</button>
+                    <button data-choice="b" data-fb="No signpost in the main clause, so result is out. 'He urged the Senate so completely that…' is not what the sentence says.">A result clause</button>
+                    <button data-choice="c" data-fb="Hortātus est is a deponent perfect — 'he urged.' It looks passive and is not, which is Module 2's rule; and it is certainly not a verb of fearing.">A fear clause with the fear verb in the passive</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="What is the fear word here, and is it a verb?">
+                <div class="widget-row-prompt"><em>Metus erat nē Catilīna ipse in Galliam effugeret.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Erat is not a verb of fearing, so purpose is out — the trap only works if you insist the word in front of nē must be a verb of fearing. Widen the search to fear WORDS.">A negative purpose clause &mdash; &ldquo;there was fear so that he would not escape&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — a fear clause hanging off the noun metus. 'There was fear that Catiline himself would escape into Gaul.' Nē is a plain 'that,' and the fear was well founded: closing the route north was exactly what the Roman commanders were trying to do.">A fear clause off a noun &mdash; &ldquo;there was fear <strong>that</strong> he would escape&rdquo;</button>
+                    <button data-choice="c" data-fb="Result needs a signpost and the marker ut. Metus is a noun, not a signpost, and the marker here is nē.">A result clause &mdash; <em>metus</em> is the signpost</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Step 1. What kind of word opens the subordinate clause?">
+                <div class="widget-row-prompt"><em>Nēmō sciēbat quot mīlitēs Catilīnae vēra arma habērent.</em> <span style="font-style:normal; color:#8a6416;">(<em>quot</em> &mdash; how many; <em>vērus, -a, -um</em> &mdash; real, genuine)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is no signpost and no ut. Quot is the interrogative 'how many,' not the result signpost tot, 'so many' — the same pair that caused trouble last week.">A result clause with <em>quot</em> as the signpost</button>
+                    <button data-choice="b" data-fb="No fear word in the main clause: sciēbat means 'knew.' Not knowing is not fearing, however it feels.">A fear clause</button>
+                    <button data-choice="c" data-fb="Right — an indirect question, Module 11. Step 1 catches it: quot is a question word, so the sentence never entered the ut/nē family. 'Nobody knew how many of Catiline's soldiers had real weapons.' Sciēbat is imperfect, so secondary sequence, so habērent.">An indirect question &mdash; Module 11</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Same marker word as the <em>metus</em> sentence above. What is different about the main clause?">
+                <div class="widget-row-prompt"><em>Catilīna equōs remōvit nē quis ex proeliō effugeret.</em> <span style="font-style:normal; color:#8a6416;">(<em>quis</em> here &mdash; anyone)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — negative purpose. Remōvit is not a fear word, nobody is being ordered, and there is no signpost, so step 5 gives purpose: 'Catiline had the horses removed so that nobody would escape from the battle.' Here nē does mean 'not.' Compare line 5 of the reading, which gives the same act a positive purpose clause: both are true of the one decision.">A negative purpose clause &mdash; &ldquo;so that nobody would escape&rdquo;</button>
+                    <button data-choice="b" data-fb="A fear clause needs a fear word in the main clause, and remōvit is 'he removed.' 'Afraid that nobody would escape' reverses his intention completely.">A fear clause &mdash; &ldquo;afraid that nobody would escape&rdquo;</button>
+                    <button data-choice="c" data-fb="Indirect command needs a verb of ordering or asking, and there is none — Catiline is doing the removing, not telling anybody to do anything.">An indirect command</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- HANDOFF -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#128203; YOUR GRADED WORK FOR MODULE 12</div>
+        <div class="task">
+            <div class="th"><strong>1. <em>Ludus XII &mdash; Nē an Ut?</em></strong> &middot; Interactive Practice &amp; Games</div>
+            <div class="td">Seventy-five seconds of two-button sorting, and your <strong>best of unlimited attempts</strong> counts. Play it before the quiz. It drills the one thing a quiz cannot drill enough of &mdash; the marker word against the main clause &mdash; and it is the cheapest way to make the reversal automatic instead of effortful.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>2. Module 12 Quiz</strong> &middot; 40 points &middot; auto-graded, unlimited attempts, highest score kept</div>
+            <div class="td">Twenty items: what a fear clause is, the <em>nē</em> reversal, the negative polarity, four forms to produce, the look-alike sort, vocabulary and derivatives, and two best-translation items. Everything on this page and the four lessons before it. Every subjunctive on the quiz is present or imperfect, and you should not offer one that is not. A gloss is supplied for the translation section.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>3. Module 12 Translation</strong> &middot; 30 points &middot; teacher-reviewed, in Microsoft Word</div>
+            <div class="td">Five sentences English into Latin and three Latin into English, all vocabulary supplied. <strong>One of the five is not a fear clause at all</strong> &mdash; read the English before you write anything, because a purpose clause dressed as a fear clause says the opposite of what was asked. Save to OneDrive as <em>Lastname_Firstname_LatinAdv_M12_Translation.docx</em> and submit through Canvas.</div>
+        </div>
+        <div class="task">
+            <div class="th"><strong>4. Module 12 Reflection</strong> &middot; ungraded survey</div>
+            <div class="td">Five questions, no points. It tells your teacher what to help you with before Module 13, which doubles the number of subjunctive tenses you have to choose between. If the <em>nē</em> reversal still costs you a beat, say so here &mdash; it is much cheaper to fix now than after the four-tense system arrives.</div>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">13</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 13 &mdash; Perfect and Pluperfect Subjunctive</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The grey column from Module 7 finally opens. Two more tenses of the subjunctive, and with them the option Latin has been holding back all semester: saying that the thing in the clause was <strong>already finished</strong>. Every construction from Modules 8 to 12 gets re-examined with that option on the table &mdash; and the sentences of Sallust that this week's reading had to adapt around become readable exactly as he wrote them.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Line 5 of the reading and the last sentence of the self-check describe the <em>same act</em> &mdash; Catiline sending the horses away &mdash; and both are purpose clauses with the same two words available. Line 3 sits three lines above them with an identical <em>nē</em> and means something opposite, because the verb in front of it is a verb of fearing. That is the whole module: <strong>the marker word is evidence about nothing until you have read the main clause.</strong></p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 12.05 &middot; The Ground He Chose</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

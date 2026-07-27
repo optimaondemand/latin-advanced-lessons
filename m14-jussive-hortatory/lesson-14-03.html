@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 14.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 14</div>
+        <div style="font-size: 12px; color: #666;">Main-Clause Subjunctives</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 14.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">What Am I to Do?</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 14.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">What Am I to Do?</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Some questions are not looking for information. They are looking for a way out.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">The fourth and last main-clause use is the <strong>deliberative question</strong>: <em>Quid faciam?</em> &mdash; &ldquo;What am I to do?&rdquo; It is a real question, with a question mark, and the person asking it usually has no answer and does not expect one from anybody else. The subjunctive is what makes it that kind of question rather than a request for facts. You will also pick up this module's vocabulary today, all of it from the Roman courtroom &mdash; and you will meet the one place in this whole family where the negative is <strong>not</strong> <em>nē</em>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognise a <strong>deliberative question</strong> and translate it with &ldquo;am I to&hellip;?&rdquo; or &ldquo;was I to&hellip;?&rdquo;</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> choose present or imperfect according to whether the speaker is deciding <strong>now</strong> or looking back at a decision already made.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use this module's fifteen words about trials, votes and pleading, and name three English derivatives from them.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; A QUESTION WITH NO ANSWER IN IT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The name comes from <em>dēlīberō, dēlīberāre</em> &mdash; &ldquo;to weigh up, consider.&rdquo; A <strong>deliberative question</strong> puts the subjunctive in a main clause and adds a question mark. The speaker is not asking for a fact. He is asking what course of action is even available.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:22px; color:#0e1c42; line-height:1.5;"><em>Quid faciam?</em></div>
+            <div style="font-size:17px; color:#1a2340; margin-top:8px; line-height:1.7;">&ldquo;<strong>What am I to do?</strong>&rdquo; &mdash; or &ldquo;What should I do?&rdquo;, or &ldquo;What is there for me to do?&rdquo;<br>
+            Compare the indicative: <em>Quid faciō?</em> would be &ldquo;What am I doing?&rdquo; &mdash; a question about the actual present, the kind you could answer by looking.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">Three more, all of them the sort of thing a man says when the situation has closed in on him:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Quid ā vōbīs petam, iūdicēs?</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;What am I to ask of you, gentlemen of the jury?&rdquo; <span style="color:#8a6416;">Gloss: <em>petō, petere, petīvī</em> &mdash; to seek, ask for; <em>iūdex, iūdicis</em> m. &mdash; juror.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Ubi nunc auxilium petāmus?</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Where are we now to look for help?&rdquo; First person <strong>plural</strong> &mdash; a group deliberating together. <span style="color:#8a6416;">Gloss: <em>auxilium, auxiliī</em> n. &mdash; help, aid.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Utrum taceam an vēra dīcam?</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Am I to keep silent, or to say what is true?&rdquo; The <em>utrum&hellip;an</em> frame from Module 11, doing service in a deliberative question. <span style="color:#8a6416;">Gloss: <em>vēra</em> &mdash; true things, the truth (neuter plural of <em>vērus, -a, -um</em>).</span></div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Where you have heard this before.</strong> Not in Latin &mdash; in English, constantly. &ldquo;What am I supposed to do?&rdquo; &ldquo;Where do we go from here?&rdquo; &ldquo;How was I to know?&rdquo; None of those wants an answer either. Latin has a grammatical form for that gesture, which is one of the small ways the language is more precise than ours: it can mark the difference between asking for information and asking out of difficulty.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; TWO TENSES, AND THEY DO MEAN TIME THIS TIME</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Yesterday the tense of a wish told you about truth, not time. In a deliberative question the tense goes back to meaning what you would expect:</p>
+        <table class="para">
+            <tr><th style="width:20%">Tense</th><th style="width:34%">When the deliberating happens</th><th>English</th></tr>
+            <tr><td class="lab"><strong>PRESENT</strong><br><span style="font-size:14px; color:#666;"><em>faciam</em>, <em>petāmus</em>, <em>dīcam</em></span></td><td>now &mdash; the speaker is stuck at this moment</td><td class="end">&ldquo;What <strong>am I to</strong> do?&rdquo;<br>&ldquo;What <strong>should</strong> we do?&rdquo;</td></tr>
+            <tr><td class="lab"><strong>IMPERFECT</strong><br><span style="font-size:14px; color:#666;"><em>facerem</em>, <em>dīcerem</em>, <em>resisterem</em></span></td><td>then &mdash; the speaker is looking back at a moment when he was stuck, usually to defend what he chose</td><td class="end">&ldquo;What <strong>was I to</strong> do?&rdquo;<br>&ldquo;What <strong>should</strong> I <strong>have</strong> done?&rdquo;</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Quid facerem? Quid dīcerem?</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;What was I to do? What was I to say?&rdquo; <strong>Imperfect</strong> &mdash; and notice what the question is really doing. It is not curiosity. It is a defence: <em>there was nothing else I could have done, and you know it.</em> This is the tense a politician reaches for when the decision has already been made and is being criticised.</div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>And here comes a collision, exactly like the one in Module 13.</strong> For third- and fourth-conjugation verbs, the <strong>1st person singular present subjunctive</strong> and the <strong>1st person singular future indicative</strong> are <strong>the same form</strong>. <em>Faciam</em> is both &ldquo;let me do / am I to do&rdquo; and &ldquo;I will do.&rdquo; So is <em>dīcam</em>, <em>petam</em>, <em>veniam</em>, <em>audiam</em>. Latin lived with it; so must you. The good news is that the first and second conjugations keep them apart: <em>laudem</em> (subjunctive) against <em>laudābō</em> (future); <em>videam</em> against <em>vidēbō</em>. And in the plural everything separates: <em>faciāmus</em> (subjunctive) against <em>faciēmus</em> (future).</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#128161; <strong>So how do you decide?</strong> By the <strong>question</strong>, not the form. &ldquo;<em>Quid faciam?</em>&rdquo; asked by a man in trouble, with no answer following, is deliberative: &ldquo;what am I to do?&rdquo; The same words in a plain statement of intention &mdash; <em>crās hoc faciam</em>, &ldquo;tomorrow I will do this&rdquo; &mdash; are future indicative. And English has exactly the same ambiguity in the words &ldquo;What shall I do?&rdquo;, which is why the collision feels less strange than it looks.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE EXCEPTION: THIS ONE TAKES <em>NŌN</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">You have been told twice this week that main-clause subjunctives take <em>nē</em>. That is true of the jussive, the hortatory and the optative &mdash; three of the four. The <strong>deliberative question is the exception</strong>, and it negates with <strong><em>nōn</em></strong>.</p>
+        <table class="para">
+            <tr><th style="width:34%">Main-clause use</th><th style="width:18%">Negative</th><th>Example</th></tr>
+            <tr><td class="lab">jussive &mdash; &ldquo;let him&hellip;&rdquo;</td><td class="end"><em>nē</em></td><td><em>Nē veniat.</em> &mdash; &ldquo;Let him not come.&rdquo;</td></tr>
+            <tr><td class="lab">hortatory &mdash; &ldquo;let us&hellip;&rdquo;</td><td class="end"><em>nē</em></td><td><em>Nē dīcāmus.</em> &mdash; &ldquo;Let us not speak.&rdquo;</td></tr>
+            <tr><td class="lab">optative &mdash; a wish</td><td class="end"><em>nē</em></td><td><em>Utinam nē veniat!</em> &mdash; &ldquo;If only he may not come!&rdquo;</td></tr>
+            <tr><td class="lab"><strong>deliberative question</strong></td><td class="end"><strong><em>nōn</em></strong></td><td><em>An ego cōnsul nōn resisterem?</em> &mdash; &ldquo;Was I, the consul, <strong>not</strong> to resist?&rdquo;</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">The reason is worth having, because it is the same reason as before, read from the other end. <em>Nē</em> belongs to a <strong>willed</strong> action &mdash; something the speaker is trying to bring about or prevent. A deliberative question is not willing anything: it is <strong>asking</strong>, genuinely, and a question is closer to a statement of fact than to a command. So it takes the ordinary negative of statements, <em>nōn</em>. Three of the four want <em>nē</em> because three of the four are trying to make something happen. The fourth is only asking.</p>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Learn the exception now rather than discovering it later.</strong> This is the sort of detail that gets skipped in a hurry and then costs a mark on a translation. Write it on the same card as the <em>nē</em> rule: <strong>jussive, hortatory, optative &rarr; <em>nē</em>. Deliberative &rarr; <em>nōn</em>.</strong> <span style="color:#8a6416;">Gloss for the example: <em>an</em> &mdash; here introducing an indignant question, &ldquo;what, was I&hellip;?&rdquo;; <em>resistō, resistere, restitī</em> &mdash; to resist, stand against.</span></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128221; PART 4 &middot; THIS MODULE'S WORDS &mdash; THE COURTROOM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">On Friday you read Cicero defending a man on trial, so the vocabulary this week is the vocabulary of a Roman court and a Roman election. Learn these fifteen; every one of them appears in the reading, the quiz or the translation.</p>
+        <table class="para">
+            <tr><th style="width:36%">Latin entry</th><th>Meaning</th></tr>
+            <tr><td class="lab"><em>utinam</em> (adv.)</td><td>if only, would that &mdash; the signpost of a wish</td></tr>
+            <tr><td class="lab"><em>iūdex, iūdicis</em> m.</td><td>juror, judge</td></tr>
+            <tr><td class="lab"><em>iūdicium, iūdiciī</em> n.</td><td>trial, court case; judgment</td></tr>
+            <tr><td class="lab"><em>reus, reī</em> m.</td><td>defendant, the accused man</td></tr>
+            <tr><td class="lab"><em>ambitus, ambitūs</em> m.</td><td>bribery at elections; illegal canvassing for votes</td></tr>
+            <tr><td class="lab"><em>absolvō, absolvere, absolvī, absolūtum</em></td><td>to acquit, clear of a charge</td></tr>
+            <tr><td class="lab"><em>condemnō, condemnāre, condemnāvī, condemnātum</em></td><td>to condemn, find guilty</td></tr>
+            <tr><td class="lab"><em>ōrō, ōrāre, ōrāvī, ōrātum</em></td><td>to beg, plead, pray</td></tr>
+            <tr><td class="lab"><em>obsecrō, obsecrāre, obsecrāvī, obsecrātum</em></td><td>to implore, entreat (stronger than <em>ōrō</em>)</td></tr>
+            <tr><td class="lab"><em>precor, precārī, precātus sum</em> (deponent)</td><td>to pray, to beg for</td></tr>
+            <tr><td class="lab"><em>cōnservō, cōnservāre, cōnservāvī, cōnservātum</em></td><td>to preserve, keep safe</td></tr>
+            <tr><td class="lab"><em>postulō, postulāre, postulāvī, postulātum</em></td><td>to demand, require</td></tr>
+            <tr><td class="lab"><em>comitia, comitiōrum</em> n. pl.</td><td>the elections; the assembly that voted</td></tr>
+            <tr><td class="lab"><em>suffrāgium, suffrāgiī</em> n.</td><td>a vote</td></tr>
+            <tr><td class="lab"><em>dēsignātus, -a, -um</em></td><td>elected but not yet in office; <em>cōnsul dēsignātus</em> = consul-elect</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Etymology minute: <em>ambitus</em>.</strong> The word means, literally, <strong>a going-around</strong> &mdash; because that is how a Roman ran for office. A candidate walked the city with a crowd of supporters, greeted voters by name, and asked for their <em>suffrāgia</em>. Going round was legal; paying while you went round was <em>ambitus</em>, the crime. And the English word that came out of it is <strong>ambition</strong> &mdash; which still carries a faint whiff of the original suspicion. (The verb behind <em>ambitus</em> is a compound of <em>eō</em>, which is Module 15.)</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 16px 0 6px 0;">Six derivatives. Say the English word before you flip the card.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; WHICH ENGLISH WORD CAME FROM THIS?</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>absolvō</em></div><div class="hint">to acquit</div><div class="back"><strong>absolve, absolution.</strong> Literally &ldquo;to loosen away from&rdquo; &mdash; <em>ab</em> + <em>solvō</em>. A Roman jury did not forgive a defendant; it untied him from the charge.</div></div>
+                <div class="flip-card"><div class="front"><em>suffrāgium</em></div><div class="hint">a vote</div><div class="back"><strong>suffrage.</strong> The right to vote. The nineteenth-century campaigners called themselves <em>suffragists</em> from this Latin noun.</div></div>
+                <div class="flip-card"><div class="front"><em>iūdex, iūdicis</em></div><div class="hint">juror</div><div class="back"><strong>judge, judicial, judicious, prejudice.</strong> A <em>prae-iūdicium</em> is a judgment made in advance &mdash; before the trial.</div></div>
+                <div class="flip-card"><div class="front"><em>precor</em></div><div class="hint">to beg</div><div class="back"><strong>prayer</strong> &mdash; and, less obviously, <strong>precarious</strong>. Something <em>precārius</em> was held only by begging, at somebody else's pleasure. That is why a precarious position is one that can be taken away.</div></div>
+                <div class="flip-card"><div class="front"><em>cōnservō</em></div><div class="hint">to keep safe</div><div class="back"><strong>conserve, conservation, conservative.</strong> <em>Con-</em> (thoroughly) + <em>servō</em> (to save, keep). Cicero's word for what he wanted the jury to do with Murena.</div></div>
+                <div class="flip-card"><div class="front"><em>ōrō, ōrāre</em></div><div class="hint">to plead</div><div class="back"><strong>orator, oration, oral.</strong> And <em>ōrātiō</em>, a speech &mdash; the word Cicero used for the thing you will read on Friday.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; SIX CHECKS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four on the deliberative question, two on the words. The last item is a preview of tomorrow.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Choose the reading that fits the Latin.</div>
+
+            <div class="widget-row" data-correct="b" data-hint="A man on trial, out of options, asking a room. Is he predicting or deliberating?">
+                <div class="widget-row-prompt"><em>Quid igitur faciam, iūdicēs?</em> &mdash; spoken by an advocate who has just admitted he wrote the law his client is charged under.</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="&quot;What will I do therefore, jurors?&quot; reads faciam as the future indicative — possible as a bare form, but it makes the speaker sound as if he is announcing a plan. He is not; he is showing the jury that he is caught.">Future indicative &mdash; &ldquo;What will I do, then?&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — deliberative. &quot;What then am I to do, gentlemen of the jury?&quot; The question has no answer coming, and its real work is to show the audience the speaker's difficulty. Faciam is present subjunctive here.">Deliberative subjunctive &mdash; &ldquo;What then am I to do?&rdquo;</button>
+                    <button data-choice="c" data-fb="An indirect question would need a verb of asking or knowing in front of it — rogō quid faciam, &quot;I ask what I am to do.&quot; There is no such verb here; the question stands on its own and ends with a question mark.">An indirect question after an understood <em>rogō</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Dīcerem is imperfect. Is the speaker stuck now, or was he stuck then?">
+                <div class="widget-row-prompt"><em>Quid dīcerem? Quid tum facerem?</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An imperfect subjunctive is not a wish here — there is no utinam, and the sentence is a question. Yesterday's rule about wishes does not reach this construction.">A wish about the present &mdash; &ldquo;if only I were speaking&rdquo;</button>
+                    <button data-choice="b" data-fb="&quot;What am I to say?&quot; would be the PRESENT subjunctive, dīcam. The imperfect dīcerem pushes the whole difficulty back into the past.">Deliberating now &mdash; &ldquo;What am I to say?&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — imperfect, so the speaker is looking back at a moment when he had to decide. &quot;What was I to say? What was I to do then?&quot; The word tum (&quot;then, at that time&quot;) confirms it.">Deliberating about the past &mdash; &ldquo;What was I to say?&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="This is the one exception in the family. Which negative does a deliberative question take?">
+                <div class="widget-row-prompt">&ldquo;Was I, the consul, not to resist?&rdquo; &mdash; <em>An ego cōnsul ____ resisterem?</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — nōn. The deliberative question is the exception in this family: it is a genuine question rather than a willed command or wish, so it takes the ordinary negative nōn.">nōn</button>
+                    <button data-choice="b" data-fb="Nē is right for the other three main-clause uses — jussive, hortatory and optative — because all three are trying to make something happen or not happen. A deliberative question is only asking, so it takes nōn.">nē</button>
+                    <button data-choice="c" data-fb="Nē nōn is the fear-clause combination from Module 12, meaning &quot;that... not&quot; after a verb of fearing. There is no verb of fearing here, and no subordinate clause at all.">nē nōn</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="One of these has a verb of asking in front of the subjunctive. That changes what the clause is.">
+                <div class="widget-row-prompt">Which is the <strong>deliberative</strong> question? &nbsp;(i) <em>Cicerō rogāvit quid faceret.</em> &nbsp;(ii) <em>Quid faciam, iūdicēs?</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Sentence (i) is an INDIRECT question from Module 11: rogāvit is the main verb, quid is the question word, and faceret is a subordinate subjunctive whose tense was chosen by the sequence rule. &quot;Cicero asked what he should do.&quot;">(i), because it has a question word and a subjunctive</button>
+                    <button data-choice="b" data-fb="Right — (ii). The subjunctive faciam is the MAIN verb of its own sentence, there is no verb of asking anywhere, and the sentence ends in a real question mark. In (i) the question has been swallowed by rogāvit, which is what makes it indirect.">(ii), because the subjunctive is the main verb and the question is asked out loud</button>
+                    <button data-choice="c" data-fb="They are two different constructions. (i) reports a question somebody asked; (ii) asks one. The grammar shows it: (i) has a main verb above its subjunctive, and (ii) does not.">Both, since both contain <em>quid</em> plus a subjunctive</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Think of the English legal word that starts with ab-.">
+                <div class="widget-row-prompt"><em>Absolvātur.</em> &mdash; What has happened to the defendant?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Condemnō is the opposite: to find guilty. Absolvō is ab + solvō, &quot;to loosen away from&quot; — to untie a man from the charge.">He has been condemned</button>
+                    <button data-choice="b" data-fb="Absolvātur is subjunctive, not indicative — so nothing has been reported as fact. As a main-clause subjunctive it is a jussive or a wish: &quot;let him be acquitted&quot; / &quot;may he be acquitted.&quot;">He has definitely been acquitted, as a statement of fact</button>
+                    <button data-choice="c" data-fb="Right — &quot;Let him be acquitted&quot; or &quot;may he be acquitted.&quot; Present subjunctive passive of absolvō, standing alone as a main verb: a jussive, or with utinam in front of it, a wish that is still open. English absolve and absolution come from this verb.">Nothing yet &mdash; this says &ldquo;let him be acquitted&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Count the verbs and find the one with nothing in front of it.">
+                <div class="widget-row-prompt"><em>Vōs ōrō atque obsecrō ut hunc virum cōnservētis.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right, and this is tomorrow's whole lesson in one sentence. Ōrō and obsecrō are INDICATIVE main verbs (&quot;I beg and implore you&quot;), and cōnservētis is a subordinate subjunctive inside an indirect command opened by ut (m08). There is no main-clause subjunctive here at all.">An indirect command &mdash; the subjunctive is subordinate, not main</button>
+                    <button data-choice="b" data-fb="Cōnservētis is subjunctive, but it is not a main-clause use: ut sits in front of it and the indicative verbs ōrō atque obsecrō sit above it. A jussive has nothing in front of it and nothing above it.">A jussive &mdash; &ldquo;let them preserve this man&rdquo;</button>
+                    <button data-choice="c" data-fb="A wish would need utinam, or at least no governing verb. Here ōrō atque obsecrō governs the clause: &quot;I beg and implore you TO preserve this man.&quot; That is an indirect command from Module 8.">A wish &mdash; &ldquo;if only you would preserve this man&rdquo;</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 14.04 &mdash; Main Clause or Subordinate?</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The most useful sort in the module, and a three-step procedure for making it. Plus the <em>nē</em> table you have been promised all week: <strong>four</strong> different jobs for one two-letter word, and how to tell in about a second which one you are looking at.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">&ldquo;<strong>Am I to&hellip;?</strong>&rdquo; for the present, &ldquo;<strong>was I to&hellip;?</strong>&rdquo; for the past &mdash; and remember that this one, alone in the family, takes <strong><em>nōn</em></strong>. Three of the four main-clause uses are trying to make something happen. This one is only asking.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 14.03 &middot; What Am I to Do?</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

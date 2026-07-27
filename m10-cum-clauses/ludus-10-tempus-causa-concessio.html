@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ludus X — Tempus, Causa, an Concessiō? | M/J Latin Advanced</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0E1C42; color: #fff; }
+    .wrap { max-width: 640px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+    .top { background: #0E1C42; border-bottom: 4px solid #55C8E8; padding: 16px 24px; text-align: center; }
+    .top .game { font-size: 13px; letter-spacing: 2px; color: #55C8E8; text-transform: uppercase; }
+    .top .name { font-size: 26px; margin-top: 2px; }
+    .top .sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .stage { flex: 1; padding: 22px 24px; display: flex; flex-direction: column; }
+    .bar-wrap { background: rgba(255,255,255,0.15); border-radius: 20px; height: 12px; overflow: hidden; margin-bottom: 6px; }
+    #bar { background: #55C8E8; height: 100%; width: 100%; transition: width 0.25s linear; }
+    .meta { display: flex; justify-content: space-between; font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 18px; }
+    .meta strong { color: #C7922C; }
+    .card { background: #fff; color: #0E1C42; border-radius: 12px; padding: 30px 24px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+    .prompt-label { font-size: 13px; color: #6b7a99; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .prompt { font-size: 26px; margin-bottom: 6px; line-height: 1.35; }
+    .prompt-note { font-size: 15px; color: #6b7a99; min-height: 20px; }
+    .opts { display: flex; gap: 12px; margin-top: 22px; }
+    .opts button { flex: 1; padding: 18px 10px; font-size: 18px; font-family: inherit; border: 2px solid #D0D9E8; background: #F4F6FA; color: #0E1C42; border-radius: 10px; cursor: pointer; transition: all 0.1s; }
+    .opts button:hover { border-color: #55C8E8; }
+    .opts button.right { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .opts button.wrong { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .btn { display: inline-block; padding: 15px 40px; font-size: 19px; font-family: inherit; background: #C7922C; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 18px; }
+    .btn:hover { background: #b3831f; }
+    .center { text-align: center; margin: auto 0; }
+    .big { font-size: 60px; color: #55C8E8; margin: 6px 0; }
+    .lead { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.9); }
+    .best { font-size: 15px; color: #C7922C; margin-top: 10px; }
+    .rules { text-align: left; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 18px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); margin: 14px 0; }
+    .hidden { display: none; }
+    .foot { text-align: center; font-size: 12px; color: rgba(255,255,255,0.4); padding: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <div class="game">Ludus X</div>
+        <div class="name">Tempus, Causa, an Concessiō?</div>
+        <div class="sub">M/J Latin Advanced &middot; Module 10</div>
+    </div>
+    <div class="stage">
+
+        <!-- START -->
+        <div id="start" class="center">
+            <div class="lead"><em>Tempus</em> is time. <em>Causa</em> is a reason. <em>Concessiō</em> is a concession &mdash; the &ldquo;although.&rdquo; One word, <em>cum</em>, does all three and works as a preposition besides. How fast can you run the four steps?</div>
+            <div class="rules">
+                &#9201;&#65039; You have <strong>75 seconds</strong>.<br>
+                &#9989; Tap the right answer &mdash; each correct answer adds to your score.<br>
+                &#128260; Play as many times as you like: <strong>your best score counts.</strong>
+            </div>
+            <div class="best" id="best-start"></div>
+            <button class="btn" id="go">Incipe! (Begin)</button>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play" class="hidden">
+            <div class="bar-wrap"><div id="bar"></div></div>
+            <div class="meta"><span>&#9201;&#65039; <strong id="time">75</strong>s</span><span>Score: <strong id="score">0</strong></span></div>
+            <div class="card">
+                <div class="prompt-label" id="p-label">Preposition or conjunction?</div>
+                <div class="prompt" id="p-text">&mdash;</div>
+                <div class="prompt-note" id="p-note"></div>
+                <div class="opts"><button id="opt0"></button><button id="opt1"></button></div>
+            </div>
+        </div>
+
+        <!-- END -->
+        <div id="end" class="hidden center">
+            <div class="lead">Tempus! (Time's up)</div>
+            <div class="big" id="final">0</div>
+            <div class="lead">correct answers</div>
+            <div class="best" id="best-end"></div>
+            <button class="btn" id="again">Iterum! (Play again)</button>
+            <div class="rules" style="margin-top:18px;">&#128221; When you are happy with your best score, record it where your course tells you (this game is graded on your <strong>best of unlimited attempts</strong>).</div>
+        </div>
+
+    </div>
+    <div class="foot">&copy; Optima Academy Online &middot; Ludus &middot; Tempus, Causa, an Concessiō? (Module 10)</div>
+</div>
+
+<script>
+(function () {
+  var ITEMS = [
+    // (a) Step 1 — preposition or conjunction?
+    { label: "Step 1: preposition or conjunction?", q: "cum senātōribus", note: "any verb in the group?", opts: ["Preposition", "Conjunction"], a: "Preposition" },
+    { label: "Step 1: preposition or conjunction?", q: "cum senātōrēs tacērent", note: "any verb in the group?", opts: ["Preposition", "Conjunction"], a: "Conjunction" },
+    { label: "Step 1: preposition or conjunction?", q: "cum praesidiō", note: "any verb in the group?", opts: ["Conjunction", "Preposition"], a: "Preposition" },
+    { label: "Step 1: preposition or conjunction?", q: "cum vesper vēnit", note: "any verb in the group?", opts: ["Conjunction", "Preposition"], a: "Conjunction" },
+    { label: "Step 1: preposition or conjunction?", q: "sēcum", note: "look at the whole word", opts: ["Preposition", "Conjunction"], a: "Preposition" },
+    { label: "Step 1: preposition or conjunction?", q: "cum exercitū in Etrūriā", note: "any verb in the group?", opts: ["Conjunction", "Preposition"], a: "Preposition" },
+    { label: "Step 1: preposition or conjunction?", q: "cum Lentulus dēmitterētur", note: "any verb in the group?", opts: ["Preposition", "Conjunction"], a: "Conjunction" },
+    { label: "Step 1: preposition or conjunction?", q: "nōbīscum", note: "look at the whole word", opts: ["Conjunction", "Preposition"], a: "Preposition" },
+
+    // (b) Step 2 — read the mood
+    { label: "Step 2: which mood?", q: "cum cīvēs tacēbant", note: "tacēbant", opts: ["Indicative", "Subjunctive"], a: "Indicative" },
+    { label: "Step 2: which mood?", q: "cum cīvēs tacērent", note: "tacērent", opts: ["Indicative", "Subjunctive"], a: "Subjunctive" },
+    { label: "Step 2: which mood?", q: "cum Cicerō haec dīxit", note: "dīxit", opts: ["Subjunctive", "Indicative"], a: "Indicative" },
+    { label: "Step 2: which mood?", q: "cum Cicerō haec dīceret", note: "dīceret", opts: ["Subjunctive", "Indicative"], a: "Subjunctive" },
+    { label: "Step 2: which mood?", q: "cum coniūrātī convēnērunt", note: "convēnērunt", opts: ["Indicative", "Subjunctive"], a: "Indicative" },
+    { label: "Step 2: which mood?", q: "cum coniūrātī convenīrent", note: "convenīrent", opts: ["Indicative", "Subjunctive"], a: "Subjunctive" },
+    { label: "Step 2: which mood?", q: "cum turba in viīs stāret", note: "stāret", opts: ["Subjunctive", "Indicative"], a: "Subjunctive" },
+    { label: "Step 2: which mood?", q: "cum turba in viīs stābat", note: "stābat", opts: ["Subjunctive", "Indicative"], a: "Indicative" },
+
+    // (c) Indicative → is it one of the three, or plain time?
+    { label: "How many meanings live here?", q: "cum + INDICATIVE", note: "after step 2", opts: ["Only “when”", "Three possibilities"], a: "Only “when”" },
+    { label: "How many meanings live here?", q: "cum + SUBJUNCTIVE", note: "after step 2", opts: ["Only “when”", "Three possibilities"], a: "Three possibilities" },
+
+    // (d) Step 3 — tamen
+    { label: "Step 3: concessive or not?", q: "Cum perīculum esset, tamen Catō surrēxit.", note: "read the main clause", opts: ["Concessive", "Not concessive"], a: "Concessive" },
+    { label: "Step 3: concessive or not?", q: "Cum nēmō respondēret, Cicerō iterum rogāvit.", note: "read the main clause", opts: ["Concessive", "Not concessive"], a: "Not concessive" },
+    { label: "Step 3: concessive or not?", q: "Cum cōnsul esset, tamen ipse ambulābat.", note: "read the main clause", opts: ["Not concessive", "Concessive"], a: "Concessive" },
+    { label: "What does tamen mean?", q: "tamen", note: "the concessive signal", opts: ["nevertheless", "therefore"], a: "nevertheless" },
+
+    // (e) Step 4 — reason or scenery?
+    { label: "Step 4: since, or when?", q: "Cum Lentulus praetor esset, magistrātū sē abdicāre dēbuit.", note: "is the clause the reason?", opts: ["Since (causal)", "When (temporal)"], a: "Since (causal)" },
+    { label: "Step 4: since, or when?", q: "Cum Lentulus in carcerem dēmitterētur, vindicēs eum necāvērunt.", note: "is the clause the reason?", opts: ["Since (causal)", "When (temporal)"], a: "When (temporal)" },
+    { label: "Step 4: since, or when?", q: "Cum nēmō respondēret, Cicerō iterum rogāvit.", note: "is the clause the reason?", opts: ["When (temporal)", "Since (causal)"], a: "Since (causal)" },
+    { label: "Step 4: since, or when?", q: "Cum tenebrae venīrent, praetōrēs coniūrātōs dūxērunt.", note: "is the clause the reason?", opts: ["When (temporal)", "Since (causal)"], a: "When (temporal)" },
+
+    // (f) The indicative cousins
+    { label: "Which mood does it take?", q: "quamquam (“although”)", note: "the plain-fact cousin", opts: ["Indicative", "Subjunctive"], a: "Indicative" },
+    { label: "Which mood does it take?", q: "quia (“because”)", note: "the plain-fact cousin", opts: ["Subjunctive", "Indicative"], a: "Indicative" },
+    { label: "What does it mean?", q: "quamquam", note: "+ indicative", opts: ["although", "because"], a: "although" },
+    { label: "What does it mean?", q: "quia", note: "+ indicative", opts: ["although", "because"], a: "because" },
+
+    // (g) Making a cum clause negative
+    { label: "How do you negate it?", q: "“since he was NOT answering”", note: "a cum clause, not purpose or result", opts: ["cum nōn respondēret", "cum nē respondēret"], a: "cum nōn respondēret" },
+    { label: "Which construction owns nē?", q: "nē", note: "not cum clauses", opts: ["Negative purpose", "Negative cum clause"], a: "Negative purpose" },
+    { label: "Which construction owns ut nōn?", q: "ut nōn", note: "not cum clauses", opts: ["Negative cum clause", "Negative result"], a: "Negative result" },
+
+    // (h) Sequence of tenses inside a cum clause
+    { label: "Which subjunctive?", q: "Cum cōnsul haec ____, populus tacēbat.", note: "tacēbat is imperfect (dīcō)", opts: ["dīcat", "dīceret"], a: "dīceret" },
+    { label: "Which subjunctive?", q: "Cum cōnsul haec ____, populus tacet.", note: "tacet is present (dīcō)", opts: ["dīcat", "dīceret"], a: "dīcat" },
+    { label: "Which subjunctive?", q: "Cum turba in viīs ____, cōnsul tacēbat.", note: "tacēbat is imperfect (stō)", opts: ["stet", "stāret"], a: "stāret" },
+    { label: "Which subjunctive?", q: "Cum Cicerō ____, populus audit.", note: "audit is present (loquor, deponent)", opts: ["loquātur", "loquerētur"], a: "loquātur" },
+
+    // (i) Module vocabulary
+    { label: "What does it mean?", q: "vix", note: "adverb", opts: ["scarcely", "already"], a: "scarcely" },
+    { label: "What does it mean?", q: "iam", note: "adverb", opts: ["scarcely", "already"], a: "already" },
+    { label: "What does it mean?", q: "nōndum", note: "adverb", opts: ["not yet", "openly"], a: "not yet" },
+    { label: "What does it mean?", q: "apertē", note: "adverb", opts: ["not yet", "openly"], a: "openly" },
+    { label: "What does it mean?", q: "tenebrae", note: "noun, plural in form", opts: ["darkness", "crowd"], a: "darkness" },
+    { label: "What does it mean?", q: "turba", note: "noun", opts: ["darkness", "crowd"], a: "crowd" },
+    { label: "What does it mean?", q: "vesper", note: "noun", opts: ["evening", "prison"], a: "evening" },
+    { label: "What does it mean?", q: "carcer", note: "noun", opts: ["evening", "prison"], a: "prison" },
+    { label: "What does it mean?", q: "cēnseō", note: "verb — and what a senator does", opts: ["to be of the opinion", "to applaud"], a: "to be of the opinion" },
+    { label: "What does it mean?", q: "plaudō", note: "verb", opts: ["to be of the opinion", "to applaud"], a: "to applaud" },
+    { label: "What does it mean?", q: "taceō", note: "verb", opts: ["to be silent", "to stand"], a: "to be silent" },
+    { label: "What does it mean?", q: "mōrēs", note: "the plural of mōs", opts: ["character, way of life", "customs officers"], a: "character, way of life" },
+    { label: "Deponent or not?", q: "ēgredior, ēgredī, ēgressus sum", note: "check the principal parts", opts: ["Deponent", "Not deponent"], a: "Deponent" },
+    { label: "Deponent or not?", q: "incipiō, incipere, incēpī", note: "check the principal parts", opts: ["Deponent", "Not deponent"], a: "Not deponent" }
+  ];
+  var DURATION = 75;
+  var order = [], oi = 0, score = 0, endAt = 0, tick = null, locked = false;
+
+  var el = function (id) { return document.getElementById(id); };
+  var startScreen = el('start'), playScreen = el('play'), endScreen = el('end');
+
+  function bestKey() { return 'ludus10_tempus_causa_concessio_best'; }
+  function getBest() { try { return parseInt(localStorage.getItem(bestKey()) || '0', 10); } catch (e) { return 0; } }
+  function setBest(v) { try { localStorage.setItem(bestKey(), String(v)); } catch (e) {} }
+  function showBest() {
+    var b = getBest();
+    el('best-start').textContent = b > 0 ? ('Your best so far: ' + b) : '';
+  }
+
+  function shuffle(n) {
+    var arr = [];
+    for (var i = 0; i < n; i++) arr.push(i);
+    for (var j = arr.length - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = arr[j]; arr[j] = arr[k]; arr[k] = tmp;
+    }
+    return arr;
+  }
+
+  function render() {
+    if (oi >= order.length) { order = shuffle(ITEMS.length); oi = 0; }
+    var it = ITEMS[order[oi]];
+    el('p-label').innerHTML = it.label;
+    el('p-text').innerHTML = it.q;
+    el('p-note').innerHTML = it.note || '';
+    var b0 = el('opt0'), b1 = el('opt1');
+    b0.className = ''; b1.className = '';
+    b0.textContent = it.opts[0]; b1.textContent = it.opts[1];
+    b0.dataset.v = it.opts[0]; b1.dataset.v = it.opts[1];
+    locked = false;
+  }
+
+  function answer(btn) {
+    if (locked) return;
+    locked = true;
+    var it = ITEMS[order[oi]];
+    var right = btn.dataset.v === it.a;
+    btn.className = right ? 'right' : 'wrong';
+    if (right) { score++; el('score').textContent = score; }
+    else {
+      var other = btn.id === 'opt0' ? el('opt1') : el('opt0');
+      other.className = 'right';
+    }
+    setTimeout(function () { oi++; render(); }, right ? 260 : 700);
+  }
+
+  function updateTimer() {
+    var remain = Math.max(0, Math.round((endAt - Date.now()) / 1000));
+    el('time').textContent = remain;
+    el('bar').style.width = (remain / DURATION * 100) + '%';
+    if (remain <= 0) finish();
+  }
+
+  function start() {
+    score = 0; oi = 0; order = shuffle(ITEMS.length);
+    el('score').textContent = '0';
+    startScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+    playScreen.classList.remove('hidden');
+    render();
+    endAt = Date.now() + DURATION * 1000;
+    updateTimer();
+    tick = setInterval(updateTimer, 250);
+  }
+
+  function finish() {
+    clearInterval(tick);
+    playScreen.classList.add('hidden');
+    el('final').textContent = score;
+    var b = getBest();
+    if (score > b) { setBest(score); el('best-end').textContent = 'New best score!'; }
+    else { el('best-end').textContent = 'Your best so far: ' + b; }
+    endScreen.classList.remove('hidden');
+  }
+
+  el('go').addEventListener('click', start);
+  el('again').addEventListener('click', start);
+  el('opt0').addEventListener('click', function () { answer(this); });
+  el('opt1').addEventListener('click', function () { answer(this); });
+  showBest();
+})();
+</script>
+</body>
+</html>

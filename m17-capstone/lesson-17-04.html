@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 17.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 17</div>
+        <div style="font-size: 12px; color: #666;">Capstone &amp; Semester Final</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 17.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">How to Sit a Cumulative Exam</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 17.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">How to Sit a Cumulative Exam</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; Procedure</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">A long Latin sentence is not a harder sentence. It is several ordinary sentences stacked inside each other.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Two things today, and the second is the real one. First, five habits for sitting an exam that covers a whole semester &mdash; the sort of advice that sounds obvious and that almost nobody actually does. Then a <strong>thirty-five-word Latin sentence with seven constructions in it</strong>, taken apart clause by clause in front of you, using a procedure you can run on anything. Then you do it again yourself on a second sentence.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find the main verb of a long Latin sentence before I try to translate any of it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> mark the boundaries of every subordinate clause and name each one by its opening word and mood.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use two exam attempts deliberately instead of accidentally.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; FIVE HABITS WORTH MORE THAN ANOTHER HOUR OF REVISION</div>
+        <table class="para">
+            <tr><th style="width:6%">#</th><th style="width:30%">The habit</th><th>Why it earns points</th></tr>
+            <tr><td class="lab"><strong>1</strong></td><td class="end">On a form-production question, say the <strong>sequence</strong> out loud before you write anything.</td><td>Every short-answer form item on the Final gives you the main verb on purpose. &ldquo;<em>Rogāvit</em> is perfect &rarr; secondary &rarr; imperfect subjunctive&rdquo; takes four seconds and prevents the single commonest error on the exam, which is a correctly built form in the wrong tense.</td></tr>
+            <tr><td class="lab"><strong>2</strong></td><td class="end">On a construction question, find the <strong>main verb</strong> before you look at <em>ut</em> or <em>nē</em>.</td><td>Yesterday's tables all turned on this. A verb of fearing makes <em>nē</em> mean &ldquo;that&rdquo;; a verb of commanding makes the <em>ut</em> clause the content of an order; anything else makes it purpose. The little word is the last thing to look at, not the first.</td></tr>
+            <tr><td class="lab"><strong>3</strong></td><td class="end">On a best-translation question, read <strong>all four options to the end</strong> before choosing.</td><td>These items are built so that two options are fluent English and only one is a correct reading of the Latin. The wrong-but-fluent option is usually second in the list, and if you stop reading when something sounds right you will take it.</td></tr>
+            <tr><td class="lab"><strong>4</strong></td><td class="end">Write down the number of every item you were <strong>unsure</strong> of, even the ones you got right.</td><td>Because you have two attempts. Between them, that list is your entire revision plan &mdash; targeted, short, and generated by the exam itself rather than by guessing what might be on it.</td></tr>
+            <tr><td class="lab"><strong>5</strong></td><td class="end">Do not offer a form you <strong>cannot parse</strong>.</td><td>If you cannot say what tense, voice, mood, person and number a form is, you have not produced it &mdash; you have remembered a shape. On a 50-item exam a shape you cannot parse will let you down about half the time. Build it from the rule instead.</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>One honest warning about macrons.</strong> The short-answer items on the Final accept both the fully macronned spelling and the plain-ASCII spelling &mdash; <em>loquerētur</em> and <em>loqueretur</em> are both marked correct, because not every keyboard can produce a macron. What is <em>not</em> accepted is the wrong vowel or the wrong ending. So type the form however your keyboard lets you, and spend your attention on getting the ending right.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE PROCEDURE FOR A LONG SENTENCE &mdash; SIX STEPS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Notice that steps 1 to 5 involve <strong>no translation at all</strong>. That is deliberate. The mistake almost everyone makes with a long sentence is to start translating at the first word, which means guessing at the structure from inside it.</p>
+        <table class="para">
+            <tr><th style="width:8%">Step</th><th style="width:34%">Do this</th><th>Notes</th></tr>
+            <tr><td class="lab"><strong>1</strong></td><td class="end">Read the whole sentence to the end. Do not translate.</td><td>You are looking for shape, not meaning. Where are the commas? Where are the little words?</td></tr>
+            <tr><td class="lab"><strong>2</strong></td><td class="end">Mark every <strong>finite</strong> verb.</td><td>Finite means it has a person and number: <em>-t, -nt, -mus, -tis, -m, -s</em> or the passive equivalents. Participles and infinitives are <strong>not</strong> finite and can never be the main verb. Each finite verb is one clause.</td></tr>
+            <tr><td class="lab"><strong>3</strong></td><td class="end">Find the <strong>main</strong> verb: the finite verb whose clause has no subordinating word in front of it.</td><td>Subordinating words: <em>ut, nē, cum, sī, nisi, quamquam, quia, quod</em>, a relative pronoun, a question word. Cross out every verb that has one of these in front of its clause. What is left is your main verb.</td></tr>
+            <tr><td class="lab"><strong>4</strong></td><td class="end">Draw the clause boundaries.</td><td>A subordinating word opens a clause; its own finite verb usually closes it. Clauses <strong>nest</strong> &mdash; one can sit entirely inside another. Latin does this far more happily than English.</td></tr>
+            <tr><td class="lab"><strong>5</strong></td><td class="end">Name each clause: <strong>opening word + mood</strong>.</td><td>This is Lesson 17.03's master table, applied. Write the label next to the clause. Do not skip this and hope.</td></tr>
+            <tr><td class="lab"><strong>6</strong></td><td class="end">Now translate, <strong>starting from the main clause</strong> and working outward.</td><td>Translate the main clause first even if it sits in the middle of the sentence, then hang each subordinate clause off it. Rearrange freely into English word order &mdash; that is not cheating, it is translating.</td></tr>
+        </table>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 3 &middot; THE WORKED EXAMPLE &mdash; SEVEN CONSTRUCTIONS, THIRTY-FIVE WORDS</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>This sentence is the adaptation's own Latin,</strong> written for this lesson out of the events of 5 December 63 BC. It is <strong>not</strong> a sentence from Sallust or from Cicero, and it should not be quoted as one. The historical frame is sound &mdash; on that day Cicero, as consul, convened the Senate in the <em>aedēs Concordiae</em>, the Temple of Concord, and the question before the house was what should be done with the arrested conspirators &mdash; but the words are ours, built to hold seven of this semester's constructions at once.</div>
+        <div class="rd">
+            <p><span class="ln">&nbsp;</span>Cum Cicerō cognōvisset quid coniūrātī nocte ēgissent, veritus nē rēs pūblica, cuius salūs sibi cūranda erat, ūnā nocte dēlērētur, senātōrēs in aedem Concordiae convocāvit ut ipsī statuerent utrum coniūrātī pūniendī essent an in custōdiam trādendī.</p>
+        </div>
+
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin:14px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS &mdash; EVERY WORD NOT ON YOUR RUNNING LIST, IN THE FORM IT APPEARS</div>
+            <ul class="gl">
+                <li><em>ēgissent</em> &mdash; pluperfect subjunctive of <em>agō, agere, ēgī</em>: to do, drive, carry on. Here &ldquo;had done, had been up to&rdquo;</li>
+                <li><em>veritus</em> &mdash; perfect participle of the deponent <em>vereor, verērī, veritus sum</em>, &ldquo;to fear.&rdquo; Deponent, so <strong>active</strong> in meaning: &ldquo;fearing, having feared&rdquo;</li>
+                <li><em>cuius</em> &mdash; genitive singular of the relative pronoun: &ldquo;whose&rdquo;</li>
+                <li><em>salūs, salūtis</em> f. &mdash; safety, welfare, survival</li>
+                <li><em>cūranda</em> &mdash; gerundive of <em>cūrō, cūrāre</em>, &ldquo;to look after, take care of,&rdquo; feminine nominative singular</li>
+                <li><em>sibi</em> &mdash; dative of the reflexive: &ldquo;by him(self),&rdquo; here the <strong>dative of agent</strong> that the gerundive of obligation requires</li>
+                <li><em>ūnā nocte</em> &mdash; ablative: &ldquo;in a single night&rdquo;</li>
+                <li><em>aedem</em> &mdash; accusative singular of <em>aedēs, aedis</em> f.: a temple, a building &middot; <em>Concordiae</em> &mdash; genitive: &ldquo;of Concord&rdquo;</li>
+                <li><em>ipsī</em> &mdash; nominative plural of <em>ipse</em>: &ldquo;they themselves&rdquo;</li>
+                <li><em>statuerent</em> &mdash; imperfect subjunctive of <em>statuō, statuere</em>: to decide, determine</li>
+                <li><em>pūniendī</em> &mdash; gerundive of <em>pūniō, pūnīre</em>, &ldquo;to punish,&rdquo; masculine nominative plural</li>
+                <li><em>custōdia, custōdiae</em> f. &mdash; custody, confinement &middot; <em>in custōdiam</em> &mdash; into custody</li>
+                <li><em>trādendī</em> &mdash; gerundive of <em>trādō, trādere</em>, &ldquo;to hand over,&rdquo; masculine nominative plural. The <em>essent</em> is not repeated after it &mdash; Latin leaves it to be understood from the first half</li>
+            </ul>
+        </div>
+
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 22px 0 6px 0;">Step 2 &mdash; Mark every finite verb</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 8px 0;">There are <strong>six</strong>: <em>cognōvisset, ēgissent, erat, dēlērētur, convocāvit, statuerent</em> &mdash; and a seventh, <em>essent</em>, near the end. Seven finite verbs, seven clauses.</p>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>And notice what is <em>not</em> on that list.</strong> <em>Veritus</em> looks like a verb and behaves like one, but it is a <strong>participle</strong> &mdash; no person, no number, no tense of its own. It cannot be the main verb of anything. Students who choose <em>veritus</em> at step 3 lose the whole sentence, which is exactly why it is sitting there.</div>
+
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 22px 0 6px 0;">Step 3 &mdash; Which one has nothing in front of it?</h3>
+        <table class="para">
+            <tr><th style="width:22%">Finite verb</th><th style="width:26%">What stands in front of its clause</th><th>Verdict</th></tr>
+            <tr><td class="lab"><em>cognōvisset</em></td><td><em>Cum</em></td><td>subordinate &mdash; cross it out</td></tr>
+            <tr><td class="lab"><em>ēgissent</em></td><td><em>quid</em> (a question word)</td><td>subordinate &mdash; cross it out</td></tr>
+            <tr><td class="lab"><em>erat</em></td><td><em>cuius</em> (a relative pronoun)</td><td>subordinate &mdash; cross it out</td></tr>
+            <tr><td class="lab"><em>dēlērētur</em></td><td><em>nē</em></td><td>subordinate &mdash; cross it out</td></tr>
+            <tr><td class="lab" style="background:#D8F0DD;"><strong><em>convocāvit</em></strong></td><td style="background:#D8F0DD;"><strong>nothing</strong></td><td class="end" style="background:#D8F0DD;"><strong>THE MAIN VERB.</strong> Subject: Cicero, carried over from the <em>cum</em> clause.</td></tr>
+            <tr><td class="lab"><em>statuerent</em></td><td><em>ut</em></td><td>subordinate &mdash; cross it out</td></tr>
+            <tr><td class="lab"><em>essent</em></td><td><em>utrum</em></td><td>subordinate &mdash; cross it out</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 8px 0 0 0;">So the spine of this thirty-five-word sentence is four words long: <strong><em>senātōrēs&hellip;convocāvit</em></strong> &mdash; &ldquo;he called the senators together.&rdquo; Everything else is attached to that.</p>
+
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 22px 0 6px 0;">Steps 4 and 5 &mdash; Boundaries and names</h3>
+        <table class="para">
+            <tr><th style="width:34%">Clause</th><th style="width:20%">Opening word + mood</th><th style="width:16%">Construction</th><th>Module &middot; sequence check</th></tr>
+            <tr><td class="lab"><em>Cum Cicerō cognōvisset&hellip;</em></td><td><em>cum</em> + pluperfect subj.</td><td class="end"><em>cum</em> clause, temporal-into-causal</td><td>m10 + m13. Main verb <em>convocāvit</em> is perfect &rarr; <strong>secondary</strong>; already finished &rarr; pluperfect. Correct.</td></tr>
+            <tr><td class="lab" style="padding-left:34px;">&#8627; <em>quid coniūrātī nocte ēgissent</em></td><td>question word + pluperfect subj.</td><td class="end">indirect question, <strong>inside</strong> the <em>cum</em> clause</td><td>m11 + m13. Depends on <em>cognōvisset</em>, itself past &rarr; secondary; already finished &rarr; pluperfect. Correct.</td></tr>
+            <tr><td class="lab"><em>veritus</em></td><td>&mdash; (participle)</td><td class="end">deponent perfect participle, active in sense</td><td>m02. Agrees with the subject, Cicero. Translate &ldquo;fearing&rdquo; or &ldquo;because he feared.&rdquo;</td></tr>
+            <tr><td class="lab"><em>nē rēs pūblica&hellip;dēlērētur</em></td><td><em>nē</em> + imperfect subj. passive</td><td class="end"><strong>fear clause</strong> &mdash; so <em>nē</em> means &ldquo;that,&rdquo; not &ldquo;that not&rdquo;</td><td>m12. Depends on <em>veritus</em>, which is aligned with the past main verb &rarr; secondary; same time &rarr; imperfect. Correct.</td></tr>
+            <tr><td class="lab" style="padding-left:34px;">&#8627; <em>cuius salūs sibi cūranda erat</em></td><td><em>cuius</em> + imperfect <strong>indicative</strong></td><td class="end">relative clause containing a <strong>gerundive of obligation</strong> + dative of agent</td><td>m05. Indicative because it is the narrator's own plain statement of fact, not part of what Cicero feared.</td></tr>
+            <tr><td class="lab" style="background:#D8F0DD;"><strong><em>senātōrēs in aedem Concordiae convocāvit</em></strong></td><td style="background:#D8F0DD;">no opening word, perfect indicative</td><td class="end" style="background:#D8F0DD;"><strong>MAIN CLAUSE</strong></td><td style="background:#D8F0DD;">&mdash;</td></tr>
+            <tr><td class="lab"><em>ut ipsī statuerent</em></td><td><em>ut</em> + imperfect subj.</td><td class="end">purpose clause &mdash; and there is no signpost word in the main clause, so <strong>not</strong> result</td><td>m08. After the perfect <em>convocāvit</em> &rarr; secondary &rarr; imperfect. Correct.</td></tr>
+            <tr><td class="lab" style="padding-left:34px;">&#8627; <em>utrum&hellip;pūniendī essent an&hellip;trādendī</em></td><td><em>utrum&hellip;an</em> + imperfect subj.</td><td class="end">indirect <strong>double</strong> question, with two gerundives of obligation</td><td>m11 + m05. Depends on <em>statuerent</em>, past &rarr; secondary; same time &rarr; imperfect. Correct.</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0 0;">Seven clauses, from six different modules, and <strong>three of them are nested inside others</strong>. That nesting is why the sentence looks impossible and is not.</p>
+
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 22px 0 6px 0;">Step 6 &mdash; Now translate, from the middle outward</h3>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:16px; color:#666; margin-bottom:6px;">First the main clause, alone:</div>
+            <div style="font-size:18px; color:#0e1c42;">&ldquo;He called the senators together into the Temple of Concord.&rdquo;</div>
+            <div style="font-size:16px; color:#666; margin:12px 0 6px 0;">Then hang each clause off it, in the order the Latin gives them:</div>
+            <div style="font-size:18px; color:#0e1c42; line-height:1.7;">&ldquo;<strong>When Cicero had found out what the conspirators had done in the night</strong>, <strong>fearing that the republic</strong> &mdash; <strong>whose safety he himself had to look after</strong> &mdash; <strong>might be destroyed in a single night</strong>, he called the senators together into the Temple of Concord <strong>so that they themselves might decide</strong> <strong>whether the conspirators had to be punished or handed over into custody</strong>.&rdquo;</div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Read that English again and notice that it is a perfectly ordinary sentence.</strong> Long, but ordinary: a man finds something out, is afraid of a consequence, and calls a meeting to get a decision made. There was never anything difficult in the <em>content</em>. The difficulty was entirely in the packing &mdash; and packing is a thing you can unpack mechanically, with six steps and no cleverness at all.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; NOW YOU DO ONE</div>
+        <div style="font-size: 15px; color: #8a6416; margin-bottom: 6px;"><strong>Also the adaptation's own Latin</strong> &mdash; and the counterfactual in it is the adaptation's own judgement, not Sallust's. What is historically sound is the choice it describes: Caesar had proposed that the conspirators be kept under guard in the towns of Italy, and Cato spoke after Cicero and carried the vote the other way.</div>
+        <div class="rd">
+            <p><span class="ln">&nbsp;</span>Nisi Catō, cum omnēs tacērent, surrēxisset ut sententiam dīceret, senātus fortasse cōnstituisset coniūrātōs in oppida Ītaliae esse trādendōs.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:14px 18px; margin:12px 0;">
+            <div style="font-size:12px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; GLOSS</div>
+            <ul class="gl">
+                <li><em>Catō, Catōnis</em> m. &mdash; Cato, the senator who spoke last in the debate of 5 December</li>
+                <li><em>surrēxisset</em> &mdash; pluperfect subjunctive of <em>surgō, surgere, surrēxī</em>: to rise, stand up</li>
+                <li><em>sententia, sententiae</em> f. &mdash; opinion, formal proposal, vote</li>
+                <li><em>fortasse</em> &mdash; perhaps</li>
+                <li><em>cōnstituisset</em> &mdash; pluperfect subjunctive of <em>cōnstituō, cōnstituere</em>: to decide</li>
+                <li><em>oppidum, oppidī</em> n. &mdash; town &middot; <em>in oppida Ītaliae</em> &mdash; into the towns of Italy</li>
+                <li><em>trādendōs</em> &mdash; gerundive of <em>trādō, trādere</em>, masculine accusative plural, agreeing with <em>coniūrātōs</em></li>
+            </ul>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 8px 0 6px 0;">Run the six steps. Five questions, one per step &mdash; do not skip ahead.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING &middot; ONE STEP AT A TIME</div>
+            <div class="widget-question">Work the procedure on the sentence above.</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Remember that esse is an infinitive, not a finite verb. Count only the forms with a person and number.">
+                <div class="widget-row-prompt">Step 2 &mdash; how many <strong>finite</strong> verbs does the sentence contain?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Three is what you get if you miss one of the two pluperfect subjunctives, or if you stop counting at the comma. Look again at tacērent, surrēxisset, dīceret, cōnstituisset.">Three</button>
+                    <button data-choice="b" data-fb="Right — four: tacērent, surrēxisset, dīceret, cōnstituisset. Esse and trādendōs are not finite (an infinitive and a gerundive), so they do not open clauses of their own in this count.">Four</button>
+                    <button data-choice="c" data-fb="Five is what you get if you count esse as a finite verb. It is an infinitive: no person, no number. It is part of an indirect statement, not a clause with its own subject-verb pair.">Five</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Cross out every verb with a subordinating word in front of its clause. Nisi, cum and ut are all subordinating.">
+                <div class="widget-row-prompt">Step 3 &mdash; which is the <strong>main</strong> verb?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Surrēxisset has nisi in front of it — it is the verb of the sī-clause (the protasis), which is subordinate by definition.">
+                        <em>surrēxisset</em></button>
+                    <button data-choice="b" data-fb="Tacērent has cum in front of it, so it belongs to a cum clause tucked inside the nisi clause. Two subordinating words deep, in fact.">
+                        <em>tacērent</em></button>
+                    <button data-choice="c" data-fb="Right — cōnstituisset. Nothing stands in front of its clause: senātus fortasse cōnstituisset is the apodosis, the main half of the condition. Its subject is senātus.">
+                        <em>cōnstituisset</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="There is a verb inside the cum group, so cum cannot be the preposition. What mood is that verb?">
+                <div class="widget-row-prompt">Step 5 &mdash; what is <em>cum omnēs tacērent</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — cum + the imperfect subjunctive tacērent: a cum clause painting the circumstances, &quot;when everyone was silent.&quot; There is no tamen, and nothing is being conceded, so temporal is the natural reading; causal &quot;since&quot; is defensible too.">A <em>cum</em> clause with the imperfect subjunctive &mdash; the circumstance</button>
+                    <button data-choice="b" data-fb="The preposition cum takes an ablative and has no verb of its own. Omnēs here is nominative plural, the subject of tacērent — and tacērent is a verb, which settles it.">The preposition <em>cum</em> &mdash; &ldquo;with everyone&rdquo;</button>
+                    <button data-choice="c" data-fb="A fear clause opens with nē (or nē nōn) and hangs off a verb of fearing. Neither is present. Tacēre is &quot;to be silent,&quot; not &quot;to be afraid.&quot;">A fear clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Look at the tense of the two verbs that make the condition — surrēxisset and cōnstituisset. Both the same. Which type has that pair?">
+                <div class="widget-row-prompt">Step 5 &mdash; what kind of condition is <em>nisi&hellip;surrēxisset, senātus&hellip;cōnstituisset</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A simple factual condition has the indicative in both halves. Both of these are pluperfect SUBJUNCTIVES, which means the sentence is not asserting either half as a fact.">Simple factual</button>
+                    <button data-choice="b" data-fb="Contrary to fact in the present needs the imperfect subjunctive in both halves — surgeret… cōnstitueret. Pluperfect moves the unreality into the past.">Contrary to fact in the present</button>
+                    <button data-choice="c" data-fb="Right — contrary to fact in the PAST: pluperfect subjunctive in both halves. &quot;If Cato had not stood up…, the Senate would perhaps have decided…&quot; And read what it therefore asserts: Cato DID stand up, and the Senate did NOT decide that.">Contrary to fact in the past</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Coniūrātōs is accusative and esse is an infinitive. What construction is built out of exactly those two things?">
+                <div class="widget-row-prompt">Step 5 &mdash; what is <em>coniūrātōs in oppida Ītaliae esse trādendōs</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An indirect question needs a question word and a subjunctive. There is no question word here, and esse is an infinitive, not a subjunctive.">An indirect question after <em>cōnstituisset</em></button>
+                    <button data-choice="b" data-fb="Right — an indirect statement (accusative coniūrātōs + infinitive esse) with a gerundive of obligation inside it: &quot;that the conspirators had to be handed over into the towns of Italy.&quot; Trādendōs is accusative plural masculine because it agrees with coniūrātōs. Two constructions, one phrase — m05 living inside Latin Intermediate material.">An indirect statement containing a gerundive of obligation</button>
+                    <button data-choice="c" data-fb="A purpose clause opens with ut or nē and takes a subjunctive. This phrase has neither; it has an accusative and an infinitive, which is the signature of reported speech.">A second purpose clause</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:14px;">&#128161; <strong>Your translation should come out close to this:</strong> &ldquo;If Cato, when everyone was silent, had not stood up to state his opinion, the Senate would perhaps have decided that the conspirators must be handed over into the towns of Italy.&rdquo; If you got the four clauses and the direction of the counterfactual, you have got the sentence &mdash; and the Review Activity tomorrow asks for exactly this, in writing, on a twelve-line passage.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 17.05 &mdash; <em>Dē Rē Pūblicā Dēfendendā</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The capstone reading. Fourteen lines of adapted Sallust and Cicero that tell the whole conspiracy from Catiline's character to his death at Pistoria &mdash; the story this course has been circling since Module 0, finally readable end to end. Then the whole-semester map, and the handoff to your graded work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Find the main verb first. Not the first verb, not the nearest verb &mdash; the one with nothing in front of its clause. Everything else in a Latin sentence is hanging off that word, and once you have it, the sentence has a spine and you are reading instead of guessing.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 17.04 &middot; How to Sit a Cumulative Exam</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 3.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .chant { background: #0E1C42; border-radius: 8px; padding: 20px 24px; margin: 14px 0; text-align: center; }
+    .chant .line { font-size: 24px; color: #ffffff; font-style: italic; line-height: 1.7; }
+    .chant .cap { font-size: 12px; color: #55C8E8; letter-spacing: 1px; margin-bottom: 10px; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 3</div>
+        <div style="font-size: 12px; color: #666;">Semi-Deponent Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 3.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Audeō from Top to Bottom</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 3.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;"><em>Audeō</em> from Top to Bottom</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">One verb, six tenses, zero new endings.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today is a paradigm day, and it is an easy one, because every ending on this page is an ending you already own. The present half uses ordinary 2nd-conjugation active endings, like <em>videō</em> or <em>timeō</em>. The perfect half uses participle plus <em>esse</em>, like <em>locūtus sum</em>. Your job is to keep them from bleeding into each other.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> produce the present, imperfect, and future of <em>audeō</em> in all six persons.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build the perfect, pluperfect, and future perfect of <em>audeō</em> with the participle agreeing correctly.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> spot and reject the two forms students invent most: <em>*auduī</em> and <em>*audeor</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; ABOVE THE SEAM &mdash; THE PRESENT SYSTEM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><em>Audeō</em> is 2nd conjugation, stem <em>aud-ē-</em>. Conjugate it exactly as you would <em>timeō</em> or <em>videō</em>: ordinary active endings <em>-ō, -s, -t, -mus, -tis, -nt</em>.</p>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 4px 0 6px 0;">Present &mdash; "I dare"</h3>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>aude<span class="end">ō</span></em> &mdash; I dare</td><td><em>audē<span class="end">mus</span></em> &mdash; we dare</td></tr>
+            <tr><td class="lab">2nd</td><td><em>audē<span class="end">s</span></em> &mdash; you dare</td><td><em>audē<span class="end">tis</span></em> &mdash; you (pl.) dare</td></tr>
+            <tr><td class="lab">3rd</td><td><em>aude<span class="end">t</span></em> &mdash; he/she dares</td><td><em>aude<span class="end">nt</span></em> &mdash; they dare</td></tr>
+        </table>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 18px 0 6px 0;">Imperfect &mdash; the <span style="color:#c7922c;">-bā-</span> marker</h3>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>audē<span class="end">bam</span></em> &mdash; I was daring</td><td><em>audēbā<span class="end">mus</span></em> &mdash; we were daring</td></tr>
+            <tr><td class="lab">2nd</td><td><em>audē<span class="end">bās</span></em> &mdash; you were daring</td><td><em>audēbā<span class="end">tis</span></em> &mdash; you (pl.) were daring</td></tr>
+            <tr><td class="lab">3rd</td><td><em>audē<span class="end">bat</span></em> &mdash; he/she was daring</td><td><em>audē<span class="end">bant</span></em> &mdash; they were daring</td></tr>
+        </table>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 18px 0 6px 0;">Future &mdash; 2nd conjugation, so <span style="color:#c7922c;">-bi-</span></h3>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>audē<span class="end">bō</span></em> &mdash; I will dare</td><td><em>audē<span class="end">bimus</span></em> &mdash; we will dare</td></tr>
+            <tr><td class="lab">2nd</td><td><em>audē<span class="end">bis</span></em> &mdash; you will dare</td><td><em>audē<span class="end">bitis</span></em> &mdash; you (pl.) will dare</td></tr>
+            <tr><td class="lab">3rd</td><td><em>audē<span class="end">bit</span></em> &mdash; he/she will dare</td><td><em>audē<span class="end">bunt</span></em> &mdash; they will dare</td></tr>
+        </table>
+        <div class="chant">
+            <div class="cap">&#127925; MEMORY WORK &middot; THE ACTIVE HALF &middot; SAY IT ALOUD THREE TIMES</div>
+            <div class="line">audeō, audēs, audet &mdash;<br>audēmus, audētis, audent</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Nothing here is special.</strong> Set <em>audeō</em> beside <em>videō, vidēre, vīdī, vīsum</em> and the present systems are identical: <em>videt / audet</em>, <em>vidēbat / audēbat</em>, <em>vidēbit / audēbit</em>. The two verbs part company only when you reach the perfect &mdash; <em>vīdit</em> versus <em>ausus est</em>.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; BELOW THE SEAM &mdash; THE PERFECT SYSTEM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Now switch modes. The perfect system of <em>audeō</em> is built the way every deponent perfect is built: <strong>the participle <em>ausus, -a, -um</em> plus a form of <em>esse</em></strong>. Which tense of <em>esse</em> you use decides which tense you get.</p>
+        <table class="para">
+            <tr><th style="width:24%">Tense</th><th style="width:36%">Form (3rd sg. masculine)</th><th>Meaning</th></tr>
+            <tr><td class="lab">Perfect</td><td><em>ausus <span class="end">est</span></em></td><td>he dared, he has dared</td></tr>
+            <tr><td class="lab">Pluperfect</td><td><em>ausus <span class="end">erat</span></em></td><td>he had dared</td></tr>
+            <tr><td class="lab">Future perfect</td><td><em>ausus <span class="end">erit</span></em></td><td>he will have dared</td></tr>
+        </table>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 18px 0 6px 0;">Full perfect of <em>audeō</em></h3>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>ausus / ausa sum</em> &mdash; I dared</td><td><em>ausī / ausae sumus</em> &mdash; we dared</td></tr>
+            <tr><td class="lab">2nd</td><td><em>ausus / ausa es</em> &mdash; you dared</td><td><em>ausī / ausae estis</em> &mdash; you (pl.) dared</td></tr>
+            <tr><td class="lab">3rd</td><td><em>ausus / ausa / ausum est</em> &mdash; he/she/it dared</td><td><em>ausī / ausae / ausa sunt</em> &mdash; they dared</td></tr>
+        </table>
+        <div class="chant">
+            <div class="cap">&#127925; MEMORY WORK &middot; THE DEPONENT HALF &middot; SAY IT ALOUD THREE TIMES</div>
+            <div class="line">ausus sum, ausus es, ausus est &mdash;<br>ausī sumus, ausī estis, ausī sunt</div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The participle agrees, exactly as it did last week.</strong> <em>Ausus</em> is an adjective and it matches its subject in gender and number. A man says <em>ausus sum</em>; a woman says <em>ausa sum</em>; a group of women says <em>ausae sumus</em>. In the reading on Friday, one form of this verb has a feminine participle, and that participle is how you know who is doing the daring.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; margin-top:12px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>And the infinitives split the same way.</strong> Present <em>audēre</em>, "to dare" &mdash; an ordinary active infinitive. Perfect <em>ausus esse</em>, "to have dared" &mdash; participle plus <em>esse</em>, like a deponent. Future <em>ausūrus esse</em>, "to be about to dare." You will need the perfect infinitive whenever <em>audeō</em> turns up inside an indirect statement.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9888;&#65039; PART 3 &middot; THE TWO FORMS THAT DO NOT EXIST</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Almost every mistake in this module is one of two errors. Both come from carrying a rule across the seam, in one direction or the other.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:14px; color:#8A1F16; margin-bottom:4px;">ERROR 1 &middot; ACTIVE PERFECT ENDINGS</div>
+                <div style="font-size:22px; color:#8A1F16;"><em>*auduī</em> &nbsp;<em>*audēvī</em> &nbsp;<em>*ausit</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">You saw an active present and assumed an active perfect. But <em>audeō</em> has <strong>no one-word perfect at all</strong>. Correct: <em>ausus sum, ausus est</em>.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:14px; color:#8A1F16; margin-bottom:4px;">ERROR 2 &middot; PASSIVE PRESENT ENDINGS</div>
+                <div style="font-size:22px; color:#8A1F16;"><em>*audeor</em> &nbsp;<em>*audētur</em> &nbsp;<em>*audēbātur</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">You heard the word "deponent" and reached for <em>-or / -tur</em>. But the present system is <strong>active in form</strong>. Correct: <em>audeō, audet, audēbat</em>.</div>
+            </div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9940; <strong>One sentence to keep.</strong> A full deponent is passive-looking <em>everywhere</em>; a semi-deponent is passive-looking <em>only in the perfect system</em>. So <em>loquitur</em> is right and <em>*loquit</em> is wrong &mdash; but <em>audet</em> is right and <em>*audētur</em> is wrong. The two verb types are opposite in the present and identical in the perfect.</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">Side by side, so the difference is visible</h3>
+        <table class="para">
+            <tr><th style="width:22%">Tense</th><th style="width:26%">Deponent &middot; <em>loquor</em></th><th style="width:26%">Semi-deponent &middot; <em>audeō</em></th><th>What is happening</th></tr>
+            <tr><td class="lab">Present 3rd sg.</td><td><em>loquitur</em> &mdash; he speaks</td><td><em>audet</em> &mdash; he dares</td><td><strong>Different.</strong> Passive-looking vs. active-looking.</td></tr>
+            <tr><td class="lab">Imperfect 3rd sg.</td><td><em>loquēbātur</em></td><td><em>audēbat</em></td><td><strong>Different.</strong> Same <em>-bā-</em> marker, opposite endings.</td></tr>
+            <tr><td class="lab">Future 3rd sg.</td><td><em>loquētur</em></td><td><em>audēbit</em></td><td><strong>Different.</strong> Also different conjugations, so different markers.</td></tr>
+            <tr><td class="lab">Perfect 3rd sg.</td><td><em>locūtus est</em></td><td><em>ausus est</em></td><td><strong>Identical pattern.</strong> Participle + <em>est</em>, active meaning.</td></tr>
+            <tr><td class="lab">Pluperfect 3rd sg.</td><td><em>locūtus erat</em></td><td><em>ausus erat</em></td><td><strong>Identical pattern.</strong> Participle + <em>erat</em>.</td></tr>
+        </table>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128269; PART 4 &middot; SAY THE MEANING FIRST, THEN CLICK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;">Name the tense and the person before you flip each card. If a form is above the seam, say so out loud.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; ALL SIX TENSES OF <em>AUDEŌ</em>, SCRAMBLED</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>audent</em></div><div class="hint">click</div><div class="back"><strong>they dare</strong> &mdash; present, 3rd pl. <span style="color:#666;">Above the seam.</span></div></div>
+                <div class="flip-card"><div class="front"><em>ausī sunt</em></div><div class="hint">click</div><div class="back"><strong>they dared</strong> &mdash; perfect, 3rd pl. m. <span style="color:#666;">Below the seam: participle + <em>sunt</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>audēbimus</em></div><div class="hint">click</div><div class="back"><strong>we will dare</strong> &mdash; future, 1st pl. <span style="color:#666;">2nd conjugation, so <em>-bi-</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>ausa erat</em></div><div class="hint">click</div><div class="back"><strong>she had dared</strong> &mdash; pluperfect, 3rd sg. f. <span style="color:#666;">Feminine participle, so the subject is a woman.</span></div></div>
+                <div class="flip-card"><div class="front"><em>audēbātis</em></div><div class="hint">click</div><div class="back"><strong>you (pl.) were daring</strong> &mdash; imperfect, 2nd pl. <span style="color:#666;">Above the seam.</span></div></div>
+                <div class="flip-card"><div class="front"><em>ausus erō</em></div><div class="hint">click</div><div class="back"><strong>I will have dared</strong> &mdash; future perfect, 1st sg. m. <span style="color:#666;">Participle + <em>erō</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>audēs</em></div><div class="hint">click</div><div class="back"><strong>you dare</strong> &mdash; present, 2nd sg. <span style="color:#666;">Long <em>ē</em>: the 2nd-conjugation stem vowel.</span></div></div>
+                <div class="flip-card"><div class="front"><em>ausae sumus</em></div><div class="hint">click</div><div class="back"><strong>we dared</strong> &mdash; perfect, 1st pl., spoken by a group of <em>women</em>. <span style="color:#666;">The participle tells you the gender.</span></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; NAME IT, THEN TRANSLATE IT</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Five sentences. Decide which side of the seam you are on before you answer.</div>
+            <div class="widget-row" data-correct="b" data-hint="Is there a -bā- marker, and is the form one word or two?">
+                <div class="widget-row-prompt"><em>Coniūrātī in senātum venīre nōn <strong>audēbant</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="The perfect would be ausī sunt &mdash; two words. This form is one word with a -bā- marker, so it is in the present system.">Perfect, 3rd pl. &mdash; "they did not dare"</button>
+                    <button data-choice="b" data-fb="Right &mdash; imperfect, 3rd plural: 'The conspirators were not daring to come into the Senate.' Ordinary active endings, because the imperfect is above the seam.">Imperfect, 3rd pl. &mdash; "they were not daring"</button>
+                    <button data-choice="c" data-fb="Nothing here is passive. Audeō has no passive forms at all &mdash; only an active present system and a deponent perfect system.">Imperfect passive &mdash; "they were not being dared"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Two words: participle plus a form of esse. Which tense of esse?">
+                <div class="widget-row-prompt"><em>Fulvia ad cōnsulem venīre <strong>ausa erat</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="The perfect is ausa est, with present est. Erat is imperfect, and that pushes the whole form back one step.">Perfect &mdash; "she dared"</button>
+                    <button data-choice="b" data-fb="Careful: this is a semi-deponent, so there is no passive sense available. 'She had been dared' is not a possible meaning.">Pluperfect passive &mdash; "she had been dared"</button>
+                    <button data-choice="c" data-fb="Right &mdash; pluperfect, 3rd singular feminine: 'Fulvia had dared to come to the consul.' Participle plus erat gives pluperfect, and ausa is feminine because Fulvia is.">Pluperfect &mdash; "she had dared"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="2nd conjugation. Which vowel after the -b- signals the future?">
+                <div class="widget-row-prompt"><em>Cicerō vērum in senātū dīcere <strong>audēbit</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; future, 3rd singular: 'Cicero will dare to speak the truth in the Senate.' In the 2nd conjugation the future marker is -bi-, as in vidēbit.">Future &mdash; "he will dare"</button>
+                    <button data-choice="b" data-fb="The imperfect is audēbat, with a long ā after the -b-. Compare vidēbat and vidēbit &mdash; same one-vowel difference.">Imperfect &mdash; "he was daring"</button>
+                    <button data-choice="c" data-fb="The present is audet, with no -b- at all. Any -b- in this verb means you are in the imperfect or the future.">Present &mdash; "he dares"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Two of these are real Latin. Which one crosses the seam illegally?">
+                <div class="widget-row-prompt">Which form is <strong>not</strong> Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This is real &mdash; audēmus, present 1st plural, 'we dare.'">audēmus</button>
+                    <button data-choice="b" data-fb="This is real &mdash; ausum est, perfect 3rd singular with a neuter subject, 'it dared.' Rare, but correctly formed.">ausum est</button>
+                    <button data-choice="c" data-fb="Right &mdash; *auduī applies active perfect endings to a verb that has none. This is the error the whole lesson is built to prevent. The perfect is ausus sum.">auduī</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Compare the two verbs in the present, not the perfect.">
+                <div class="widget-row-prompt">Which pair correctly matches the present tense of each verb type?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Backwards. Loquor is the full deponent, so its present is passive-looking (loquitur); audeō is the semi-deponent, so its present is active-looking (audet).">deponent <em>loquit</em> &middot; semi-deponent <em>audētur</em></button>
+                    <button data-choice="b" data-fb="Right &mdash; loquitur, passive in form, for the full deponent; audet, active in form, for the semi-deponent. In the present the two types look opposite; in the perfect they look the same.">deponent <em>loquitur</em> &middot; semi-deponent <em>audet</em></button>
+                    <button data-choice="c" data-fb="Both of these are wrong forms. *Loquit gives a deponent an active ending it does not have; *audeor gives a semi-deponent a passive present it does not have.">deponent <em>loquit</em> &middot; semi-deponent <em>audeor</em></button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 3.03 &mdash; The Other Three, and Your Vocabulary</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;"><em>Soleō, gaudeō, fīdō</em> &mdash; including the one that refuses to take an accusative object &mdash; plus a principal-parts driller and this module's new nouns.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Above the seam, <em>audeō</em> is <em>videō</em>: <em>audet, audēbat, audēbit</em>. Below the seam, <em>audeō</em> is <em>loquor</em>: <em>ausus est, ausus erat, ausus erit</em>. There is no <em>*auduī</em> and no <em>*audētur</em> &mdash; each of those tries to make one half behave like the other.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 3.02 &middot; Audeō from Top to Bottom</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

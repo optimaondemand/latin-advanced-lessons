@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 4.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 4</div>
+        <div style="font-size: 12px; color: #666;">Gerunds</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Doing of It</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Doing of It</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">English uses one word for two different jobs. Latin refuses to.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">"I like <strong>reading</strong>." "The <strong>reading</strong> man." Same English word, two completely different grammatical jobs &mdash; one is a <em>noun</em>, one is an <em>adjective</em>. Latin keeps them in separate forms, and the noun one is called the <strong>gerund</strong>. Once you can see the difference, a whole layer of Cicero opens up.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what a gerund is, and tell it apart from a participle in English before I meet it in Latin.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build the gerund of a verb in any of the four conjugations.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say why the gerund has no nominative, and what fills that gap instead.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; TEST IT IN ENGLISH FIRST</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Before any Latin, get your ear working. English <em>-ing</em> words do at least two jobs, and English does not mark which:</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1A6B3D; margin-bottom:4px;">DOING THE JOB OF A NOUN</div>
+                <div style="font-size:20px; color:#0e1c42;">"I like <strong>reading</strong>."</div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">Swap in a plain noun and it still works: "I like <em>books</em>." So <em>reading</em> is a <strong>noun</strong> here. That is a <strong>gerund</strong>.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#EEF1F8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:4px;">DOING THE JOB OF AN ADJECTIVE</div>
+                <div style="font-size:20px; color:#0e1c42;">"the <strong>reading</strong> man"</div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">Swap in a plain adjective and it still works: "the <em>tall</em> man." So <em>reading</em> is an <strong>adjective</strong> here. That is a <strong>participle</strong> &mdash; Latin <em>legēns</em>, which you already know.</div>
+            </div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The swap test.</strong> If you can replace the <em>-ing</em> word with a noun, it is a gerund. If you can replace it with an adjective, it is a participle. English leaves you guessing; Latin hands you two different forms so you never have to.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">You already own an active participle in Latin (<em>legēns</em>, "reading" as an adjective). What is your first guess about why Latin would <em>also</em> need a noun form of the verb?</div>
+            <div class="widget-options">
+                <button data-response="Exactly the right instinct. Cases are how Latin assigns jobs to nouns, and a participle carries an adjective's job, not a noun's. If you want to say 'of speaking' or 'by speaking,' you need something that can take a noun case for its own reason.">Because Latin nouns need cases, and a participle's case belongs to the noun it modifies</button>
+                <button data-response="Reasonable, and Latin does have the infinitive — dīcere, 'to speak' — sitting in exactly that slot. The catch you will meet in Part 2 is that the infinitive can only do the nominative job. Everything else needs the gerund.">Because the infinitive already does that, so maybe Latin does not need one</button>
+                <button data-response="Fair guess, but not this time. The gerund is not a stylish extra — it is the only way Latin can say 'of doing,' 'for doing,' or 'by doing.' Cicero uses it constantly because he has no alternative.">Probably just for variety, so prose does not sound repetitive</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE DEFINITION, AND THE HOLE IN IT</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;">A <strong>gerund</strong> is a <strong>verbal noun</strong> &mdash; a verb turned into a noun so it can fill a noun's slot in the sentence. It is always <strong>neuter</strong>, always <strong>singular</strong>, and it has <strong>no nominative</strong>.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">Three of those facts are easy. The fourth &mdash; no nominative &mdash; sounds like a defect. It is not. Latin already has a verb-as-noun that handles the nominative: the <strong>infinitive</strong>.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Dīcere est difficile.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"<strong>Speaking</strong> is difficult." &mdash; or "<strong>To speak</strong> is difficult."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Dīcere</em> is the subject of <em>est</em>. That is nominative work, and the infinitive does it. Note that <em>difficile</em> is <strong>neuter</strong> &mdash; Latin treats a verbal noun as neuter singular, which is exactly what the gerund is too.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0;">So the two forms are partners, not rivals. The infinitive owns the nominative. The gerund owns every other case:</p>
+        <table class="para">
+            <tr><th style="width:26%">Job</th><th style="width:34%">Which form Latin uses</th><th>Example</th></tr>
+            <tr><td class="lab">Subject (nominative)</td><td><strong>Infinitive</strong></td><td><em>Dīcere est difficile.</em> &mdash; Speaking is difficult.</td></tr>
+            <tr><td class="lab">"of doing" (genitive)</td><td><strong>Gerund</strong></td><td><em>ars dīcend<span class="end">ī</span></em> &mdash; the art of speaking</td></tr>
+            <tr><td class="lab">purpose (accusative, after <em>ad</em>)</td><td><strong>Gerund</strong></td><td><em>ad dīcend<span class="end">um</span></em> &mdash; for speaking</td></tr>
+            <tr><td class="lab">"by doing" (ablative)</td><td><strong>Gerund</strong></td><td><em>dīcend<span class="end">ō</span></em> &mdash; by speaking</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>What the name means.</strong> <em>Gerund</em> comes from <em>gerendum</em>, from <em>gerō</em> &mdash; "to carry on, to conduct, to do." A gerund is literally "the doing of it." Keep that phrase; it is the fastest translation crutch you will get all module. <em>Dīcendī</em> = "of the doing-of-speaking" &rarr; "of speaking."</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; HOW TO BUILD ONE &mdash; THREE STEPS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This is one of the cheapest paradigms in Latin. You need the second principal part and nothing else.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:190px; background:#EEF1F8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:4px;">STEP 1</div>
+                <div style="font-size:17px; color:#0e1c42;">Take the <strong>infinitive</strong> &mdash; the 2nd principal part.</div>
+                <div style="font-size:18px; color:#c7922c; margin-top:6px;"><em>dīcere</em></div>
+            </div>
+            <div style="flex:1; min-width:190px; background:#EEF1F8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:4px;">STEP 2</div>
+                <div style="font-size:17px; color:#0e1c42;">Drop <strong>-re</strong> and add <strong>-nd-</strong>.</div>
+                <div style="font-size:18px; color:#c7922c; margin-top:6px;"><em>dīce-</em> &rarr; <em>dīcend-</em></div>
+            </div>
+            <div style="flex:1; min-width:190px; background:#EEF1F8; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#6b7a99; margin-bottom:4px;">STEP 3</div>
+                <div style="font-size:17px; color:#0e1c42;">Add <strong>2nd-declension neuter singular</strong> endings.</div>
+                <div style="font-size:18px; color:#c7922c; margin-top:6px;"><em>dīcendī, dīcendō, dīcendum, dīcendō</em></div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 4px 0;">The same three steps run through all four conjugations. The only thing that changes is the vowel you are left with after you drop <em>-re</em> &mdash; and the 3rd io-stem and 4th conjugations both give you <strong>-ie-</strong>:</p>
+        <table class="para">
+            <tr><th style="width:20%">Conjugation</th><th style="width:20%">Infinitive</th><th style="width:22%">Gerund stem</th><th>Accusative (the <em>ad</em> form)</th></tr>
+            <tr><td class="lab"><strong>1st</strong></td><td><em>amāre</em></td><td><em>am<span class="end">and</span>-</em></td><td><em>ad amandum</em> &mdash; for loving</td></tr>
+            <tr><td class="lab"><strong>2nd</strong></td><td><em>monēre</em></td><td><em>mon<span class="end">end</span>-</em></td><td><em>ad monendum</em> &mdash; for warning</td></tr>
+            <tr><td class="lab"><strong>3rd</strong></td><td><em>dīcere</em></td><td><em>dīc<span class="end">end</span>-</em></td><td><em>ad dīcendum</em> &mdash; for speaking</td></tr>
+            <tr><td class="lab"><strong>3rd io-stem</strong></td><td><em>capere</em></td><td><em>cap<span class="end">iend</span>-</em></td><td><em>ad capiendum</em> &mdash; for seizing</td></tr>
+            <tr><td class="lab"><strong>4th</strong></td><td><em>audīre</em></td><td><em>aud<span class="end">iend</span>-</em></td><td><em>ad audiendum</em> &mdash; for listening</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Watch the macron you do <em>not</em> write.</strong> <em>Amāre</em> has a long <em>ā</em>. The gerund does <strong>not</strong>: it is <em>am<strong>a</strong>ndī</em>, with a short <em>a</em>, because a vowel shortens before <em>-nd-</em>. Same for <em>mon<strong>e</strong>ndī</em> from <em>monēre</em> and <em>aud<strong>ie</strong>ndī</em> from <em>audīre</em>. Writing <em>amāndī</em> is a real error, not a typo &mdash; it claims a vowel length Latin does not have there.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 14px 0 4px 0;"><strong>And deponents behave normally here.</strong> A deponent's second principal part looks passive (<em>loquī</em>, <em>sequī</em>), but its gerund is built the ordinary way from the present stem, and it means what you expect:</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY THE GERUND FIRST &middot; THEN CLICK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>scrībere</em></div><div class="hint">genitive &middot; click</div><div class="back"><strong><em>scrībendī</em></strong> &mdash; "of writing"<br><span style="color:#666;">3rd conjugation.</span></div></div>
+                <div class="flip-card"><div class="front"><em>legere</em></div><div class="hint">ablative &middot; click</div><div class="back"><strong><em>legendō</em></strong> &mdash; "by reading"<br><span style="color:#666;">This is where English <em>legend</em> comes from.</span></div></div>
+                <div class="flip-card"><div class="front"><em>venīre</em></div><div class="hint">accusative &middot; click</div><div class="back"><strong><em>ad veniendum</em></strong> &mdash; "for coming"<br><span style="color:#666;">4th conjugation, so <em>-ie-</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>loquī</em> <span style="font-size:13px; color:#999;">(deponent)</span></div><div class="hint">genitive &middot; click</div><div class="back"><strong><em>loquendī</em></strong> &mdash; "of speaking"<br><span style="color:#666;">Deponent, but the gerund is completely ordinary.</span></div></div>
+                <div class="flip-card"><div class="front"><em>cōgitāre</em></div><div class="hint">ablative &middot; click</div><div class="back"><strong><em>cōgitandō</em></strong> &mdash; "by thinking"<br><span style="color:#666;">Short <em>a</em> in the stem, even though <em>cōgitāre</em> has a long one.</span></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; NOUN OR ADJECTIVE?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four questions. The first two are still in English &mdash; get the concept solid before the Latin piles up.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Use the swap test: can you replace the word with a noun, or with an adjective?</div>
+            <div class="widget-row" data-correct="b" data-hint="Try swapping in a plain noun: 'Cicero feared ____.'">
+                <div class="widget-row-prompt">"Cicero feared <strong>losing</strong>." What job is <em>losing</em> doing?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="An adjective would have to describe someone. Here nothing is being described — losing is the thing Cicero feared.">Adjective &mdash; a participle</button>
+                    <button data-choice="b" data-fb="Right &mdash; it is the direct object of 'feared,' so it is a noun. Swap in 'defeat' and the sentence still works. That is a gerund.">Noun &mdash; a gerund</button>
+                    <button data-choice="c" data-fb="It is not the main verb; 'feared' is. Losing is what he feared, which makes it the object.">The main verb of the sentence</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which word is being described?">
+                <div class="widget-row-prompt">"The <strong>waiting</strong> senators grew restless." What job is <em>waiting</em> doing?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A noun would be a thing in the sentence. Here waiting is not a thing — it is a quality attached to the senators.">Noun &mdash; a gerund</button>
+                    <button data-choice="b" data-fb="It is not the main verb; 'grew' is. Waiting only tells you what the senators were like.">The main verb of the sentence</button>
+                    <button data-choice="c" data-fb="Right &mdash; it describes senators, so it is an adjective. In Latin that is a present participle: senātōrēs exspectantēs. Not a gerund.">Adjective &mdash; a participle</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Drop -re from the infinitive, add -nd-, then the neuter singular genitive ending.">
+                <div class="widget-row-prompt">What is the <strong>genitive gerund</strong> of <em>audīre</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; audiendī. 4th conjugation gives -ie- before the -nd-, and the genitive neuter singular ending is -ī.">audiendī</button>
+                    <button data-choice="b" data-fb="Audiendum is the accusative. The genitive ends in -ī.">audiendum</button>
+                    <button data-choice="c" data-fb="Audītī is the perfect passive participle in the genitive — 'of the heard thing.' A participle, not a gerund.">audītī</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which case is missing from the gerund entirely?">
+                <div class="widget-row-prompt">Latin wants to say "<strong>Speaking</strong> is difficult," with <em>speaking</em> as the subject. What does it use?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is no nominative gerund at all. Dīcendum est difficile is not how Latin says this — and in Module 5 that shape will turn out to mean something else entirely.">The nominative gerund, <em>dīcendum</em></button>
+                    <button data-choice="b" data-fb="Dīcendī is genitive — 'of speaking.' A genitive cannot be the subject of est.">The genitive gerund, <em>dīcendī</em></button>
+                    <button data-choice="c" data-fb="Right &mdash; the infinitive: Dīcere est difficile. The infinitive covers the nominative job, which is exactly why the gerund does not need to.">The infinitive, <em>dīcere</em></button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> a Roman space built for speaking &mdash; the <em>Forum Rōmānum</em>, the Senate House (<em>Cūria</em>), or the speaker's platform itself, the <em>Rōstra</em>. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>five</strong> parts of the space, and make at least <strong>two</strong> labels a gerund phrase. For example <em>locus dīcendī</em> ("a place of speaking"), <em>gradūs ad ascendendum</em> ("steps for climbing up"), <em>Rōstra</em>, <em>Cūria</em>, <em>templum</em>. <span style="color:#666;">[ARTHUR: label tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write one Latin sentence</strong> using a gerund with <em>causā</em> or with <em>ad</em>. Example: <em>Cicerō ad Rōstra dīcendī causā vēnit.</em> &mdash; "Cicero came to the Rostra for the sake of speaking." Formative and ungraded; the graded ARTHUR project comes at Module 8.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; GRAVITĀS &middot; RESPONSIBILITY</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><em>Gravitās</em> comes from <em>gravis</em>, "heavy," and for Romans it named the quality of carrying weight properly &mdash; being serious about serious things, and not frivolous with what matters. The gerund is a small grammar lesson in it. A verb is an action rushing past; a gerund freezes that action into a <em>thing</em> &mdash; "the doing of it" &mdash; and a thing can be picked up, examined, weighed, argued about, and answered for. When Cicero says <em>ars dīcendī</em>, "the art of speaking," he has turned his own talking into an object he can be held responsible for. That is what <em>gravitās</em> asks of you too: stop treating what you do as a blur of events, and name it as a thing you own.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 4.02 &mdash; The Gerund in All Its Cases</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Four cases, four jobs, one worked example each &mdash; plus a chant, and the one place two cases share a form.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A gerund is a <strong>verbal noun</strong>: infinitive minus <em>-re</em>, plus <em>-nd-</em>, plus neuter singular endings. It is <strong>neuter, singular, and has no nominative</strong> &mdash; because the infinitive already does that job. Translate it as "the doing of it," then tidy the English.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.01 &middot; The Doing of It</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

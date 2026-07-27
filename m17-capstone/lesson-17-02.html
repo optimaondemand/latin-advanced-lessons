@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 17.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 17</div>
+        <div style="font-size: 12px; color: #666;">Capstone &amp; Semester Final</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 17.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Grammar Tour, Part 1: Forms</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 25 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 17.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Grammar Tour, Part 1: Forms</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; Review</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Every ending the semester added, on one page. Bookmark this lesson.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today is not an explanation lesson. It is a <strong>reference</strong> lesson &mdash; the page you come back to on the morning of the Final. Nine tables, in the order the semester built them: deponents and semi-deponents, gerund against gerundive, the subjunctive in four tenses in both voices, and the six irregular verbs. Read the tables, then use the two activities at the bottom to find out which ones you actually own and which ones you only recognise.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> produce any of the four subjunctive tenses, active or passive, from a verb's principal parts.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell a gerund from a gerundive by looking for the noun it agrees with.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the two Latin forms that are genuinely ambiguous and say what settles them.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; DEPONENTS AND SEMI-DEPONENTS &nbsp;<span style="color:#666;">m02, m03</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A <strong>deponent</strong> verb has laid down its active forms (Latin <em>dēpōnere</em>, &ldquo;to lay down&rdquo;) and uses passive endings with active meaning. It has <strong>three</strong> principal parts, not four, and the third one is a participle plus <em>sum</em>.</p>
+        <table class="para">
+            <tr><th style="width:24%">Principal parts</th><th style="width:16%">Conj.</th><th style="width:20%">Meaning</th><th>Sample form and what it means</th></tr>
+            <tr><td class="lab"><em>cōnor, cōnārī, cōnātus sum</em></td><td>1st</td><td>to try</td><td><em>cōnābimur</em> &mdash; we will try (future, 1st plural)</td></tr>
+            <tr><td class="lab"><em>hortor, hortārī, hortātus sum</em></td><td>1st</td><td>to urge</td><td><em>hortātus est</em> &mdash; he urged</td></tr>
+            <tr><td class="lab"><em>arbitror, arbitrārī, arbitrātus sum</em></td><td>1st</td><td>to judge, think</td><td><em>arbitrātus sum</em> &mdash; I thought</td></tr>
+            <tr><td class="lab"><em>mīror, mīrārī, mīrātus sum</em></td><td>1st</td><td>to marvel at</td><td><em>mīrātī erant</em> &mdash; they had marvelled</td></tr>
+            <tr><td class="lab"><em>vereor, verērī, veritus sum</em></td><td>2nd</td><td>to fear, revere</td><td><em>verēbātur</em> &mdash; he was afraid</td></tr>
+            <tr><td class="lab"><em>loquor, loquī, locūtus sum</em></td><td>3rd</td><td>to speak</td><td><em>loquēbātur</em> &mdash; he was speaking</td></tr>
+            <tr><td class="lab"><em>sequor, sequī, secūtus sum</em></td><td>3rd</td><td>to follow</td><td><em>sequēbantur</em> &mdash; they were following</td></tr>
+            <tr><td class="lab"><em>ūtor, ūtī, ūsus sum</em> (+ abl.)</td><td>3rd</td><td>to use, make use of</td><td><em>indiciō ūsus est</em> &mdash; he used the informer's evidence</td></tr>
+            <tr><td class="lab"><em>proficīscor, proficīscī, profectus sum</em></td><td>3rd</td><td>to set out</td><td><em>profectus est</em> &mdash; he set out</td></tr>
+            <tr><td class="lab"><em>ēgredior, ēgredī, ēgressus sum</em></td><td>3rd -iō</td><td>to go out</td><td><em>ēgressus</em> &mdash; having gone out</td></tr>
+            <tr><td class="lab"><em>patior, patī, passus sum</em></td><td>3rd -iō</td><td>to suffer, allow</td><td><em>passī sunt</em> &mdash; they suffered</td></tr>
+            <tr><td class="lab"><em>morior, morī, mortuus sum</em></td><td>3rd -iō</td><td>to die</td><td><em>moriētur</em> &mdash; he will die</td></tr>
+            <tr><td class="lab"><em>nāscor, nāscī, nātus sum</em></td><td>3rd</td><td>to be born</td><td><em>nātus</em> &mdash; born, having been born</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">A <strong>semi-deponent</strong> is only half of that. It is <strong>active in the present system</strong> (present, imperfect, future) and <strong>deponent in the perfect system</strong> (perfect, pluperfect, future perfect). There are four to know:</p>
+        <table class="para">
+            <tr><th style="width:30%">Principal parts</th><th style="width:20%">Present system</th><th style="width:22%">Perfect system</th><th>Meaning</th></tr>
+            <tr><td class="lab"><em>audeō, audēre, ausus sum</em></td><td class="end"><em>audet</em> &mdash; he dares</td><td class="end"><em>ausus est</em> &mdash; he dared</td><td>to dare</td></tr>
+            <tr><td class="lab"><em>soleō, solēre, solitus sum</em></td><td class="end"><em>solēbat</em> &mdash; he was accustomed</td><td class="end"><em>solitus est</em> &mdash; he was accustomed</td><td>to be accustomed</td></tr>
+            <tr><td class="lab"><em>gaudeō, gaudēre, gāvīsus sum</em></td><td class="end"><em>gaudet</em> &mdash; he rejoices</td><td class="end"><em>gāvīsus est</em> &mdash; he rejoiced</td><td>to rejoice</td></tr>
+            <tr><td class="lab"><em>fīdō, fīdere, fīsus sum</em> (+ abl./dat.)</td><td class="end"><em>fīdit</em> &mdash; he trusts</td><td class="end"><em>fīsus est</em> &mdash; he trusted</td><td>to trust</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The one thing that gets marked wrong on exams.</strong> Because the perfect of a deponent or semi-deponent is a <em>participle</em> plus <em>sum</em>, the participle must <strong>agree with its subject</strong> in gender and number. <em>Fulvia ausa est</em>, not <em>Fulvia ausus est</em>. <em>Coniūrātī profectī sunt</em>, not <em>profectus sunt</em>. On the Final, when a form-production item names a masculine or feminine subject, that is what it is testing.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; GERUND AGAINST GERUNDIVE &nbsp;<span style="color:#666;">m04, m05</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Both are built on the same <strong>-nd-</strong> stem. They are told apart by a single question: <strong>is there a noun for the form to agree with?</strong></p>
+        <table class="para">
+            <tr><th style="width:22%"></th><th style="width:38%">GERUND</th><th>GERUNDIVE</th></tr>
+            <tr><td class="lab"><strong>What it is</strong></td><td>a verbal <strong>noun</strong> &mdash; &ldquo;the act of&hellip;&rdquo;</td><td>a verbal <strong>adjective</strong> &mdash; &ldquo;to be&hellip;ed&rdquo;</td></tr>
+            <tr><td class="lab"><strong>Declension</strong></td><td>2nd declension neuter, <strong>singular only</strong>, no nominative</td><td><em>-ndus, -nda, -ndum</em> &mdash; declines fully, like <em>bonus, -a, -um</em></td></tr>
+            <tr><td class="lab"><strong>Agrees with?</strong></td><td class="end">nothing &mdash; it is a noun in its own right</td><td class="end">a noun, in gender, number and case</td></tr>
+            <tr><td class="lab"><strong>Forms of <em>dīcō</em></strong></td><td>gen. <em>dīcendī</em> &middot; dat. <em>dīcendō</em> &middot; acc. <em>dīcendum</em> &middot; abl. <em>dīcendō</em></td><td><em>dīcendus, dīcenda, dīcendum</em>&hellip; through all cases and both numbers</td></tr>
+            <tr><td class="lab"><strong>Example</strong></td><td><em>ars dīcendī</em> &mdash; &ldquo;the art <strong>of speaking</strong>&rdquo;<br><em>ad audiendum</em> &mdash; &ldquo;for the purpose of listening&rdquo;<br><em>in legendō</em> &mdash; &ldquo;in reading&rdquo;</td><td><em>ad hostēs vincendōs</em> &mdash; &ldquo;for conquering the enemy&rdquo; (<em>vincendōs</em> agrees with <em>hostēs</em>)<br><em>epistulae legendae</em> &mdash; &ldquo;letters to be read&rdquo;</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">And the one construction Module 5 exists for &mdash; the <strong>gerundive of obligation</strong>, gerundive + a form of <em>esse</em>, with the person who must act in the <strong>dative</strong>:</p>
+        <table class="para">
+            <tr><th style="width:44%">Latin</th><th>English</th></tr>
+            <tr><td class="lab"><em>Rēs pūblica <strong>nōbīs</strong> dēfendenda est.</em></td><td class="end">&ldquo;The republic <strong>must be defended by us</strong>.&rdquo;</td></tr>
+            <tr><td class="lab"><em>Catilīna <strong>cōnsulī</strong> pūniendus erat.</em></td><td class="end">&ldquo;Catiline had to be punished by the consul.&rdquo;</td></tr>
+            <tr><td class="lab"><em><strong>Nōbīs</strong> prō patriā pugnandum est.</em></td><td class="end">&ldquo;We must fight for our country.&rdquo; (impersonal &mdash; no object, so the gerundive stays neuter singular)</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why the dative and not <em>ā</em> + ablative?</strong> Because the ablative of agent slot is already taken. <em>Rēs pūblica ā Cicerōne dēfenditur</em> means &ldquo;the republic is being defended by Cicero&rdquo; &mdash; a plain passive. Latin needed a different way to say &ldquo;is the one who <em>has to</em> do it,&rdquo; and it reached for the dative, the case of the person concerned. English keeps them both as &ldquo;by,&rdquo; which is why this is the item students lose points on: they read <em>nōbīs</em> as an indirect object and reverse the sentence.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE SUBJUNCTIVE, ACTIVE: PRESENT AND IMPERFECT &nbsp;<span style="color:#666;">m06</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;"><strong>Present subjunctive.</strong> First conjugation swaps its <em>-a-</em> for <em>-e-</em>; everything else takes <em>-a-</em>. The old mnemonic still works: <em>&ldquo;we beat a liar&rdquo;</em> &mdash; <em>-e-</em> in the first conjugation, <em>-a-</em> in the rest.</p>
+        <table class="para">
+            <tr><th style="width:16%"></th><th>1st <em>amō</em></th><th>2nd <em>moneō</em></th><th>3rd <em>regō</em></th><th>3rd -iō <em>capiō</em></th><th>4th <em>audiō</em></th></tr>
+            <tr><td class="lab">1 sg.</td><td>am<span class="end">em</span></td><td>mone<span class="end">am</span></td><td>reg<span class="end">am</span></td><td>capi<span class="end">am</span></td><td>audi<span class="end">am</span></td></tr>
+            <tr><td class="lab">2 sg.</td><td>am<span class="end">ēs</span></td><td>mone<span class="end">ās</span></td><td>reg<span class="end">ās</span></td><td>capi<span class="end">ās</span></td><td>audi<span class="end">ās</span></td></tr>
+            <tr><td class="lab">3 sg.</td><td>am<span class="end">et</span></td><td>mone<span class="end">at</span></td><td>reg<span class="end">at</span></td><td>capi<span class="end">at</span></td><td>audi<span class="end">at</span></td></tr>
+            <tr><td class="lab">1 pl.</td><td>am<span class="end">ēmus</span></td><td>mone<span class="end">āmus</span></td><td>reg<span class="end">āmus</span></td><td>capi<span class="end">āmus</span></td><td>audi<span class="end">āmus</span></td></tr>
+            <tr><td class="lab">2 pl.</td><td>am<span class="end">ētis</span></td><td>mone<span class="end">ātis</span></td><td>reg<span class="end">ātis</span></td><td>capi<span class="end">ātis</span></td><td>audi<span class="end">ātis</span></td></tr>
+            <tr><td class="lab">3 pl.</td><td>am<span class="end">ent</span></td><td>mone<span class="end">ant</span></td><td>reg<span class="end">ant</span></td><td>capi<span class="end">ant</span></td><td>audi<span class="end">ant</span></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;"><strong>Imperfect subjunctive.</strong> The easiest form in the language: take the <strong>present active infinitive exactly as it is</strong> and add <em>-m, -s, -t, -mus, -tis, -nt</em>.</p>
+        <table class="para">
+            <tr><th style="width:16%"></th><th><em>amāre</em></th><th><em>monēre</em></th><th><em>regere</em></th><th><em>capere</em></th><th><em>audīre</em></th></tr>
+            <tr><td class="lab">1 sg.</td><td>amāre<span class="end">m</span></td><td>monēre<span class="end">m</span></td><td>regere<span class="end">m</span></td><td>capere<span class="end">m</span></td><td>audīre<span class="end">m</span></td></tr>
+            <tr><td class="lab">3 sg.</td><td>amāre<span class="end">t</span></td><td>monēre<span class="end">t</span></td><td>regere<span class="end">t</span></td><td>capere<span class="end">t</span></td><td>audīre<span class="end">t</span></td></tr>
+            <tr><td class="lab">3 pl.</td><td>amāre<span class="end">nt</span></td><td>monēre<span class="end">nt</span></td><td>regere<span class="end">nt</span></td><td>capere<span class="end">nt</span></td><td>audīre<span class="end">nt</span></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">And the two verbs that turn up in every clause in Latin:</p>
+        <table class="para">
+            <tr><th style="width:20%"></th><th><em>sum</em> &mdash; present subj.</th><th><em>sum</em> &mdash; imperfect subj.</th><th><em>possum</em> &mdash; pres. / impf.</th></tr>
+            <tr><td class="lab">3 sg.</td><td class="end">sit</td><td class="end">esset</td><td class="end">possit / posset</td></tr>
+            <tr><td class="lab">3 pl.</td><td class="end">sint</td><td class="end">essent</td><td class="end">possint / possent</td></tr>
+            <tr><td class="lab">full set (sg.)</td><td>sim, sīs, sit</td><td>essem, essēs, esset</td><td>possim, possīs, possit / possem, possēs, posset</td></tr>
+            <tr><td class="lab">full set (pl.)</td><td>sīmus, sītis, sint</td><td>essēmus, essētis, essent</td><td>possīmus, possītis, possint / possēmus, possētis, possent</td></tr>
+        </table>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; THE SUBJUNCTIVE, ACTIVE: PERFECT AND PLUPERFECT &nbsp;<span style="color:#666;">m13</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">These two are built off the <strong>perfect stem</strong> &mdash; the third principal part with its ending cut off &mdash; and they are identical for every conjugation, because the perfect stem does all the work. <em>amāv-</em>, <em>monu-</em>, <em>rēx-</em>, <em>cēp-</em>, <em>audīv-</em>, <em>fu-</em>.</p>
+        <table class="para">
+            <tr><th style="width:16%"></th><th style="width:26%">PERFECT subj. &mdash; stem + <em>-eri-</em></th><th style="width:26%">PLUPERFECT subj. &mdash; stem + <em>-isse-</em></th><th>What each one means in a clause</th></tr>
+            <tr><td class="lab">1 sg.</td><td>amāv<span class="end">erim</span></td><td>amāv<span class="end">issem</span></td><td rowspan="6" style="font-size:15px;">PERFECT = &ldquo;already finished&rdquo; in <strong>primary</strong> sequence (after a present or future main verb).<br><br>PLUPERFECT = &ldquo;already finished&rdquo; in <strong>secondary</strong> sequence (after a past main verb).<br><br>Neither one means &ldquo;perfect&rdquo; or &ldquo;pluperfect&rdquo; the way an indicative does. In a subordinate clause they mean <em>earlier than the main verb</em>.</td></tr>
+            <tr><td class="lab">2 sg.</td><td>amāv<span class="end">erīs</span></td><td>amāv<span class="end">issēs</span></td></tr>
+            <tr><td class="lab">3 sg.</td><td>amāv<span class="end">erit</span></td><td>amāv<span class="end">isset</span></td></tr>
+            <tr><td class="lab">1 pl.</td><td>amāv<span class="end">erīmus</span></td><td>amāv<span class="end">issēmus</span></td></tr>
+            <tr><td class="lab">2 pl.</td><td>amāv<span class="end">erītis</span></td><td>amāv<span class="end">issētis</span></td></tr>
+            <tr><td class="lab">3 pl.</td><td>amāv<span class="end">erint</span></td><td>amāv<span class="end">issent</span></td></tr>
+        </table>
+        <table class="para">
+            <tr><th style="width:20%">Verb</th><th>Perfect subj., 3 sg.</th><th>Pluperfect subj., 3 sg.</th></tr>
+            <tr><td class="lab"><em>faciō, fēcī</em></td><td class="end">fēcerit</td><td class="end">fēcisset</td></tr>
+            <tr><td class="lab"><em>veniō, vēnī</em></td><td class="end">vēnerit</td><td class="end">vēnisset</td></tr>
+            <tr><td class="lab"><em>discēdō, discessī</em></td><td class="end">discesserit</td><td class="end">discessisset</td></tr>
+            <tr><td class="lab"><em>sum, fuī</em></td><td class="end">fuerit</td><td class="end">fuisset</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The honest collision, first named in Lesson 13.02.</strong> The perfect subjunctive and the future perfect indicative overlap. <em>Fēcerit</em> can be &ldquo;he will have done&rdquo; (future perfect indicative) or a perfect subjunctive; only <em>fēcerō</em> and <em>fēcerimus</em> versus <em>fēcerim</em> and <em>fēcerīmus</em> differ. This is not a flaw in your memory. It is a real ambiguity in Latin, and it is settled the same way everything else is: <strong>mood is decided by the clause, not by the word.</strong> If the form sits after <em>cum</em>, after a question word, after <em>ut</em> or <em>nē</em>, it is subjunctive. If it stands as the main verb of its own sentence, it is indicative.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 5 &middot; PASSIVE AND DEPONENT SUBJUNCTIVES &nbsp;<span style="color:#666;">m06, m13</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The present and imperfect passive use passive endings on the same stems. The perfect and pluperfect passive use <strong>two words</strong>: the perfect passive participle plus the subjunctive of <em>sum</em>.</p>
+        <table class="para">
+            <tr><th style="width:20%">Tense</th><th style="width:34%">Passive &mdash; <em>regō</em>, 3 sg.</th><th>Deponent &mdash; <em>loquor</em>, 3 sg.</th></tr>
+            <tr><td class="lab">Present subj.</td><td class="end">regātur &mdash; &ldquo;he may be ruled&rdquo;</td><td class="end">loquātur &mdash; &ldquo;he may speak&rdquo;</td></tr>
+            <tr><td class="lab">Imperfect subj.</td><td class="end">regerētur</td><td class="end">loquerētur</td></tr>
+            <tr><td class="lab">Perfect subj.</td><td class="end">rēctus sit &nbsp;<span style="font-weight:normal; color:#666;">(PPP + <em>sim</em>)</span></td><td class="end">locūtus sit</td></tr>
+            <tr><td class="lab">Pluperfect subj.</td><td class="end">rēctus esset &nbsp;<span style="font-weight:normal; color:#666;">(PPP + <em>essem</em>)</span></td><td class="end">locūtus esset</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">Full present and imperfect passive endings, so nothing is hidden:</p>
+        <table class="para">
+            <tr><th style="width:16%"></th><th>Present passive subj. <em>regō</em></th><th>Imperfect passive subj. <em>regō</em></th><th>Present subj. <em>loquor</em></th></tr>
+            <tr><td class="lab">1 sg.</td><td>regar</td><td>regerer</td><td>loquar</td></tr>
+            <tr><td class="lab">2 sg.</td><td>regāris</td><td>regerēris</td><td>loquāris</td></tr>
+            <tr><td class="lab">3 sg.</td><td>regātur</td><td>regerētur</td><td>loquātur</td></tr>
+            <tr><td class="lab">1 pl.</td><td>regāmur</td><td>regerēmur</td><td>loquāmur</td></tr>
+            <tr><td class="lab">2 pl.</td><td>regāminī</td><td>regerēminī</td><td>loquāminī</td></tr>
+            <tr><td class="lab">3 pl.</td><td>regantur</td><td>regerentur</td><td>loquantur</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Deponents look exactly like passives here too.</strong> <em>Loquātur</em> and <em>regātur</em> are built identically; the difference is entirely in the dictionary entry. If the verb's principal parts end in <em>-or, -ī, -us sum</em>, the meaning is active however passive the ending looks. This is the Module 2 rule, still true in Module 17, and it never stops mattering.</div>
+    </div>
+
+    <!-- PART 6 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 6 &middot; THE SIX IRREGULAR VERBS &nbsp;<span style="color:#666;">m15</span></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">These are common enough that they are vocabulary as much as paradigms. Learn the third-person singular of each and you will recognise nine tenths of what you meet.</p>
+        <table class="para">
+            <tr><th style="width:22%">Principal parts</th><th style="width:12%">Meaning</th><th style="width:22%">Present indic. (sg. / pl.)</th><th style="width:14%">Pres. subj. 3 sg.</th><th>Impf. subj. 3 sg.</th></tr>
+            <tr><td class="lab"><em>ferō, ferre, tulī, lātum</em></td><td>carry, bring, bear</td><td>ferō, fers, fert / ferimus, fertis, ferunt</td><td class="end">ferat</td><td class="end">ferret</td></tr>
+            <tr><td class="lab"><em>eō, īre, iī, itum</em></td><td>go</td><td>eō, īs, it / īmus, ītis, eunt</td><td class="end">eat</td><td class="end">īret</td></tr>
+            <tr><td class="lab"><em>volō, velle, voluī</em></td><td>want, be willing</td><td>volō, vīs, vult / volumus, vultis, volunt</td><td class="end">velit</td><td class="end">vellet</td></tr>
+            <tr><td class="lab"><em>nōlō, nōlle, nōluī</em></td><td>not want, refuse</td><td>nōlō, nōn vīs, nōn vult / nōlumus, nōn vultis, nōlunt</td><td class="end">nōlit</td><td class="end">nōllet</td></tr>
+            <tr><td class="lab"><em>mālō, mālle, māluī</em></td><td>prefer</td><td>mālō, māvīs, māvult / mālumus, māvultis, mālunt</td><td class="end">mālit</td><td class="end">māllet</td></tr>
+            <tr><td class="lab"><em>fīō, fierī, factus sum</em></td><td>become, be made, happen</td><td>fīō, fīs, fit / &mdash;, &mdash;, fīunt</td><td class="end">fīat</td><td class="end">fieret</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Three of these are the same verb wearing different clothes.</strong> <em>Volō</em> (&ldquo;I want&rdquo;), <em>nōlō</em> (from <em>nē</em> + <em>volō</em>, &ldquo;I want&hellip;not&rdquo;) and <em>mālō</em> (from <em>magis</em> + <em>volō</em>, &ldquo;I want more&rdquo;) share one set of endings and one irregularity. Learn <em>volō</em> and you have paid for the other two. And <em>fīō</em> supplies the passive that <em>faciō</em> lacks in the present system: <em>faciō</em> &ldquo;I make,&rdquo; <em>fīō</em> &ldquo;I am made / I become.&rdquo;</div>
+    </div>
+
+    <!-- PART 7 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 7 &middot; FORM CARDS &mdash; SAY IT BEFORE YOU FLIP IT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Name the form out loud &mdash; tense, voice, mood, person, number &mdash; and then click to check. Saying it out loud is the whole exercise; reading the back of the card teaches you nothing.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#128204; FLIP CARDS &middot; PARSE THE FORM</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>fēcerit</em></div><div class="hint">perfect stem + what?</div><div class="back">Perfect subjunctive active, 3rd singular, of <em>faciō</em>. Also, honestly, a possible future perfect indicative &mdash; the clause decides.</div></div>
+                <div class="flip-card"><div class="front"><em>regerētur</em></div><div class="hint">infinitive + endings</div><div class="back">Imperfect subjunctive <strong>passive</strong>, 3rd singular, of <em>regō</em>: &ldquo;he/it might be ruled.&rdquo; <em>regere</em> + <em>-tur</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>locūtus esset</em></div><div class="hint">two words</div><div class="back">Pluperfect subjunctive of the deponent <em>loquor</em>, 3rd singular: &ldquo;he had spoken.&rdquo; Active in meaning.</div></div>
+                <div class="flip-card"><div class="front"><em>capiāmus</em></div><div class="hint">-a- or -e-?</div><div class="back">Present subjunctive active, 1st plural, of <em>capiō</em>. Third conjugation -iō, so <em>-a-</em>. On its own it could be a hortatory &ldquo;let us seize.&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>vēnissent</em></div><div class="hint">-isse-</div><div class="back">Pluperfect subjunctive active, 3rd plural, of <em>veniō</em>. Perfect stem <em>vēn-</em> + <em>-issent</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>vellet</em></div><div class="hint">an irregular</div><div class="back">Imperfect subjunctive, 3rd singular, of <em>volō</em>: &ldquo;he would want.&rdquo; From the infinitive <em>velle</em> + <em>-t</em> &mdash; so it is regular after all, once you know the infinitive.</div></div>
+                <div class="flip-card"><div class="front"><em>ausa est</em></div><div class="hint">who is the subject?</div><div class="back">Perfect of the semi-deponent <em>audeō</em>, 3rd singular, with a <strong>feminine</strong> subject: &ldquo;she dared.&rdquo; Active in meaning.</div></div>
+                <div class="flip-card"><div class="front"><em>dēfendenda</em></div><div class="hint">noun or adjective?</div><div class="back">Gerundive, feminine nominative singular. It needs a feminine singular noun to agree with &mdash; e.g. <em>rēs pūblica dēfendenda est</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>dīcendī</em></div><div class="hint">is there a noun for it?</div><div class="back">Genitive <strong>gerund</strong> &mdash; &ldquo;of speaking&rdquo; &mdash; if nothing agrees with it, as in <em>ars dīcendī</em>. It could also be a gerundive if a masculine genitive singular or nominative plural noun is standing next to it. Look at the neighbours.</div></div>
+                <div class="flip-card"><div class="front"><em>fīat</em></div><div class="hint">an irregular, and a famous one</div><div class="back">Present subjunctive, 3rd singular, of <em>fīō</em>: &ldquo;let it be made / let it happen.&rdquo; As a main-verb jussive this is the <em>fīat lūx</em> of the Latin Bible.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 8 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 8 &middot; FIVE FORMS THAT CATCH PEOPLE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Not the easy ones. These five are the ones that go wrong on a cumulative exam.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Parse the form.</div>
+
+            <div class="widget-row" data-correct="a" data-hint="Compare it with audiuntur. Which vowel is in there, and what does that vowel do in the third and fourth conjugations?">
+                <div class="widget-row-prompt"><em>audiantur</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — present subjunctive passive, 3rd plural, of audiō: &quot;they may be heard.&quot; The -a- is the subjunctive marker; the indicative would be audiuntur.">Present subjunctive passive, 3rd plural</button>
+                    <button data-choice="b" data-fb="The imperfect subjunctive passive would be audīrentur, built on the infinitive audīre. There is no -re- in audiantur.">Imperfect subjunctive passive, 3rd plural</button>
+                    <button data-choice="c" data-fb="The present indicative passive is audiuntur, with -u-. Swap that -u- for -a- and you have crossed from indicative into subjunctive, which is the whole of Module 6 in one vowel.">Present indicative passive, 3rd plural</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="This form is genuinely ambiguous. Do not pick one of the first two just because a question usually has one answer.">
+                <div class="widget-row-prompt"><em>fuerint</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="It CAN be the future perfect indicative — &quot;they will have been&quot; — but that is not the only possibility, and answering as though it were is exactly the trap Lesson 13.02 warned about.">Future perfect indicative only</button>
+                    <button data-choice="b" data-fb="It CAN be the perfect subjunctive, but not only. In the 3rd plural these two tenses have collapsed into one spelling.">Perfect subjunctive only</button>
+                    <button data-choice="c" data-fb="Right, and this is the honest answer. In the 3rd plural the future perfect indicative and the perfect subjunctive are spelled identically. What settles it is the clause: inside a cum clause, an indirect question, or an ut/nē clause it is subjunctive; standing as a main verb it is indicative.">Either &mdash; the two tenses are spelled the same here, and only the clause decides</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two words. Look at the participle's ending before you look at the verb.">
+                <div class="widget-row-prompt"><em>Fulvia ad cōnsulem venīre ausa est.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Audeō is semi-deponent: ausa est looks passive but means &quot;she dared,&quot; active. Nothing in this sentence is being done to Fulvia.">Passive &mdash; &ldquo;Fulvia was dared&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — &quot;Fulvia dared to come to the consul.&quot; The participle ausa is feminine because Fulvia is, and the perfect of a semi-deponent is a participle plus est. Ausus est would be wrong here.">Active in meaning, and the participle is feminine because Fulvia is</button>
+                    <button data-choice="c" data-fb="Ausa est is perfect, not present. Audet would be &quot;she dares.&quot; Semi-deponents are active in FORM in the present system and deponent in the perfect system — this is the perfect.">Present tense &mdash; &ldquo;Fulvia dares&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Ask the Module 5 question: is there a noun for the -nd- form to agree with, and what case is it in?">
+                <div class="widget-row-prompt"><em>Epistulae ā Lentulō scrīptae sunt, sed nōbīs legendae sunt.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nōbīs is dative, not ablative, and there is no ā in front of it — compare ā Lentulō in the first half, which IS an ablative of agent. The sentence puts the two agent constructions side by side on purpose.">Two ablatives of agent &mdash; &ldquo;by Lentulus&rdquo; and &ldquo;by us&rdquo;</button>
+                    <button data-choice="b" data-fb="Legendae is not a gerund. Gerunds are neuter singular nouns and never take a feminine plural ending; legendae is agreeing with epistulae.">A gerund, &ldquo;of reading&rdquo;</button>
+                    <button data-choice="c" data-fb="Right. Legendae is a gerundive agreeing with epistulae (feminine nominative plural), plus sunt: &quot;The letters were written by Lentulus, but they must be read by us.&quot; Ā Lentulō is the ordinary ablative of agent; nōbīs is the dative of agent that the gerundive of obligation requires.">Gerundive of obligation with the <strong>dative</strong> of agent <em>nōbīs</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Count the r's. One r or two — and which stem does each one come from?">
+                <div class="widget-row-prompt"><em>Cōnsul mīlitēs mīsit ut auxilium ferrent.</em> &mdash; concentrate only on <em>ferrent</em>.</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Ferunt is the present indicative, 3rd plural — &quot;they bring.&quot; It cannot stand in an ut clause of purpose, which requires the subjunctive.">Present indicative, 3rd plural, of <em>ferō</em></button>
+                    <button data-choice="b" data-fb="Right — imperfect subjunctive, 3rd plural, of ferō, in a purpose clause after the perfect mīsit (secondary sequence): &quot;The consul sent soldiers to bring help.&quot; Ferō is irregular in the present indicative (fers, fert) but its imperfect subjunctive is built the ordinary way, off the infinitive ferre: ferre + -nt.">Imperfect subjunctive, 3rd plural, of <em>ferō</em></button>
+                    <button data-choice="c" data-fb="The present subjunctive is ferant, with one r and an -a-. Ferrent has two r's because the infinitive ferre has two, and that is the imperfect marker. It also has to be imperfect here: mīsit is perfect, so secondary sequence.">Present subjunctive, 3rd plural, of <em>ferō</em></button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 17.03 &mdash; The Grammar Tour, Part 2: Constructions</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Knowing that <em>dīceret</em> is an imperfect subjunctive tells you almost nothing about what the sentence means. Tomorrow: the nine constructions that put it there, the four jobs of <em>nē</em>, the three jobs of <em>ut</em>, and the one table that sorts them all.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Every subjunctive you have ever met comes from one of three places: the <strong>present stem</strong> with a changed vowel, the <strong>present infinitive</strong> with endings stuck on, or the <strong>perfect stem</strong> with <em>-eri-</em> or <em>-isse-</em>. Three sources, four tenses. If you can say which of the three a form came from, you have parsed it.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 17.02 &middot; The Grammar Tour, Part 1: Forms</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

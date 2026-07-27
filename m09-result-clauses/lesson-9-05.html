@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 9.05</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd u { color: #1B6A94; font-style: italic; text-decoration: underline; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 9</div>
+        <div style="font-size: 12px; color: #666;">Result Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 9.05 &middot; Day 5 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Debate in the Senate</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 9.05</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Debate in the Senate</div>
+        <div style="font-size: 16px; color: #666;">Reading &middot; Review &amp; Self-Check</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Five men had been arrested. The Senate had to decide what to do with them.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">5 December 63 BC. Caesar argues that Roman citizens should not be executed without trial; Cato argues that these men have stopped being citizens. Sallust gives both speeches at length, and the contrast between them is the heart of his book. Your job today is to read the debate &mdash; and to sort five result clauses from one purpose clause and one indirect command, with nothing labelled for you.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> find and parse every result clause in an adapted passage of Sallust, and name its signpost.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> distinguish the purpose clause and the indirect command in the same passage from the result clauses around them.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain what Caesar and Cato each argued, and why Sallust reports both at length.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 - READING -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 1 &middot; THE READING</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;"><strong>Adapted from Sallust, <em>Bellum Catilīnae</em> 50&ndash;53.</strong> A simplified Latin retelling of the Senate debate &mdash; <strong>not Sallust's own sentences.</strong> <span style="color:#AA1E2D;"><strong>Result clauses are marked in red.</strong></span> <span style="color:#1B6A94;"><u>The purpose clause and the indirect command are underlined in blue.</u></span> Read it once straight through for sense before you start parsing.</p>
+        <div class="rd">
+            <p>Nōnīs Decembribus senātus convēnit <u>ut dē coniūrātīs comprehēnsīs cōnsuleret</u>. Tanta erat dissēnsiō <b>ut senātōrēs saepe clāmārent</b>. Prīmus Sīlānus, cōnsul dēsignātus, dīxit coniūrātōs necārī dēbēre.</p>
+            <p>Deinde Caesar surrēxit. Tam callidē dīxit <b>ut multī eī crēderent</b>. Nōn negāvit coniūrātōs scelus fēcisse; sed poenam novam posterīs perīculōsam futūram esse dīxit. Itaque cēnsuit coniūrātōs in vinculīs per Italiae oppida tenendōs esse et bona eōrum pūblicanda esse. Hoc cēnsuit <u>nē posterī tālī exemplō abūterentur</u>.</p>
+            <p>Tum Catō surrēxit. Adeō ācriter locūtus est <b>ut omnēs audīrent</b>. Dīxit hōs hominēs nōn cīvēs sed hostēs esse. Tantum erat perīculum <b>ut nōn diūtius cūnctandum esset</b>. Tālis erat ōrātiō Catōnis <b>ut senātōrēs sententiam mūtārent</b>.</p>
+            <p>Itaque senātus dēcrēvit <u>ut coniūrātī necārentur</u>. Eōdem vespere Lentulus et cēterī in carcerem ductī et necātī sunt. Sallustius autem ōrātiōnem utrīusque virī nārrat et iūdicium lēctōrī relinquit.</p>
+        </div>
+        <div style="background:#FDFBF5; border:1px solid #E6DFC9; border-radius:8px; padding:16px 20px; margin: 14px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128214; VOCABULARY GLOSS &middot; every word not on your running list</div>
+            <ul class="gl">
+                <li><em>Nōnīs Decembribus</em> &mdash; &ldquo;on the Nones of December&rdquo; = 5 December (ablative of time when)</li>
+                <li><em>convēnit</em> &mdash; &ldquo;met, assembled&rdquo; (perfect of <em>conveniō</em>)</li>
+                <li><em>comprehēnsīs</em> &mdash; &ldquo;arrested&rdquo; (PPP of <em>comprehendō</em>, ablative plural, with <em>coniūrātīs</em>)</li>
+                <li><em>cōnsuleret</em> &mdash; &ldquo;might deliberate&rdquo; (imperfect subjunctive of <em>cōnsulō</em>; <em>cōnsulere dē</em> + abl. = &ldquo;to deliberate about&rdquo;)</li>
+                <li><em>dissēnsiō, dissēnsiōnis</em> f. &mdash; disagreement</li>
+                <li><em>saepe</em> (adv.) &mdash; often</li>
+                <li><em>Sīlānus, Sīlānī</em> m. &mdash; Silanus (Decimus Iunius Silanus, consul-elect for the coming year)</li>
+                <li><em>cōnsul dēsignātus</em> &mdash; consul-elect, &ldquo;consul designate&rdquo;</li>
+                <li><em>necārī</em> &mdash; &ldquo;to be put to death&rdquo; (present passive infinitive of <em>necō</em>); <em>necārī dēbēre</em> &mdash; &ldquo;that they ought to be put to death&rdquo;</li>
+                <li><em>callidē</em> (adv.) &mdash; cleverly, shrewdly (and often with a hint of slyness)</li>
+                <li><em>negāvit</em> &mdash; &ldquo;he denied&rdquo; (perfect of <em>negō</em>)</li>
+                <li><em>scelus, sceleris</em> n. &mdash; crime, wickedness</li>
+                <li><em>fēcisse</em> &mdash; &ldquo;to have committed&rdquo; (perfect infinitive of <em>faciō</em>, in indirect statement)</li>
+                <li><em>poena, poenae</em> f. &mdash; penalty, punishment</li>
+                <li><em>posterī, posterōrum</em> m. pl. &mdash; those who come after, later generations</li>
+                <li><em>futūram esse</em> &mdash; &ldquo;would be&rdquo; (future infinitive of <em>sum</em>, agreeing with <em>poenam</em>)</li>
+                <li><em>cēnsuit</em> &mdash; &ldquo;he proposed, he moved&rdquo; (perfect of <em>cēnseō</em> &mdash; the formal word for the motion a senator puts forward)</li>
+                <li><em>vincula, vinculōrum</em> n. pl. &mdash; chains; <em>in vinculīs</em> &mdash; in custody</li>
+                <li><em>oppidum, oppidī</em> n. &mdash; town; <em>per Italiae oppida</em> &mdash; throughout the towns of Italy</li>
+                <li><em>tenendōs esse</em> &mdash; &ldquo;must be held&rdquo; (gerundive of obligation, Module 5, inside an indirect statement)</li>
+                <li><em>bona, bonōrum</em> n. pl. &mdash; goods, property</li>
+                <li><em>pūblicanda esse</em> &mdash; &ldquo;must be confiscated&rdquo; (gerundive of <em>pūblicō</em>, &ldquo;to make into public property&rdquo;)</li>
+                <li><em>exemplum, exemplī</em> n. &mdash; example, precedent</li>
+                <li><em>abūterentur</em> &mdash; &ldquo;might misuse&rdquo; (imperfect subjunctive of the deponent <em>abūtor</em>, which takes the ablative)</li>
+                <li><em>ācriter</em> (adv.) &mdash; fiercely, sharply</li>
+                <li><em>cīvis, cīvis</em> m./f. &mdash; citizen</li>
+                <li><em>hostis, hostis</em> m. &mdash; enemy of the state (not <em>inimīcus</em>, a personal enemy &mdash; the difference is Cato's whole argument)</li>
+                <li><em>diūtius</em> (adv.) &mdash; any longer</li>
+                <li><em>cūnctandum esset</em> &mdash; &ldquo;there must be no delaying&rdquo; (gerundive of obligation from the deponent <em>cūnctor</em>, &ldquo;to delay,&rdquo; with the subjunctive of <em>esse</em> &mdash; Module 5 and Module 6 working together)</li>
+                <li><em>ōrātiō, ōrātiōnis</em> f. &mdash; speech</li>
+                <li><em>mūtārent</em> &mdash; &ldquo;changed&rdquo; (imperfect subjunctive of <em>mūtō</em>)</li>
+                <li><em>dēcrēvit</em> &mdash; &ldquo;decreed, voted&rdquo; (perfect of <em>dēcernō</em>)</li>
+                <li><em>eōdem vespere</em> &mdash; on the same evening</li>
+                <li><em>Lentulus, Lentulī</em> m. &mdash; Lentulus (Publius Cornelius Lentulus Sura, the most senior of the arrested men)</li>
+                <li><em>cēterī, cēterōrum</em> m. pl. &mdash; the rest, the others</li>
+                <li><em>carcer, carceris</em> m. &mdash; prison</li>
+                <li><em>ductī sunt</em> &mdash; &ldquo;they were led&rdquo; (perfect passive of <em>dūcō</em>)</li>
+                <li><em>Sallustius, Sallustiī</em> m. &mdash; Sallust</li>
+                <li><em>utrīusque virī</em> &mdash; &ldquo;of each of the two men&rdquo; (genitive of <em>uterque</em>)</li>
+                <li><em>nārrat</em> &mdash; tells, relates</li>
+                <li><em>iūdicium, iūdiciī</em> n. &mdash; judgment, verdict</li>
+                <li><em>lēctor, lēctōris</em> m. &mdash; reader; <em>lēctōrī</em> &mdash; to the reader (dative)</li>
+                <li><em>relinquit</em> &mdash; leaves, leaves behind</li>
+            </ul>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>One note about the adaptation.</strong> Sallust's own Latin here is much harder than this &mdash; long speeches in reported form, packed with constructions you meet in Modules 11 to 15. This retelling keeps the argument and the sequence of events while staying inside the grammar you now have. When you read the real chapters in high-school Latin, you will recognize the shape of what you learned here.</div>
+    </div>
+
+    <!-- PART 2 - INVENTORY -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128209; PART 2 &middot; CLAUSE INVENTORY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Work through the passage and classify each <em>ut</em> or <em>nē</em> clause yourself first, using the three-question test. Then check against this table &mdash; it is also your revision sheet for the quiz.</p>
+        <table class="para">
+            <tr><th style="width:26%">Clause</th><th style="width:19%">Type</th><th style="width:17%">What decides it</th><th>English</th></tr>
+            <tr><td class="lab"><em>ut&hellip;cōnsuleret</em></td><td>purpose</td><td>no signpost; answers &ldquo;why did they meet?&rdquo;</td><td>in order to deliberate about the arrested conspirators</td></tr>
+            <tr><td class="lab"><em>ut senātōrēs saepe clāmārent</em></td><td>result</td><td>signpost <em>tanta</em></td><td>that the senators often shouted</td></tr>
+            <tr><td class="lab"><em>ut multī eī crēderent</em></td><td>result</td><td>signpost <em>tam</em> (+ <em>callidē</em>)</td><td>that many believed him</td></tr>
+            <tr><td class="lab"><em>nē posterī&hellip;abūterentur</em></td><td>purpose <span style="color:#AA1E2D;">(negative)</span></td><td><em>nē</em> &mdash; and <em>nē</em> is never result</td><td>so that later generations would not misuse such a precedent</td></tr>
+            <tr><td class="lab"><em>ut omnēs audīrent</em></td><td>result</td><td>signpost <em>adeō</em> (+ <em>ācriter</em>)</td><td>that everyone listened</td></tr>
+            <tr><td class="lab"><em>ut nōn diūtius cūnctandum esset</em></td><td>result <span style="color:#AA1E2D;">(negative)</span></td><td>signpost <em>tantum</em>; negative <em>ut nōn</em></td><td>that there must be no further delay</td></tr>
+            <tr><td class="lab"><em>ut senātōrēs sententiam mūtārent</em></td><td>result</td><td>signpost <em>tālis</em></td><td>that the senators changed their vote</td></tr>
+            <tr><td class="lab"><em>ut coniūrātī necārentur</em></td><td>indirect command</td><td>main verb <em>dēcrēvit</em>, a verb of decreeing</td><td>that the conspirators be put to death</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-bottom:12px;">&#128269; <strong>Two things worth noticing.</strong> First: every subjunctive in the passage is <strong>imperfect</strong>, because every main verb is a past tense. One rule, eight clauses, no exceptions &mdash; that is secondary sequence doing its job. Second: look at <em>nē posterī <span style="color:#AA1E2D;">tālī</span> exemplō abūterentur</em>. There is a signpost word in it, <em>tālī</em> &mdash; but it sits <em>inside</em> the subordinate clause and simply means &ldquo;such a.&rdquo; A signpost counts only when it is in the <strong>main</strong> clause, pointing forward at an <em>ut</em>. Here the <em>nē</em> settles the matter before the signpost can mislead you.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Read one sentence twice: <em>Tālis erat ōrātiō Catōnis ut senātōrēs sententiam mūtārent.</em></strong> This is the most important result clause in the passage, and it makes a claim of fact: the speech <em>did</em> change votes. A purpose clause would have said something quite different &mdash; that Cato spoke in order to change votes, with no promise that it worked. Sallust is not telling us Cato's intention. He is telling us the outcome, and the outcome is why five men died that evening.</div>
+    </div>
+
+    <!-- PART 3 - TRANSLATE -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#9997;&#65039; PART 3 &middot; TRANSLATE, THEN CHECK</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Write your English out before flipping. These four are good practice for the graded translation.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; TRANSLATE FIRST &middot; THEN CLICK TO COMPARE</div>
+            <div class="flip-grid" style="flex-direction:column;">
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Tanta erat dissēnsiō ut senātōrēs saepe clāmārent.</em></div><div class="hint">click to compare</div><div class="back">&ldquo;The disagreement was <strong>so great that</strong> the senators often shouted.&rdquo; <em>Tanta</em> is feminine nominative singular, agreeing with <em>dissēnsiō</em>. <em>Erat</em> is imperfect, so the subjunctive is imperfect: <em>clāmārent</em>. Also fine: &ldquo;There was such great disagreement that&hellip;&rdquo;</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Tam callidē dīxit ut multī eī crēderent.</em></div><div class="hint">click to compare</div><div class="back">&ldquo;He spoke <strong>so cleverly that</strong> many believed him.&rdquo; Signpost <em>tam</em> with the adverb <em>callidē</em>. Watch the dative: <em>crēdō</em> takes the dative, so <em>eī</em> is &ldquo;him,&rdquo; not &ldquo;to him.&rdquo; And note what Sallust's word choice does &mdash; <em>callidē</em> is admiring and suspicious at the same time.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Hoc cēnsuit nē posterī tālī exemplō abūterentur.</em></div><div class="hint">click to compare</div><div class="back">&ldquo;He proposed this <strong>so that</strong> later generations <strong>would not</strong> misuse such a precedent.&rdquo; <em>Nē</em>, so <strong>purpose</strong>, not result: this is Caesar's reason. <em>Abūtor</em> is deponent and takes the ablative, hence <em>tālī exemplō</em>. This one sentence is the whole of Caesar's argument in miniature.</div></div>
+                <div class="flip-card" style="text-align:left;"><div class="front"><em>Tantum erat perīculum ut nōn diūtius cūnctandum esset.</em></div><div class="hint">click to compare</div><div class="back">&ldquo;The danger was <strong>so great that</strong> there could be <strong>no</strong> further delay.&rdquo; (Also good: &ldquo;&hellip;that they must not delay any longer.&rdquo;) <em>Tantum</em> is neuter, agreeing with <em>perīculum</em>; the negative is <em>ut nōn</em>, so this is a negative <strong>result</strong> &mdash; Cato is claiming a fact about the situation, not stating an aim.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; CAESAR, CATO, AND THE HISTORIAN'S <em>VĒRITĀS</em></div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Five men were in custody. Everyone in the room agreed they had plotted to burn Rome. The question was what a Roman senate was allowed to do about it. Silanus, the consul-elect, was asked first and moved the death penalty. Then Julius Caesar &mdash; still a young politician on the rise, not yet the Caesar of the civil wars &mdash; argued against it: confiscate their property, hold them in custody in the towns of Italy for life, but do not kill Roman citizens without trial. His reason was the one in your reading: a precedent set today will be used by somebody else tomorrow.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">Then Cato spoke. Marcus Porcius Cato, tribune-elect, great-grandson of the famous censor, and for Romans a byword for rigid integrity, made the case that Caesar's argument rested on a false premise. These men were no longer <em>cīvēs</em>, citizens with a citizen's protections; by taking up arms against Rome they had made themselves <em>hostēs</em>, public enemies, and you do not put an enemy on trial. The Senate voted for execution. That evening the men were taken down into the prison and killed.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;"><strong>Now the honest part, and you already know it from Module 2.</strong> The two great speeches in Sallust's account are <em>Sallust's compositions</em>, not transcripts. Nobody in that room was taking shorthand. Ancient historians openly composed speeches to fit what they judged the speaker's character and argument to have been, and Sallust does it here at unusual length &mdash; the two speeches are among the most admired pieces of prose in Latin. What we can say with confidence is the shape of the debate: Caesar argued against execution, Cato argued for it, and the executions happened. What Sallust gives us on top of that is his reading of two extraordinary men.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">This is <em>vēritās</em> as a historian practises it. Sallust admired Caesar &mdash; he had served under him &mdash; and he still gives Cato the argument that won. He reports the minority case at full strength instead of quietly letting it lose. Writing about Cato later in the book, Sallust puts it in five words:</p>
+        <div style="background:#FFFFFF; border:1px solid #C5DCE5; border-radius:7px; padding:14px 18px; margin:10px 0;">
+            <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">SALLUST, <em>BELLUM CATILĪNAE</em> 54 &mdash; UNADAPTED, ONE LINE</div>
+            <div style="font-size:22px; color:#0e1c42; font-style:italic;">Esse quam vidērī bonus mālēbat.</div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;He preferred to <strong>be</strong> good rather than to <strong>seem</strong> good.&rdquo;</div>
+            <div style="font-size:15px; color:#666; margin-top:8px;"><span style="color:#8a6416;">Gloss: <em>esse</em> &mdash; to be; <em>quam</em> &mdash; than; <em>vidērī</em> &mdash; to seem (present passive infinitive of <em>videō</em>); <em>bonus</em> &mdash; good; <em>mālēbat</em> &mdash; &ldquo;he preferred&rdquo; (imperfect of the irregular verb <em>mālō</em> &mdash; <strong>not yet studied; gloss provided</strong>, and you meet it in Module 15).</span></div>
+        </div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>One consequence, five years later.</strong> Caesar's warning about precedent turned out to be sound. In 58 BC Cicero, who had presided over the executions as consul, was driven out of Rome by political enemies who used exactly this charge against him: that he had put citizens to death without trial. That is a result clause the length of half a decade &mdash; and it is not in Sallust, who says nothing about it. It is what later history did with the evening of 5 December.</p>
+    </div>
+
+    <!-- MODULE REVIEW -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; MODULE 9 IN FIVE LINES</div>
+        <table class="para">
+            <tr><th style="width:22%">Lesson</th><th>The one thing to keep</th></tr>
+            <tr><td class="lab">9.01</td><td>A result clause is <em>ut</em> + subjunctive meaning <strong>&ldquo;with the result that.&rdquo;</strong> Same machinery as purpose; opposite job.</td></tr>
+            <tr><td class="lab">9.02</td><td>Signposts announce it: <em>tam, tantus, tālis, tot, adeō, sīc/ita</em>. <strong><em>Tantus</em> and <em>tālis</em> agree; the rest never change.</strong></td></tr>
+            <tr><td class="lab">9.03</td><td><strong>Purpose negates with <em>nē</em>; result negates with <em>ut nōn</em>.</strong> And <em>nēmō / nihil / numquam</em> carry their own negative &mdash; do not add <em>nōn</em>.</td></tr>
+            <tr><td class="lab">9.04</td><td>Three questions in order: negative? main verb? signpost? Two of them need no interpretation at all.</td></tr>
+            <tr><td class="lab">9.05</td><td>Real prose mixes all three constructions in one paragraph &mdash; and a result clause is a claim about what actually happened.</td></tr>
+        </table>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; FINAL SELF-CHECK BEFORE THE QUIZ</div>
+            <div class="widget-question">Four questions across the whole module.</div>
+            <div class="widget-row" data-correct="b" data-hint="One of these two constructions has its own special negative.">
+                <div class="widget-row-prompt">What is the negative of a <strong>result</strong> clause?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nē is the negative of purpose and of indirect command — never of result.">nē</button>
+                    <button data-choice="b" data-fb="Right — ut nōn. This is the one test in the module that needs no judgment: read the word and you know.">ut nōn</button>
+                    <button data-choice="c" data-fb="Nōn ut is not a Latin construction. The order is ut nōn.">nōn ut</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Scelus is neuter. Which form of tantus is neuter singular?">
+                <div class="widget-row-prompt">Complete: <em>____ erat scelus ut nēmō dīcere audēret.</em> (&ldquo;The crime was so great that&hellip;&rdquo;)</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Tam attaches to an adjective or adverb, and there is none here — scelus is a noun.">Tam</button>
+                    <button data-choice="b" data-fb="Tantus is masculine. Scelus, sceleris is neuter.">Tantus</button>
+                    <button data-choice="c" data-fb="Right — tantum, neuter nominative singular, agreeing with scelus. And notice: nēmō already carries the negative, so no nōn is needed.">Tantum</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Question 2 of the three-question test: what kind of verb is dēcrēvit?">
+                <div class="widget-row-prompt"><em>Senātus dēcrēvit ut coniūrātī necārentur.</em> What is the <em>ut</em> clause?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — an indirect command. Dēcernō is a verb of decreeing, so the ut clause is the content of the decree: &quot;that the conspirators be put to death.&quot;">Indirect command &mdash; the content of the decree</button>
+                    <button data-choice="b" data-fb="There is no signpost in the main clause — just senātus dēcrēvit. Result needs one.">Result &mdash; &ldquo;with the result that they were killed&rdquo;</button>
+                    <button data-choice="c" data-fb="Purpose is closer than result, but the main verb decides it: after a verb of ordering or decreeing, the ut clause states what was ordered rather than why.">Purpose &mdash; &ldquo;in order that they be killed&rdquo;</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which claim does the Latin actually make — an aim, or an outcome?">
+                <div class="widget-row-prompt">Why does it matter that <em>Tālis erat ōrātiō Catōnis ut senātōrēs sententiam mūtārent</em> is a <strong>result</strong> clause?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="It is not about the tense. The subjunctive is imperfect either way — sequence is decided by the main verb, not by the construction.">Because it tells you the subjunctive is imperfect</button>
+                    <button data-choice="b" data-fb="Sallust's admiration is a separate question, and the grammar does not settle it. Look at what the clause claims.">Because it shows Sallust admired Cato</button>
+                    <button data-choice="c" data-fb="Right — a result clause claims the votes actually changed. Purpose would only have claimed that Cato was trying to change them. The grammar is the difference between an aim and an outcome.">Because it claims the votes really did change, not merely that Cato hoped they would</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- THIS WEEK'S WORK -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; YOUR GRADED WORK FOR MODULE 9</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Lūdus IX &mdash; <em>Ēventus an Prōpositum?</em></strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">75 seconds of result-or-purpose, negatives, signpost agreement, and sequence. <strong>Best of unlimited attempts.</strong></div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 9 Quiz</strong> &middot; auto-graded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Identification, purpose-versus-result discrimination, signpost agreement, form production, vocabulary, and best-translation questions from this passage.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 9 Translation</strong> &middot; read by your teacher</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five sentences into Latin and three out of Latin, including one negative result and one negative purpose so that you have to choose between <em>ut nōn</em> and <em>nē</em>. Full vocabulary provided &mdash; you are assessed on <em>forms and syntax</em>, not memory.</div>
+            </div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 3px;"><strong>Module 9 Reflection</strong> &middot; ungraded</div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five quick questions. Tell your teacher what clicked and what did not.</div>
+            </div>
+        </div>
+        <div style="background:#E9F5EC; border-left:5px solid #2A9D5C; border-radius:6px; padding:12px 16px; margin-top:14px; font-size:16px; color:#1a2340; line-height:1.6;">&#128196; <strong>M365 step for the translation.</strong> Write it in <strong>Microsoft Word</strong>. Put your Latin in <em>italics</em> (Ctrl+I) and leave your English in plain text. For one English-to-Latin sentence, add a <strong>Word comment</strong> (Review &rarr; New Comment) naming the signpost you used and saying how a reader would know from it that a result clause is coming. Save to <strong>OneDrive</strong> as <code>Lastname_Firstname_LatinAdv_M09_Translation.docx</code> and submit through Canvas.</div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT'S COMING</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 15px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">M10</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Module 10 &mdash; <em>Cum</em> + Subjunctive</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">One conjunction, three meanings: &ldquo;when,&rdquo; &ldquo;since,&rdquo; and &ldquo;although.&rdquo; If you enjoyed telling <em>ut</em> apart from <em>ut</em>, you will recognize the skill. The reading follows the executions of 5 December &mdash; the evening this lesson ended on.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A result clause is a claim about the world: <em>this actually followed from that.</em> Purpose only tells you what somebody hoped. Which is why <em>Tālis erat ōrātiō Catōnis ut senātōrēs sententiam mūtārent</em> is a sentence about history and not about Cato's feelings &mdash; the votes changed, and five men died that evening.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 9.05 &middot; The Debate in the Senate</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

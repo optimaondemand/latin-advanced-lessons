@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 7.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .chant { background: #0E1C42; border-radius: 8px; padding: 20px 24px; margin: 14px 0; text-align: center; }
+    .chant .line { font-size: 24px; color: #ffffff; font-style: italic; line-height: 1.7; }
+    .chant .cap { font-size: 12px; color: #55C8E8; letter-spacing: 1px; margin-bottom: 10px; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 7</div>
+        <div style="font-size: 12px; color: #666;">Sequence of Tenses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 7.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Primary Sequence</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 7.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Primary Sequence</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Half the rule, learned properly, is worth more than all of it learned vaguely.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Today is the <strong>primary</strong> half. Main verb <strong>present</strong> or <strong>future</strong> &rarr; the subordinate subjunctive is <strong>present</strong>. That is one line of grammar, so we are going to spend the lesson making the forms automatic and learning what kind of clause they show up in.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognize a present or future main verb on sight and call the sequence <strong>primary</strong>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> supply the present subjunctive a primary clause needs &mdash; any conjugation, active or passive, deponent, or <em>esse</em>.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> use this module's new vocabulary, including <em>vigilō</em> and <em>custōdia</em>, in a subordinate clause.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; WHAT COUNTS AS PRIMARY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Two tenses, and only two, put a sentence into primary sequence. Learn them as a pair: <strong>the non-past tenses</strong>.</p>
+        <table class="para">
+            <tr><th style="width:22%">Main verb tense</th><th style="width:26%">Example main verb</th><th>A whole sentence</th></tr>
+            <tr><td class="lab"><strong>Present</strong></td><td><em>vigilat</em> &mdash; he keeps watch</td><td><em>Cicerō vigilat ut cīvēs tūtī <span class="end">sint</span>.</em><br><span style="font-size:14px; color:#666;">"Cicero keeps watch so that the citizens may be safe."</span></td></tr>
+            <tr><td class="lab"><strong>Future</strong></td><td><em>vigilābit</em> &mdash; he will keep watch</td><td><em>Cicerō vigilābit ut cīvēs tūtī <span class="end">sint</span>.</em><br><span style="font-size:14px; color:#666;">"Cicero will keep watch so that the citizens may be safe."</span></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Same subjunctive, twice.</strong> That is the whole point of the table above. Whether Cicero keeps watch now or will keep watch tomorrow, the clause after it gets <em>sint</em>. Latin sorts main verbs into <strong>past</strong> and <strong>not-past</strong>, and the present subjunctive answers everything in the not-past pile.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>The English trap.</strong> You will want to translate the second sentence "so that the citizens <em>would</em> be safe," because that is how English handles a future frame. Then, translating back into Latin, "would" will pull you toward the imperfect subjunctive. Do not let it. In English, <em>may</em> and <em>would</em> are stylistic choices; in Latin the tense is decided by a rule, and the rule looks only at the main verb.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE ANSWER FORM &mdash; PRESENT SUBJUNCTIVE, ALL FIVE PATTERNS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Straight from Module 6. Third person is what you will meet most in reading, so it is set out first:</p>
+        <table class="para">
+            <tr><th style="width:20%">Conjugation</th><th style="width:22%">Marker</th><th style="width:29%">3rd singular</th><th>3rd plural</th></tr>
+            <tr><td class="lab"><strong>1st</strong> &mdash; <em>amō</em></td><td class="end">-e-</td><td><em>amet</em> &mdash; he may love</td><td><em>ament</em> &mdash; they may love</td></tr>
+            <tr><td class="lab"><strong>2nd</strong> &mdash; <em>moneō</em></td><td class="end">-ea-</td><td><em>moneat</em></td><td><em>moneant</em></td></tr>
+            <tr><td class="lab"><strong>3rd</strong> &mdash; <em>regō</em></td><td class="end">-a-</td><td><em>regat</em></td><td><em>regant</em></td></tr>
+            <tr><td class="lab"><strong>3rd io</strong> &mdash; <em>capiō</em></td><td class="end">-ia-</td><td><em>capiat</em></td><td><em>capiant</em></td></tr>
+            <tr><td class="lab"><strong>4th</strong> &mdash; <em>audiō</em></td><td class="end">-ia-</td><td><em>audiat</em></td><td><em>audiant</em></td></tr>
+        </table>
+        <div class="chant">
+            <div class="cap">&#127925; MEMORY WORK &middot; SAY BOTH ALOUD THREE TIMES</div>
+            <div class="line">amem, amēs, amet &mdash; amēmus, amētis, ament<br>regam, regās, regat &mdash; regāmus, regātis, regant</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>First conjugation is the odd one out, and it is the one that bites.</strong> Everywhere else the subjunctive marker is an <em>a</em>. In the 1st conjugation it is an <em>e</em> &mdash; which means the 1st-conjugation present <em>subjunctive</em> and the 2nd-conjugation present <em>indicative</em> can look alarmingly similar, and it means <em>am<strong>ē</strong>s</em> (subjunctive) sits one macron away from <em>am<strong>ā</strong>s</em> (indicative). Slow down on 1st-conjugation verbs.</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">Passive, deponent, and the two verbs you cannot avoid</h3>
+        <table class="para">
+            <tr><th style="width:30%">Type</th><th style="width:32%">3rd singular</th><th>3rd plural</th></tr>
+            <tr><td class="lab">Passive (1st) &mdash; <em>amor</em></td><td><em>amētur</em> &mdash; he may be loved</td><td><em>amentur</em></td></tr>
+            <tr><td class="lab">Passive (3rd) &mdash; <em>regor</em></td><td><em>regātur</em></td><td><em>regantur</em></td></tr>
+            <tr><td class="lab">Deponent &mdash; <em>loquor</em></td><td><em>loquātur</em> &mdash; he may speak</td><td><em>loquantur</em></td></tr>
+            <tr><td class="lab"><em>esse</em> &mdash; to be</td><td><em>sit</em></td><td><em>sint</em></td></tr>
+            <tr><td class="lab"><em>possum</em> &mdash; to be able</td><td><em>possit</em></td><td><em>possint</em></td></tr>
+            <tr><td class="lab"><em>eō</em> &mdash; to go</td><td><em>eat</em></td><td><em>eant</em></td></tr>
+        </table>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY THE PRESENT SUBJUNCTIVE FIRST &middot; THEN CLICK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>dēfendō</em>, 3rd pl.</div><div class="hint">3rd conj. &middot; click</div><div class="back"><em>dēfendant</em> &mdash; "they may defend"</div></div>
+                <div class="flip-card"><div class="front"><em>audiō</em>, 3rd sg.</div><div class="hint">4th conj. &middot; click</div><div class="back"><em>audiat</em> &mdash; "he may hear"</div></div>
+                <div class="flip-card"><div class="front"><em>vigilō</em>, 3rd pl.</div><div class="hint">1st conj. &mdash; careful &middot; click</div><div class="back"><em>vigilent</em> &mdash; "they may keep watch." 1st conjugation, so the marker is <strong>-e-</strong>, not -a-.</div></div>
+                <div class="flip-card"><div class="front"><em>capiō</em>, 3rd sg.</div><div class="hint">3rd io-stem &middot; click</div><div class="back"><em>capiat</em> &mdash; "he may take, seize"</div></div>
+                <div class="flip-card"><div class="front"><em>loquor</em>, 3rd sg.</div><div class="hint">deponent &middot; click</div><div class="back"><em>loquātur</em> &mdash; "he may speak." Passive endings, active meaning, exactly as in Module 2.</div></div>
+                <div class="flip-card"><div class="front"><em>esse</em>, 3rd pl.</div><div class="hint">the commonest of all &middot; click</div><div class="back"><em>sint</em> &mdash; "they may be"</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE CONTAINERS &mdash; AND AN HONEST NOTE ABOUT THEM</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">A subjunctive does not float loose. It sits inside a subordinate clause of some particular kind, and Latin has a good number of those kinds. Here is the honest situation: <strong>this module teaches the tense rule, not the clause types.</strong> The clause types each get their own module later. So all week, every clause you meet is labelled for you.</p>
+        <table class="para">
+            <tr><th style="width:24%">Container</th><th style="width:30%">What it means</th><th>Status in this course</th></tr>
+            <tr><td class="lab"><em>ut</em> + subjunctive</td><td>"so that&hellip;, in order that&hellip;" &mdash; a purpose clause</td><td><strong>Not yet studied &mdash; gloss provided.</strong> Taught fully in Module 8.</td></tr>
+            <tr><td class="lab"><em>nē</em> + subjunctive</td><td>"so that&hellip; not&hellip;, to prevent&hellip;" &mdash; a negative purpose clause</td><td><strong>Not yet studied &mdash; gloss provided.</strong> Module 8.</td></tr>
+            <tr><td class="lab"><em>cum</em> + subjunctive</td><td>"when&hellip;, since&hellip;, although&hellip;"</td><td><strong>Not yet studied &mdash; gloss provided.</strong> Module 10.</td></tr>
+            <tr><td class="lab">question word + subjunctive<br><span style="font-size:14px; color:#666;"><em>cūr, quid, ubi</em></span></td><td>"&hellip;why / what / where&hellip;" reported inside another sentence &mdash; an indirect question</td><td><strong>Not yet studied &mdash; gloss provided.</strong> Module 11.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why teach the rule before the clauses?</strong> Because the rule is the same in all of them. Learn it once now, with the clause types handed to you, and every module from 8 to 12 gets easier: you will already know which tense goes in the box before you learn what the box is called. Nothing you are graded on in this module asks you to <em>name</em> a clause type.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>One exception worth knowing now:</strong> plenty of subordinate clauses take the <strong>indicative</strong>, and those obey no sequence rule at all. <em>Catilīna discessit, <strong>quia</strong> in urbe manēre nōn poterat</em> &mdash; "Catiline left, because he could not stay in the city." <em>Poterat</em> is indicative; it reports a plain fact and picks its own tense freely. Sequence of tenses is a rule about <strong>subjunctives</strong>. If the verb is indicative, the rule is simply not in play.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; WORDS FOR THIS MODULE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Sixteen entries, most of them from the speech you will read on Day 5. Add them to your running list.</p>
+        <table class="para">
+            <tr><th style="width:38%">Latin</th><th>English</th></tr>
+            <tr><td class="lab"><em>vigilō, vigilāre, vigilāvī, vigilātum</em></td><td>to keep watch, stay awake, be on guard</td></tr>
+            <tr><td class="lab"><em>prōcēdō, prōcēdere, prōcessī, prōcessum</em></td><td>to go forward, advance, come out</td></tr>
+            <tr><td class="lab"><em>aperiō, aperīre, aperuī, apertum</em></td><td>to open, uncover</td></tr>
+            <tr><td class="lab"><em>custōdia, custōdiae</em> f.</td><td>a guard, a guard post; custody</td></tr>
+            <tr><td class="lab"><em>porta, portae</em> f.</td><td>gate (of a city)</td></tr>
+            <tr><td class="lab"><em>admīrātiō, admīrātiōnis</em> f.</td><td>wonder, amazement, admiration</td></tr>
+            <tr><td class="lab"><em>Rōstra, Rōstrōrum</em> n. pl.</td><td>the Rostra &mdash; the speaker's platform in the Forum</td></tr>
+            <tr><td class="lab"><em>Quirītēs, Quirītium</em> m. pl.</td><td>"Citizens!" &mdash; the formal way to address the Roman people in assembly</td></tr>
+            <tr><td class="lab"><em>tūtus, -a, -um</em></td><td>safe, protected</td></tr>
+            <tr><td class="lab"><em>salvus, -a, -um</em></td><td>safe, unharmed, sound</td></tr>
+            <tr><td class="lab"><em>apertē</em> (adv.)</td><td>openly, plainly</td></tr>
+            <tr><td class="lab"><em>igitur</em> (conj.)</td><td>therefore, and so</td></tr>
+            <tr><td class="lab"><em>quia</em> (conj.)</td><td>because (takes the indicative)</td></tr>
+            <tr><td class="lab"><em>nēmō</em></td><td>no one, nobody</td></tr>
+            <tr><td class="lab"><em>postrīdiē</em> (adv.)</td><td>on the next day</td></tr>
+            <tr><td class="lab"><em>prīdiē</em> (adv.)</td><td>on the day before</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128220; <strong>Etymology moment.</strong> <em>Vigilō</em> gives English <em>vigil</em>, <em>vigilant</em>, <em>vigilance</em>, and (through French) <em>surveillance</em> &mdash; all of them about staying awake so that someone else can sleep, which is exactly the claim Cicero makes about himself. <em>Custōdia</em> gives <em>custody</em> and <em>custodian</em>. <em>Aperiō</em> gives <em>aperture</em>, an opening. <em>Porta</em> gives <em>portal</em> and <em>portico</em>. <em>Salvus</em> gives <em>salvation</em>, <em>salutary</em>, and, by a long road through French, <em>safe</em>. And <em>admīrātiō</em> gives <em>admire</em>, <em>marvel</em>, and <em>miracle</em>.</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; BUILD A PRIMARY CLAUSE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Check the main verb first, every time. The container is glossed for you.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which form does the sentence require?</div>
+            <div class="widget-row" data-correct="c" data-hint="What tense is rogat? That decides everything.">
+                <div class="widget-row-prompt"><em>Cicerō <strong>rogat</strong> cūr Catilīna ex urbe ____.</em> &mdash; "Cicero asks why Catiline is leaving the city." <span style="color:#666;">(indirect question &mdash; container glossed, Module 11)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Discēderet is the imperfect subjunctive, which belongs to secondary sequence. Rogat is present, so the sequence is primary.">discēderet</button>
+                    <button data-choice="b" data-fb="Discessit is perfect INDICATIVE. The clause needs a subjunctive, because it is a reported question, not a plain statement.">discessit</button>
+                    <button data-choice="c" data-fb="Right — rogat is present, so primary sequence, so the present subjunctive discēdat.">discēdat</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Mittet is future. Is future primary or secondary?">
+                <div class="widget-row-prompt"><em>Cōnsul mīlitēs <strong>mittet</strong> ut urbem ____.</em> &mdash; "The consul will send soldiers so that they may defend the city." <span style="color:#666;">(purpose clause &mdash; container glossed, Module 8)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — future main verb, so primary sequence, so the present subjunctive dēfendant. Future is a non-past tense.">dēfendant</button>
+                    <button data-choice="b" data-fb="This is the trap the English 'so that they would defend' sets for you. Dēfenderent is imperfect subjunctive, and it needs a PAST main verb.">dēfenderent</button>
+                    <button data-choice="c" data-fb="Dēfendunt is present indicative. An ut clause of this kind always takes the subjunctive.">dēfendunt</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Vigilō is present, 1st person singular.">
+                <div class="widget-row-prompt"><em>Nunc <strong>vigilō</strong> ut rēs pūblica salva ____.</em> &mdash; "Now I keep watch so that the republic may be safe." <span style="color:#666;">(purpose clause &mdash; container glossed)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Esset is the imperfect subjunctive of esse — secondary sequence. The main verb vigilō is present.">esset</button>
+                    <button data-choice="b" data-fb="Right — sit, the present subjunctive of esse. Present main verb, primary sequence.">sit</button>
+                    <button data-choice="c" data-fb="Est is present indicative. The purpose clause needs the subjunctive mood, whatever its tense.">est</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Parant is present. And which verb means 'to be able'?">
+                <div class="widget-row-prompt"><em>Coniūrātī arma <strong>parant</strong> ut urbem capere ____.</em> &mdash; "The conspirators are preparing weapons so that they may be able to take the city." <span style="color:#666;">(purpose clause &mdash; container glossed)</span></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Possent is the imperfect subjunctive of possum. It would be right after a past main verb — parābant or parāvērunt — but not after parant.">possent</button>
+                    <button data-choice="b" data-fb="Poterant is imperfect INDICATIVE, 'they were able.' Wrong mood and wrong tense.">poterant</button>
+                    <button data-choice="c" data-fb="Right — possint, the present subjunctive of possum. Present main verb, primary sequence.">possint</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="One of these three is a past tense.">
+                <div class="widget-row-prompt">Which of these main verbs does <strong>not</strong> put its clause in primary sequence?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Rogābit is future — a non-past tense, therefore primary. This one is fine.">rogābit</button>
+                    <button data-choice="b" data-fb="Right — rogābat is imperfect, a past tense, so it triggers SECONDARY sequence and an imperfect subjunctive. That is tomorrow's lesson.">rogābat</button>
+                    <button data-choice="c" data-fb="Rogat is present, so primary. This one is fine.">rogat</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 7.03 &mdash; Secondary Sequence</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The other half: past main verbs and the imperfect subjunctive. Same sentences, one word changed, everything downstream changes with it &mdash; and two macrons worth guarding.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Present main verb and future main verb behave <strong>identically</strong>: both are primary, and both take the <strong>present</strong> subjunctive. When your English says "so that he <em>would</em>&hellip;" but the Latin main verb is future, trust the Latin rule and write the present subjunctive.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 7.02 &middot; Primary Sequence</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

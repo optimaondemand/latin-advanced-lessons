@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 11.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 11</div>
+        <div style="font-size: 12px; color: #666;">Indirect Questions</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 11.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Whether</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 11.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Whether: Yes-or-No Questions Reported</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Yesterday's kit had nine question words in it. Today's questions have none.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">&ldquo;Is Catiline in the city?&rdquo; has no <em>cūr</em>, no <em>ubi</em>, no <em>quot</em> &mdash; nothing for the four steps to keep. So how does Latin report it? The answer is a small set of words that mean, roughly, <strong>&ldquo;whether&rdquo;</strong>: the enclitic <em>-ne</em>, the word <em>num</em>, and for a choice between two things, <em><strong>utrum&hellip;an</strong></em>. Everything else about the construction &mdash; subjunctive, sequence, no question mark &mdash; stays exactly as it was.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognise <em>-ne</em>, <em>nōnne</em> and <em>num</em> as the three ways Latin asks a direct yes-or-no question.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> report a yes-or-no question with <em>num</em> or <em>-ne</em> meaning &ldquo;whether,&rdquo; keeping the subjunctive and the sequence.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build and translate a double question with <em>utrum&hellip;an</em> and <em>&hellip;necne</em>.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; DIRECT YES-OR-NO: THREE FLAVOURS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Start with the direct question, because you have to know what is being reported before you can report it. English asks a yes-or-no question by moving the verb: &ldquo;Catiline <em>is</em> in the city&rdquo; &rarr; &ldquo;<em>Is</em> Catiline in the city?&rdquo; Latin cannot do that &mdash; its word order is too free for a rearrangement to signal anything. So Latin adds a word. And the word it picks tells you <strong>what answer the speaker expects</strong>:</p>
+        <table class="para">
+            <tr><th style="width:16%">Word</th><th style="width:24%">Expects</th><th>Example</th></tr>
+            <tr><td class="lab"><strong>-ne</strong><br><span style="font-size:14px; color:#666;">glued to the first word</span></td><td class="end">nothing &mdash; a neutral question</td><td><em>Est<strong>ne</strong> Catilīna in urbe?</em><br><span style="font-size:15px;">&ldquo;Is Catiline in the city?&rdquo; A real question; the speaker does not know.</span></td></tr>
+            <tr><td class="lab"><strong>nōnne</strong></td><td class="end"><strong>yes</strong> &mdash; &ldquo;surely&hellip;?&rdquo;</td><td><em>Nōnne Catilīna in urbe est?</em><br><span style="font-size:15px;">&ldquo;Catiline <em>is</em> in the city, isn't he?&rdquo; The speaker is confident and wants agreement.</span></td></tr>
+            <tr><td class="lab"><strong>num</strong></td><td class="end"><strong>no</strong> &mdash; &ldquo;surely not&hellip;?&rdquo;</td><td><em>Num Catilīna in urbe est?</em><br><span style="font-size:15px;">&ldquo;Catiline isn't in the city, is he?&rdquo; The speaker expects to be told no.</span></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong><em>-ne</em> is an enclitic</strong> &mdash; a word too small to stand alone, so it rides on the back of another one, like the <em>-que</em> in <em>senātus populusque</em>. It attaches to whichever word the question is really about, and that word goes first: <em>Estne&hellip;?</em> asks about the being; <em>Catilīnane&hellip;?</em> would ask whether it is <em>Catiline</em> (rather than someone else). You met the same trick in <em>mēcum</em> &mdash; small words in Latin like to travel attached.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Latin has a word that means &ldquo;I expect the answer is no.&rdquo; English does not, quite. What do we use instead?</div>
+            <div class="widget-options">
+                <button data-response="Exactly — tone of voice, and it is the reason English yes-or-no questions are ambiguous in writing in a way Latin's are not. 'Is Catiline in the city?' on a page could be neutral or sarcastic; estne and num are two different sentences.">Tone of voice, mostly</button>
+                <button data-response="Good instinct. 'Surely he isn't...', 'He's not..., is he?', 'Don't tell me he...' — English does it with whole phrases and tag questions where Latin does it with one three-letter word. That is a fair trade; Latin pays for it elsewhere, with five noun cases.">Extra words &mdash; &ldquo;surely,&rdquo; &ldquo;is he?&rdquo;</button>
+                <button data-response="Worth noticing, and true: a raised eyebrow is doing grammatical work in English. Latin readers did not have that option, because they were reading. So Latin built the eyebrow into the sentence.">Facial expression, honestly</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; REPORTED: &ldquo;WHETHER&rdquo;</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Now fold one of those questions inside a bigger sentence. Run the same four steps from Lesson 11.01 &mdash; and step 1 is where the change happens, because there is no question word to keep. You supply one instead. Latin's usual choices are <strong><em>num</em></strong> and <strong><em>-ne</em></strong>, and in an indirect question both simply mean <strong>&ldquo;whether.&rdquo;</strong></p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:17px; color:#1a2340; line-height:1.9;">
+            <strong>Direct:</strong> <em>Estne Catilīna in urbe?</em> &mdash; &ldquo;Is Catiline in the city?&rdquo;<br>
+            <strong>Reported:</strong> <em>Cicerō rogāvit <strong>num</strong> Catilīna in urbe <strong>esset</strong>.</em><br>
+            &ldquo;Cicero asked <strong>whether</strong> Catiline was in the city.&rdquo;</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">Check the four steps against it. <strong>1</strong> &mdash; supply <em>num</em> in place of the missing question word. <strong>2</strong> &mdash; the main verb of asking is <em>rogāvit</em>. <strong>3</strong> &mdash; <em>est</em> becomes subjunctive, and because <em>rogāvit</em> is perfect the sequence is secondary, so <em>esset</em>. <strong>4</strong> &mdash; no question mark. Nothing new; only step 1 behaves differently.</p>
+        <table class="para">
+            <tr><th style="width:34%">Latin</th><th>English</th></tr>
+            <tr><td><em>Nesciō num coniūrātī adhūc in urbe sint.</em></td><td>&ldquo;I do not know <strong>whether</strong> the conspirators are still in the city.&rdquo; <span style="font-size:14px; color:#666;">Present <em>nesciō</em> &rarr; primary &rarr; present subjunctive.</span></td></tr>
+            <tr><td><em>Cicerō quaesīvit num Lentulus haec probāret.</em></td><td>&ldquo;Cicero inquired <strong>whether</strong> Lentulus approved of these things.&rdquo; <span style="font-size:14px; color:#666;">Perfect <em>quaesīvit</em> &rarr; secondary &rarr; imperfect subjunctive.</span></td></tr>
+            <tr><td><em>Rogō possit<strong>ne</strong> senātus hodiē cōnstituere.</em></td><td>&ldquo;I ask <strong>whether</strong> the Senate can decide today.&rdquo; <span style="font-size:14px; color:#666;">Here <em>-ne</em> does the job instead, glued to <em>possit</em>. Same meaning.</span></td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>The one place <em>num</em> quietly changes meaning.</strong> In a <em>direct</em> question, <em>num</em> carries an expectation: &ldquo;surely not?&rdquo; In an <em>indirect</em> question that expectation <strong>drops away</strong> and <em>num</em> means a plain, neutral &ldquo;whether.&rdquo; <em>Nesciō num vēnerit</em> is not &ldquo;I don't know &mdash; surely he hasn't come?&rdquo; It is simply &ldquo;I do not know whether he has come.&rdquo; This catches good students, because they have learned <em>num</em>'s bias well and then keep applying it where it no longer holds.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:10px;">&#128161; <strong>A note on one idiom you will see and should not imitate yet.</strong> After <em>nesciō</em> and <em>dubitō</em>, Roman writers sometimes use <em>an</em> by itself &mdash; and <em>nesciō an</em> often means not &ldquo;I don't know whether&rdquo; but something closer to &ldquo;I rather think.&rdquo; It is a real idiom and it is genuinely confusing, so it will always be glossed for you when it appears. Do not use it in your own Latin this year.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; TWO CHOICES: <em>UTRUM&hellip;AN</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The commonest yes-or-no question in Roman politics was not really yes-or-no at all. It was <em>this or that</em> &mdash; imprisonment or death, mercy or severity, act now or wait. Latin has a dedicated frame for it, and you will meet it in Cicero on Friday:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><strong><em>utrum</em> &hellip; <em>an</em> &hellip;</strong> &nbsp;=&nbsp; &ldquo;whether &hellip; or &hellip;&rdquo;</div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;"><em>Utrum</em> introduces the first option; <em>an</em> introduces the second. Both verbs go into the subjunctive if both halves are reported &mdash; though very often the two options share one verb, as in the example below, and then there is only one subjunctive to worry about.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerō rogāvit <strong>utrum</strong> lēnitās <strong>an</strong> sevēritās reī pūblicae magis ūtilis <strong>esset</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Cicero asked <strong>whether</strong> mercy <strong>or</strong> severity was more useful to the republic.&rdquo; <span style="color:#8a6416;">Gloss: <em>lēnitās, lēnitātis</em> f. &mdash; mildness, mercy; <em>sevēritās, sevēritātis</em> f. &mdash; strictness, severity; <em>magis</em> &mdash; more; <em>ūtilis, ūtile</em> &mdash; useful (Module 11 vocabulary).</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 8px 0;">Two variations you should recognise:</p>
+        <table class="para">
+            <tr><th style="width:26%">Frame</th><th>What it does</th></tr>
+            <tr><td class="lab"><em>-ne</em> &hellip; <em>an</em> &hellip;</td><td>The same thing, with the enclitic doing <em>utrum</em>'s job: <em>Rogāvit lēnitās<strong>ne</strong> <strong>an</strong> sevēritās&hellip;</em> Read it exactly as <em>utrum&hellip;an</em>.</td></tr>
+            <tr><td class="lab">&hellip; <em>necne</em></td><td><strong>&ldquo;or not.&rdquo;</strong> <em>Cicerō nesciēbat utrum coniūrātī fugerent <strong>necne</strong>.</em> &mdash; &ldquo;Cicero did not know whether the conspirators were fleeing <strong>or not</strong>.&rdquo; In a reported question the &ldquo;or not&rdquo; is <em>necne</em>, one word, sitting at the end.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Do not confuse <em>an</em> with <em>aut</em>.</strong> <em>Aut</em> is the ordinary &ldquo;or&rdquo; you have used since your first year: <em>gladiō aut hastā</em>, &ldquo;with a sword or a spear.&rdquo; <em>An</em> is the &ldquo;or&rdquo; that lives inside a <strong>question</strong>. If you find <em>an</em>, there is a question in the sentence, direct or reported &mdash; which makes <em>an</em> a signal word worth as much to you as <em>tamen</em> was in Module 10.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; BUILD AND READ</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five items. Two ask you to pick the right word, three ask you to read a sentence that has one.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Choose the right answer, and check your reasoning against the feedback.</div>
+
+            <div class="widget-row" data-correct="b" data-hint="The English is &ldquo;whether,&rdquo; and there is no question word to keep. What do you supply?">
+                <div class="widget-row-prompt">Complete it: &ldquo;Cicero asked <strong>whether</strong> Catiline was in the city.&rdquo; &mdash; <em>Cicerō rogāvit ____ Catilīna in urbe esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Cūr means &quot;why.&quot; The English does not ask why anything; it asks whether something is the case. Supplying cūr would change the sentence.">cūr</button>
+                    <button data-choice="b" data-fb="Right — num, and in a reported question it simply means &quot;whether,&quot; with none of the &quot;surely not?&quot; bias it carries in a direct question. Estne… Catilīna in urbe esset would also work with the -ne attached to the verb.">num</button>
+                    <button data-choice="c" data-fb="Aut is the ordinary &quot;or&quot; and does not introduce a question at all. The question-word &quot;or&quot; is an, and it needs a first option in front of it.">aut</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two options are being weighed. Which frame handles &ldquo;whether X or Y&rdquo;?">
+                <div class="widget-row-prompt">Complete it: &ldquo;The Senate was deciding <strong>whether</strong> punishment <strong>or</strong> custody was more useful.&rdquo; &mdash; <em>Senātus cōnstituēbat ____ supplicium ____ custōdia magis ūtilis esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Num…aut mixes the two systems: num can open a reported yes-or-no question, but aut is the non-question &quot;or&quot; and cannot serve as the second half of a double question.">num &hellip; aut</button>
+                    <button data-choice="b" data-fb="Close — -ne…an is a real frame, but -ne is an enclitic: it cannot stand as a separate word in the gap. It would have to be written suppliciumne…an.">-ne &hellip; an</button>
+                    <button data-choice="c" data-fb="Right — utrum…an, the standard double-question frame: &quot;whether punishment or custody was more useful.&quot; One subjunctive (esset) serves both halves because they share a verb.">utrum &hellip; an</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Where is the -ne, and what word is it riding on?">
+                <div class="widget-row-prompt"><em>Cicerō rogāvit possetne senātus hōc diē cōnstituere.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. The -ne is glued to posset (imperfect subjunctive of possum, secondary sequence after rogāvit), and it means &quot;whether&quot;: &quot;Cicero asked whether the Senate was able to decide on this day.&quot;">&ldquo;Cicero asked <strong>whether</strong> the Senate could decide on this day.&rdquo;</button>
+                    <button data-choice="b" data-fb="This reads the sentence as a direct question, but there is no question mark and rogāvit has folded it in. Also posset is subjunctive — a direct question would use the indicative poterat.">&ldquo;Cicero asked: could the Senate decide on this day?&rdquo;</button>
+                    <button data-choice="c" data-fb="&quot;Why&quot; would need cūr. There is no cūr here; the -ne on posset is the whole signal, and it means &quot;whether.&quot;">&ldquo;Cicero asked <strong>why</strong> the Senate could not decide on this day.&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Find necne. What does it do to the end of a reported question?">
+                <div class="widget-row-prompt"><em>Nesciēbāmus utrum coniūrātī iam fugerent necne.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Necne is not a negative on the verb — fugerent is not negated. Necne supplies the second half of the double question: &quot;or not.&quot;">&ldquo;We did not know whether the conspirators were <strong>not</strong> fleeing.&rdquo;</button>
+                    <button data-choice="b" data-fb="Nec on its own means &quot;and not, nor,&quot; but necne as one word at the end of a reported question is fixed: it means &quot;or not.&quot;">&ldquo;We did not know whether the conspirators were fleeing, <strong>and neither</strong>&hellip;&rdquo;</button>
+                    <button data-choice="c" data-fb="Right. Utrum opens the question, necne closes it: &quot;We did not know whether the conspirators were already fleeing or not.&quot; Nesciēbāmus is imperfect → secondary → imperfect subjunctive fugerent.">&ldquo;We did not know whether the conspirators were already fleeing <strong>or not</strong>.&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two sentences that look almost identical. One is direct, one is reported — and num does not mean the same thing in both.">
+                <div class="widget-row-prompt">Which pair of translations is correct? &nbsp;(i) <em>Num Catilīna in urbe est?</em> &nbsp;(ii) <em>Nesciō num Catilīna in urbe sit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This gives num the same force in both, which is exactly the error the module warns about. In (ii) the &quot;surely not&quot; expectation has gone; num there is a neutral &quot;whether.&quot;">(i) &ldquo;Surely Catiline isn't in the city?&rdquo; &nbsp;(ii) &ldquo;I don't know &mdash; surely Catiline isn't in the city?&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — and this is the point of Part 2's warning box. Direct num carries an expectation of &quot;no&quot;; indirect num has dropped it and means a plain &quot;whether.&quot; Note the mood too: est indicative in the direct question, sit subjunctive in the reported one.">(i) &ldquo;Surely Catiline isn't in the city?&rdquo; &nbsp;(ii) &ldquo;I do not know whether Catiline is in the city.&rdquo;</button>
+                    <button data-choice="c" data-fb="Reversed. It is the DIRECT question that carries the &quot;surely not?&quot; expectation; the reported one is neutral. And (i) has est, an indicative, so it cannot be the reported version.">(i) &ldquo;I do not know whether Catiline is in the city.&rdquo; &nbsp;(ii) &ldquo;Surely Catiline isn't in the city?&rdquo;</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 5 &middot; THE WORD LIST &middot; CLICK EACH CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six small words, and they are the whole lesson. Say what each one does before you flip.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; SAY IT FIRST</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>-ne</em></div><div class="hint">direct? reported?</div><div class="back"><strong>Both.</strong> Direct: a neutral yes-or-no question. Reported: &ldquo;whether.&rdquo; An enclitic &mdash; it must ride on the back of another word.</div></div>
+                <div class="flip-card"><div class="front"><em>nōnne</em></div><div class="hint">what does it expect?</div><div class="back"><strong>Direct questions, expecting &ldquo;yes.&rdquo;</strong> &ldquo;Surely&hellip;?&rdquo; / &ldquo;&hellip;isn't he?&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>num</em></div><div class="hint">careful &mdash; two jobs</div><div class="back"><strong>Direct:</strong> expects &ldquo;no&rdquo; &mdash; &ldquo;surely not&hellip;?&rdquo; <strong>Reported:</strong> a neutral &ldquo;whether,&rdquo; with the expectation gone.</div></div>
+                <div class="flip-card"><div class="front"><em>utrum&hellip;an</em></div><div class="hint">what shape of question?</div><div class="back"><strong>&ldquo;Whether&hellip;or&hellip;&rdquo;</strong> &mdash; a choice between two options. <em>Utrum</em> opens, <em>an</em> introduces the alternative.</div></div>
+                <div class="flip-card"><div class="front"><em>necne</em></div><div class="hint">where does it sit?</div><div class="back"><strong>&ldquo;Or not&rdquo;</strong> &mdash; one word, at the <em>end</em> of a reported question. <em>&hellip;utrum fugerent necne.</em></div></div>
+                <div class="flip-card"><div class="front"><em>an</em> vs <em>aut</em></div><div class="hint">which is which?</div><div class="back"><em>An</em> = the &ldquo;or&rdquo; inside a <strong>question</strong>. <em>Aut</em> = the ordinary &ldquo;or.&rdquo; Finding <em>an</em> tells you a question is in the sentence.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 11.04 &mdash; Question, Statement, or Relative?</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Five constructions now report or subordinate something, and three of them can start with a <em>qu-</em> word. The trap of <em>quis</em> against <em>quī</em>, the difference between an indirect question and an indirect statement, and a procedure for telling all of them apart on sight.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">A yes-or-no question has nothing to report <em>with</em>, so Latin lends it a word: <em>num</em> or <em>-ne</em> for one option, <em>utrum&hellip;an</em> for two, <em>necne</em> for &ldquo;or not.&rdquo; The subjunctive and the sequence never change. Only step 1 of the four steps does.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 11.03 &middot; Whether: Yes-or-No Questions Reported</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 17.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .rd .ln { display: inline-block; min-width: 26px; font-size: 13px; color: #a08a55; font-style: normal; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+    .task { background: #FFFFFF; border: 1px solid #D0D9E8; border-left: 4px solid #0E1C42; border-radius: 6px; padding: 14px 18px; margin-bottom: 12px; }
+    .task .th { font-size: 17px; color: #0e1c42; margin-bottom: 4px; }
+    .task .td { font-size: 16px; color: #1a2340; line-height: 1.55; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 17</div>
+        <div style="font-size: 12px; color: #666;">Capstone &amp; Semester Final</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 17.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">What You Could Not Read in September</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 17.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">What You Could Not Read in September</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">There is one measurement that matters at the end of a semester, and it is not your grade.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">It is this: <strong>put a sentence in front of you that you could not read in September, and read it.</strong> That is what this week is for. There is no new grammar in Module 17 &mdash; not one form, not one construction. What there is instead is a tour of everything you built, a lesson on how to sit an exam that covers a whole semester, and one long piece of Latin about the Catilinarian conspiracy that you could not have touched sixteen modules ago and can now read end to end.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the five things this semester added to my Latin, and say which modules added each one.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> take one long Latin sentence and point to the five separate constructions inside it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> say exactly what this week's graded work is, how many points it carries, and how many attempts I get.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; TWO SENTENCES, SIXTEEN MODULES APART</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Here is a sentence you could have read on the first day of this course. Nothing in it is beyond the Latin you brought with you from Latin Intermediate.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerō, coniūrātiōne cognitā, senātōrēs convocāvit et omnia nūntiāvit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;With the conspiracy discovered, Cicero called the senators together and reported everything.&rdquo; <br>An <strong>ablative absolute</strong>, two perfect indicatives, one conjunction. Solid Latin. Also: nothing but statement.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">And here is a sentence about the same afternoon in which, in September, you could not have parsed a single verb.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0; border-left:4px solid #C7922C;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.6;"><em>Cum Cicerō cognōvisset quid coniūrātī parāvissent, verēbātur nē rēs pūblica, quae sibi dēfendenda erat, ūnā nocte dēlērētur.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;When Cicero had found out what the conspirators had prepared, he was afraid that the republic &mdash; which he himself had to defend &mdash; might be destroyed in a single night.&rdquo;</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">Count what is in it. Five constructions, from five different modules, in twenty words:</p>
+        <table class="para">
+            <tr><th style="width:32%">The Latin</th><th style="width:24%">What it is</th><th>Where you got it</th></tr>
+            <tr><td class="lab"><em>Cum&hellip;cognōvisset</em></td><td class="end"><em>cum</em> + pluperfect subjunctive</td><td>Module 10 gave you the clause; Module 13 gave you the tense.</td></tr>
+            <tr><td class="lab"><em>quid&hellip;parāvissent</em></td><td class="end">indirect question, pluperfect subjunctive</td><td>Module 11, again with Module 13's &ldquo;already finished&rdquo; tense.</td></tr>
+            <tr><td class="lab"><em>verēbātur</em></td><td class="end">deponent verb, imperfect indicative</td><td>Module 2 &mdash; passive in form, active in meaning.</td></tr>
+            <tr><td class="lab"><em>nē&hellip;dēlērētur</em></td><td class="end">fear clause &mdash; &ldquo;that it might be&hellip;&rdquo;</td><td>Module 12, and the <em>nē</em> that reverses.</td></tr>
+            <tr><td class="lab"><em>quae sibi dēfendenda erat</em></td><td class="end">gerundive of obligation + dative of agent, inside a relative clause</td><td>Module 5, tucked inside a construction you already owned.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Notice what the second sentence can do that the first cannot.</strong> The first one reports events. The second one reports a mind &mdash; what Cicero knew, what he did not know, what he feared, and what he believed he was obliged to do. Nearly every construction you added this semester does that same kind of work: it lets Latin say something about the <em>relationship</em> between a fact and a person. That is not decoration. It is the difference between reading a chronicle and reading a historian.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Look back over the semester. Which module changed the most about how you read Latin?</div>
+            <div class="widget-options">
+                <button data-response="A common answer, and a telling one. Deponents were the first time this course told you that a form can lie about itself — that sequitur looks passive and means 'he follows.' Once you accept that, the subjunctive is much less alarming, because the subjunctive is also a form that does not mean one fixed thing.">Module 2 &mdash; deponents</button>
+                <button data-response="Probably the right answer for most readers. Modules 6 and 7 were the wall: a whole second mood, plus a rule about which tense goes where. Everything from Module 8 to Module 15 is an application of those two modules. If you found them hard, that is because they were the hard part.">Modules 6 and 7 &mdash; the subjunctive and sequence</button>
+                <button data-response="An excellent answer if it is yours, because Module 16 is where the semester stopped being a list. Up to that point each construction had its own week and its own label. Module 16 took the labels away and asked you to sort them — which is what actual reading is.">Module 16 &mdash; the great sort</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE FIVE THINGS THIS SEMESTER ADDED</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Seventeen modules is a lot of weeks and not very many ideas. Here is the whole semester as five additions:</p>
+        <table class="para">
+            <tr><th style="width:5%">#</th><th style="width:25%">What was added</th><th style="width:13%">Modules</th><th>What it let you do</th></tr>
+            <tr><td class="lab"><strong>1</strong></td><td class="end">Deponent and semi-deponent verbs</td><td>m02, m03</td><td>Read a whole class of extremely common verbs &mdash; <em>loquor, sequor, patior, morior, cōnor, proficīscor, arbitror, ūtor, vereor, audeō, soleō, gaudeō, fīdō</em> &mdash; that had been invisible to you.</td></tr>
+            <tr><td class="lab"><strong>2</strong></td><td class="end">Gerunds and gerundives</td><td>m04, m05</td><td>Turn an action into a noun (<em>ars dīcendī</em>, &ldquo;the art of speaking&rdquo;) and say that something <strong>must be done</strong>, and by whom (<em>rēs pūblica nōbīs dēfendenda est</em>).</td></tr>
+            <tr><td class="lab"><strong>3</strong></td><td class="end">The subjunctive mood &mdash; all four tenses, active and passive</td><td>m06, m13</td><td>Read the mood Latin uses for anything that is not a plain assertion of fact: present, imperfect, perfect, pluperfect.</td></tr>
+            <tr><td class="lab"><strong>4</strong></td><td class="end">Six subordinate constructions that use it, plus the rule that picks the tense</td><td>m07&ndash;m12</td><td>Purpose &middot; indirect command &middot; result &middot; <em>cum</em> (temporal, causal, concessive) &middot; indirect question &middot; fear clause. All governed by <strong>sequence of tenses</strong>.</td></tr>
+            <tr><td class="lab"><strong>5</strong></td><td class="end">The subjunctive outside a subordinate clause, conditions, and the irregular verbs</td><td>m14, m15</td><td>Jussive, hortatory, optative and deliberative subjunctives &middot; conditions that are not facts &middot; <em>ferō, eō, volō, nōlō, mālō, fīō</em>.</td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Three of those five are about one mood.</strong> Deponents and gerundives are real additions, but the spine of this semester is the subjunctive: its forms (Lesson 17.02), the constructions that use it (17.03), and the discipline of telling them apart when nobody labels them for you (17.04, and the whole of Module 16). If you revise nothing else this week, revise the mood.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128203; PART 3 &middot; WHAT THIS WEEK ACTUALLY IS &mdash; NO SURPRISES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Module 17 is shaped differently from every other module in this course, so read this part once, carefully, and then stop worrying about it.</p>
+        <table class="para">
+            <tr><th style="width:28%">What</th><th style="width:16%">Points</th><th>How it works</th></tr>
+            <tr><td class="lab"><strong>Five lessons</strong><br><span style="font-size:13px; color:#666;">17.01&ndash;17.05</span></td><td>Mark as Done</td><td>The grand tour. No new grammar anywhere in them.</td></tr>
+            <tr><td class="lab"><strong>Review Activity</strong></td><td class="end">25 points</td><td><strong>Teacher-reviewed</strong>, in Microsoft Word. One adapted passage of twelve lines: parse eight forms, name four constructions, translate four lines, and put one English sentence into Latin. It counts in the <strong>Translations</strong> group.</td></tr>
+            <tr><td class="lab"><strong>Semester Final</strong></td><td class="end">100 points</td><td><strong>Auto-graded.</strong> Fifty questions drawn from every module of the semester, m00 to m16. <strong>Two attempts, and your higher score is the one that counts.</strong> Answers are shuffled. It is 10% of your semester grade.</td></tr>
+            <tr><td class="lab"><strong>Capstone reflection</strong></td><td>0 points</td><td>An ungraded survey. Six questions about the whole semester. It costs you nothing and tells your teacher what Semester 2 needs to do differently.</td></tr>
+            <tr><td class="lab"><strong>No Ludus this week</strong></td><td>&mdash;</td><td>There is no Module 17 game, no module quiz and no module translation. The Final replaces the quiz; the Review Activity replaces the translation.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Two attempts is a design decision, not a loophole.</strong> The point of a cumulative exam is not to catch you out on the one form you forgot; it is to find out what you can read. So take the first attempt seriously, write down the items you were unsure of, go back to the lesson each one came from, and then take the second attempt. That is not gaming the exam. That is the exam working.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; FOUR SENTENCES, FOUR DIFFERENT WEEKS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">No labels, no hints about which module each one came from. Name the construction. This is the whole shape of the Final in four questions.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What is the subordinate construction &mdash; and how do you know?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Look at the main verb before you look at the nē. What kind of verb is verēbātur?">
+                <div class="widget-row-prompt"><em>Cicerō verēbātur nē coniūrātī effugerent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Negative purpose would answer the question &quot;why did he do it?&quot; — but verēbātur is not something Cicero did in order to achieve an effect. A verb of fearing changes what nē means.">Negative purpose clause</button>
+                    <button data-choice="b" data-fb="Right — a fear clause. Vereor is a verb of fearing (and a deponent, m02), so nē means &quot;that,&quot; not &quot;that not&quot;: &quot;Cicero was afraid that the conspirators would escape.&quot;">Fear clause</button>
+                    <button data-choice="c" data-fb="Negative result is ut nōn, not nē, and a result clause needs a signpost word — tam, tantus, tālis, tot, adeō — in the main clause. There is none here.">Negative result clause</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Two things to check: is there a noun for faciendum to agree with, and what case is nōbīs?">
+                <div class="widget-row-prompt"><em>Nōbīs prō patriā pugnandum est.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nōbīs is dative, not ablative — and there is no ā or ab. This is exactly the substitution m05 taught: with a gerundive of obligation, the agent goes into the dative.">A gerund with the ablative of agent</button>
+                    <button data-choice="b" data-fb="Not a fear clause: no verb of fearing and no nē. Pugnandum est is two words, a gerundive plus esse.">A fear clause with the gerundive</button>
+                    <button data-choice="c" data-fb="Right — the impersonal gerundive of obligation with the dative of agent: &quot;We must fight for our country&quot; (literally &quot;there must be fighting by us&quot;). Pugnō is intransitive, so it has no object to agree with and the gerundive stays neuter singular.">Gerundive of obligation, impersonal, with the dative of agent</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Utinam is only ever one thing. What tense is adesset, and what does that tense tell you about the wish?">
+                <div class="widget-row-prompt"><em>Utinam Catō adesset!</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — an optative wish (m14), and the imperfect subjunctive marks it as a wish for something that is NOT so: &quot;If only Cato were here!&quot; A present subjunctive (adsit) would leave it open and possible.">An optative wish about something that is not the case</button>
+                    <button data-choice="b" data-fb="A deliberative question asks &quot;what am I to do?&quot; and needs a question word or at least a question. Utinam is not interrogative; it introduces a wish.">A deliberative question</button>
+                    <button data-choice="c" data-fb="A jussive is a third-person command — &quot;let him come&quot; — and would be adsit with no utinam. The word utinam is the giveaway that this is a wish, not an order.">A jussive command</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Look at the tense of both verbs. Are they present, imperfect, or pluperfect subjunctive?">
+                <div class="widget-row-prompt"><em>Nisi Cicerō vigilāvisset, rēs pūblica dēlēta esset.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="A simple factual condition takes the indicative in both halves: sī vigilāvit… dēlēta est. Both verbs here are subjunctive, which means the condition is not being asserted as a fact.">A simple factual condition</button>
+                    <button data-choice="b" data-fb="Contrary to fact in the PRESENT would put the imperfect subjunctive in both halves — vigilāret… dēlērētur, &quot;if he were not watchful, it would be destroyed.&quot; These are pluperfects.">Contrary to fact in the present</button>
+                    <button data-choice="c" data-fb="Right — contrary to fact in the past. Pluperfect subjunctive in both halves: &quot;If Cicero had not been watchful, the republic would have been destroyed.&quot; And notice what the sentence therefore asserts: he WAS watchful, and it was NOT destroyed.">Contrary to fact in the past</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; ADMĪRĀTIŌ &middot; WONDER</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Admīrātiō, admīrātiōnis</em> f. is wonder &mdash; the state of being struck by something. It is built on <em>mīror, mīrārī, mīrātus sum</em>, &ldquo;to marvel at,&rdquo; which is a <strong>deponent</strong> verb you learned in Module 2, with <em>ad-</em> in front of it: wonder directed <em>at</em> something. The same root gives English <em>admire</em>, <em>miracle</em>, and <em>mirror</em> &mdash; a thing you look into and are surprised by.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;">This course opened with <em>admīrātiō</em> in Module 0 and closes with it here, and that is deliberate. In September the wonder was ahead of you: a language you had two years of, about to open into something harder. The wonder available to you now is different and better, because it is retrospective. You can look at <em>verēbātur nē rēs pūblica dēlērētur</em> and see, without effort, a man's fear about a state &mdash; and four months ago that string of letters would have told you nothing at all.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">Wonder is not the same as feeling pleased with yourself. Being pleased looks at you; wonder looks at the thing. What is actually remarkable here is not that you worked hard, though you did. It is that a language spoken by people who have been dead for two thousand years still carries their thinking accurately enough that a twelve-year-old in Florida can pick up a sentence and find a Roman consul's mind still in it. That is the thing to marvel at this week. <em>Mīrāre</em> &mdash; look at it, and be surprised.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 17.02 &mdash; The Grammar Tour, Part 1: Forms</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Every paradigm the semester added, on one page: deponents and semi-deponents, the gerund against the gerundive, all four tenses of the subjunctive in both voices, and the six irregular verbs. Bring nothing but your eyes; the tables do the work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">You did not learn seventeen things this semester. You learned five, and the third one &mdash; the subjunctive &mdash; is most of the other four. Revise <em>the mood</em> this week, and everything built on top of it comes with it.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 17.01 &middot; What You Could Not Read in September</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

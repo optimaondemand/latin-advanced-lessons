@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 15.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 15</div>
+        <div style="font-size: 12px; color: #666;">Conditions &amp; Irregular Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 15.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Two Halves of an If</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 15.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The Two Halves of an If</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You have been reading <em>sī</em> since your first year. This week you learn what Latin can do with it that English cannot do at all.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A condition is a sentence built out of two halves: a <em>sī</em> clause that supposes something, and a main clause that says what follows from the supposing. Latin has <strong>four</strong> of these patterns, and it tells you which one you are in by the <strong>mood and tense of the verbs</strong> &mdash; not by any extra word. One of the four you already own from 0706010. The other three are this module, and they end at the pattern Latin uses to say <em>what would have happened and did not</em> &mdash; the grammar of every argument anyone has ever had about the past.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> point at the <strong>protasis</strong> and the <strong>apodosis</strong> of any conditional sentence, whichever half comes first.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> read and translate a <strong>simple</strong> condition (<em>sī</em> + indicative) and explain why the indicative is the honest mood for it.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the four condition types and say what a subjunctive in a <em>sī</em> clause is telling me that an indicative would not.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; A SENTENCE MADE OF TWO SENTENCES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Take an ordinary English sentence apart:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.5;"><span style="color:#AA1E2D;">If Catiline is in the city,</span> <span style="color:#1B6A94;">the danger is great.</span></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;">The red half <strong>supposes</strong> something. The blue half says <strong>what follows</strong> if the supposing holds. Neither half is a complete thought on its own: &ldquo;if Catiline is in the city&rdquo; leaves you waiting, and &ldquo;the danger is great&rdquo; on its own is a plain claim rather than a consequence of anything.</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">The two halves have names, and it is worth learning them now, because from Lesson 15.02 onward you will need to talk about <em>each half separately</em>:</p>
+        <table class="para">
+            <tr><th style="width:20%">Name</th><th style="width:26%">Which half</th><th>What it does</th></tr>
+            <tr><td class="lab"><strong>protasis</strong><br><span style="font-size:14px; color:#666;">pro-TASS-iss</span></td><td>the <em>sī</em> clause<br><span style="font-size:14px; color:#666;"><em>sī Catilīna in urbe est</em></span></td><td class="end">supposes something<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">the &ldquo;if&rdquo; half; it makes no claim that the thing is so</span></td></tr>
+            <tr><td class="lab"><strong>apodosis</strong><br><span style="font-size:14px; color:#666;">ap-ODD-oss-iss</span></td><td>the main clause<br><span style="font-size:14px; color:#666;"><em>perīculum magnum est</em></span></td><td class="end">states the consequence<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">the &ldquo;then&rdquo; half, even when no &ldquo;then&rdquo; is written</span></td></tr>
+        </table>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Where those two words come from.</strong> They are Greek. Roman schoolmasters took most of their grammatical vocabulary from Greek teachers, and these two came along with the rest: <em>protasis</em> is &ldquo;the stretching-forward,&rdquo; the part held out first, and <em>apodosis</em> is &ldquo;the giving-back,&rdquo; the answer to it. If you would rather think in Latin: the <em>sī</em> clause states the <strong><em>condiciō</em></strong> &mdash; the condition, the terms &mdash; and the main clause states what follows from those terms.</div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#128161; <strong>The names are not about word order.</strong> Latin puts the <em>sī</em> clause first most of the time, but not always: <em>Perīculum magnum est sī Catilīna in urbe est</em> is the same sentence with the halves swapped, and the protasis is still the <em>sī</em> half. Find the word <em>sī</em>, and you have found the protasis, wherever it is sitting.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Before any Latin: think about the English sentence &ldquo;If the Senate had not acted, Rome would have burned.&rdquo; Is that sentence <em>true</em>? What kind of thing is it even claiming?</div>
+            <div class="widget-options">
+                <button data-response="A sharp instinct, and it is the whole difficulty. The sentence cannot be checked, because the Senate DID act and Rome did NOT burn — so there is no fact anywhere in the world for the sentence to match. And yet people argue about sentences like this constantly, and some of those arguments are better than others. Latin gives this kind of claim its own grammar, which is a way of admitting out loud what sort of claim it is.">It cannot really be true or false &mdash; it never happened</button>
+                <button data-response="Reasonable, and this is roughly what a historian would say: the sentence is a claim about what the situation was TENDING toward. It can be well supported or badly supported even though it never happened. Notice that you had to reach for words like 'probably' and 'likely' to say that — Latin instead reaches for a change of MOOD, which is what this module is about.">It is a guess about what probably would have happened</button>
+                <button data-response="Also fair — and this is exactly the accusation Cicero spent the rest of his life answering. A man who has done something drastic has every reason to describe the disaster he prevented in the darkest colours possible, because nobody can check him. Hold on to that suspicion; you will read Cicero making precisely this argument in Lesson 15.05, and the honest question about it is the reading's real subject.">It is mostly a way of defending what you already did</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE ONE YOU ALREADY OWN: <em>SĪ</em> + INDICATIVE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">This is the type you have been reading since 0706000, and it has a name: the <strong>simple</strong> or <strong>factual</strong> condition. Both halves are <strong>indicative</strong>. Nothing else is going on.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī Catilīna in urbe <strong>est</strong>, perīculum magnum <strong>est</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If Catiline is in the city, the danger is great.&rdquo; Two present indicatives. The speaker does not say whether Catiline <em>is</em> in the city; he says that <strong>if that is the case, this follows</strong>. That is all a factual condition ever claims.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī hoc <strong>crēdis</strong>, <strong>errās</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If you believe this, you are wrong.&rdquo; <span style="color:#8a6416;">Gloss: <em>crēdō, crēdere</em> &mdash; to believe; <em>errō, errāre</em> &mdash; to be wrong, to wander.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī senātus hoc <strong>dēcrēvit</strong>, cōnsul rectē <strong>fēcit</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If the Senate decreed this, the consul acted rightly.&rdquo; Past tenses, still indicative, still simply factual. <span style="color:#8a6416;">Gloss: <em>dēcernō, dēcernere, dēcrēvī</em> &mdash; to decree, decide; <em>rectē</em> (adv.) &mdash; rightly.</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">And the future belongs here too. When a Latin writer means &ldquo;if this happens, that will happen&rdquo; &mdash; a real possibility, expected to be settled one way or the other &mdash; both halves stay <strong>indicative</strong>, in the future or future perfect:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī <strong>tacēbis</strong>, tūtus <strong>eris</strong>.</em> &nbsp;&middot;&nbsp; <em>Sī Catilīna <strong>vēnerit</strong>, cīvēs eum <strong>capient</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If you keep silent, you will be safe.&rdquo; &middot; &ldquo;If Catiline comes, the citizens will capture him.&rdquo; Latin is fussier than English here: it puts a <strong>future perfect</strong> (<em>vēnerit</em>) in the protasis when the coming has to be finished before the capturing can start. English says &ldquo;if he comes&rdquo; and lets you work it out.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Why the indicative is the right mood for all of these.</strong> The indicative is Latin's mood for <em>fact</em> &mdash; for what is, was, or will be the case. In a factual condition the writer is not backing away from anything. He is not saying &ldquo;this is not so&rdquo; or &ldquo;this might conceivably be so.&rdquo; He is saying: <strong>whether or not the protasis happens to be true, the two things are tied together.</strong> Nothing about that requires the subjunctive, and Latin does not use it.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; WHAT THE SUBJUNCTIVE ADDS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Now look at three English sentences that are all &ldquo;about&rdquo; Catiline being in the city, and notice that they say three completely different things:</p>
+        <table class="para">
+            <tr><th style="width:44%">English</th><th>What the speaker is committing to</th></tr>
+            <tr><td class="lab">If Catiline <strong>is</strong> in the city, there <strong>is</strong> danger.</td><td>No commitment either way. Maybe he is, maybe he is not.</td></tr>
+            <tr><td class="lab">If Catiline <strong>should be</strong> in the city, there <strong>would be</strong> danger.</td><td>A possibility held at arm's length. It <em>could</em> happen; the speaker is not betting on it.</td></tr>
+            <tr><td class="lab">If Catiline <strong>were</strong> in the city, there <strong>would be</strong> danger.</td><td class="end">He <strong>is not</strong>. The speaker says so by the way he builds the sentence.</td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 10px 0;">English marks those differences with a pile of helper words &mdash; <em>should, would, were</em> &mdash; and does it so badly that people argue about &ldquo;if I was&rdquo; versus &ldquo;if I were.&rdquo; Latin marks them with the <strong>mood and tense of the verb</strong>, and it is completely regular. Here is the whole module in one table, on one verb. You are not expected to produce these today; you are expected to see the shape.</p>
+        <table class="para">
+            <tr><th style="width:22%">Type</th><th style="width:36%">Latin</th><th>English</th></tr>
+            <tr><td class="lab"><strong>1. simple / factual</strong><br><span style="font-size:14px; color:#666;">indicative in both halves</span></td><td><em>Sī Catilīna in urbe <strong>est</strong>, perīculum <strong>est</strong>.</em></td><td>If Catiline is in the city, there is danger.<br><span style="font-size:14px; color:#666;">No claim about whether he is.</span></td></tr>
+            <tr><td class="lab"><strong>2. future less vivid</strong><br><span style="font-size:14px; color:#666;"><span class="end">present subjunctive</span> in both halves</span></td><td><em>Sī Catilīna in urbe <strong>sit</strong>, perīculum <strong>sit</strong>.</em></td><td>If Catiline <strong>should be</strong> in the city, there <strong>would be</strong> danger.<br><span style="font-size:14px; color:#666;">A possibility, held at a distance.</span></td></tr>
+            <tr><td class="lab"><strong>3. contrary to fact, present</strong><br><span style="font-size:14px; color:#666;"><span class="end">imperfect subjunctive</span> in both halves</span></td><td><em>Sī Catilīna in urbe <strong>esset</strong>, perīculum <strong>esset</strong>.</em></td><td>If Catiline <strong>were</strong> in the city, there <strong>would be</strong> danger.<br><span style="font-size:14px; color:#666;">And he is not.</span></td></tr>
+            <tr><td class="lab"><strong>4. contrary to fact, past</strong><br><span style="font-size:14px; color:#666;"><span class="end">pluperfect subjunctive</span> in both halves</span></td><td><em>Sī Catilīna in urbe <strong>fuisset</strong>, perīculum <strong>fuisset</strong>.</em></td><td>If Catiline <strong>had been</strong> in the city, there <strong>would have been</strong> danger.<br><span style="font-size:14px; color:#666;">And he was not.</span></td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Read the middle column downward and you have the module.</strong> <em>est &middot; sit &middot; esset &middot; fuisset.</em> One verb, four tenses, four different things said about the same imaginary Catiline. Nothing is added to the sentence but the ending.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>And now the thing that makes this module unlike everything since Module 7.</strong> Look at rows 2, 3 and 4 again: <strong>both halves carry the same tense.</strong> That has not been true of anything else you have learned. In a purpose clause, a <em>cum</em> clause, an indirect question or a fear clause, the tense of the subjunctive is chosen by <strong>sequence</strong> &mdash; you look at the indicative main verb, decide primary or secondary, and pick from the row. In a subjunctive condition there <em>is</em> no indicative main verb to look at: the apodosis is subjunctive too. So sequence has nothing to work on, and the rule is simply <strong>match</strong>. Lesson 15.02 says this again, because it is the single most useful sentence in the module.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; FIRST SORT: HALVES, AND REAL VERSUS UNREAL</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five questions. None of them asks you to build a form &mdash; that starts tomorrow. Today you are only learning to look in the right place.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Find the half, or read the mood.</div>
+
+            <div class="widget-row" data-correct="a" data-hint="Which half contains the word sī?">
+                <div class="widget-row-prompt"><em>Sī Catilīna in urbe est, perīculum magnum est.</em> &mdash; which words are the <strong>protasis</strong>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right. The protasis is the sī clause: it supposes something. Sī Catilīna in urbe est — 'if Catiline is in the city.'"><em>Sī Catilīna in urbe est</em></button>
+                    <button data-choice="b" data-fb="That is the apodosis — the main clause, which states the consequence. It has no sī in it, and it could stand on its own as a sentence."><em>perīculum magnum est</em></button>
+                    <button data-choice="c" data-fb="Only one half is the protasis. The two names divide the sentence between them; nothing is both.">The whole sentence</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Compare esset with est. What is the difference in mood, and what does the speaker gain by it?">
+                <div class="widget-row-prompt"><em>Sī Catilīna in urbe esset, perīculum magnum esset.</em> &mdash; is the speaker saying Catiline is in the city?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="No — that is what the indicative est would have said, or rather what it would have left open. Esset is the imperfect subjunctive, and a Latin writer chooses it here precisely to signal that the supposing is false.">Yes, he is stating it as a fact</button>
+                    <button data-choice="b" data-fb="Nearly, but not quite: 'leaving it open' is what the factual condition with est does. The imperfect subjunctive goes further and closes it — in the speaker's opinion, off the table.">He is leaving it open, as in the est version</button>
+                    <button data-choice="c" data-fb="Right — and this is the whole point of the module. Sī with the imperfect subjunctive in both halves says 'if he were… — and he is not.' The denial is carried by the ending of the verb and by nothing else.">No &mdash; the subjunctive tells you he is <em>not</em></button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Tacēbis and eris — indicative or subjunctive? Then which of the four types is that?">
+                <div class="widget-row-prompt"><em>Sī tacēbis, tūtus eris.</em> &mdash; which type of condition is this?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Future less vivid needs the present SUBJUNCTIVE in both halves — sī taceās, tūtus sīs. Tacēbis and eris are future INDICATIVE.">Future less vivid &mdash; &ldquo;should&hellip;would&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — simple / factual, in the future. Both verbs are future indicative, and the sentence treats the silence as a real possibility: 'If you keep silent, you will be safe.'">Simple / factual &mdash; both halves indicative</button>
+                    <button data-choice="c" data-fb="Contrary to fact would need a subjunctive, and would be saying that the thing is not so. Nothing here is being denied — the speaker is offering you a genuine choice.">Contrary to fact &mdash; and you will not keep silent</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="The halves have been swapped. Does that change which is which?">
+                <div class="widget-row-prompt"><em>Perīculum magnum est sī Catilīna in urbe est.</em> &mdash; where is the apodosis?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — at the front. Perīculum magnum est is the main clause and therefore the apodosis, even though it is standing first. The names describe the job, not the position.">First: <em>perīculum magnum est</em></button>
+                    <button data-choice="b" data-fb="That half opens with sī, so it is the protasis wherever it sits. Latin word order is free enough that position is never a safe test for anything.">Last, because the apodosis always comes last</button>
+                    <button data-choice="c" data-fb="There is exactly one apodosis in a conditional sentence, and this one has both halves in plain sight. Word order has been rearranged, not the grammar.">There is no apodosis in this sentence</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Which English tense pattern is in front of you: 'should…would', 'were…would be', or 'had…would have'?">
+                <div class="widget-row-prompt">English: &ldquo;If the Senate had not acted, the city would have burned.&rdquo; &mdash; which of the four Latin types will this need?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Simple / factual is for what may well be so. This sentence is about something that definitely did NOT happen: the Senate did act, and the city did not burn.">Type 1, simple / factual &mdash; indicative</button>
+                    <button data-choice="b" data-fb="'Were… would be' is the PRESENT contrary to fact, type 3, with the imperfect subjunctive. This sentence is about the past — 'had not acted', 'would have burned'.">Type 3, contrary to fact present &mdash; imperfect subjunctive</button>
+                    <button data-choice="c" data-fb="Right — type 4, contrary to fact in the PAST, which takes the pluperfect subjunctive in both halves. This is the sentence Module 15 exists for, and it is the sentence Cicero spent twenty years repeating.">Type 4, contrary to fact past &mdash; pluperfect subjunctive</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the ground near Pistoria, in the hills of Etruria, where Catiline's army was destroyed in January 62 BC &mdash; a narrow valley with mountains on one side and rough ground on the other. Walk it in daylight, with nothing happening. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things in the scene in Latin &mdash; for example <em>vallis</em> (&ldquo;valley&rdquo;), <em>mōns</em> (&ldquo;mountain&rdquo;), <em>aciēs</em> (&ldquo;battle line&rdquo;), <em>signum</em> (&ldquo;standard&rdquo;), <em>gladius</em> (&ldquo;sword&rdquo;), <em>exercitus</em> (&ldquo;army&rdquo;). <span style="color:#666;">[ARTHUR: label tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write two Latin sentences</strong> about the place, each a condition, and put the type in brackets after it. Do the first one now, while you still only own type 1: <em>Sī Catilīna hīc pugnāvit, fortiter pugnāvit.</em> [simple] &mdash; &ldquo;If Catiline fought here, he fought bravely.&rdquo; Come back after Lesson 15.03 and write the second one as a past contrary-to-fact: <em>Sī Catilīna fūgisset, nōn hīc mortuus esset.</em> [contrary to fact, past]. <strong>This is the same ground your graded ARTHUR Project uses at Module 16</strong> &mdash; go now, so that when the project comes you already know the place. This session is formative and ungraded; the graded ARTHUR projects are Modules 8 and 16 only.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; GRAVITĀS &middot; RESPONSIBILITY</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Gravitās, gravitātis</em> f. comes straight from <em>gravis, grave</em>, &ldquo;heavy.&rdquo; For a Roman it meant the weight a serious person carries: the habit of treating important things as important, and of not being flippant where flippancy costs other people something. The same root gives English <em>gravity</em>, <em>grave</em>, <em>aggravate</em>, and &mdash; borrowed whole and unchanged &mdash; <em>gravitas</em>.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">It is the right virtue for a module about conditions, because a contrary-to-fact condition is what weighing actually sounds like. <em>Sī hoc fēcissem, illud accidisset.</em> &ldquo;If I had done this, that would have happened.&rdquo; You cannot make a decision without running sentences of that shape, and you cannot take responsibility for a decision afterwards without running them again, honestly, including the ones that do not flatter you. Cicero built his whole defence out of one such sentence &mdash; <em>if the Senate had not acted, the republic would have fallen</em> &mdash; and his enemies replied with another: <em>if you had not been in such a hurry, five citizens would still be alive.</em> Neither sentence can be checked against anything. That is precisely why the person who says one needs <em>gravitās</em>: the grammar will not stop you from claiming whatever you like about a past that never happened. Only you will.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 15.02 &mdash; Two Kinds of Not-Yet-True</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Types 2 and 3: the future less vivid (&ldquo;should&hellip;would&rdquo;) with the present subjunctive in both halves, and the present contrary-to-fact (&ldquo;were&hellip;would be&rdquo;) with the imperfect subjunctive in both halves. One letter of difference in Latin, and a large difference in what you are claiming.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Two halves, two names: the <strong>protasis</strong> is the <em>sī</em> clause, the <strong>apodosis</strong> is the main clause, and word order does not decide which is which. Then one question: <strong>indicative or subjunctive?</strong> Indicative in both halves means the writer is making no claim about whether the supposing is true. Subjunctive in both halves means he is &mdash; and the tense tells you which claim. <em>Est &middot; sit &middot; esset &middot; fuisset.</em></p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 15.01 &middot; The Two Halves of an If</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

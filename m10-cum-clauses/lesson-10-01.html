@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 10.01</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 10</div>
+        <div style="font-size: 12px; color: #666;"><em>Cum</em> Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 10.01 &middot; Day 1 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">One Word, Four Jobs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 10.01</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">One Word, Four Jobs</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">You learned <em>cum</em> in your first year of Latin. You did not learn most of it.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Since 0706000 <em>cum</em> has meant &ldquo;with,&rdquo; a preposition with the ablative: <em>cum senātōribus</em>, &ldquo;with the senators.&rdquo; That word is still there and still means that. But Latin has a second <em>cum</em> &mdash; a <strong>conjunction</strong> &mdash; and it does three different jobs: <strong>&ldquo;when,&rdquo; &ldquo;since,&rdquo;</strong> and <strong>&ldquo;although.&rdquo;</strong> Four jobs, one spelling, and this week you learn to tell them apart.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell <em>cum</em> the preposition from <em>cum</em> the conjunction in one look.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> name the three meanings of <em>cum</em> + subjunctive and the one meaning of <em>cum</em> + indicative.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> explain why the <em>form</em> of the verb cannot, by itself, tell me which of the three meanings is in front of me.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE ONE YOU ALREADY OWN</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Start with what is safe. <em>Cum</em> the <strong>preposition</strong> means <strong>&ldquo;with&rdquo;</strong> and takes the <strong>ablative</strong>. You have used it for two years:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cicerō <strong>cum senātōribus</strong> in Cūriam vēnit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;Cicero came into the Senate House <strong>with the senators</strong>.&rdquo; <span style="color:#8a6416;">Gloss: <em>Cūria, Cūriae</em> f. &mdash; the Senate House.</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">And you know its odd habit of climbing onto the back of a pronoun: <em>mēcum</em> (&ldquo;with me&rdquo;), <em>tēcum</em>, <em>nōbīscum</em>, <em>sēcum</em>. Same word, glued on.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.55;">The test that never fails: <strong>the preposition <em>cum</em> governs a noun or pronoun in the ablative and has no verb of its own.</strong> The conjunction <em>cum</em> opens a whole clause &mdash; and a clause has a verb.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>So the first question is not &ldquo;what does <em>cum</em> mean here?&rdquo;</strong> It is <strong>&ldquo;is there a verb in this group of words?&rdquo;</strong> That question you can answer without understanding the sentence at all &mdash; which, as Module 9 taught you with <em>ut nōn</em>, is exactly the kind of question worth asking first.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">Before the grammar: does it bother you that one small word carries four different jobs? What is your instinct about how a language ends up like that?</div>
+            <div class="widget-options">
+                <button data-response="That is very likely the history. The conjunction and the preposition seem to come from the same old root idea of 'together with' — 'with the senators sitting' slides easily into 'when the senators were sitting.' English does the same thing: 'with the door open' and 'when the door is open' are close cousins.">Probably two words that grew together</button>
+                <button data-response="Reasonable, and true of English too. Think of 'since': 'I have not seen him since Tuesday' (time) and 'Since you are here, help me' (cause). English uses one word for time and reason without anyone complaining. Latin does the same with cum, and adds 'although' to the pile.">English does it too, so it must be normal</button>
+                <button data-response="Fair worry, but it turns out to be manageable. Context does almost all the work, and Latin gives you one mechanical clue — the little word tamen — that settles the hardest of the three. You will meet it in Part 3.">It sounds like it would make reading impossible</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THE CONJUNCTION, AND ITS FOUR OUTCOMES</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Once you have found a verb inside the <em>cum</em> group, you are dealing with the conjunction. Now look at the <strong>mood</strong> of that verb. It splits the possibilities in two:</p>
+        <table class="para">
+            <tr><th style="width:22%">What follows <em>cum</em></th><th style="width:22%">How many meanings</th><th>What it means</th></tr>
+            <tr><td class="lab"><strong>INDICATIVE</strong><br><span style="font-size:14px; color:#666;"><em>vēnit</em>, <em>loquitur</em>, <em>dīxit</em></span></td><td>almost always <strong>one</strong></td><td class="end">&ldquo;when&rdquo; &mdash; plain time, nothing more<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">and with a present tense, often &ldquo;whenever&rdquo;</span></td></tr>
+            <tr><td class="lab"><strong>SUBJUNCTIVE</strong><br><span style="font-size:14px; color:#666;"><em>venīret</em>, <em>loquerētur</em>, <em>esset</em></span></td><td><strong>three</strong></td><td class="end">&ldquo;when / after&rdquo; &nbsp;&middot;&nbsp; &ldquo;since / because&rdquo; &nbsp;&middot;&nbsp; &ldquo;although&rdquo;<br><span style="font-size:14px; color:#1a2340; font-weight:normal;">and you decide which from the sense</span></td></tr>
+        </table>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 10px 0;">Here are all four, one line each. Read the English before you read the label.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cum vesper vēnit, praetōrēs coniūrātōs ex aedibus dūxērunt.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>When</strong> evening came, the praetors led the conspirators out of the houses.&rdquo; <br><strong>Indicative</strong> (<em>vēnit</em>). Pure time: it tells you the hour and nothing else.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cum cīvēs in viīs stārent, Cicerō tacēbat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>When</strong> the citizens were standing in the streets, Cicero was silent.&rdquo; <br><strong>Subjunctive &mdash; temporal.</strong> The clause paints the circumstances the main action sat inside.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cum nēmō respondēret, Cicerō iterum rogāvit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>Since</strong> no one was answering, Cicero asked again.&rdquo; <br><strong>Subjunctive &mdash; causal.</strong> The silence is not just background; it is the <em>reason</em> he asked a second time.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cum perīculum magnum esset, <strong>tamen</strong> Catō surrēxit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;<strong>Although</strong> the danger was great, Cato <strong>nevertheless</strong> stood up.&rdquo; <br><strong>Subjunctive &mdash; concessive.</strong> The clause states something that should have <em>stopped</em> the main action, and did not.</div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Notice the shape of each relationship.</strong> Temporal: the two events sit <em>side by side</em>. Causal: the second <em>flows out of</em> the first. Concessive: the second <em>pushes against</em> the first. Three relationships, and Latin marks all three with the same four letters. What it gives you instead is the little word <em>tamen</em>.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE ONE MECHANICAL HANDLE: <em>TAMEN</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Module 9 gave you a mechanical test: read the negative word off the page and you are done. This module gives you exactly one test of that kind, and it is worth memorising today:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><strong><em>Tamen</em> in the main clause &rarr; the <em>cum</em> clause is concessive: &ldquo;although.&rdquo;</strong></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px;"><em>Tamen</em> means &ldquo;nevertheless, all the same, still.&rdquo; A writer who puts it in the main clause is telling you out loud that what came before <em>should</em> have led somewhere else.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Be honest about how much this test does.</strong> <em>Tamen</em> is a strong signal <em>toward</em> concessive, but it is not a law: not every concessive clause bothers to include it, and once in a while <em>tamen</em> is doing other work in the sentence. Treat it as your best single clue, not as a guarantee. Where it is absent, you decide from the sense &mdash; and Lesson 10.04 will give you a procedure for doing that.</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">And the part nobody should pretend about</h3>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">There is no ending that says &ldquo;causal&rdquo; and no ending that says &ldquo;temporal.&rdquo; <em>Cum senātōrēs tacērent</em> is exactly the same Latin whether it means &ldquo;when the senators were silent&rdquo; or &ldquo;since the senators were silent.&rdquo; The <strong>form</strong> tells you the mood and the tense. The <strong>sense</strong> tells you the job.</p>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Which means &mdash; sometimes two readings are both good.</strong> <em>Cum Cicerō cōnsul esset, coniūrātiōnem superāvit</em> can be read &ldquo;<strong>When</strong> Cicero was consul, he defeated the conspiracy&rdquo; or &ldquo;<strong>Since</strong> Cicero was consul, he defeated the conspiracy.&rdquo; Both are defensible; good translators disagree about sentences like this one. Your job is not to find a certainty the language does not offer &mdash; it is to name what is decidable and translate the rest sensibly.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; FIRST SORT: PREPOSITION OR CONJUNCTION?</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Four sentences. Do not translate them yet &mdash; just find out whether there is a verb inside the <em>cum</em> group, and if there is, what mood it is in.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Is this <em>cum</em> a preposition or a conjunction &mdash; and how do you know?</div>
+            <div class="widget-row" data-correct="b" data-hint="Look for a verb between cum and the comma. Is there one?">
+                <div class="widget-row-prompt"><em>Cicerō cum senātōribus in Cūriam vēnit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is no verb attached to cum here — senātōribus is a plain ablative plural noun. The only verb in the sentence is vēnit, and it belongs to Cicerō.">Conjunction &mdash; &ldquo;when the senators&hellip;&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — preposition. Cum senātōribus is ablative with no verb of its own: &quot;Cicero came into the Senate House with the senators.&quot;">Preposition &mdash; &ldquo;with the senators&rdquo;</button>
+                    <button data-choice="c" data-fb="Concessive would need a clause with a subjunctive verb inside it, and there is no verb inside this cum group at all.">Conjunction &mdash; &ldquo;although the senators&hellip;&rdquo;</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Tacērent — what mood is that, and how do you know?">
+                <div class="widget-row-prompt"><em>Cum cīvēs tacērent, Cicerō surrēxit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Cīvēs is nominative plural here (the subject of tacērent), not ablative — and there is a verb in the group, which a preposition can never have.">Preposition &mdash; &ldquo;with the silent citizens&rdquo;</button>
+                    <button data-choice="b" data-fb="It is a conjunction, but tacērent is not indicative. The imperfect indicative would be tacēbant. Tacērent is the present infinitive tacēre plus -nt: imperfect subjunctive.">Conjunction, and <em>tacērent</em> is indicative</button>
+                    <button data-choice="c" data-fb="Right — conjunction, with the imperfect subjunctive tacērent (tacēre + -nt). So this is one of the three: &quot;when / since the citizens were silent, Cicero stood up.&quot;">Conjunction, and <em>tacērent</em> is imperfect subjunctive</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Where is the cum in this sentence? Look at the end of a word.">
+                <div class="widget-row-prompt"><em>Catilīna sēcum diū cōgitābat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — the preposition, glued onto the back of the pronoun: sē + cum, &quot;with himself.&quot; &quot;Catiline was thinking to himself for a long time.&quot; Cōgitō — to think, ponder.">Preposition, attached to the pronoun &mdash; &ldquo;with himself&rdquo;</button>
+                    <button data-choice="b" data-fb="There is no separate cum word here to be a conjunction, and cōgitābat is indicative and belongs to Catilīna as the main verb.">Conjunction &mdash; &ldquo;when he was thinking&rdquo;</button>
+                    <button data-choice="c" data-fb="Not a mistake — mēcum, tēcum, nōbīscum, vōbīscum and sēcum are the normal, correct classical spellings. The preposition goes on the back of these pronouns.">A spelling error for <em>cum sē</em></button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="Dīxit — indicative or subjunctive? Compare it with dīceret.">
+                <div class="widget-row-prompt"><em>Cum Cicerō haec dīxit, populus tacuit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Haec is neuter accusative plural, the object of dīxit — not an ablative after a preposition. And the group contains a verb, so cum is a conjunction.">Preposition &mdash; &ldquo;with these words&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — conjunction with the perfect INDICATIVE dīxit. That is plain time and nothing else: &quot;When Cicero said these things, the people fell silent.&quot; The subjunctive would have been dīceret.">Conjunction with the indicative &mdash; plain &ldquo;when&rdquo;</button>
+                    <button data-choice="c" data-fb="Dīxit is perfect indicative, not subjunctive. Watch for the -isse- and -ere- shapes that mark subjunctives; dīxit has neither.">Conjunction with a subjunctive &mdash; could be any of the three</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- ARTHUR -->
+    <div style="background:#E9F5EC; border:1px solid #BFE0C7; border-left:5px solid #2A9D5C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1A6B3D; letter-spacing:.4px; margin-bottom:8px;">&#127760; YOUR ARTHUR SESSION THIS MODULE</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Where:</strong> the <em>Via Sacra</em>, the Sacred Way through the Forum, on the evening of 5 December 63 BC &mdash; a silent crowd lining the street as the condemned men are taken past. <span style="color:#666;">[ARTHUR: link and entry steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 8px 0;"><strong>Do this:</strong> label <strong>six</strong> things in the scene in Latin &mdash; for example <em>Via Sacra</em>, <em>forum</em>, <em>turba</em> (the crowd), <em>carcer</em> (the prison), <em>cōnsul</em>, <em>vesper</em> (evening). <span style="color:#666;">[ARTHUR: label tool steps]</span></p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;"><strong>Then write two Latin sentences</strong> about the scene, each with a <em>cum</em> clause, and put the type in brackets after it. Make one of them concessive with <em>tamen</em>. Models: <em>Cum turba in viā stāret, cōnsul tacēbat.</em> [temporal] &middot; <em>Cum cōnsul esset, tamen ipse ambulābat.</em> [concessive] &mdash; &ldquo;Although he was consul, he nevertheless walked himself.&rdquo; Formative and ungraded; the graded ARTHUR projects are Modules 8 and 16 only.</p>
+    </div>
+
+    <!-- VIRTUE -->
+    <div style="background:#F5E7E8; border:1px solid #E0B8BD; border-left:5px solid #AA1E2D; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#AA1E2D; letter-spacing:.4px; margin-bottom:6px;">&#9733; CŌMITĀS &middot; COURTESY</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0 0 10px 0;"><em>Cōmitās, cōmitātis</em> f. is courtesy &mdash; graciousness, human warmth, the quality of being good to be around without giving up your dignity. It comes from <em>comes, comitis</em>, &ldquo;companion,&rdquo; literally &ldquo;one who goes with.&rdquo; The same root gives English <em>comity</em> and, by a long road through medieval Latin, the title <em>count</em>.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.6; margin:0;">And it is the right virtue for this week, because <em>cum</em> clauses are Latin's way of saying that no action stands alone. A <em>cum</em> clause never carries the main news of a sentence. Its whole job is to hold up the circumstances that the main clause happens <em>inside</em> &mdash; the going-with of one event beside another. Courage is only courage <em>when</em> there is danger. Courtesy is only courtesy <em>although</em> you had the power to be rude. Circumstance is not decoration around a virtue; it is what makes the virtue mean anything. Latin built a whole construction to keep that in view.</p>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 10.02 &mdash; Temporal <em>Cum</em>: The Circumstance</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The commonest of the three, the forms it uses, how sequence of tenses governs it &mdash; plus an honest account of the two subjunctive tenses this construction has that you do not own yet. And the words this module needs.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Ask two questions in order. <strong>Is there a verb in the <em>cum</em> group?</strong> No &rarr; preposition, &ldquo;with&rdquo; + ablative. Yes &rarr; conjunction; now, <strong>what mood is that verb?</strong> Indicative &rarr; plain &ldquo;when.&rdquo; Subjunctive &rarr; one of three, and <em>tamen</em> is your best clue.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 10.01 &middot; One Word, Four Jobs</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

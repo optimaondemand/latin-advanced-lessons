@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 4.03</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 17px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 4</div>
+        <div style="font-size: 12px; color: #666;">Gerunds</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 4.03 &middot; Day 3 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Two Ways to Say Purpose</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 4.03</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Two Ways to Say Purpose</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core &middot; Vocabulary</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">"In order to" &mdash; the phrase Latin has three different ways of saying.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Two of the three use a gerund, and you can learn both today: <strong><em>causā</em> + genitive</strong> and <strong><em>ad</em> + accusative</strong>. Together they cover most expressions of purpose you will meet in Cicero's prose. The third way is coming, and you should know now that it exists.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build and translate a purpose phrase with <em>causā</em> or <em>grātiā</em> plus a genitive gerund.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build and translate a purpose phrase with <em>ad</em> plus an accusative gerund.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> give the meaning of eleven new words from Cicero's political and legal vocabulary.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; <em>CAUSĀ</em> AND <em>GRĀTIĀ</em> &mdash; "FOR THE SAKE OF"</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Two words, one meaning. <em>Causā</em> ("for the reason of") and <em>grātiā</em> ("for the favor of") both mean <strong>"for the sake of."</strong> Both take the <strong>genitive</strong> &mdash; and both do something unusual with word order:</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Causā</em> and <em>grātiā</em> are <strong>postpositive</strong>: they come <em>after</em> the genitive they govern, not before it.</div>
+        </div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:230px; background:#FDECEC; border:1px solid #E8C4C0; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:15px; color:#8A1F16; margin-bottom:4px;">WHAT ENGLISH WORD ORDER WANTS</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>causā dīcendī</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">Not how Latin normally writes it.</div>
+            </div>
+            <div style="flex:1; min-width:230px; background:#D8F0DD; border:1px solid #A8D8B5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:15px; color:#1A6B3D; margin-bottom:4px;">WHAT LATIN ACTUALLY WRITES</div>
+                <div style="font-size:20px; color:#0e1c42;"><em>dīcendī causā</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:6px;">"for the sake of speaking."</div>
+            </div>
+        </div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>The reading strategy this gives you.</strong> When your eye lands on <em>causā</em> or <em>grātiā</em> in a sentence, do not read forward &mdash; <strong>look back</strong>. The genitive you need is the word immediately before it, and if that word ends in <em>-ndī</em>, you are holding a purpose phrase.</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:12px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Cicerō ad Cūriam <strong>dīcendī causā</strong> festīnāvit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Cicero hurried to the Senate House <strong>for the sake of speaking</strong>" &mdash; that is, in order to speak.</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Note the two <em>ad</em>-free layers: <em>ad Cūriam</em> is plain motion toward a place; <em>dīcendī causā</em> is the purpose. <span style="color:#8a6416;">Gloss: <em>Cūria, Cūriae</em> f. &mdash; the Senate House; <em>festīnō, festīnāre</em> &mdash; to hurry.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:12px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Catilīna <strong>fallendī grātiā</strong> in senātū sedēbat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Catiline was sitting in the Senate <strong>for the sake of deceiving</strong>."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><em>Grātiā</em> works exactly like <em>causā</em>; Cicero uses both. <span style="color:#8a6416;">Gloss: <em>fallō, fallere, fefellī, falsum</em> &mdash; to deceive, cheat.</span></div>
+        </div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; <em>AD</em> + ACCUSATIVE &mdash; "FOR THE PURPOSE OF"</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">The other one is easier, because <em>ad</em> behaves like the ordinary preposition you have always known: it takes the accusative and it goes in front.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:12px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Cicerō <strong>ad dīcendum</strong> surrēxit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"Cicero rose <strong>to speak</strong>" &mdash; literally "for the purpose of speaking."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;"><span style="color:#8a6416;">Gloss: <em>surrēxit</em> &mdash; "rose, stood up" (perfect of <em>surgō</em>).</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:12px 0;">
+            <div style="font-size:20px; color:#0e1c42;"><em>Mīlitēs <strong>ad pugnandum</strong> parātī erant.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">"The soldiers were ready <strong>for fighting</strong>."</div>
+            <div style="font-size:15px; color:#666; margin-top:6px;">Adjectives of readiness and fitness &mdash; <em>parātus</em>, <em>aptus</em>, <em>prōmptus</em> &mdash; regularly take <em>ad</em> + gerund. Learn this pairing; it is everywhere.</div>
+        </div>
+        <table class="para">
+            <tr><th style="width:34%">Construction</th><th style="width:28%">Case of the gerund</th><th>Feel of it</th></tr>
+            <tr><td class="lab"><em>dīcendī causā / grātiā</em></td><td>Genitive, word <strong>after</strong></td><td>Leans toward <strong>motive</strong> &mdash; <em>why</em> someone is doing this at all.</td></tr>
+            <tr><td class="lab"><em>ad dīcendum</em></td><td>Accusative, word <strong>before</strong></td><td>Leans toward <strong>immediate aim</strong> &mdash; what this particular action is <em>for</em>.</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Do not oversell the difference.</strong> In real Latin the two overlap heavily, and often either would do. The nuance above is a tendency, not a rule &mdash; useful for choosing when you write, not for scoring points when you read. Both translate comfortably as "in order to."</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; THE THIRD WAY, AND WHY WE ARE TELLING YOU EARLY</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Latin has one more way of expressing purpose, and it is actually the most common of the three: a full clause with <em>ut</em> and a verb in the <strong>subjunctive mood</strong>. Something like <em>Cicerō surrēxit ut dīceret</em> &mdash; "Cicero rose so that he might speak."</p>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>Not yet studied &mdash; and not on this module's quiz.</strong> <em>Dīceret</em> is an imperfect subjunctive, and the subjunctive mood arrives in <strong>Module 6</strong>. Purpose clauses with <em>ut</em> and <em>nē</em> are taught in <strong>Module 8</strong>, which is a mastery gate. You will not be asked to read or write one before then, and nothing on the Module 4 quiz or translation requires it.</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 0 0;">We are telling you now for one reason: so that when Module 8 arrives you recognize it as <em>the third member of a family you already know</em>, not as a bolt from the blue. Latin lets a speaker choose &mdash; a tight gerund phrase, or a full clause with its own verb. Cicero chooses deliberately, and by Module 8 you will be able to see why.</p>
+    </div>
+
+    <!-- PART 4 - VOCAB -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; VOCABULARY &mdash; CICERO'S WORKING WORDS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 4px 0;">These eleven words carry the rest of the semester. They are the vocabulary of Roman public life &mdash; law, duty, citizenship, safety &mdash; and Cicero reaches for them constantly. Say the meaning before you flip.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; NOUNS OF PUBLIC LIFE</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>ōrātiō,<br>ōrātiōnis</em> f.</div><div class="hint">click</div><div class="back">a <strong>speech, oration</strong><br><span style="color:#666;"><em>ōrātiōnem habēre</em> &mdash; "to deliver a speech" (idiom).</span></div></div>
+                <div class="flip-card"><div class="front"><em>iūs,<br>iūris</em> n.</div><div class="hint">click</div><div class="back"><strong>law, right, justice</strong> &mdash; law as a <em>principle</em><br><span style="color:#666;"><em>iūre</em> (abl.) = "rightly, lawfully."</span></div></div>
+                <div class="flip-card"><div class="front"><em>lēx,<br>lēgis</em> f.</div><div class="hint">click</div><div class="back">a <strong>law</strong> &mdash; one specific statute that was voted on<br><span style="color:#666;">Contrast <em>iūs</em>: <em>lēx</em> is a document, <em>iūs</em> is a principle.</span></div></div>
+                <div class="flip-card"><div class="front"><em>cīvis,<br>cīvis</em> m./f.</div><div class="hint">click</div><div class="back">a <strong>citizen</strong><br><span style="color:#666;">3rd declension i-stem &mdash; genitive plural <em>cīvium</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>salūs,<br>salūtis</em> f.</div><div class="hint">click</div><div class="back"><strong>safety, well-being, survival</strong><br><span style="color:#666;"><em>salūs reī pūblicae</em> &mdash; the safety of the state. Cicero's whole argument.</span></div></div>
+                <div class="flip-card"><div class="front"><em>officium,<br>officiī</em> n.</div><div class="hint">click</div><div class="back"><strong>duty, service, obligation</strong><br><span style="color:#666;">Module 5's virtue. Cicero wrote a whole book called <em>Dē Officiīs</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>ars,<br>artis</em> f.</div><div class="hint">click</div><div class="back"><strong>art, skill, craft</strong><br><span style="color:#666;">3rd declension i-stem. <em>ars dīcendī</em> &mdash; the art of speaking.</span></div></div>
+            </div>
+            <div class="widget-kicker" style="color:#c7922c; margin-top:8px;">&#128269; THE TWO PURPOSE WORDS &middot; AND TWO VERBS</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>causa,<br>causae</em> f.</div><div class="hint">click</div><div class="back"><strong>cause, reason</strong>; also a <strong>legal case</strong><br><span style="color:#666;"><em>causā</em> (+ gen., <em>after</em> its noun) = "for the sake of."</span></div></div>
+                <div class="flip-card"><div class="front"><em>grātia,<br>grātiae</em> f.</div><div class="hint">click</div><div class="back"><strong>favor, goodwill, grace</strong><br><span style="color:#666;"><em>grātiā</em> (+ gen., <em>after</em> its noun) = "for the sake of." Also <em>grātiās agere</em>, "to give thanks."</span></div></div>
+                <div class="flip-card"><div class="front"><em>cōgitō, cōgitāre,<br>cōgitāvī, cōgitātum</em></div><div class="hint">click</div><div class="back">to <strong>think, reflect, turn over in the mind</strong><br><span style="color:#666;">Often with <em>dē</em> + ablative: <em>dē salūte cōgitāre</em>.</span></div></div>
+                <div class="flip-card"><div class="front"><em>dēfendō, dēfendere,<br>dēfendī, dēfēnsum</em></div><div class="hint">click</div><div class="back">to <strong>defend, protect, ward off</strong><br><span style="color:#666;">The verb Cicero applies to himself throughout the speeches.</span></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- DERIVATIVE -->
+    <div style="background:#FDF3E3; border:1px solid #E6D59A; border-left:5px solid #C7922C; border-radius:8px; padding:16px 20px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#8a6416; letter-spacing:.4px; margin-bottom:8px;">&#128220; DERIVATIVE MINUTE &middot; THE <em>-ND-</em> FAMILY IN ENGLISH</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 8px 0;">You have been reading Latin <em>-nd-</em> forms in English your whole life without knowing it. English borrowed them whole, endings and all:</p>
+        <table class="para" style="margin:6px 0;">
+            <tr><th style="width:26%">Latin form</th><th style="width:26%">Literally</th><th>English word</th></tr>
+            <tr><td class="lab"><em>agenda</em> &mdash; from <em>agō</em>, to do</td><td>"things to be done"</td><td><strong>agenda</strong> &mdash; still exactly a list of things to be done</td></tr>
+            <tr><td class="lab"><em>memorandum</em> &mdash; from <em>memorō</em>, to recall</td><td>"a thing to be remembered"</td><td><strong>memorandum</strong>, shortened to <strong>memo</strong></td></tr>
+            <tr><td class="lab"><em>referendum</em> &mdash; from <em>referō</em>, to carry back</td><td>"a thing to be referred back"</td><td><strong>referendum</strong> &mdash; a question referred back to the voters</td></tr>
+            <tr><td class="lab"><em>legenda</em> &mdash; from <em>legō</em>, to read</td><td>"things to be read"</td><td><strong>legend</strong> &mdash; originally a saint's life, read aloud</td></tr>
+            <tr><td class="lab"><em>addendum</em> &mdash; from <em>addō</em>, to add</td><td>"a thing to be added"</td><td><strong>addendum</strong>, plural <strong>addenda</strong></td></tr>
+            <tr><td class="lab"><em>dīvidendum</em> &mdash; from <em>dīvidō</em>, to divide</td><td>"a thing to be divided up"</td><td><strong>dividend</strong> &mdash; profit to be divided among shareholders</td></tr>
+        </table>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:8px 0 0 0;"><strong>Notice the translations.</strong> Every one of them came out as "a thing <em>to be</em> done / remembered / read." That is not what a gerund means &mdash; a gerund is "the doing of it." These English words are actually borrowed <strong>gerundives</strong>, the gerund's twin. Which is exactly tomorrow's lesson, and it is the best possible reason to learn to tell the two apart.</p>
+    </div>
+
+    <!-- CULTURAL CALLOUT -->
+    <div style="background:#E8F6FB; border:1px solid #C5DCE5; border-left:5px solid #2196D0; border-radius:8px; padding:18px 22px; margin-bottom:20px;">
+        <div style="font-size:11px; color:#1B6A94; letter-spacing:.4px; margin-bottom:8px;">&#127963;&#65039; CULTURAL CALLOUT &middot; CICERO THE ORATOR &mdash; NOT THE LETTER-WRITER</div>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">You have met Cicero before. Last year, in <em>Latin Intermediate</em>, you read his <strong>letters</strong> &mdash; a man writing privately to a friend, complaining about the weather, worrying about money, dropping Greek phrases the way you might drop slang. That Cicero is chatty, unguarded, and often funny. Keep him; he is real. But he is not the Cicero of this semester.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">This semester you meet Cicero <strong>on his feet, in public, with the state at stake</strong>. It is a genuinely different register &mdash; not just louder, but built differently. Long sentences that hold their shape to the end. Questions instead of accusations. Direct address to a man sitting in the room. Sound patterns and rhythm chosen so the ear cannot look away. If a letter is a person talking, an <em>ōrātiō</em> is a person building.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0 0 10px 0;">He earned it. As a young man he went east and studied rhetoric and philosophy in Greece and on Rhodes; back in Rome he built a career on the strength of his voice alone, in a city where almost everyone who mattered had inherited their position and he had not. He later wrote treatises about how the whole craft works &mdash; <em>Dē Ōrātōre</em> is the most famous. When Romans said <em>ars dīcendī</em>, the art of speaking, Cicero was the name attached to it.</p>
+        <p style="font-size:16px; color:#1a2340; line-height:1.65; margin:0;"><strong>Why this matters for grammar.</strong> A speech that has to land in one hearing cannot afford loose joints. That is why oratory is full of gerunds: <em>dīcendī causā</em>, <em>ad dēfendendum</em> &mdash; compact, weighted, balanced, and easy for a listener to hold. The grammar you learn this week is not decoration on the history. It is the machinery of the history.</p>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 5 &middot; BUILD THE PURPOSE PHRASE</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Four questions on the two constructions. Watch the case, and watch the word order.</div>
+            <div class="widget-row" data-correct="b" data-hint="Which case does causā govern, and where does causā sit?">
+                <div class="widget-row-prompt">Which is correct Latin for "for the sake of defending"?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Causā takes the genitive, not the accusative. Dēfendendum is accusative — that form belongs with ad.">causā dēfendendum</button>
+                    <button data-choice="b" data-fb="Right &mdash; genitive dēfendendī, with causā following it. That is the standard Latin order.">dēfendendī causā</button>
+                    <button data-choice="c" data-fb="The case is right, but the order is not how Latin normally writes it: causā and grātiā are postpositive and follow the genitive.">causā dēfendendī</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Look for a word that governs a case, then check what case is in front of it.">
+                <div class="widget-row-prompt"><em>Cīvēs in Forum <strong>audiendī causā</strong> vēnērunt.</em> What is <em>audiendī</em>?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Nominative plural of a participle would be audientēs, and there is no nominative gerund at all.">A nominative participle describing <em>cīvēs</em></button>
+                    <button data-choice="b" data-fb="Ablative would be audiendō. And causā does not govern the ablative.">An ablative gerund of means</button>
+                    <button data-choice="c" data-fb="Right &mdash; genitive gerund governed by causā: 'The citizens came into the Forum for the sake of listening.'">A genitive gerund governed by <em>causā</em></button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="Both are purpose. Which one uses a preposition?">
+                <div class="widget-row-prompt">Rewrite <em>dīcendī causā</em> using the <em>other</em> purpose construction. Which is right?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right &mdash; ad dīcendum. Same meaning, different machinery: preposition plus accusative instead of genitive plus causā.">ad dīcendum</button>
+                    <button data-choice="b" data-fb="Ad governs the accusative, never the genitive. Dīcendī is genitive.">ad dīcendī</button>
+                    <button data-choice="c" data-fb="In + ablative means 'while speaking, in the course of speaking' — a situation, not a purpose.">in dīcendō</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="When does the course teach ut plus the subjunctive?">
+                <div class="widget-row-prompt">Latin's third way of expressing purpose is <em>ut</em> + subjunctive. When do you learn it?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not this module. Module 4 gives you the two gerund constructions only; no subjunctive appears on this module's quiz or translation.">This module, later this week</button>
+                    <button data-choice="b" data-fb="Right &mdash; the subjunctive mood arrives in Module 6, and purpose clauses with ut and nē are taught in Module 8, which is a mastery gate.">Module 8, after the subjunctive arrives in Module 6</button>
+                    <button data-choice="c" data-fb="It is definitely taught — it is the most common purpose construction in Latin, and Module 8 is built on it.">Never; it is only for high school Latin</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">4</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 4.04 &mdash; Gerund or Gerundive?</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">There is a second <em>-nd-</em> form, and it is an adjective. One test tells them apart in under three seconds &mdash; and it explains why <em>agenda</em> means "things to be done."</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Two purpose constructions, both meaning "in order to": <strong><em>-ndī causā</em></strong> or <strong><em>-ndī grātiā</em></strong> (genitive, and the governing word comes <em>after</em>), and <strong><em>ad -ndum</em></strong> (accusative, preposition in front). A third way &mdash; <em>ut</em> + subjunctive &mdash; is real, is coming in Module 8, and is not your problem yet.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 4.03 &middot; Two Ways to Say Purpose</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

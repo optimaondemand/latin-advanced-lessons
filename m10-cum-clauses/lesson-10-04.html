@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 10.04</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .step { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+    .step-n { min-width: 34px; height: 34px; border-radius: 8px; background: #0E1C42; color: #fff; font-size: 17px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-b { font-size: 17px; color: #1a2340; line-height: 1.6; }
+    .step-b strong { color: #0e1c42; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 10</div>
+        <div style="font-size: 12px; color: #666;"><em>Cum</em> Clauses</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 10.04 &middot; Day 4 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The <em>Cum</em> Sorter</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 10.04</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">The <em>Cum</em> Sorter</div>
+        <div style="font-size: 16px; color: #666;">Lesson</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">For three days the sentences have arrived with labels on them. Today they arrive with nothing.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Lesson 10.01 sorted preposition from conjunction. 10.02 taught temporal <em>cum</em>. 10.03 taught causal and concessive, plus the indicative cousins <em>quia</em> and <em>quamquam</em>. Every drill so far told you in advance which one you were looking at. Real Latin does not. So today you get a <strong>four-step procedure</strong> you can run on any <em>cum</em> in any sentence you will ever meet, an unlabelled pile to run it on &mdash; and an honest account of the sentences where two answers are both right and the procedure has to stop.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> run the four-step <em>cum</em> procedure in order, out loud, without looking it up.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> sort unlabelled <em>cum</em> sentences into preposition, plain &ldquo;when,&rdquo; causal, and concessive.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> recognise a genuinely ambiguous <em>cum</em> clause and say what my translation commits me to.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE FOUR-STEP PROCEDURE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 14px 0;">Run these in order. Each step either finishes the job or hands you to the next one. Notice that <strong>the first two steps need no understanding of the sentence at all</strong> &mdash; they are pure form. Only steps 3 and 4 ask you to think about meaning, and by then you have narrowed four possibilities to two.</p>
+
+        <div class="step">
+            <div class="step-n">1</div>
+            <div class="step-b"><strong>Is there a verb inside the <em>cum</em> group?</strong><br>
+            <span style="color:#1A6B3D;"><strong>No</strong> &rarr; it is the <strong>preposition</strong>: &ldquo;with&rdquo; + ablative. <em>Stop.</em></span><br>
+            <span style="color:#666;">Yes &rarr; it is the conjunction. Go to step 2.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">2</div>
+            <div class="step-b"><strong>What mood is that verb?</strong><br>
+            <span style="color:#1A6B3D;"><strong>Indicative</strong> &rarr; plain <strong>&ldquo;when&rdquo;</strong> (or &ldquo;whenever,&rdquo; if the tense is present). Pure time, no extra claim. <em>Stop.</em></span><br>
+            <span style="color:#666;">Subjunctive &rarr; one of three. Go to step 3.</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">3</div>
+            <div class="step-b"><strong>Is <em>tamen</em> in the main clause?</strong><br>
+            <span style="color:#1A6B3D;"><strong>Yes</strong> &rarr; <strong>concessive</strong>: &ldquo;although.&rdquo; <em>Stop.</em></span><br>
+            <span style="color:#666;">No &rarr; go to step 4. (Remember from 10.03: a concessive clause does not <em>have</em> to carry <em>tamen</em>. Its absence rules nothing out; its presence nearly settles it.)</span></div>
+        </div>
+        <div class="step">
+            <div class="step-n">4</div>
+            <div class="step-b"><strong>Does the <em>cum</em> clause give the <em>reason</em> the main clause happened?</strong> Test it by putting &ldquo;since&rdquo; in front and asking whether the sentence still makes sense as an argument.<br>
+            <span style="color:#1A6B3D;"><strong>Yes</strong> &rarr; <strong>causal</strong>: &ldquo;since, because.&rdquo;</span><br>
+            <span style="color:#1A6B3D;"><strong>No</strong> &rarr; <strong>temporal</strong>: &ldquo;when, after.&rdquo; The clause is setting the scene, not explaining it.</span></div>
+        </div>
+
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9997;&#65039; <strong>Why the order matters.</strong> Students who go straight to &ldquo;what does it mean?&rdquo; guess. Students who ask &ldquo;is there a verb?&rdquo; and then &ldquo;what mood?&rdquo; have eliminated half the possibilities <em>before</em> meaning enters the picture &mdash; and they have done it with two questions they cannot get wrong. Keep the cheap questions first.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; THREE WORKED WALK-THROUGHS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Read each one and watch the four steps run. Say the steps to yourself; the point is the habit, not the answers.</p>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Cum praetōrēs cum mīlitibus vēnissent</em>&hellip;</div>
+            <div style="font-size:16px; color:#AA1E2D; line-height:1.6; margin-bottom:8px;">&#9888;&#65039; Trap sentence &mdash; and not one you can finish yet. <em>Vēnissent</em> is a <strong>pluperfect subjunctive</strong>, which is Module 13. Set it aside; what matters here is the <em>other</em> half.</div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>Step 1, twice.</strong> There are two <em>cum</em>s in this line. The first has a verb in its group (<em>vēnissent</em>) &rarr; conjunction. The second, <em>cum mīlitibus</em>, has no verb of its own and a plain ablative plural &rarr; preposition, &ldquo;with the soldiers.&rdquo; One sentence, both <em>cum</em>s, and step 1 separated them without your knowing what the sentence says.</div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Cum cōnsul haec cognōvit, statim ad senātum vēnit.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>1.</strong> Verb in the group? Yes &mdash; <em>cognōvit</em>. Conjunction. &nbsp;<strong>2.</strong> Mood? <em>Cognōvit</em> is perfect <strong>indicative</strong> (the subjunctive would be <em>cognōsceret</em>). &rarr; <strong>Plain &ldquo;when.&rdquo; Stop &mdash; steps 3 and 4 never run.</strong><br>
+            &ldquo;When the consul learned these things, he came at once to the Senate.&rdquo; <span style="color:#8a6416;">Gloss: <em>cognōscō, cognōscere, cognōvī</em> &mdash; to learn, find out; <em>statim</em> &mdash; at once.</span></div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Cum tenebrae iam venīrent, tamen cōnsul nōn dubitābat.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>1.</strong> Verb? <em>Venīrent</em>. Conjunction. &nbsp;<strong>2.</strong> Mood? Imperfect subjunctive (<em>venīre</em> + <em>-nt</em>). Three possibilities live. &nbsp;<strong>3.</strong> <em>Tamen</em> in the main clause? <strong>Yes.</strong> &rarr; <strong>Concessive. Stop.</strong><br>
+            &ldquo;Although darkness was already coming on, the consul nevertheless was not hesitating.&rdquo; <span style="color:#8a6416;">Gloss: <em>dubitō, dubitāre</em> &mdash; to hesitate, doubt.</span></div>
+        </div>
+
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:12px 0;">
+            <div style="font-size:19px; color:#0e1c42; margin-bottom:8px;"><em>Cum Lentulus praetor esset, prīmum magistrātū sē abdicāre dēbuit.</em></div>
+            <div style="font-size:16px; color:#1a2340; line-height:1.7;"><strong>1.</strong> Verb? <em>Esset</em>. Conjunction. &nbsp;<strong>2.</strong> Mood? Imperfect subjunctive. &nbsp;<strong>3.</strong> <em>Tamen</em>? No. Go on. &nbsp;<strong>4.</strong> Does the clause give the reason? Put &ldquo;since&rdquo; in front: <em>since</em> Lentulus was a praetor, he first had to resign his office. Yes &mdash; being praetor is exactly <em>why</em> the resignation was required. &rarr; <strong>Causal.</strong><br>
+            <span style="color:#8a6416;">Gloss: <em>magistrātus, magistrātūs</em> m. &mdash; public office; <em>sē abdicāre</em> (+ ablative) &mdash; to resign from; <em>prīmum</em> (adv.) &mdash; first.</span></div>
+        </div>
+
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>That last one is real history, and you will read it on Friday.</strong> Lentulus was a serving praetor in December 63 BC. Rome could not execute a magistrate, so before anything else could happen he was made to resign the office. The Latin sentence and the constitutional problem have the same shape: the <em>cum</em> clause is not scene-setting, it is the reason.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 3 &middot; THE UNLABELLED PILE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Six sentences, no labels, in no helpful order. Run the four steps on each one before you look at the options.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">What job is <em>cum</em> doing in this sentence?</div>
+
+            <div class="widget-row" data-correct="c" data-hint="Step 1: is there a verb between cum and the comma? Step 2: what mood is it?">
+                <div class="widget-row-prompt"><em>Cum Cicerō cōnsul esset, coniūrātiōnem apertē accūsāvit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is a verb — esset — inside the cum group, so this cannot be the preposition. A preposition governs a noun or pronoun and nothing else.">Preposition &mdash; &ldquo;with the consul&rdquo;</button>
+                    <button data-choice="b" data-fb="Step 3 fails: there is no tamen in the main clause, and nothing in the sense pushes against anything. Being consul did not work against accusing the conspiracy — it is what made it possible.">Concessive &mdash; &ldquo;although he was consul&rdquo;</button>
+                    <button data-choice="c" data-fb="Right. Step 1 verb → conjunction. Step 2 esset → imperfect subjunctive. Step 3 no tamen. Step 4: put &quot;since&quot; in front — &quot;since Cicero was consul, he openly accused the conspiracy&quot; — and it reads as the reason he had the standing to do it. Causal. (&quot;When Cicero was consul&quot; is also defensible here; see Part 4.)">Causal &mdash; &ldquo;since he was consul&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Convēnērunt — compare it with convenīrent. Which one is this?">
+                <div class="widget-row-prompt"><em>Cum vesper vēnit, coniūrātī in aedibus Brūtī convēnērunt.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Causal would need the subjunctive. Vēnit is perfect indicative — Latin uses the indicative here precisely because it is making no claim beyond the hour.">Causal &mdash; &ldquo;since evening came&rdquo;</button>
+                    <button data-choice="b" data-fb="Right. Step 2 settles it: vēnit is perfect indicative, so plain time and nothing more. &quot;When evening came, the conspirators met in the house of Brutus.&quot; Steps 3 and 4 never run.">Plain &ldquo;when&rdquo; &mdash; indicative, pure time</button>
+                    <button data-choice="c" data-fb="Concessive requires the subjunctive and normally announces itself with tamen. Neither is here. Also ask what evening's arrival would be pushing against.">Concessive &mdash; &ldquo;although evening came&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Step 1. Look for a verb inside the cum group — is there one at all?">
+                <div class="widget-row-prompt"><em>Cicerō cum praetōribus per Viam Sacram ambulābat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — preposition. Cum praetōribus is ablative plural with no verb of its own; the only verb, ambulābat, belongs to Cicerō. &quot;Cicero was walking through the Sacred Way with the praetors.&quot;">Preposition &mdash; &ldquo;with the praetors&rdquo;</button>
+                    <button data-choice="b" data-fb="For a temporal clause you would need a verb inside the cum group. Praetōribus is a plain ablative plural noun — there is nothing for cum to be a conjunction of.">Temporal &mdash; &ldquo;when the praetors&hellip;&rdquo;</button>
+                    <button data-choice="c" data-fb="Ambulābat is imperfect indicative and it is the main verb of the sentence, belonging to Cicerō. It is not inside the cum group at all.">Conjunction with the indicative &mdash; plain &ldquo;when&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Read the main clause first this time. Is there a word in it that pushes back?">
+                <div class="widget-row-prompt"><em>Cum multī cīvēs Catilīnam timērent, tamen quīdam eum adhūc laudābant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Timērent is imperfect subjunctive, not indicative — the indicative would be timēbant. So this is not the plain-time use.">Plain &ldquo;when&rdquo; &mdash; indicative, pure time</button>
+                    <button data-choice="b" data-fb="Step 4 would be the causal test, but you never get there: step 3 already fired. And check the sense — citizens fearing Catiline is not the reason others praised him. It is the thing that makes the praise surprising.">Causal &mdash; &ldquo;since many citizens feared him&rdquo;</button>
+                    <button data-choice="c" data-fb="Right. Step 3 fires: tamen sits in the main clause. &quot;Although many citizens feared Catiline, certain people were nevertheless still praising him.&quot; Gloss: quīdam — certain people; adhūc — still, up to now.">Concessive &mdash; &ldquo;although many feared him&rdquo;</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Two cum words in one sentence. Do step 1 on each of them separately.">
+                <div class="widget-row-prompt"><em>Cum cōnsul cum custōdibus ad carcerem venīret, turba tacēbat.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Both cannot be prepositions: venīret is a verb sitting inside the first cum group, and prepositions never have verbs.">Both are prepositions &mdash; &ldquo;with the consul, with the guards&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — and this is the sentence the module is built for. The first cum opens a clause (verb venīret, imperfect subjunctive → temporal or causal; the sense is scene-setting, so temporal). The second, cum custōdibus, is the plain preposition with an ablative and no verb. &quot;When the consul was coming to the prison with the guards, the crowd was silent.&quot;">First is the conjunction, second is the preposition</button>
+                    <button data-choice="c" data-fb="Reverse it: cum custōdibus has no verb, so it cannot be the conjunction, and venīret is inside the first group, so the first cum cannot be the preposition.">First is the preposition, second is the conjunction</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Respondēret is subjunctive, and there is no tamen. So you are at step 4: is this the reason, or the scenery?">
+                <div class="widget-row-prompt"><em>Cum Catilīna nihil respondēret, Cicerō sententiam suam iterum dīxit.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — causal. Step 4: &quot;since Catiline was answering nothing, Cicero stated his opinion again.&quot; The silence is what produced the second speech; that is a reason, not a backdrop. Temporal is not absurd here, but causal reads the sentence better.">Causal &mdash; &ldquo;since he was answering nothing&rdquo;</button>
+                    <button data-choice="b" data-fb="Concessive would need the silence to work against the second speech, and it does not — it invites it. There is no tamen either.">Concessive &mdash; &ldquo;although he was answering nothing&rdquo;</button>
+                    <button data-choice="c" data-fb="Respondēret is imperfect subjunctive (respondēre + -nt), not indicative. The indicative would be respondēbat.">Plain &ldquo;when&rdquo; &mdash; indicative, pure time</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 4 &middot; WHEN TWO ANSWERS ARE BOTH RIGHT</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Twice in Part 3 the feedback admitted that a second reading was defensible. That was not hedging. Step 4 asks a question about <em>meaning</em>, and meaning is sometimes genuinely open. Here is the honest picture:</p>
+        <table class="para">
+            <tr><th style="width:30%">Boundary</th><th style="width:22%">How often it is decidable</th><th>What to do</th></tr>
+            <tr><td class="lab"><strong>preposition vs. conjunction</strong></td><td class="end">always</td><td>Step 1 settles it every time. There is no judgment call here.</td></tr>
+            <tr><td class="lab"><strong>indicative vs. subjunctive</strong></td><td class="end">always</td><td>Step 2 settles it every time. Read the ending.</td></tr>
+            <tr><td class="lab"><strong>concessive vs. the other two</strong></td><td class="end">usually</td><td><em>Tamen</em> settles it when present. Absent, the sense normally still makes it clear, because a concessive clause has to push against something.</td></tr>
+            <tr><td class="lab"><strong>temporal vs. causal</strong></td><td class="end">often not</td><td>Choose the reading that makes the sentence say something worth saying, translate it, and be able to name your choice.</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Cum Cicerō cōnsul esset, coniūrātiōnem superāvit.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:8px; line-height:1.7;"><strong>&ldquo;When Cicero was consul, he defeated the conspiracy.&rdquo;</strong> &mdash; a date. It tells you which year.<br><strong>&ldquo;Since Cicero was consul, he defeated the conspiracy.&rdquo;</strong> &mdash; an argument. It says the office is why he could.<br>The Latin is identical. Both translations are grammatically sound. They are <em>not</em> the same claim about history, and that is the interesting part: your translation takes a position the Latin left open.</div>
+        </div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>What this does not license.</strong> &ldquo;Two readings are possible&rdquo; is a real fact about some <em>cum</em> clauses; it is not a defence for guessing. It never applies to steps 1 and 2, and a translation that reads a subjunctive as an indicative, or a conjunction as a preposition, is simply wrong. Ambiguity lives in one place only &mdash; the temporal/causal boundary &mdash; and you have to have run the first three steps to earn it.</div>
+
+        <div class="optima-widget ow-reflect">
+            <div class="widget-kicker">&#128173; QUICK CHECK-IN &middot; NO WRONG ANSWER</div>
+            <div class="widget-question">You are translating a <em>cum</em> clause and both &ldquo;when&rdquo; and &ldquo;since&rdquo; work. What do you do?</div>
+            <div class="widget-options">
+                <button data-response="That is the professional answer. Pick the reading that makes the whole sentence coherent, write it, and know what you chose. Editors of Latin texts write footnotes exactly like this — 'temporal or causal' — and then translate one of them anyway, because a translation has to say something.">Pick the one that fits the passage and note the choice</button>
+                <button data-response="Tempting, and occasionally translators do it — 'when, indeed since.' But it usually makes English worse without making the Latin clearer. Better to choose, and to be able to defend the choice if asked.">Try to get both into the English somehow</button>
+                <button data-response="Understandable, but this is worth resisting. 'When' is not the safe default; it is a choice too — it claims the clause is only telling you the time. If the clause is really giving a reason, defaulting to 'when' quietly throws that away.">Default to &ldquo;when&rdquo; because it is safer</button>
+            </div>
+            <div class="widget-feedback"></div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128220; PART 5 &middot; SPEED SORT &middot; CLICK EACH CARD</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Say your answer out loud, then flip. These are short on purpose &mdash; the goal is to get the four steps down to about a second each.</p>
+        <div class="optima-widget ow-flip">
+            <div class="widget-kicker">&#127183; FLIP CARDS &middot; NAME THE JOB BEFORE YOU FLIP</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>cum senātōribus</em></div><div class="hint">which job?</div><div class="back"><strong>Preposition.</strong> No verb in the group. &ldquo;with the senators.&rdquo; Step 1, done.</div></div>
+                <div class="flip-card"><div class="front"><em>cum senātōrēs tacērent</em></div><div class="hint">which job?</div><div class="back"><strong>Conjunction + imperfect subjunctive.</strong> Temporal or causal &mdash; the main clause decides. Not concessive without <em>tamen</em> or a clear push-back.</div></div>
+                <div class="flip-card"><div class="front"><em>cum senātōrēs tacēbant</em></div><div class="hint">which job?</div><div class="back"><strong>Conjunction + indicative.</strong> Plain &ldquo;when.&rdquo; Step 2 stops you: pure time.</div></div>
+                <div class="flip-card"><div class="front"><em>mēcum</em></div><div class="hint">which job?</div><div class="back"><strong>Preposition</strong>, glued to the back of the pronoun. &ldquo;with me.&rdquo; Same with <em>tēcum, nōbīscum, sēcum</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>cum&hellip;, tamen&hellip;</em></div><div class="hint">which job?</div><div class="back"><strong>Concessive.</strong> &ldquo;Although.&rdquo; <em>Tamen</em> in the main clause is your one mechanical handle in this whole module.</div></div>
+                <div class="flip-card"><div class="front"><em>quamquam perīculum magnum erat</em></div><div class="hint">which job?</div><div class="back"><strong>Not <em>cum</em> at all.</strong> <em>Quamquam</em> + <strong>indicative</strong> &mdash; &ldquo;although,&rdquo; stated as plain fact. The indicative cousin from 10.03.</div></div>
+                <div class="flip-card"><div class="front"><em>quia nēmō respondēbat</em></div><div class="hint">which job?</div><div class="back"><strong>Not <em>cum</em> either.</strong> <em>Quia</em> + <strong>indicative</strong> &mdash; &ldquo;because,&rdquo; the reason given flatly. Causal <em>cum</em> is the same idea in the subjunctive.</div></div>
+                <div class="flip-card"><div class="front"><em>cum vesper venīret</em></div><div class="hint">which job?</div><div class="back"><strong>Conjunction + imperfect subjunctive, temporal.</strong> Evening's arrival is scenery, not a reason. Compare <em>cum vesper vēnit</em> &mdash; indicative, same meaning, no subjunctive.</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">5</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 10.05 &mdash; The Fifth of December</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">The reading: Sallust on the execution of the conspirators, adapted &mdash; ten lines that run <em>cum</em> through nearly every use you have learned, including one line with both <em>cum</em>s in it. Then the module review and the handoff to your graded work.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>Verb? Mood? <em>Tamen</em>? Reason?</strong> Four questions, always in that order. The first two are free &mdash; you read them off the page. The third is nearly free. Only the fourth costs you any thought, and by then there are only two answers left.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 10.04 &middot; The <em>Cum</em> Sorter</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

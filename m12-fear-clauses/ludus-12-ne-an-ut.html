@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ludus XII — Nē an Ut? | M/J Latin Advanced</title>
+<style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #0E1C42; color: #fff; }
+    .wrap { max-width: 640px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+    .top { background: #0E1C42; border-bottom: 4px solid #55C8E8; padding: 16px 24px; text-align: center; }
+    .top .game { font-size: 13px; letter-spacing: 2px; color: #55C8E8; text-transform: uppercase; }
+    .top .name { font-size: 26px; margin-top: 2px; }
+    .top .sub { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .stage { flex: 1; padding: 22px 24px; display: flex; flex-direction: column; }
+    .bar-wrap { background: rgba(255,255,255,0.15); border-radius: 20px; height: 12px; overflow: hidden; margin-bottom: 6px; }
+    #bar { background: #55C8E8; height: 100%; width: 100%; transition: width 0.25s linear; }
+    .meta { display: flex; justify-content: space-between; font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 18px; }
+    .meta strong { color: #C7922C; }
+    .card { background: #fff; color: #0E1C42; border-radius: 12px; padding: 30px 24px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25); }
+    .prompt-label { font-size: 13px; color: #6b7a99; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .prompt { font-size: 26px; margin-bottom: 6px; line-height: 1.35; }
+    .prompt-note { font-size: 15px; color: #6b7a99; min-height: 20px; }
+    .opts { display: flex; gap: 12px; margin-top: 22px; }
+    .opts button { flex: 1; padding: 18px 10px; font-size: 18px; font-family: inherit; border: 2px solid #D0D9E8; background: #F4F6FA; color: #0E1C42; border-radius: 10px; cursor: pointer; transition: all 0.1s; }
+    .opts button:hover { border-color: #55C8E8; }
+    .opts button.right { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .opts button.wrong { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .btn { display: inline-block; padding: 15px 40px; font-size: 19px; font-family: inherit; background: #C7922C; color: #fff; border: none; border-radius: 10px; cursor: pointer; margin-top: 18px; }
+    .btn:hover { background: #b3831f; }
+    .center { text-align: center; margin: auto 0; }
+    .big { font-size: 60px; color: #55C8E8; margin: 6px 0; }
+    .lead { font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.9); }
+    .best { font-size: 15px; color: #C7922C; margin-top: 10px; }
+    .rules { text-align: left; background: rgba(255,255,255,0.08); border-radius: 10px; padding: 14px 18px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.9); margin: 14px 0; }
+    .hidden { display: none; }
+    .foot { text-align: center; font-size: 12px; color: rgba(255,255,255,0.4); padding: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <div class="game">Ludus XII</div>
+        <div class="name">Nē an Ut?</div>
+        <div class="sub">M/J Latin Advanced &middot; Module 12</div>
+    </div>
+    <div class="stage">
+
+        <!-- START -->
+        <div id="start" class="center">
+            <div class="lead"><em>Nē an ut?</em> &mdash; &ldquo;<em>Nē</em> or <em>ut</em>?&rdquo; Module 11 taught you that <em>an</em> is the &ldquo;or&rdquo; that lives inside a question, so the title of this game is itself a question &mdash; and it is the question this whole module asks. Which marker does the fear need, which tense goes in the clause, and is it even a fear clause at all?</div>
+            <div class="rules">
+                &#9201;&#65039; You have <strong>75 seconds</strong>.<br>
+                &#9989; Tap the right answer &mdash; each correct answer adds to your score.<br>
+                &#128260; Play as many times as you like: <strong>your best score counts.</strong>
+            </div>
+            <div class="best" id="best-start"></div>
+            <button class="btn" id="go">Incipe! (Begin)</button>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play" class="hidden">
+            <div class="bar-wrap"><div id="bar"></div></div>
+            <div class="meta"><span>&#9201;&#65039; <strong id="time">75</strong>s</span><span>Score: <strong id="score">0</strong></span></div>
+            <div class="card">
+                <div class="prompt-label" id="p-label">Nē an ut?</div>
+                <div class="prompt" id="p-text">&mdash;</div>
+                <div class="prompt-note" id="p-note"></div>
+                <div class="opts"><button id="opt0"></button><button id="opt1"></button></div>
+            </div>
+        </div>
+
+        <!-- END -->
+        <div id="end" class="hidden center">
+            <div class="lead">Tempus! (Time's up)</div>
+            <div class="big" id="final">0</div>
+            <div class="lead">correct answers</div>
+            <div class="best" id="best-end"></div>
+            <button class="btn" id="again">Iterum! (Play again)</button>
+            <div class="rules" style="margin-top:18px;">&#128221; When you are happy with your best score, record it where your course tells you (this game is graded on your <strong>best of unlimited attempts</strong>).</div>
+        </div>
+
+    </div>
+    <div class="foot">&copy; Optima Academy Online &middot; Ludus &middot; Nē an Ut? (Module 12)</div>
+</div>
+
+<script>
+(function () {
+  var ITEMS = [
+    // (a) After a verb of fearing, what does the marker mean?
+    { label: "After fearing, it means…", q: "nē", note: "the core of the module", opts: ["that", "that…not"], a: "that" },
+    { label: "After fearing, it means…", q: "ut", note: "the rare one", opts: ["that", "that…not"], a: "that…not" },
+    { label: "After fearing, it means…", q: "nē nōn", note: "the ordinary negative", opts: ["that…not", "that"], a: "that…not" },
+    { label: "Legal after a verb of fearing?", q: "timeō ut nōn…", note: "think before you tap", opts: ["No", "Yes"], a: "No" },
+    { label: "Legal after a verb of fearing?", q: "timeō nē nōn…", note: "Module 8 banned it — does Module 12?", opts: ["Yes", "No"], a: "Yes" },
+    { label: "Which English?", q: "Timeō nē reveniat.", note: "plain nē (reveniō = come back)", opts: ["that he will come back", "that he will not come back"], a: "that he will come back" },
+    { label: "Which English?", q: "Timeō ut reveniat.", note: "the rare ut (reveniō = come back)", opts: ["that he will come back", "that he will not come back"], a: "that he will not come back" },
+    { label: "Which English?", q: "Timeō nē nōn reveniat.", note: "nē with an honest nōn", opts: ["that he will not come back", "that he will come back"], a: "that he will not come back" },
+
+    // (b) English fear → which Latin marker
+    { label: "Which marker?", q: "“I fear the city will be captured.”", note: "wanted or unwanted?", opts: ["nē", "ut"], a: "nē" },
+    { label: "Which marker?", q: "“I fear help will not arrive.”", note: "written the rarer way", opts: ["nē", "ut"], a: "ut" },
+    { label: "Which marker?", q: "“I fear help will not arrive.”", note: "written the ordinary way", opts: ["nē nōn", "ut nōn"], a: "nē nōn" },
+    { label: "Which marker?", q: "“We fear the enemy will attack.”", note: "unwanted outcome", opts: ["nē", "nē nōn"], a: "nē" },
+    { label: "Which marker?", q: "“We fear the grain will not last.”", note: "wanted outcome", opts: ["nē nōn", "nē"], a: "nē nōn" },
+    { label: "Which marker?", q: "“He feared the army would scatter.”", note: "unwanted outcome", opts: ["nē", "ut"], a: "nē" },
+    { label: "Which marker?", q: "“He feared the messenger would not arrive.”", note: "wanted outcome", opts: ["nē nōn", "nē"], a: "nē nōn" },
+    { label: "Which opening?", q: "“There was a fear that Catiline would escape.”", note: "the fear hangs off a noun", opts: ["metus erat nē", "metus erat ut"], a: "metus erat nē" },
+
+    // (c) Sequence — which subjunctive?
+    { label: "Which subjunctive?", q: "Timeō nē ____.", note: "timeō is present (veniō)", opts: ["veniat", "venīret"], a: "veniat" },
+    { label: "Which subjunctive?", q: "Timēbam nē ____.", note: "timēbam is imperfect (veniō)", opts: ["veniat", "venīret"], a: "venīret" },
+    { label: "Which subjunctive?", q: "Metuit nē urbs ____.", note: "metuit here is present (capiō, passive)", opts: ["capiātur", "caperētur"], a: "capiātur" },
+    { label: "Which subjunctive?", q: "Metuēbat nē urbs ____.", note: "imperfect (capiō, passive)", opts: ["capiātur", "caperētur"], a: "caperētur" },
+    { label: "Which subjunctive?", q: "Vereor nē hostēs ____.", note: "vereor is present (adsum)", opts: ["adsint", "adessent"], a: "adsint" },
+    { label: "Which subjunctive?", q: "Verēbātur nē hostēs ____.", note: "imperfect (adsum)", opts: ["adsint", "adessent"], a: "adessent" },
+    { label: "Which subjunctive?", q: "Timēbit nē dux ____.", note: "timēbit is FUTURE (cadō)", opts: ["cadat", "caderet"], a: "cadat" },
+    { label: "Which subjunctive?", q: "Timor erat nē mīlitēs ____.", note: "erat is imperfect (dīlābor)", opts: ["dīlābantur", "dīlāberentur"], a: "dīlāberentur" },
+    { label: "Primary or secondary?", q: "timeō", note: "present", opts: ["Primary", "Secondary"], a: "Primary" },
+    { label: "Primary or secondary?", q: "timuit", note: "perfect", opts: ["Primary", "Secondary"], a: "Secondary" },
+    { label: "Primary or secondary?", q: "metuēbant", note: "imperfect", opts: ["Secondary", "Primary"], a: "Secondary" },
+    { label: "Primary or secondary?", q: "verēbitur", note: "future", opts: ["Secondary", "Primary"], a: "Primary" },
+
+    // (d) The look-alike sort — nē's jobs and ut's jobs
+    { label: "Which construction?", q: "Timeō nē veniat.", note: "read the main verb", opts: ["Fear clause", "Purpose clause"], a: "Fear clause" },
+    { label: "Which construction?", q: "Fūgit nē caperētur.", note: "read the main verb", opts: ["Fear clause", "Purpose clause"], a: "Purpose clause" },
+    { label: "Which construction?", q: "Imperāvit nē pugnārent.", note: "read the main verb", opts: ["Indirect command", "Fear clause"], a: "Indirect command" },
+    { label: "Which construction?", q: "Metuēbat nē pugnārent.", note: "read the main verb", opts: ["Indirect command", "Fear clause"], a: "Fear clause" },
+    { label: "Which construction?", q: "Tam fessī erant ut nōn pugnārent.", note: "fessus = tired; look at tam", opts: ["Result clause", "Fear clause"], a: "Result clause" },
+    { label: "Which construction?", q: "Vēnit ut Catilīnam vidēret.", note: "no signpost anywhere", opts: ["Purpose clause", "Result clause"], a: "Purpose clause" },
+    { label: "Which construction?", q: "Metus erat nē urbs ārdēret.", note: "ārdeō = to burn; where is the fear word?", opts: ["Fear clause", "Purpose clause"], a: "Fear clause" },
+    { label: "Which construction?", q: "Cum Antōnius aeger esset, Petrēius pugnāvit.", note: "read the opening word", opts: ["Cum clause", "Fear clause"], a: "Cum clause" },
+    { label: "Which construction?", q: "Nesciēbat utrum manēret an fugeret.", note: "read the opening word", opts: ["Indirect question", "Fear clause"], a: "Indirect question" },
+    { label: "Whose negative is it?", q: "ut nōn", note: "one construction only", opts: ["Result", "Fear"], a: "Result" },
+    { label: "Whose negative is it?", q: "nē nōn", note: "one construction only", opts: ["Fear", "Result"], a: "Fear" },
+    { label: "Which step fires first?", q: "a verb of fearing in the main clause", note: "the five-step procedure", opts: ["Step 2 — fear clause", "Step 5 — purpose"], a: "Step 2 — fear clause" },
+
+    // (e) Vereor and form recognition
+    { label: "Which form is it?", q: "verēbātur", note: "vereor, verērī, veritus sum", opts: ["imperfect indicative", "imperfect subjunctive"], a: "imperfect indicative" },
+    { label: "Which form is it?", q: "verērētur", note: "vereor, verērī, veritus sum", opts: ["imperfect indicative", "imperfect subjunctive"], a: "imperfect subjunctive" },
+    { label: "Which form is it?", q: "vereātur", note: "vereor, verērī, veritus sum", opts: ["present subjunctive", "present indicative"], a: "present subjunctive" },
+    { label: "Which form is it?", q: "verētur", note: "vereor, verērī, veritus sum", opts: ["present subjunctive", "present indicative"], a: "present indicative" },
+    { label: "What does it mean?", q: "veritus sum", note: "deponent — careful", opts: ["I feared", "I was feared"], a: "I feared" },
+    { label: "Deponent or ordinary?", q: "vereor", note: "count the principal parts", opts: ["Deponent", "Ordinary"], a: "Deponent" },
+    { label: "Deponent or ordinary?", q: "metuō", note: "count the principal parts", opts: ["Deponent", "Ordinary"], a: "Ordinary" },
+
+    // (f) Module vocabulary
+    { label: "What does it mean?", q: "timor", note: "noun", opts: ["fear", "hope"], a: "fear" },
+    { label: "What does it mean?", q: "spēs", note: "noun", opts: ["fear", "hope"], a: "hope" },
+    { label: "Which declension?", q: "metus, metūs", note: "the ablative is metū, not metō", opts: ["4th declension", "2nd declension"], a: "4th declension" },
+    { label: "What does it mean?", q: "aciēs", note: "noun", opts: ["battle line", "battle"], a: "battle line" },
+    { label: "What does it mean?", q: "effugiō", note: "verb", opts: ["to escape", "to slip away"], a: "to escape" },
+    { label: "What does it mean?", q: "dīlābor", note: "verb — deponent", opts: ["to escape", "to slip away"], a: "to slip away" },
+    { label: "What does it mean?", q: "dēspērō", note: "verb", opts: ["to give up hope", "to make equal"], a: "to give up hope" },
+    { label: "What does it mean?", q: "ferōcia", note: "noun", opts: ["fierceness", "face, expression"], a: "fierceness" },
+    { label: "What does it mean?", q: "vultus", note: "noun", opts: ["fierceness", "face, expression"], a: "face, expression" },
+    { label: "Which Latin word is it from?", q: "“meticulous”", note: "an English derivative", opts: ["metus", "timor"], a: "metus" },
+    { label: "Which Latin word is it from?", q: "“reverence”", note: "an English derivative", opts: ["vereor", "metuō"], a: "vereor" },
+    { label: "What does it mean?", q: "virtūs", note: "this module's virtue", opts: ["courage", "fierceness"], a: "courage" }
+  ];
+  var DURATION = 75;
+  var order = [], oi = 0, score = 0, endAt = 0, tick = null, locked = false;
+
+  var el = function (id) { return document.getElementById(id); };
+  var startScreen = el('start'), playScreen = el('play'), endScreen = el('end');
+
+  function bestKey() { return 'ludus12_ne_an_ut_best'; }
+  function getBest() { try { return parseInt(localStorage.getItem(bestKey()) || '0', 10); } catch (e) { return 0; } }
+  function setBest(v) { try { localStorage.setItem(bestKey(), String(v)); } catch (e) {} }
+  function showBest() {
+    var b = getBest();
+    el('best-start').textContent = b > 0 ? ('Your best so far: ' + b) : '';
+  }
+
+  function shuffle(n) {
+    var arr = [];
+    for (var i = 0; i < n; i++) arr.push(i);
+    for (var j = arr.length - 1; j > 0; j--) {
+      var k = Math.floor(Math.random() * (j + 1));
+      var tmp = arr[j]; arr[j] = arr[k]; arr[k] = tmp;
+    }
+    return arr;
+  }
+
+  function render() {
+    if (oi >= order.length) { order = shuffle(ITEMS.length); oi = 0; }
+    var it = ITEMS[order[oi]];
+    el('p-label').innerHTML = it.label;
+    el('p-text').innerHTML = it.q;
+    el('p-note').innerHTML = it.note || '';
+    var b0 = el('opt0'), b1 = el('opt1');
+    b0.className = ''; b1.className = '';
+    b0.textContent = it.opts[0]; b1.textContent = it.opts[1];
+    b0.dataset.v = it.opts[0]; b1.dataset.v = it.opts[1];
+    locked = false;
+  }
+
+  function answer(btn) {
+    if (locked) return;
+    locked = true;
+    var it = ITEMS[order[oi]];
+    var right = btn.dataset.v === it.a;
+    btn.className = right ? 'right' : 'wrong';
+    if (right) { score++; el('score').textContent = score; }
+    else {
+      var other = btn.id === 'opt0' ? el('opt1') : el('opt0');
+      other.className = 'right';
+    }
+    setTimeout(function () { oi++; render(); }, right ? 260 : 700);
+  }
+
+  function updateTimer() {
+    var remain = Math.max(0, Math.round((endAt - Date.now()) / 1000));
+    el('time').textContent = remain;
+    el('bar').style.width = (remain / DURATION * 100) + '%';
+    if (remain <= 0) finish();
+  }
+
+  function start() {
+    score = 0; oi = 0; order = shuffle(ITEMS.length);
+    el('score').textContent = '0';
+    startScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+    playScreen.classList.remove('hidden');
+    render();
+    endAt = Date.now() + DURATION * 1000;
+    updateTimer();
+    tick = setInterval(updateTimer, 250);
+  }
+
+  function finish() {
+    clearInterval(tick);
+    playScreen.classList.add('hidden');
+    el('final').textContent = score;
+    var b = getBest();
+    if (score > b) { setBest(score); el('best-end').textContent = 'New best score!'; }
+    else { el('best-end').textContent = 'Your best so far: ' + b; }
+    endScreen.classList.remove('hidden');
+  }
+
+  el('go').addEventListener('click', start);
+  el('again').addEventListener('click', start);
+  el('opt0').addEventListener('click', function () { answer(this); });
+  el('opt1').addEventListener('click', function () { answer(this); });
+  showBest();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 2.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .chant { background: #0E1C42; border-radius: 8px; padding: 20px 24px; margin: 14px 0; text-align: center; }
+    .chant .line { font-size: 24px; color: #ffffff; font-style: italic; line-height: 1.7; }
+    .chant .cap { font-size: 12px; color: #55C8E8; letter-spacing: 1px; margin-bottom: 10px; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q1 &middot; Module 2</div>
+        <div style="font-size: 12px; color: #666;">Deponent Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 2.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">The Present System</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 2.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Deponents in the Present System</div>
+        <div style="font-size: 16px; color: #666;">Grammar Core</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Good news: you already know these endings.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">A deponent's present, imperfect, and future are built <strong>exactly</strong> like the passives you learned last year &mdash; same stem, same markers, same endings. Nothing new to memorize. Only the translation changes: everything comes out <strong>active</strong>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> produce the present, imperfect, and future of <em>loquor</em> in all six persons.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> conjugate a 1st-conjugation deponent (<em>hortor</em>) and see the same pattern at work.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> tell <em>loqueris</em> from <em>loquēris</em> and say why the macron matters.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; PRESENT TENSE &mdash; <em>LOQUOR</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Same passive endings you know (<em>-or, -ris, -tur, -mur, -minī, -ntur</em>), 3rd-conjugation vowels, active meanings:</p>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>loqu<span class="end">or</span></em> &mdash; I speak</td><td><em>loquim<span class="end">ur</span></em> &mdash; we speak</td></tr>
+            <tr><td class="lab">2nd</td><td><em>loque<span class="end">ris</span></em> &mdash; you speak</td><td><em>loquim<span class="end">inī</span></em> &mdash; you (pl.) speak</td></tr>
+            <tr><td class="lab">3rd</td><td><em>loqui<span class="end">tur</span></em> &mdash; he/she/it speaks</td><td><em>loquu<span class="end">ntur</span></em> &mdash; they speak</td></tr>
+        </table>
+        <div class="chant">
+            <div class="cap">&#127925; MEMORY WORK &middot; SAY IT ALOUD THREE TIMES</div>
+            <div class="line">loquor, loqueris, loquitur &mdash;<br>loquimur, loquiminī, loquuntur</div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 0 0;">Say it out loud. This chant is the same rhythm as the passive chants you already learned, and having it automatic is what lets you read Sallust at speed later this week.</p>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; IMPERFECT AND FUTURE</div>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 4px 0 6px 0;">Imperfect &mdash; the <span style="color:#c7922c;">-bā-</span> marker, exactly as before</h3>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>loquē<span class="end">bar</span></em> &mdash; I was speaking</td><td><em>loquēbā<span class="end">mur</span></em> &mdash; we were speaking</td></tr>
+            <tr><td class="lab">2nd</td><td><em>loquēbā<span class="end">ris</span></em> &mdash; you were speaking</td><td><em>loquēbā<span class="end">minī</span></em> &mdash; you (pl.) were speaking</td></tr>
+            <tr><td class="lab">3rd</td><td><em>loquēbā<span class="end">tur</span></em> &mdash; he/she was speaking</td><td><em>loquēba<span class="end">ntur</span></em> &mdash; they were speaking</td></tr>
+        </table>
+        <h3 style="font-size: 19px; color: #0e1c42; margin: 20px 0 6px 0;">Future &mdash; 3rd conjugation, so <span style="color:#c7922c;">-a-</span> then <span style="color:#c7922c;">-ē-</span></h3>
+        <table class="para">
+            <tr><th style="width:12%"></th><th style="width:44%">Singular</th><th>Plural</th></tr>
+            <tr><td class="lab">1st</td><td><em>loqu<span class="end">ar</span></em> &mdash; I will speak</td><td><em>loquē<span class="end">mur</span></em> &mdash; we will speak</td></tr>
+            <tr><td class="lab">2nd</td><td><em>loquē<span class="end">ris</span></em> &mdash; you will speak</td><td><em>loquē<span class="end">minī</span></em> &mdash; you (pl.) will speak</td></tr>
+            <tr><td class="lab">3rd</td><td><em>loquē<span class="end">tur</span></em> &mdash; he/she will speak</td><td><em>loque<span class="end">ntur</span></em> &mdash; they will speak</td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:14px 18px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>One macron, two tenses.</strong> Look carefully:
+            <div style="display:flex; gap:12px; flex-wrap:wrap; margin:10px 0 6px 0;">
+                <div style="flex:1; min-width:200px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:20px; color:#0e1c42;"><em>loqu<strong>e</strong>ris</em></div><div style="font-size:15px; color:#1a2340;">short e &rarr; <strong>present:</strong> "you speak"</div></div>
+                <div style="flex:1; min-width:200px; background:#ffffff; border-radius:6px; padding:10px 14px;"><div style="font-size:20px; color:#0e1c42;"><em>loqu<strong>ē</strong>ris</em></div><div style="font-size:15px; color:#1a2340;">long ē &rarr; <strong>future:</strong> "you will speak"</div></div>
+            </div>
+            This is the same trap as <em>regit</em> / <em>reget</em> from Module 0, one step harder. In real Roman manuscripts the macron is not written &mdash; readers relied on context. You have macrons; use them.</div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; A 1ST-CONJUGATION DEPONENT: <em>HORTOR</em></div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Change the conjugation and nothing about the <em>system</em> changes &mdash; only the stem vowel and the future marker, exactly as with ordinary verbs. <em>Hortor, hortārī, hortātus sum</em> &mdash; "to urge, encourage":</p>
+        <table class="para">
+            <tr><th style="width:22%">Tense</th><th style="width:39%">3rd singular</th><th>3rd plural</th></tr>
+            <tr><td class="lab">Present</td><td><em>hortātur</em> &mdash; he urges</td><td><em>hortantur</em> &mdash; they urge</td></tr>
+            <tr><td class="lab">Imperfect</td><td><em>hortābātur</em> &mdash; he was urging</td><td><em>hortābantur</em> &mdash; they were urging</td></tr>
+            <tr><td class="lab">Future</td><td><em>hortābitur</em> &mdash; he will urge</td><td><em>hortābuntur</em> &mdash; they will urge</td></tr>
+        </table>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>Because it is 1st conjugation,</strong> the future uses <em>-bi-</em> (<em>hortābitur</em>) &mdash; just like <em>laudābitur</em>. Third-conjugation <em>loquor</em> uses <em>-ē-</em> (<em>loquētur</em>) &mdash; just like <em>regētur</em>. You are not learning new machinery. You are learning to read familiar machinery in the opposite direction.</div>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY THE MEANING FIRST &middot; THEN CLICK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>cōnātur</em></div><div class="hint">cōnor &middot; click</div><div class="back"><strong>he tries</strong> &mdash; present, 3rd sg. (1st conj.)</div></div>
+                <div class="flip-card"><div class="front"><em>sequēbantur</em></div><div class="hint">sequor &middot; click</div><div class="back"><strong>they were following</strong> &mdash; imperfect, 3rd pl. (3rd conj.)</div></div>
+                <div class="flip-card"><div class="front"><em>cōnābimur</em></div><div class="hint">cōnor &middot; click</div><div class="back"><strong>we will try</strong> &mdash; future, 1st pl. (1st conj., so -bi-)</div></div>
+                <div class="flip-card"><div class="front"><em>mīrāminī</em></div><div class="hint">mīror &middot; click</div><div class="back"><strong>you (pl.) wonder at, admire</strong> &mdash; present, 2nd pl. (1st conj.)</div></div>
+                <div class="flip-card"><div class="front"><em>proficīscēmur</em></div><div class="hint">proficīscor &middot; click</div><div class="back"><strong>we will set out</strong> &mdash; future, 1st pl. (3rd conj., so -ē-)</div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; NAME IT, THEN TRANSLATE IT</div>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">All five verbs are deponents. Watch the markers &mdash; and the macrons.</div>
+            <div class="widget-row" data-correct="b" data-hint="-ēbā- is which marker?">
+                <div class="widget-row-prompt"><em>Catilīna ad coniūrātōs <strong>loquēbātur</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Present 3rd singular is loquitur. There is no -ēbā- in the present.">Present, 3rd sg. — "he speaks"</button>
+                    <button data-choice="b" data-fb="Right — imperfect, 3rd singular: 'Catiline was speaking to the conspirators.' The -ēbā- gives imperfect, -tur gives 3rd singular.">Imperfect, 3rd sg. — "he was speaking"</button>
+                    <button data-choice="c" data-fb="Careful: this is passive in FORM only. A deponent never translates passively.">Imperfect passive — "he was being spoken"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Long ē before -ris. Which tense?">
+                <div class="widget-row-prompt"><em>Tū, Catilīna, in senātū nōn <strong>loquēris</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Present 2nd singular is loqueris, with a SHORT e. This one has a long ē.">Present — "you do not speak"</button>
+                    <button data-choice="b" data-fb="Imperfect 2nd singular would be loquēbāris, with the -ēbā- marker.">Imperfect — "you were not speaking"</button>
+                    <button data-choice="c" data-fb="Right — the long ē marks the future in the 3rd conjugation: 'You, Catiline, will not speak in the Senate.'">Future — "you will not speak"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="a" data-hint="1st conjugation: which vowel signals the future?">
+                <div class="widget-row-prompt"><em>Cōnsul cīvēs <strong>hortābitur</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — hortor is 1st conjugation, so the future uses -bi-: 'The consul will urge the citizens.'">Future, 3rd sg. — "he will urge"</button>
+                    <button data-choice="b" data-fb="Imperfect would be hortābātur, with a long ā: 'he was urging.' Look at the vowel after -b-.">Imperfect, 3rd sg. — "he was urging"</button>
+                    <button data-choice="c" data-fb="Present 3rd singular is hortātur, with no -b- at all.">Present, 3rd sg. — "he urges"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="b" data-hint="-minī is which person and number?">
+                <div class="widget-row-prompt"><em>Vōs ducem vestrum <strong>sequiminī</strong>.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="1st plural is sequimur, ending in -mur.">Present, 1st pl. — "we follow"</button>
+                    <button data-choice="b" data-fb="Right — -minī is 2nd plural: 'You (all) follow your leader.' Note vōs confirms it.">Present, 2nd pl. — "you all follow"</button>
+                    <button data-choice="c" data-fb="3rd plural is sequuntur, ending in -ntur.">Present, 3rd pl. — "they follow"</button>
+                </div>
+            </div>
+            <div class="widget-row" data-correct="c" data-hint="Which form could a deponent never have?">
+                <div class="widget-row-prompt">Which form does <strong>not exist</strong> in Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="This exists — imperfect 3rd plural of cōnor, 'they were trying.'">cōnābantur</button>
+                    <button data-choice="b" data-fb="This exists — future 1st singular of loquor, 'I will speak.' Do not be thrown by how short it is.">loquar</button>
+                    <button data-choice="c" data-fb="Right — sequunt would be an ACTIVE 3rd plural, and a deponent has no active forms. The real form is sequuntur.">sequunt</button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 2.03 &mdash; The Perfect System, and Your Deponent Vocabulary</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Why <em>locūtus sum</em> can never mean "I was spoken" &mdash; plus the twelve deponents you will use for the rest of the year.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;">Deponent present-system forms use <strong>the passive endings you already own</strong> &mdash; stem, marker, ending, unchanged. Read the form the way you always did, then translate it <strong>actively</strong>. And check the macron: <em>loqueris</em> now, <em>loquēris</em> later.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 1 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 2.02 &middot; Deponents in the Present System</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

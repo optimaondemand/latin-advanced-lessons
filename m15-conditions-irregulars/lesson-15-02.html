@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>M/J Latin, Advanced &mdash; Lesson 15.02</title>
+<style>
+    body { margin: 0; padding: 0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f6fa; }
+    .canvas-frame { max-width: 1100px; margin: 0 auto; background: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .optima-widget { background: linear-gradient(135deg, #E8F6FB 0%, #F4F9FC 100%); border: 1px solid #C5DCE5; border-left: 5px solid #2196D0; border-radius: 8px; padding: 18px 22px; margin: 18px 0; }
+    .widget-kicker { font-size: 11px; color: #1B6A94; margin-bottom: 10px; letter-spacing: 0.4px; }
+    .widget-question { font-size: 17px; color: #0E1C42; margin-bottom: 14px; line-height: 1.55; }
+    .widget-row { background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+    .widget-row-prompt { font-size: 15px; color: #0E1C42; margin-bottom: 8px; line-height: 1.5; font-style: italic; }
+    .widget-options { display: flex; flex-wrap: wrap; gap: 8px; }
+    .widget-options button { background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 8px 14px; font-size: 14px; color: #0E1C42; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+    .widget-options button:hover { background: #F4F6FA; border-color: #55C8E8; }
+    .widget-options button.selected { background: #0E1C42; color: #FFFFFF; border-color: #0E1C42; }
+    .widget-options button.correct { background: #D8F0DD; border-color: #2A9D5C; color: #1A6B3D; }
+    .widget-options button.incorrect { background: #FDECEC; border-color: #C0392B; color: #8A1F16; }
+    .widget-feedback { background: #FFFFFF; border-left: 3px solid #C7922C; padding: 10px 14px; font-size: 15px; color: #1a2340; line-height: 1.55; margin: 10px 0; display: none; border-radius: 4px; }
+    .widget-feedback.show { display: block; }
+    .row-feedback { padding: 8px 12px; margin-top: 8px; font-size: 14px; border-radius: 4px; line-height: 1.5; }
+    .row-feedback.correct { background: #D8F0DD; border-left: 3px solid #2A9D5C; color: #1A6B3D; }
+    .row-feedback.incorrect { background: #FDECEC; border-left: 3px solid #C0392B; color: #8A1F16; }
+    .widget-reset { background: transparent; border: 1px solid #C7922C; color: #C7922C; border-radius: 6px; padding: 6px 12px; font-size: 12px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .widget-reset:hover { background: #FDF3E3; }
+    .flip-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+    .flip-card { min-width: 150px; flex: 1; background: #FFFFFF; border: 1.5px solid #D0D9E8; border-radius: 8px; padding: 14px 16px; cursor: pointer; text-align: center; transition: all 0.15s; }
+    .flip-card:hover { border-color: #55C8E8; }
+    .flip-card .front { font-size: 18px; color: #0E1C42; }
+    .flip-card .hint { font-size: 12px; color: #999; margin-top: 4px; }
+    .flip-card .back { display: none; font-size: 15px; color: #1B6A94; margin-top: 8px; border-top: 1px dashed #C5DCE5; padding-top: 8px; }
+    .flip-card.flipped .back { display: block; }
+    .para { border-collapse: collapse; margin: 14px 0; width: 100%; }
+    .para td, .para th { border: 1px solid #C5DCE5; padding: 9px 14px; font-size: 16px; text-align: left; }
+    .para th { background: #0E1C42; color: #fff; font-weight: normal; font-size: 13px; }
+    .para .lab { background: #EEF1F8; color: #0e1c42; }
+    .para .end { color: #c7922c; font-weight: 700; }
+    .rd { background: #FDFBF5; border: 1px solid #E6DFC9; border-left: 5px solid #C7922C; border-radius: 8px; padding: 20px 24px; margin: 14px 0; }
+    .rd p { font-size: 18px; color: #1a2340; line-height: 1.9; margin: 0 0 12px 0; font-style: italic; }
+    .rd p:last-child { margin-bottom: 0; }
+    .rd b { color: #AA1E2D; font-style: italic; }
+    .gl { list-style: none; padding: 0; margin: 8px 0 0 0; }
+    .gl li { font-size: 15px; color: #1a2340; line-height: 1.6; padding: 3px 0; border-bottom: 1px dotted #E6DFC9; }
+    .completion-banner { display: flex; align-items: center; gap: 16px; background: #E9F5EC; border: 1px solid #2A9D5C; border-radius: 6px; padding: 16px 20px; margin: 24px 0 8px 0; }
+    .cb-icon { width: 32px; height: 32px; background: #2A9D5C; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .cb-text { font-size: 14px; color: #1a2340; line-height: 1.55; }
+    .cb-text strong { color: #1A6B3D; }
+</style>
+</head>
+<body>
+<div class="canvas-frame">
+
+<!-- HEADER -->
+<div style="background: #0E1C42; border-bottom: 5px solid #55C8E8; padding: 22px 34px;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 10px;">
+        <div style="width: 52px; height: 52px; border-radius: 50%; background: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;"><img src="https://raw.githubusercontent.com/optimaondemand/optima-assets/eeb0b335630058906d52f478028361d352253a93/images/Optima%20Final%20Circle%20-%20Owl%20Only.png" alt="Optima Academy" style="width: 50px; height: 40px; object-fit: contain;" /></div>
+        <div>
+            <div style="font-size: 28px; color: #ffffff; line-height: 1.2;">Optima Academy Online</div>
+            <div style="font-size: 12px; color: #55c8e8;">An Education Experience Company</div>
+        </div>
+    </div>
+    <div style="font-size: 36px; color: #ffffff; margin-bottom: 6px;">M/J LATIN, ADVANCED</div>
+</div>
+
+<!-- METADATA STRIP -->
+<div style="background: #FFFFFF; border-bottom: 2px solid #D0D9E8; display: flex; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Quarter / Module</div>
+        <div style="font-size: 17px; color: #0e1c42;">Q2 &middot; Module 15</div>
+        <div style="font-size: 12px; color: #666;">Conditions &amp; Irregular Verbs</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Lesson</div>
+        <div style="font-size: 17px; color: #0e1c42;">Lesson 15.02 &middot; Day 2 of 5</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px; border-right: 1px solid #D0D9E8;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Topic</div>
+        <div style="font-size: 17px; color: #0e1c42; font-style: italic;">Two Kinds of Not-Yet-True</div>
+    </div>
+    <div style="flex: 1; min-width: 140px; padding: 12px 16px;">
+        <div style="font-size: 11px; color: #6b7a99; margin-bottom: 4px;">Time</div>
+        <div style="font-size: 16px; color: #0e1c42;">about 20 minutes</div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div style="padding: 24px 34px;">
+
+    <div style="background: #EEF1F8; border-left: 5px solid #0E1C42; border-radius: 7px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #0e1c42; margin-bottom: 6px;">Lesson 15.02</div>
+        <div style="font-size: 22px; color: #0e1c42; margin-bottom: 4px;">Two Kinds of Not-Yet-True</div>
+        <div style="font-size: 16px; color: #666;">Lesson &middot; future less vivid and present contrary to fact</div>
+    </div>
+
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128214; TODAY'S FOCUS</div>
+        <div style="font-size: 20px; color: #0e1c42; font-style: italic; margin-bottom: 10px;">Two of the four types today, and one rule that replaces everything you have been doing since Module 7.</div>
+        <div style="font-size: 18px; color: #1a2340; line-height: 1.65;">Type 2, the <strong>future less vivid</strong>, holds a possibility at arm's length: &ldquo;if this <em>should</em> happen, that <em>would</em> happen.&rdquo; Type 3, the <strong>present contrary to fact</strong>, denies the possibility outright: &ldquo;if this <em>were</em> so &mdash; and it is not &mdash; that <em>would be</em> so.&rdquo; Latin builds the first with the <strong>present subjunctive in both halves</strong> and the second with the <strong>imperfect subjunctive in both halves</strong>. No new endings. You have owned both tenses since Module 6. What is new is where they go, and the fact that <em>sequence of tenses does not apply here at all</em>.</div>
+    </div>
+
+    <!-- OBJECTIVES -->
+    <div style="background: #FFFFFF; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#127919; BY THE END OF THIS LESSON YOU WILL BE ABLE TO&hellip;</div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> state the matching rule &mdash; <strong>both halves take the same tense</strong> &mdash; and explain why sequence of tenses has nothing to do here.</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build a <strong>future less vivid</strong> condition with the present subjunctive and translate it with &ldquo;should&hellip;would.&rdquo;</div>
+        </div>
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <div style="min-width: 26px; height: 26px; border-radius: 50%; background: #C7922C; color: #fff; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div style="font-size: 18px; color: #1a2340; line-height: 1.65;"><strong>I will be able to</strong> build a <strong>present contrary-to-fact</strong> condition with the imperfect subjunctive and say what fact it is denying.</div>
+        </div>
+    </div>
+
+    <!-- PART 1 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 1 &middot; THE RULE THAT REPLACES SEQUENCE</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 10px 0;">Every subjunctive you have met since Module 7 has had its tense chosen for it by <strong>sequence</strong>. The procedure was always the same: find the <strong>indicative</strong> main verb, decide whether it is primary or secondary, and read the tense off the two-row table.</p>
+        <table class="para">
+            <tr><th style="width:32%">Construction</th><th style="width:30%">Main verb</th><th>How the subjunctive's tense was chosen</th></tr>
+            <tr><td class="lab">purpose &middot; result &middot; <em>cum</em> &middot; indirect question &middot; fear <span style="font-size:13px; color:#666;">(m08&ndash;m13)</span></td><td><strong>indicative</strong> &mdash; <em>rogat</em>, <em>rogāvit</em>, <em>timēbat</em></td><td>by <strong>sequence</strong>: primary &rarr; present or perfect subj.; secondary &rarr; imperfect or pluperfect subj.</td></tr>
+            <tr><td class="lab"><strong>conditions with the subjunctive</strong> <span style="font-size:13px; color:#666;">(m15)</span></td><td><strong>subjunctive too</strong> &mdash; there is no indicative main verb</td><td class="end">by <strong>matching</strong>: the apodosis takes the <strong>same tense</strong> as the protasis</td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:10px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;">In a subjunctive condition, <strong>both halves carry the same tense of the subjunctive.</strong> Present with present. Imperfect with imperfect. Pluperfect with pluperfect.</div>
+        </div>
+        <div style="background:#E8F6FB; border-left:5px solid #2196D0; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#128161; <strong>And here is <em>why</em>, which is worth thirty seconds of thought.</strong> Sequence of tenses is a rule about how a subordinate clause positions itself in time <em>relative to a main clause that is stating a fact</em>. A conditional sentence of types 2, 3 and 4 has no such main clause: the apodosis is in the subjunctive as well, because it too is unreal. The two halves are unreal <em>together</em>, in the same imaginary world, at the same imaginary time. So there is nothing for sequence to measure from, and Latin does the obvious thing instead &mdash; it uses one tense for the whole sentence.</div>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9888;&#65039; <strong>Do not throw the sequence rule away.</strong> It is still in force everywhere else, and Module 16 will test it. What is more, a condition can sit <em>inside</em> a construction that does use sequence &mdash; and then both rules apply at once, each to its own clause. You are not replacing a rule; you are learning where its territory stops.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 2 &middot; TYPE 2: THE FUTURE LESS VIVID (&ldquo;SHOULD&hellip;WOULD&rdquo;)</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><em>Sī</em> + <strong>present subjunctive</strong> &hellip; , &nbsp;<strong>present subjunctive</strong>.<br><span style="font-size:16px; color:#1a2340;">English: &ldquo;If X <strong>should</strong> happen, Y <strong>would</strong> happen.&rdquo;</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">Compare the two future conditions side by side. The Latin difference is one mood; the difference in what the speaker is doing is large.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap; margin:12px 0;">
+            <div style="flex:1; min-width:250px; background:#E8F6FB; border:1px solid #C5DCE5; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#1B6A94; margin-bottom:6px;">TYPE 1 &middot; FUTURE, INDICATIVE</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Sī Catilīna in urbem <strong>veniet</strong>, cīvēs arma <strong>capient</strong>.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;If Catiline <strong>comes</strong> into the city, the citizens <strong>will take up</strong> arms.&rdquo;</div>
+                <div style="font-size:15px; color:#1B6A94; margin-top:6px;">A live question. The speaker expects it to be settled one way or the other, quite soon, and is telling you what happens then.</div>
+            </div>
+            <div style="flex:1; min-width:250px; background:#FDF3E3; border:1px solid #E6DFC9; border-radius:7px; padding:14px 18px;">
+                <div style="font-size:13px; color:#8a6416; margin-bottom:6px;">TYPE 2 &middot; FUTURE LESS VIVID, PRESENT SUBJUNCTIVE</div>
+                <div style="font-size:19px; color:#0e1c42; line-height:1.5;"><em>Sī Catilīna in urbem <strong>veniat</strong>, cīvēs arma <strong>capiant</strong>.</em></div>
+                <div style="font-size:16px; color:#1a2340; margin-top:8px;">&ldquo;If Catiline <strong>should come</strong> into the city, the citizens <strong>would take up</strong> arms.&rdquo;</div>
+                <div style="font-size:15px; color:#8a6416; margin-top:6px;">A supposing. The speaker is imagining the case rather than expecting it &mdash; and is not saying it will not happen either.</div>
+            </div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">The name is worth unpacking, because it explains itself. Both are <strong>future</strong> conditions. Type 1 is <em>vivid</em> &mdash; it puts the scene in front of you as a thing that may well happen. Type 2 is <strong>less vivid</strong> &mdash; the same scene, held further off, sketched rather than painted. Some books call it the &ldquo;ideal&rdquo; condition for the same reason.</p>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 10px 0 6px 0;">No new forms are needed. This is the present subjunctive from Module 6, in both halves:</p>
+        <table class="para">
+            <tr><th style="width:22%">Verb</th><th style="width:26%">Present subjunctive, 3 sg.</th><th>Present subjunctive, 3 pl.</th></tr>
+            <tr><td class="lab"><em>amō</em> (1st)</td><td><em>amet</em></td><td><em>ament</em></td></tr>
+            <tr><td class="lab"><em>moneō</em> (2nd)</td><td><em>moneat</em></td><td><em>moneant</em></td></tr>
+            <tr><td class="lab"><em>regō</em> (3rd)</td><td><em>regat</em></td><td><em>regant</em></td></tr>
+            <tr><td class="lab"><em>capiō</em> (3rd io)</td><td><em>capiat</em></td><td><em>capiant</em></td></tr>
+            <tr><td class="lab"><em>audiō</em> (4th)</td><td><em>audiat</em></td><td><em>audiant</em></td></tr>
+            <tr><td class="lab"><em>sum</em></td><td class="end"><em>sit</em></td><td class="end"><em>sint</em></td></tr>
+            <tr><td class="lab"><em>possum</em></td><td><em>possit</em></td><td><em>possint</em></td></tr>
+            <tr><td class="lab"><em>loquor</em> (deponent, m02)</td><td><em>loquātur</em></td><td><em>loquantur</em></td></tr>
+        </table>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī hoc dīcās, omnēs mīrentur.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If you should say this, everyone would be astonished.&rdquo; Both present subjunctive; <em>mīrentur</em> is the deponent <em>mīror</em> from Module 2, passive in form and active in meaning as always. <span style="color:#8a6416;">Gloss: <em>mīror, mīrārī, mīrātus sum</em> &mdash; to wonder at, be astonished.</span></div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī senātus taceat, rēs pūblica cadat.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If the Senate should keep silent, the republic would fall.&rdquo; Watch the shape: <em>taceat</em> and <em>cadat</em>, matched. <span style="color:#8a6416;">Gloss: <em>cadō, cadere, cecidī</em> &mdash; to fall; <em>rēs pūblica, reī pūblicae</em> f. &mdash; the republic, the state, public affairs.</span></div>
+        </div>
+    </div>
+
+    <!-- PART 3 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 3 &middot; TYPE 3: PRESENT CONTRARY TO FACT (&ldquo;WERE&hellip;WOULD BE&rdquo;)</div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:16px 20px; margin:8px 0;">
+            <div style="font-size:20px; color:#0e1c42; line-height:1.55;"><em>Sī</em> + <strong>imperfect subjunctive</strong> &hellip; , &nbsp;<strong>imperfect subjunctive</strong>.<br><span style="font-size:16px; color:#1a2340;">English: &ldquo;If X <strong>were</strong> so, Y <strong>would be</strong> so.&rdquo; &mdash; <em>and X is not so</em>.</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 8px 0;">The phrase <strong>contrary to fact</strong> means exactly what it says: the sentence runs <em>against</em> the facts, and the writer knows it and expects you to know it. This is the type that carries a hidden second claim. When a Roman writes <em>sī Catilīna in urbe esset</em>, he has told you two things at once &mdash; a supposing, and a denial.</p>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī Catilīna in urbe <strong>esset</strong>, cīvēs <strong>timērent</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If Catiline were in the city, the citizens would be afraid.&rdquo; <strong>Understood:</strong> he is not in the city, and they are not afraid. Both verbs imperfect subjunctive, matched.</div>
+        </div>
+        <div style="background:#EEF1F8; border-radius:7px; padding:14px 18px; margin:8px 0;">
+            <div style="font-size:19px; color:#0e1c42;"><em>Sī cōnsul <strong>tacēret</strong>, coniūrātī <strong>vincerent</strong>.</em></div>
+            <div style="font-size:16px; color:#1a2340; margin-top:6px;">&ldquo;If the consul were keeping silent, the conspirators would be winning.&rdquo; <strong>Understood:</strong> the consul is not keeping silent, so they are not winning. Notice how much argument is packed into two endings: the sentence is a compliment to Cicero disguised as a supposition. <span style="color:#8a6416;">Gloss: <em>vincō, vincere, vīcī</em> &mdash; to conquer, win.</span></div>
+        </div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 12px 0 6px 0;">The forms are the imperfect subjunctive from Lesson 6.03 &mdash; <strong>present infinitive + <em>-m, -s, -t, -mus, -tis, -nt</em></strong>. Set the two subjunctive tenses of this lesson side by side and learn them as a pair:</p>
+        <table class="para">
+            <tr><th style="width:22%">Verb</th><th style="width:26%">Type 2 &mdash; present subj. (3 sg.)</th><th>Type 3 &mdash; imperfect subj. (3 sg.)</th></tr>
+            <tr><td class="lab"><em>amō</em></td><td><em>amet</em></td><td class="end"><em>amāret</em></td></tr>
+            <tr><td class="lab"><em>moneō</em></td><td><em>moneat</em></td><td class="end"><em>monēret</em></td></tr>
+            <tr><td class="lab"><em>regō</em></td><td><em>regat</em></td><td class="end"><em>regeret</em></td></tr>
+            <tr><td class="lab"><em>capiō</em></td><td><em>capiat</em></td><td class="end"><em>caperet</em></td></tr>
+            <tr><td class="lab"><em>audiō</em></td><td><em>audiat</em></td><td class="end"><em>audīret</em></td></tr>
+            <tr><td class="lab"><em>sum</em></td><td><em>sit</em></td><td class="end"><em>esset</em></td></tr>
+            <tr><td class="lab"><em>possum</em></td><td><em>possit</em></td><td class="end"><em>posset</em></td></tr>
+            <tr><td class="lab"><em>loquor</em> (deponent)</td><td><em>loquātur</em></td><td class="end"><em>loquerētur</em></td></tr>
+        </table>
+        <div style="background:#F5E7E8; border-left:5px solid #AA1E2D; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6;">&#9888;&#65039; <strong>An honest warning about the English word &ldquo;would.&rdquo;</strong> English uses <em>would</em> for at least three unrelated jobs: the apodosis of a condition (&ldquo;he <em>would</em> be afraid&rdquo;), habitual past action (&ldquo;every morning he <em>would</em> walk to the Forum&rdquo;), and future-in-the-past (&ldquo;he said he <em>would</em> come&rdquo;). Only the first is a conditional apodosis. So do not translate <em>into</em> Latin from the English word <em>would</em> alone &mdash; read the whole sentence and find out whether there is an &ldquo;if&rdquo; anywhere. Two of the three &ldquo;woulds&rdquo; above need no subjunctive in Latin at all.</div>
+        <div style="background:#FDF3E3; border-left:5px solid #C7922C; border-radius:6px; padding:12px 16px; font-size:16px; color:#1a2340; line-height:1.6; margin-top:12px;">&#9997;&#65039; <strong>Negatives are tomorrow.</strong> Every example on this page is positive on purpose. Latin has a special word for a negative protasis &mdash; <em>nisi</em>, &ldquo;unless, if&hellip;not&rdquo; &mdash; and it arrives in Lesson 15.03 alongside the last and most important condition type.</div>
+    </div>
+
+    <!-- PART 4 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#129504; PART 4 &middot; ONE MOOD, ONE TENSE, THREE DIFFERENT CLAIMS</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Five items. Read the endings, not the vocabulary.</p>
+        <div class="optima-widget ow-select">
+            <div class="widget-kicker">&#9989; CHECK YOUR UNDERSTANDING</div>
+            <div class="widget-question">Which type is this, and what is the speaker committing to?</div>
+
+            <div class="widget-row" data-correct="b" data-hint="Veniat and capiant — present indicative or present subjunctive? Then read the table in Part 2.">
+                <div class="widget-row-prompt"><em>Sī Catilīna in urbem veniat, cīvēs arma capiant.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Simple / factual needs the indicative — veniet and capient. Veniat and capiant are present SUBJUNCTIVE: the -a- where an -e- would be is the giveaway in a 4th-conjugation and a 3rd-io verb.">Simple / factual &mdash; &ldquo;If Catiline comes&hellip;&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — future less vivid. Present subjunctive in both halves: 'If Catiline should come into the city, the citizens would take up arms.' The speaker is imagining it, not predicting it.">Future less vivid &mdash; &ldquo;should come&hellip;would take up&rdquo;</button>
+                    <button data-choice="c" data-fb="Present contrary to fact takes the IMPERFECT subjunctive — venīret and caperent — and would mean 'if he were coming (and he is not).' Present subjunctive does not deny anything.">Present contrary to fact &mdash; and he is not coming</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Esset and timērent. Which tense of the subjunctive is that, and which type owns it?">
+                <div class="widget-row-prompt"><em>Sī Catilīna in urbe esset, cīvēs timērent.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Not the indicative: the imperfect indicative would be erat and timēbant. Esset and timērent are imperfect subjunctive — the present infinitive plus -m, -s, -t.">Simple / factual, in the past</button>
+                    <button data-choice="b" data-fb="Future less vivid uses the PRESENT subjunctive, sit and timeant. The imperfect subjunctive is one step further: it denies the supposing instead of merely entertaining it.">Future less vivid &mdash; &ldquo;should be&hellip;would fear&rdquo;</button>
+                    <button data-choice="c" data-fb="Right — present contrary to fact. Imperfect subjunctive in both halves: 'If Catiline were in the city, the citizens would be afraid.' And the sentence tells you, without a separate word, that he is not.">Present contrary to fact &mdash; he is <em>not</em> in the city</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="a" data-hint="Look at the two verbs. Do their tenses match? What does the matching rule require?">
+                <div class="widget-row-prompt">A student writes: <em>Sī Catilīna in urbe esset, cīvēs arma capiant.</em> What is wrong with it?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Right — the halves do not match. Esset is imperfect subjunctive, capiant is present subjunctive. Pick one world and stay in it: either sī esset… caperent (contrary to fact) or sī sit… capiant (future less vivid).">The two halves are in different tenses</button>
+                    <button data-choice="b" data-fb="Word order is fine, and in any case Latin word order is free. The problem is in the verb endings.">The protasis should come second</button>
+                    <button data-choice="c" data-fb="Both verbs are in fact subjunctive — esset and capiant. That is not the error; the error is that they are in different TENSES, which the matching rule forbids.">One of the verbs is indicative</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="b" data-hint="Which of the three English 'woulds' is this — conditional, habitual, or future-in-the-past?">
+                <div class="widget-row-prompt">English: &ldquo;Every morning the old senator would walk to the Forum.&rdquo; What does this need in Latin?</div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="There is no 'if' anywhere in the sentence, and nothing is being supposed. A conditional apodosis needs a protasis to answer, and there is none.">An imperfect subjunctive, because of &ldquo;would&rdquo;</button>
+                    <button data-choice="b" data-fb="Right — this is habitual past action, which is one of the ordinary jobs of the imperfect INDICATIVE: ambulābat. The English 'would' here is a trap, and it is the reason you translate from the sentence and not from the word.">An imperfect indicative &mdash; <em>ambulābat</em></button>
+                    <button data-choice="c" data-fb="Future less vivid would need a supposing and an 'if'. This sentence reports a habit that really happened, which is as indicative as anything gets.">A present subjunctive, as in a future less vivid</button>
+                </div>
+            </div>
+
+            <div class="widget-row" data-correct="c" data-hint="Build it: which tense goes in BOTH halves for 'should… would'?">
+                <div class="widget-row-prompt">Complete a <strong>future less vivid</strong>: &ldquo;If the Senate should keep silent, the republic would fall.&rdquo; &mdash; <em>Sī senātus ____, rēs pūblica ____.</em></div>
+                <div class="widget-options">
+                    <button data-choice="a" data-fb="Tacēret and caderet are imperfect subjunctive, which builds a PRESENT CONTRARY-TO-FACT: 'if the Senate were keeping silent (and it is not), the republic would be falling.' A different claim.">
+                        <em>tacēret &hellip; caderet</em></button>
+                    <button data-choice="b" data-fb="Tacēbit and cadet are future indicative, which builds a type 1 future condition: 'if the Senate keeps silent, the republic will fall.' Vivid, not less vivid.">
+                        <em>tacēbit &hellip; cadet</em></button>
+                    <button data-choice="c" data-fb="Right — taceat and cadat, present subjunctive in both halves. 'If the Senate should keep silent, the republic would fall.' Matched tenses, and the softest of the three claims.">
+                        <em>taceat &hellip; cadat</em></button>
+                </div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- PART 5 -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 14px;">&#128218; PART 5 &middot; SAY THE PAIR</div>
+        <p style="font-size: 17px; color: #1a2340; line-height: 1.65; margin: 0 0 6px 0;">Type 2 and type 3 differ by one tense, so drill them as a pair rather than one at a time. Say both aloud before you click.</p>
+        <div class="optima-widget ow-flip" style="background:#FFFFFF; border-left-color:#C7922C;">
+            <div class="widget-kicker" style="color:#c7922c;">&#128269; SAY IT FIRST &middot; THEN CLICK TO CHECK</div>
+            <div class="flip-grid">
+                <div class="flip-card"><div class="front"><em>sum</em> &mdash; 3 sg. pair</div><div class="hint">present subj. &middot; imperfect subj.</div><div class="back"><em>sit</em> &middot; <em>esset</em>. The most common pair in the whole module, because most contrary-to-fact conditions are about how things <em>are</em>.</div></div>
+                <div class="flip-card"><div class="front"><em>possum</em> &mdash; 3 sg. pair</div><div class="hint">present subj. &middot; imperfect subj.</div><div class="back"><em>possit</em> &middot; <em>posset</em>. One letter apart. In a condition the difference is &ldquo;would be able&rdquo; (possible) versus &ldquo;would be able&rdquo; (but is not).</div></div>
+                <div class="flip-card"><div class="front"><em>veniō</em> &mdash; 3 sg. pair</div><div class="hint">present subj. &middot; imperfect subj.</div><div class="back"><em>veniat</em> &middot; <em>venīret</em>. <em>Sī veniat</em> = &ldquo;should he come&rdquo;; <em>sī venīret</em> = &ldquo;if he were coming &mdash; and he is not.&rdquo;</div></div>
+                <div class="flip-card"><div class="front"><em>faciō</em> &mdash; 3 sg. pair</div><div class="hint">present subj. &middot; imperfect subj.</div><div class="back"><em>faciat</em> &middot; <em>faceret</em>. Watch the vowel: <em>facia-</em> against <em>face-</em>. This is the pair students most often blur.</div></div>
+                <div class="flip-card"><div class="front"><em>loquor</em> &mdash; 3 sg. pair</div><div class="hint">deponent &middot; m02</div><div class="back"><em>loquātur</em> &middot; <em>loquerētur</em>. Passive in form, active in meaning, and it behaves in a condition exactly like any other verb.</div></div>
+                <div class="flip-card"><div class="front">the matching rule</div><div class="hint">say it out loud &middot; click</div><div class="back">Both halves take the <strong>same tense</strong>. No sequence, no primary or secondary, nothing to look up. <em>Sit&hellip;sit. Esset&hellip;esset.</em></div></div>
+            </div>
+            <button class="widget-reset">Reset</button>
+        </div>
+    </div>
+
+    <!-- WHAT'S NEXT -->
+    <div style="background: #FFFFFF; border-top: 3px solid #0E1C42; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 16px;">&#10145;&#65039; WHAT YOU'LL DO NEXT</div>
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="min-width: 34px; height: 34px; border-radius: 50%; background: #0E1C42; color: #fff; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</div>
+            <div>
+                <div style="font-size: 18px; color: #0e1c42; margin-bottom: 4px;"><strong>Lesson 15.03 &mdash; What Would Have Been</strong></div>
+                <div style="font-size: 16px; color: #1a2340; line-height: 1.55;">Type 4: the past contrary to fact, with the <strong>pluperfect subjunctive</strong> in both halves &mdash; the form you learned in Module 13, arriving at the job it was made for. Plus <em>nisi</em>, &ldquo;unless,&rdquo; and this module's vocabulary.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WRAP-UP -->
+    <div style="background: #FFFFFF; border-top: 3px solid #C7922C; border: 1px solid #D0D9E8; border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;">
+        <div style="font-size: 11px; color: #c7922c; margin-bottom: 12px;">&#128170; ONE IDEA TO CARRY OUT</div>
+        <p style="font-size: 18px; color: #1a2340; line-height: 1.65; margin: 0;"><strong>Match the halves.</strong> <em>Sit&hellip;sit</em> is &ldquo;should&hellip;would&rdquo; &mdash; a possibility held at arm's length. <em>Esset&hellip;esset</em> is &ldquo;were&hellip;would be&rdquo; &mdash; and it is not so. If you catch yourself reaching for the two-row sequence table in a conditional sentence, stop: there is no indicative main verb to measure from, and the answer is simply the tense already sitting in the other half.</p>
+    </div>
+
+    <!-- COMPLETION -->
+    <div class="completion-banner">
+        <div class="cb-icon">&#10003;</div>
+        <div class="cb-text"><strong>Mark this lesson as done in Canvas</strong> once you have read all sections and worked through the activities above. Find this page in your Canvas module and click <strong>Mark as Done</strong> to record your completion and unlock the next item.</div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="background: #0E1C42; border-top: 3px solid #55C8E8; padding: 18px 34px; text-align: center;">
+    <div style="font-size: 18px; color: #ffffff; margin-bottom: 6px;"><span style="color: #55c8e8;">Optima Academy Online</span> &middot; M/J LATIN, ADVANCED &middot; Quarter 2 &middot; Student Lesson Page</div>
+    <div style="font-size: 13px; color: rgba(255,255,255,0.65); margin-bottom: 4px;">Lesson 15.02 &middot; Two Kinds of Not-Yet-True</div>
+    <div style="font-size: 12px; color: rgba(255,255,255,0.4);">&copy; Optima Academy Online &middot; An Education Experience Company</div>
+</div>
+
+</div>
+
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var reset = e.target.closest('.widget-reset');
+    if (reset) {
+      var w = reset.closest('.optima-widget');
+      w.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      w.querySelectorAll('.widget-feedback').forEach(function (f) { f.classList.remove('show'); f.textContent = ''; });
+      w.querySelectorAll('.row-feedback').forEach(function (f) { f.remove(); });
+      w.querySelectorAll('.flip-card').forEach(function (c) { c.classList.remove('flipped'); });
+      return;
+    }
+    var flip = e.target.closest('.ow-flip .flip-card');
+    if (flip) { flip.classList.toggle('flipped'); return; }
+    var rBtn = e.target.closest('.ow-reflect .widget-options button');
+    if (rBtn) {
+      var rw = rBtn.closest('.optima-widget');
+      rw.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected'); });
+      rBtn.classList.add('selected');
+      var fb = rw.querySelector('.widget-feedback');
+      fb.textContent = rBtn.dataset.response || '';
+      fb.classList.add('show');
+      return;
+    }
+    var sBtn = e.target.closest('.ow-select .widget-row .widget-options button');
+    if (sBtn) {
+      var row = sBtn.closest('.widget-row');
+      row.querySelectorAll('.widget-options button').forEach(function (b) { b.classList.remove('selected', 'correct', 'incorrect'); });
+      var right = sBtn.dataset.choice === row.dataset.correct;
+      sBtn.classList.add(right ? 'correct' : 'incorrect');
+      var text = right ? (sBtn.dataset.fb || 'Right.') : (sBtn.dataset.fb || row.dataset.hint || 'Not quite — try again.');
+      var rf = row.querySelector('.row-feedback') || row.appendChild(document.createElement('div'));
+      rf.className = 'row-feedback ' + (right ? 'correct' : 'incorrect');
+      rf.textContent = text;
+      return;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
